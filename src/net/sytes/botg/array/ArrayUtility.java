@@ -377,4 +377,20 @@ public class ArrayUtility {
         numbers[i] = numbers[j];
         numbers[j] = temp;
     }	
+    
+    public static int countStringOccurencesInArray(String[] ar, String s, boolean caseSensitive) {
+    	int count = -1;
+        for (int i = 0; i < ar.length; i++) {
+        	if (!caseSensitive) {
+	        	if (s.toLowerCase().equals(ar[i].toLowerCase())){
+	        		count++;
+	            }
+        	} else {
+        		if (s.equals(ar[i])){
+	        		count++;
+	            }
+        	}
+        }
+        return count;
+    }  
 }
