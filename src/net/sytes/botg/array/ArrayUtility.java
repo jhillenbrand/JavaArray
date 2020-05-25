@@ -42,7 +42,7 @@ public class ArrayUtility {
 		System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 
-	public static void reverseByteArray3(byte[] array) {
+	public static byte[] reverseByteArray3(byte[] array) {
 		long start = System.nanoTime();
 		int i, j, n;
 		n = array.length;
@@ -53,6 +53,7 @@ public class ArrayUtility {
 			j = j - 1;
 		}
 		System.out.println(System.nanoTime() - start + " ns elapsed");
+		return newArray;
 	}
 	
 	public static char[] bytesToHex(byte[] bytes) {
