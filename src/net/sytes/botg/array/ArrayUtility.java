@@ -43,7 +43,7 @@ public class ArrayUtility {
 	}
 
 	public static byte[] reverseByteArray3(byte[] array) {
-		long start = System.nanoTime();
+		//long start = System.nanoTime();
 		int i, j, n;
 		n = array.length;
 		j = n;
@@ -52,7 +52,7 @@ public class ArrayUtility {
 			newArray[j - 1] = array[i];
 			j = j - 1;
 		}
-		System.out.println(System.nanoTime() - start + " ns elapsed");
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 		return newArray;
 	}
 	
@@ -70,12 +70,12 @@ public class ArrayUtility {
 	}
 	
 	public static int[] bytesToInt(byte[] bytes, int numOfBytes) {
-		long start = System.nanoTime();
+		//long start = System.nanoTime();
 		int[] ints = new int[bytes.length / numOfBytes];
 		for (int i = 0; i < ints.length; i++) {
 			ints[i] = getInt(bytes, numOfBytes * i);
 		}
-		System.out.println(System.nanoTime() - start + " ns elapsed");
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 		return ints;
 	}
 	
