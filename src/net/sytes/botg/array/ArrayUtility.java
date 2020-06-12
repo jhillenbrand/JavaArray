@@ -394,4 +394,13 @@ public class ArrayUtility {
         }
         return count;
     }  
+    
+    public static boolean isIntInArray(int[] ar, int i) {
+    	for (int j = 0; j < ar.length; j++) {
+    		if (ar[j] == i) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 }
