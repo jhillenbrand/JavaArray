@@ -72,7 +72,7 @@ public class ArrayUtility {
 	}
 	
 	public static int[] bytesToInt(byte[] bytes, int numOfBytes) {
-		long start = System.nanoTime();
+		//long start = System.nanoTime();
 		int[] ints = new int[bytes.length / numOfBytes];
 		for (int i = 0; i < ints.length; i++) {
 			ints[i] = getInt(bytes, numOfBytes * i);
@@ -380,4 +380,29 @@ public class ArrayUtility {
         numbers[i] = numbers[j];
         numbers[j] = temp;
     }	
+    
+    public static int countStringOccurencesInArray(String[] ar, String s, boolean caseSensitive) {
+    	int count = -1;
+        for (int i = 0; i < ar.length; i++) {
+        	if (!caseSensitive) {
+	        	if (s.toLowerCase().equals(ar[i].toLowerCase())){
+	        		count++;
+	            }
+        	} else {
+        		if (s.equals(ar[i])){
+	        		count++;
+	            }
+        	}
+        }
+        return count;
+    }  
+    
+    public static boolean isIntInArray(int[] ar, int i) {
+    	for (int j = 0; j < ar.length; j++) {
+    		if (ar[j] == i) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 }
