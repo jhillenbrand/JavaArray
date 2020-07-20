@@ -24,7 +24,7 @@ public class ArrayUtility {
 	}
 	
 	public static void reverseByteArray(byte[] array) {
-		long start = System.nanoTime();
+		//long start = System.nanoTime();
 		int i = 0;
 		byte b;
 		int n = array.length;
@@ -33,17 +33,19 @@ public class ArrayUtility {
 			array[i] = array[n - i - 1];
 			array[n - i - 1] = b;
 		}
-		System.out.println(System.nanoTime() - start + " ns elapsed");
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
+	// DEBUGGING NOT WORKING DUE TO LIST IMPLEMENTATION
 	public static void reverseByteArray2(byte[] array) {
-		long start = System.nanoTime();
-		Collections.reverse(Arrays.asList(array));
-		System.out.println(System.nanoTime() - start + " ns elapsed");
+		//long start = System.nanoTime();
+		List<byte[]> bL = Arrays.asList(array);
+		Collections.reverse(bL);
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 
-	public static void reverseByteArray3(byte[] array) {
-		long start = System.nanoTime();
+	public static byte[] reverseByteArray3(byte[] array) {
+		//long start = System.nanoTime();
 		int i, j, n;
 		n = array.length;
 		j = n;
@@ -52,7 +54,8 @@ public class ArrayUtility {
 			newArray[j - 1] = array[i];
 			j = j - 1;
 		}
-		System.out.println(System.nanoTime() - start + " ns elapsed");
+		return newArray;
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
 	public static char[] bytesToHex(byte[] bytes) {
@@ -74,7 +77,7 @@ public class ArrayUtility {
 		for (int i = 0; i < ints.length; i++) {
 			ints[i] = getInt(bytes, numOfBytes * i);
 		}
-		System.out.println(System.nanoTime() - start + " ns elapsed");
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 		return ints;
 	}
 	
