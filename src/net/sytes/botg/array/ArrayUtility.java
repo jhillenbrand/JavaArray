@@ -23,6 +23,29 @@ public class ArrayUtility {
 		System.out.println(Arrays.toString(inds));
 	}
 	
+
+	/**
+	 * This method converts an object array to a string. The elements are divided by a delimiter. 
+	 * @param a
+	 * @return
+	 */
+	public static String toString(Object[] a, String delimiter) {
+        if (a == null) {
+            return null;
+        }
+        int iMax = a.length - 1;
+        if (iMax == -1)
+            return null;
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; ; i++) {
+            b.append(String.valueOf(a[i]));
+            if (i == iMax)
+                return b.toString();
+            b.append(delimiter);
+        }
+    }
+	
 	public static void reverseByteArray(byte[] array) {
 		//long start = System.nanoTime();
 		int i = 0;
