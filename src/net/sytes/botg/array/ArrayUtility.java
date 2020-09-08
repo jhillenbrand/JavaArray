@@ -81,6 +81,20 @@ public class ArrayUtility {
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
+	public static byte[] switchOddToEvenBytes(byte[] array) {
+		//long start = System.nanoTime();
+		byte[] newArray = new byte[array.length];
+		if (array.length < 2) {
+			throw new RuntimeException("array must contain at least 2 elements");
+		}
+		for (int i = 1; i < array.length; i += 2) {
+			newArray[i - 1] = array[i];
+			newArray[i] = array[i - 1];
+		}
+		return newArray;
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
+	
 	public static char[] bytesToHex(byte[] bytes) {
 		long start = System.nanoTime();
 	    char[] hexArray = "0123456789ABCDEF".toCharArray();
