@@ -40,8 +40,9 @@ public class ArrayUtility {
         StringBuilder b = new StringBuilder();
         for (int i = 0; ; i++) {
             b.append(String.valueOf(a[i]));
-            if (i == iMax)
+            if (i == iMax) {
                 return b.toString();
+            }
             b.append(delimiter);
         }
     }
