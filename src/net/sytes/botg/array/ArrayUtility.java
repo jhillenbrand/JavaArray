@@ -13,16 +13,39 @@ import java.util.List;
  */
 public class ArrayUtility {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		double[] ar = {1,5,3,6,8,0};
-		int inds[] = quicksort2(ar);
-		System.out.println(Arrays.toString(inds));
+	public static byte[] convertDoubleArrayToByteArray(double[] ar, int doublePrecision) {
+		byte[] byteArray = new byte[ar.length * doublePrecision / 8];
+		for (int a = 0; a < ar.length; a++) {
+			byte[] bytes = convertDoubleToBytes(ar[a], doublePrecision);
+			for (int b = 0; b < bytes.length; b++) {
+				byteArray[a * doublePrecision + b] = bytes[b];
+			}
+		}
+		return byteArray;
 	}
 	
+	public static byte[] convertDoubleToBytes(double d, int doublePrecision) {
+		byte[] bytes = new byte[doublePrecision / 8];
+		long lng = Double.doubleToLongBits(d);
+		for(int i = 0; i < bytes.length; i++) {
+			bytes[i] = (byte)((lng >> ((7 - i) * 8)) & 0xff);
+		}
+		return bytes;
+	}
+	
+	public static byte[] convertDoubleToBytes(double d, int size, double precision) {
+		double temp = d;
+		temp = temp * Math.pow(10, precision);
+		/*
+		for (int i = 0; i < precision; i++) {
+			temp *= 10;
+		}
+		*/
+	    int output = (int) temp;
+	    String strOut = String.format("%0" + size + "d", output);
+	    return strOut.getBytes();
+	}
+
 
 	/**
 	 * This method converts an object array to a string. The elements are divided by a delimiter. 
