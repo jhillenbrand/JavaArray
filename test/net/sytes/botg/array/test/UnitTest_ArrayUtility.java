@@ -1,0 +1,78 @@
+package net.sytes.botg.array.test;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
+import net.sytes.botg.array.ArrayUtility;
+
+public class UnitTest_ArrayUtility {
+
+	@Test
+	public void testNumberToByte() {
+		
+		//Number n = 0;
+		double n = 1020480.56485;
+		
+		byte[] bytes = ArrayUtility.convertDoubleToBytes2(n, 64);
+		//byte[] bytes = ArrayUtility.convertIntToBytes(n, 16);
+		System.out.println(Arrays.toString(bytes));
+		
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream("C:\\Users\\hillenbrand\\Downloads\\test1\\test1.bin");
+			
+			fos.write(bytes);
+			
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	@Test
+	public void testNumberArrayToByteFile() {
+		Number[] ns = {120.2, 2134123, -34, 12};
+		
+		
+	}
+	
+	
+	
+	@Test
+	public void testShortToByte() {
+		
+		Short n = 32767;
+		//double n = 1020480.56485;
+		
+		byte[] bytes = ArrayUtility.convertShortToBytes(n);
+		//byte[] bytes = ArrayUtility.convertIntToBytes(n, 16);
+		System.out.println(Arrays.toString(bytes));
+		
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream("C:\\Users\\hillenbrand\\Downloads\\test1\\test2.bin");
+			
+			fos.write(bytes);
+			
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+}

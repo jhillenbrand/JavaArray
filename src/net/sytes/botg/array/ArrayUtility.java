@@ -1,4 +1,6 @@
 package net.sytes.botg.array;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,10 +28,17 @@ public class ArrayUtility {
 	
 	public static byte[] convertNumberArrayToByteArray(Number[] ar, int doublePrecision) {
 		byte[] byteArray = new byte[ar.length * doublePrecision / 8];
-		for (int a = 0; a < ar.length; a++) {
+		int index = 0;
+		int numOfNumbers = ar.length;
+		for (int a = 0; a < numOfNumbers; a++) {
 			byte[] bytes = convertNumberToBytes(ar[a], doublePrecision);
-			for (int b = 0; b < bytes.length; b++) {
-				byteArray[a * doublePrecision + b] = bytes[b];
+			int numOfBytes = bytes.length;
+			//if (a == numOfNumbers - 1) {
+			//	System.out.println("DEBUG NOTE");
+			//}
+			for (int b = 0; b < numOfBytes; b++) {
+				index = a * doublePrecision / 8 + b;
+				byteArray[index] = bytes[b];
 			}
 		}
 		return byteArray;
@@ -51,7 +60,7 @@ public class ArrayUtility {
 	 * @return
 	 */
 	public static byte[] convertNumberToBytes(Number d, int doublePrecision) {
-		return convertDoubleToBytes(d.doubleValue(), doublePrecision);
+		return convertDoubleToBytes2(d.doubleValue(), doublePrecision);
 	}
 	
 	public static byte[] convertDoubleToBytes(double d, int doublePrecision) {
@@ -76,6 +85,49 @@ public class ArrayUtility {
 	    return strOut.getBytes();
 	}
 
+	/**
+	 * 
+	 * @param d
+	 * @param precision
+	 * @return
+	 */
+	public static byte[] convertDoubleToBytes2(double d, int precision) {
+		byte[] bytes = new byte[precision / 8];
+	    ByteBuffer.wrap(bytes).putDouble(d);
+	    return bytes;
+	}
+	
+	/**
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static double convertBytesToDouble(byte[] bytes) {
+	    return ByteBuffer.wrap(bytes).getDouble();
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static byte[] convertShortToBytes(short s) {
+		byte[] bytes = new byte[2];
+		ByteBuffer.wrap(bytes).putShort(s);
+		return bytes;
+	}
+		
+	/**
+	 * 
+	 * @param i
+	 * @param precision
+	 * @return
+	 */
+	public static byte[] convertIntegerToBytes(int i, int precision) {
+		BigInteger bigInt = BigInteger.valueOf(i);
+		return bigInt.toByteArray();
+	}
+	
 
 	/**
 	 * This method converts an object array to a string. The elements are divided by a delimiter. 
