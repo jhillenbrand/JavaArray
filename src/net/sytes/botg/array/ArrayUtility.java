@@ -24,6 +24,36 @@ public class ArrayUtility {
 		return byteArray;
 	}
 	
+	public static byte[] convertNumberArrayToByteArray(Number[] ar, int doublePrecision) {
+		byte[] byteArray = new byte[ar.length * doublePrecision / 8];
+		for (int a = 0; a < ar.length; a++) {
+			byte[] bytes = convertNumberToBytes(ar[a], doublePrecision);
+			for (int b = 0; b < bytes.length; b++) {
+				byteArray[a * doublePrecision + b] = bytes[b];
+			}
+		}
+		return byteArray;
+	}
+	
+	/**
+	 * method returns the Number in byte[], assuming 64bit double precision
+	 * @param d
+	 * @return
+	 */
+	public static byte[] convertNumberToBytes(Number d) {
+		return convertNumberToBytes(d.doubleValue(), 64);
+	}
+	
+	/**
+	 * method returns the Number in byte[], assuming <doublePrecision [int]>-bit precision
+	 * @param d
+	 * @param doublePrecision
+	 * @return
+	 */
+	public static byte[] convertNumberToBytes(Number d, int doublePrecision) {
+		return convertDoubleToBytes(d.doubleValue(), doublePrecision);
+	}
+	
 	public static byte[] convertDoubleToBytes(double d, int doublePrecision) {
 		byte[] bytes = new byte[doublePrecision / 8];
 		long lng = Double.doubleToLongBits(d);
