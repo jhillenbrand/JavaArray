@@ -11,6 +11,9 @@ import net.sytes.botg.array.ArrayUtility;
 
 public class UnitTest_ArrayUtility {
 
+	
+	private static final String FOLDER = "C:\\Users\\aeadmin\\Downloads\\test\\";
+	
 	@Test
 	public void testNumberToByte() {
 		
@@ -23,7 +26,7 @@ public class UnitTest_ArrayUtility {
 		
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream("C:\\Users\\hillenbrand\\Downloads\\test1\\test1.bin");
+			fos = new FileOutputStream(FOLDER + "test1.bin");
 			
 			fos.write(bytes);
 			
@@ -43,7 +46,24 @@ public class UnitTest_ArrayUtility {
 	public void testNumberArrayToByteFile() {
 		Number[] ns = {120.2, 2134123, -34, 12};
 		
-		
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(FOLDER + "test3.bin");
+			byte[] bytes = null;
+			for (Number n : ns) {
+				bytes = ArrayUtility.convertNumberToBytes(n);
+				fos.write(bytes);
+			}
+			
+			
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -60,7 +80,7 @@ public class UnitTest_ArrayUtility {
 		
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream("C:\\Users\\hillenbrand\\Downloads\\test1\\test2.bin");
+			fos = new FileOutputStream(FOLDER + "test2.bin");
 			
 			fos.write(bytes);
 			
