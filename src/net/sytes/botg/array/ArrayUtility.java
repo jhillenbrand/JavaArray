@@ -63,6 +63,12 @@ public class ArrayUtility {
 		return convertDoubleToBytes2(d.doubleValue(), doublePrecision);
 	}
 	
+	/**
+	 * 
+	 * @param d
+	 * @param doublePrecision in bits (e.g. 64); 
+	 * @return
+	 */
 	public static byte[] convertDoubleToBytes(double d, int doublePrecision) {
 		byte[] bytes = new byte[doublePrecision / 8];
 		long lng = Double.doubleToLongBits(d);
@@ -214,14 +220,34 @@ public class ArrayUtility {
 	    return hexChars;
 	}
 	
-	public static int[] bytesToInt(byte[] bytes, int numOfBytes) {
+	public static int[] bytesToInt(byte[] bytes, int precision) {
 		//long start = System.nanoTime();
-		int[] ints = new int[bytes.length / numOfBytes];
+		int[] ints = new int[bytes.length / precision];
 		for (int i = 0; i < ints.length; i++) {
-			ints[i] = getInt(bytes, numOfBytes * i);
+			ints[i] = getInt(bytes, precision * i);
 		}
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
 		return ints;
+	}
+	
+	public static double bytesToDouble(byte[] bytes) {
+		return ByteBuffer.wrap(bytes).getDouble();
+	}
+	
+	/**
+	 * assuming 64bit double precision a double array is returned based on element wise conversion of 8 byte of byteArray
+	 * @param byteArray
+	 * @return double[]
+	 */
+	public static double[] bytesToDoubleArray(byte[] byteArray) {
+		double[] doubleArray = new double[byteArray.length / 8]; // divided by 8, because 8 * 8 = 64 bit precision
+		byte[] bytes = null;		
+		for (int i = 0; i < doubleArray.length; i++) {
+			bytes = Arrays.copyOfRange(byteArray, i, i + 8 - 1);
+			doubleArray[i] = bytesToDouble(bytes);
+			i = i + 8 - 1;
+		}
+		return doubleArray;		
 	}
 	
 	private static int getInt(byte[] arr, int off) {
