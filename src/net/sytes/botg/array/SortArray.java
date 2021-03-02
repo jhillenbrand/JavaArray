@@ -1,6 +1,24 @@
 package net.sytes.botg.array;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 public class SortArray {
+	
+	public static void flip(double[] doubleArray) {
+		ArrayUtils.reverse(doubleArray);
+		return;
+	}
+	
+	public static void flip(int[] intArray) {
+		ArrayUtils.reverse(intArray);
+		return;
+	}
+	
+	public static void flip(long[] longArray) {
+		ArrayUtils.reverse(longArray);
+		return;
+	}
+	
 	public static double[] merge(final double[] ...arrays ) {
 	    int size = 0;
 	    for (double[] a: arrays) {

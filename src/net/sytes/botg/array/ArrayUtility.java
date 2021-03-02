@@ -230,7 +230,7 @@ public class ArrayUtility {
 		return ints;
 	}
 	
-	public static double bytesToDouble(byte[] bytes) {
+	public static double bytesArrayToDouble(byte[] bytes) {
 		return ByteBuffer.wrap(bytes).getDouble();
 	}
 	
@@ -239,13 +239,12 @@ public class ArrayUtility {
 	 * @param byteArray
 	 * @return double[]
 	 */
-	public static double[] bytesToDoubleArray(byte[] byteArray) {
+	public static double[] byteArrayToDoubleArray(byte[] byteArray) {
 		double[] doubleArray = new double[byteArray.length / 8]; // divided by 8, because 8 * 8 = 64 bit precision
 		byte[] bytes = null;		
 		for (int i = 0; i < doubleArray.length; i++) {
-			bytes = Arrays.copyOfRange(byteArray, i, i + 8 - 1);
-			doubleArray[i] = bytesToDouble(bytes);
-			i = i + 8 - 1;
+			bytes = Arrays.copyOfRange(byteArray, i * 8, (i + 1) * 8);
+			doubleArray[i] = bytesArrayToDouble(bytes);
 		}
 		return doubleArray;		
 	}
