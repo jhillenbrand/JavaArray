@@ -129,4 +129,30 @@ public class MathArray {
 		}
 		return ar;
 	}
+	
+	public static double scalarProd(double[] ar1, double[] ar2) {
+		if (!checkForEqualDimensions(ar1, ar2)){
+			
+		}
+		double scalar = 0.0;
+		for (int i = 0; i < ar1.length - 1; i++) {
+			scalar = scalar + ar1[i] * ar2[i];
+		}
+		return scalar;
+	}
+	
+	public static double scalarProd2(double[] ar1, double[] ar2) {
+		if (!checkForEqualDimensions(ar1, ar2)){
+			
+		}
+		double scalar = 0.0;
+		for (int i = 0; i < ar1.length - 1; i++) {
+			scalar = scalar + ar1[i] * ar2[i];
+		}
+		return scalar;
+	}
+	
+	private static boolean checkForEqualDimensions(double[] ar1, double[] ar2) {
+		return true;
+	}
 }

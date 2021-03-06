@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import net.sytes.botg.array.ArrayUtility;
+import net.sytes.botg.array.ConvertArray;
 
 public class UnitTest_ArrayUtility {
 
@@ -20,7 +20,7 @@ public class UnitTest_ArrayUtility {
 		//Number n = 0;
 		double n = 1020480.56485;
 		
-		byte[] bytes = ArrayUtility.convertDoubleToBytes2(n, 64);
+		byte[] bytes = ConvertArray.convertDoubleToBytes2(n, 64);
 		//byte[] bytes = ArrayUtility.convertIntToBytes(n, 16);
 		System.out.println(Arrays.toString(bytes));
 		
@@ -51,7 +51,7 @@ public class UnitTest_ArrayUtility {
 			fos = new FileOutputStream(FOLDER + "test3.bin");
 			byte[] bytes = null;
 			for (Number n : ns) {
-				bytes = ArrayUtility.convertNumberToBytes(n);
+				bytes = ConvertArray.convertNumberToBytes(n);
 				fos.write(bytes);
 			}
 			
@@ -74,7 +74,7 @@ public class UnitTest_ArrayUtility {
 		Short n = 32767;
 		//double n = 1020480.56485;
 		
-		byte[] bytes = ArrayUtility.convertShortToBytes(n);
+		byte[] bytes = ConvertArray.convertShortToBytes(n);
 		//byte[] bytes = ArrayUtility.convertIntToBytes(n, 16);
 		System.out.println(Arrays.toString(bytes));
 		

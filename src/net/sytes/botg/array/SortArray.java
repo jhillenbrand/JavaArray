@@ -1,8 +1,62 @@
 package net.sytes.botg.array;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 public class SortArray {
+
+	
+	public static void reverseByteArray(byte[] array) {
+		//long start = System.nanoTime();
+		int i = 0;
+		byte b;
+		int n = array.length;
+		for (i = 0; i < n / 2; i++) {
+			b = array[i];
+			array[i] = array[n - i - 1];
+			array[n - i - 1] = b;
+		}
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
+	
+	// DEBUGGING NOT WORKING DUE TO LIST IMPLEMENTATION
+	public static void reverseByteArray2(byte[] array) {
+		//long start = System.nanoTime();
+		List<byte[]> bL = Arrays.asList(array);
+		Collections.reverse(bL);
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
+
+	public static byte[] reverseByteArray3(byte[] array) {
+		//long start = System.nanoTime();
+		int i, j, n;
+		n = array.length;
+		j = n;
+		byte[] newArray = new byte[j];
+		for (i = 0; i < n; i++) {
+			newArray[j - 1] = array[i];
+			j = j - 1;
+		}
+		return newArray;
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
+	
+	public static byte[] switchOddToEvenBytes(byte[] array) {
+		//long start = System.nanoTime();
+		byte[] newArray = new byte[array.length];
+		if (array.length < 2) {
+			throw new RuntimeException("array must contain at least 2 elements");
+		}
+		for (int i = 1; i < array.length; i += 2) {
+			newArray[i - 1] = array[i];
+			newArray[i] = array[i - 1];
+		}
+		return newArray;
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
 	
 	public static void flip(double[] doubleArray) {
 		ArrayUtils.reverse(doubleArray);

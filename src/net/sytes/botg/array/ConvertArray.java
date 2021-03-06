@@ -13,7 +13,7 @@ import java.util.List;
  * @author jonas
  *
  */
-public class ArrayUtility {
+public class ConvertArray {
 	
 	public static byte[] convertDoubleArrayToByteArray(double[] ar, int doublePrecision) {
 		byte[] byteArray = new byte[ar.length * doublePrecision / 8];
@@ -158,55 +158,6 @@ public class ArrayUtility {
         }
     }
 	
-	public static void reverseByteArray(byte[] array) {
-		//long start = System.nanoTime();
-		int i = 0;
-		byte b;
-		int n = array.length;
-		for (i = 0; i < n / 2; i++) {
-			b = array[i];
-			array[i] = array[n - i - 1];
-			array[n - i - 1] = b;
-		}
-		//System.out.println(System.nanoTime() - start + " ns elapsed");
-	}
-	
-	// DEBUGGING NOT WORKING DUE TO LIST IMPLEMENTATION
-	public static void reverseByteArray2(byte[] array) {
-		//long start = System.nanoTime();
-		List<byte[]> bL = Arrays.asList(array);
-		Collections.reverse(bL);
-		//System.out.println(System.nanoTime() - start + " ns elapsed");
-	}
-
-	public static byte[] reverseByteArray3(byte[] array) {
-		//long start = System.nanoTime();
-		int i, j, n;
-		n = array.length;
-		j = n;
-		byte[] newArray = new byte[j];
-		for (i = 0; i < n; i++) {
-			newArray[j - 1] = array[i];
-			j = j - 1;
-		}
-		return newArray;
-		//System.out.println(System.nanoTime() - start + " ns elapsed");
-	}
-	
-	public static byte[] switchOddToEvenBytes(byte[] array) {
-		//long start = System.nanoTime();
-		byte[] newArray = new byte[array.length];
-		if (array.length < 2) {
-			throw new RuntimeException("array must contain at least 2 elements");
-		}
-		for (int i = 1; i < array.length; i += 2) {
-			newArray[i - 1] = array[i];
-			newArray[i] = array[i - 1];
-		}
-		return newArray;
-		//System.out.println(System.nanoTime() - start + " ns elapsed");
-	}
-	
 	public static char[] bytesToHex(byte[] bytes) {
 		long start = System.nanoTime();
 	    char[] hexArray = "0123456789ABCDEF".toCharArray();
@@ -252,22 +203,7 @@ public class ArrayUtility {
 	private static int getInt(byte[] arr, int off) {
 		return arr[off] << 8 & 0xFF00 | arr[off + 1] & 0xFF;
 	}
-	
-	/**
-	 * method returns true/false whether String str is contained in Array ar
-	 * @param ar
-	 * @param str
-	 * @return true/false
-	 */
-	public static boolean isStringInArray(String[] ar, String str) {
-		List<String> list = Arrays.asList(ar);
-		if (list.contains(str)) {
-			return true;
-		} else {
-			return false;
-		}
-	}	
-	
+		
 	public static double[] copyFromIntToDoubleArray(int[] intAr) {
 	    double[] doubleAr = new double[intAr.length];
 	    for(int i=0; i < intAr.length; i++) {
