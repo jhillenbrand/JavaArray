@@ -103,7 +103,12 @@ public class SortArray {
 		return ar;
 	}
 	
-	public static void quicksort(double[] ar) {
+	/**
+	 * subject to EPL 2.0 in /lic/LICENSE_VOGELLA_QUICKSORT.txt
+	 * @see <a href="https://www.vogella.com/tutorials/JavaAlgorithmsQuicksort/article.html">Link</a>
+	 * @param ar
+	 */
+	public static void quicksort(double[] ar) {		
         double[] numbers;
         int number;
 		// check for empty or null array
@@ -115,6 +120,12 @@ public class SortArray {
         quicksortRec(0, number - 1, numbers);
     }
 	
+	/**
+	 * subject to EPL 2.0 in /lic/LICENSE_VOGELLA_QUICKSORT.txt
+	 * @see <a href="https://www.vogella.com/tutorials/JavaAlgorithmsQuicksort/article.html">Link</a>
+	 * @param ar
+	 * @return
+	 */
 	public static int[] quicksort2(double[] ar) {
         double[] numbers;
         int[] inds = new int[ar.length];
