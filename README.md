@@ -1,6 +1,6 @@
 # JavaArray
 
-Java project containing collection classes with static methods to manipulate arrays
+Java project containing classes with static methods to manipulate arrays
 
 * [ConvertArray](src/net/sytes/botg/array/ConvertArray.java)
 * [MathArray](src/net/sytes/botg/array/MathArray.java)
@@ -11,4 +11,4 @@ Java project containing collection classes with static methods to manipulate arr
 ### Licenses used
 this Project: MIT
 
-other Projects used: EPL 2.0
+code used within Project is subject to EPL 2.0
