@@ -10,4 +10,5 @@ Java project containing collection classes with static methods to manipulate arr
 
 ### Licenses used
 this Project: MIT
+
 other Projects used: EPL 2.0
