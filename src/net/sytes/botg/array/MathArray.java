@@ -2,6 +2,7 @@ package net.sytes.botg.array;
 
 import java.util.Arrays;
 
+
 public class MathArray {
 
 	public static double rms(double[] ar) {
@@ -33,6 +34,91 @@ public class MathArray {
 		    med = ar[ar.length / 2];
 		}
 		return med;
+	}
+	
+	public static double mean (double[] data) {
+		int size = data.length;
+		double mean = 0;
+		for (double d : data) {
+			mean= mean + d;
+		}
+		return (mean/size);
+	}
+	
+	public static double variance (double [] data) {
+		int size = data.length;
+		double mean = MathArray.mean(data);
+		double variance = 0;
+		for (double d : data) {
+			variance= variance + Math.pow(d-mean,2);
+		}
+		return (variance/size);
+	}
+	
+	public static double varianceCorrected (double [] data) {
+		int size = data.length;
+		double mean = MathArray.mean(data);
+		double variance = 0;
+		for (double d : data) {
+			variance= variance + Math.pow(d-mean,2);
+		}
+		return (variance/(size-1));
+	}
+	
+	public static double skewness(double[] data) {
+		/***
+		 * estimates the skewness through its moment - biased estimator
+		 */
+		int size = data.length;
+		double mean = MathArray.mean(data);
+		double var = MathArray.variance(data);
+		double [] newData = new double [size];
+		for (int i =0; i> size; i++) {
+			newData[i] = Math.pow(((data[i] - mean)/var),3);
+		}
+		double skewness = MathArray.mean(newData);
+		return skewness;
+	}
+	
+	public static double skewnessUnbiased(double[] data) {
+		/***
+		 * estimates the skewness as unbiased estimator
+		 */
+		int size = data.length;
+		double mean = MathArray.mean(data);
+		double var = MathArray.variance(data);
+		double [] newData = new double [size];
+		for (int i =0; i> size; i++) {
+			newData[i] = Math.pow(((data[i] - mean)/var),3);
+		}
+		double sum = MathArray.sum(newData);
+		double skewness = (size/((size-1)*(size-2)))*sum;
+		return skewness;
+	}
+	
+	
+	public static double kurtosis (double[] data) {
+		/***
+		 * estimates the kurtosis through its moment 
+		 */
+		int size = data.length;
+		double mean = MathArray.mean(data);
+		double var = MathArray.variance(data);
+		double [] newData = new double [size];
+		for (int i =0; i> size; i++) {
+			newData[i] = Math.pow(((data[i] - mean)/var),4);
+		}
+		double kurtosis = MathArray.mean(newData);
+		return kurtosis;
+	}
+	
+	public static double[] power(double[] data, int power) {
+		int size = data.length;
+		double[] newdata = new double[size];
+		for (int i = 0; i>size;i++) {
+			newdata[i] = Math.pow(data[i], power);
+		}
+		return newdata;
 	}
 	
 	public static double max(double ar[]) {
