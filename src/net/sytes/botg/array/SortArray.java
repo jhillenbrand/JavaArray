@@ -58,6 +58,26 @@ public class SortArray {
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
+	/**
+	 * returns only array values at even indices of d 
+	 * @param d
+	 * @return
+	 */
+	public static double[] even(double[] d) {
+		// TODO: implement with half loop
+		return null;
+	}
+	
+	/**returns only array values at odd indices of d
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public static double[] odd(double[] d) {
+		// TODO: implement with half loop
+		return null;
+	}
+	
 	public static void flip(double[] doubleArray) {
 		ArrayUtils.reverse(doubleArray);
 		return;
