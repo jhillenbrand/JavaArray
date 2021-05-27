@@ -4,6 +4,31 @@ import java.util.Arrays;
 
 public class MathArray {
 
+	/**
+	 * If a number is divisible by 2 then it has its least significant bit (LSB) set to 0,
+	 * 	if divisible by 4 then two LSB’s set to 0, if by 8 then three LSB’s set to 0 and so on.
+	 * 	Keeping this in mind, a number n is divisible by 2m if (n & ((1 << m) – 1)) is equal to 0 else not.
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static boolean isDivByPow(int n, int m) {
+		if ((n & ((1 << m) - 1)) == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static int closestExponentForBase2(int n) {
+		int m = (int) log2(n);		
+		return m;
+	}
+	
+	public static double log2(double d) {
+		return Math.log(d) / Math.log(2);
+	}
+	
 	public static double rms(double[] ar) {
 		double rmsSum = 0;
 		for (double d : ar) {
