@@ -12,6 +12,7 @@ public class SearchArray {
 	 * @return true/false
 	 */
 	public static boolean isStringInArray(String[] ar, String str) {
+		// TODO this is slow, because contains also iterates over list
 		List<String> list = Arrays.asList(ar);
 		if (list.contains(str)) {
 			return true;

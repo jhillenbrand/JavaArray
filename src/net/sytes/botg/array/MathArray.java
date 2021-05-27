@@ -2,7 +2,6 @@ package net.sytes.botg.array;
 
 import java.util.Arrays;
 
-
 public class MathArray {
 
 	public static double rms(double[] ar) {
