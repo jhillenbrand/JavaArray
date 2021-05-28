@@ -64,8 +64,12 @@ public class SortArray {
 	 * @return
 	 */
 	public static double[] even(double[] d) {
-		// TODO: implement with half loop
-		return null;
+		int n = d.length / 2 + 1;
+		double[] e = new double[n];
+		for (int k = 0; k < n; k++) {
+            e[k] = d[2*k];
+        }
+		return e;
 	}
 	
 	/**returns only array values at odd indices of d
@@ -74,8 +78,12 @@ public class SortArray {
 	 * @return
 	 */
 	public static double[] odd(double[] d) {
-		// TODO: implement with half loop
-		return null;
+		int n = d.length / 2;
+		double[] o = new double[n];
+		for (int k = 0; k < n; k++) {
+            o[k] = d[2 * k + 1];
+        }
+		return o;
 	}
 	
 	public static void flip(double[] doubleArray) {
