@@ -1,5 +1,7 @@
 package net.sytes.botg.array;
 
+import java.lang.reflect.Array;
+
 /**
  * 
  */
@@ -9,6 +11,27 @@ package net.sytes.botg.array;
  *
  */
 public class ConvertArray {
+	
+	public static byte[] concat(byte[] b1, byte[] b2) {
+		int len1 = b1.length;
+	    int len2 = b2.length;
+	    byte[] bn = new byte[len1 + len2];
+	    System.arraycopy(b1, 0, bn, 0, len1);
+	    System.arraycopy(b2, 0, bn, len1, len2);	
+		return bn;
+	}
+	
+	public static <T> T[] concat(T[] a, T[] b) {
+	    int aLen = a.length;
+	    int bLen = b.length;
+
+	    @SuppressWarnings("unchecked")
+	    T[] c = (T[]) Array.newInstance(a.getClass().getComponentType(), aLen + bLen);
+	    System.arraycopy(a, 0, c, 0, aLen);
+	    System.arraycopy(b, 0, c, aLen, bLen);
+
+	    return c;
+	}
 	
 	/**
 	 * This method converts an object array to a string. The elements are divided by a delimiter. 
