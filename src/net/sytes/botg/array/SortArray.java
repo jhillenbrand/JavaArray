@@ -1,5 +1,6 @@
 package net.sytes.botg.array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +8,26 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class SortArray {
+	
+	public static <T> T[] removeEmpty(T[] ar) {
+		List<T> list = new ArrayList<T>();
+		for (int a = 0; a < ar.length; a++) {
+			if (ar[a] != null) {
+				list.add(ar[a]);
+			}
+		}
+		return list.toArray(Arrays.copyOf(ar, list.size()));
+	}	
 
+	public static <T> T[] removeWith(T[] ar, T removeContent) {
+		List<T> list = new ArrayList<T>();
+		for (int a = 0; a < ar.length; a++) {
+			if (!ar[a].equals(removeContent)) {
+				list.add(ar[a]);
+			}
+		}
+		return list.toArray(Arrays.copyOf(ar, list.size()));
+	}
 	
 	public static void reverseByteArray(byte[] array) {
 		//long start = System.nanoTime();

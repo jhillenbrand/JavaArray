@@ -1,4 +1,4 @@
-package testing.MathArray;
+package MathArray;
 
 import java.util.Arrays;
 
