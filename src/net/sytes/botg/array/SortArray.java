@@ -64,6 +64,11 @@ public class SortArray {
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
+	/**
+	 * faster than switchOddToEvenBytes2
+	 * @param array
+	 * @return
+	 */
 	public static byte[] switchOddToEvenBytes(byte[] array) {
 		//long start = System.nanoTime();
 		byte[] newArray = new byte[array.length];
@@ -76,6 +81,20 @@ public class SortArray {
 		}
 		return newArray;
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
+	
+	public static void switchOddToEvenBytes2(byte[] array) {
+		if (array.length < 2) {
+			throw new RuntimeException("array must contain at least 2 elements");
+		}
+		byte b1 = 0;
+		byte b2 = 0;
+		for (int i = 1; i < array.length; i += 2) {
+			b1 = array[i];
+			b2 = array[i - 1];
+			array[i - 1] = b1;
+			array[i] = b2;
+		}
 	}
 	
 	/**
