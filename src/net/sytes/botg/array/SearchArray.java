@@ -125,7 +125,22 @@ public class SearchArray {
 		} else {
 			return false;
 		}
-	}			
+	}
+	
+	/**
+	 * method returns true/false whether any of the array elements ar are contained in String s
+	 * @param s
+	 * @param ar
+	 * @return 
+	 */
+	public static boolean containsStringArrayElement(String s, String[] ar) {
+		for (String a : ar) {
+			if (s.contains(a)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
     public static int countStringOccurencesInArray(String[] ar, String s, boolean caseSensitive) {
     	int count = -1;
