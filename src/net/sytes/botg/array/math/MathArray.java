@@ -9,6 +9,65 @@ public class MathArray {
 
 	/**
 	 * ---------------------------------------------------------------------------
+	 * SECTION - WINDOWING
+	 */
+	
+	/**
+	 * separates the given double array into windows of size windowSize
+	 * <br>if dropUneven is true, then the remaining last ar.length % windowSize elements are dropped
+	 * @param ar
+	 * @param windowSize
+	 * @param dropUneven
+	 * @return
+	 */
+	public static double[][] fixedWindows(double[] ar, int windowSize, boolean dropUneven){
+		if (ar == null) {
+			return null;
+		}
+		int win = 0;
+		int rem = 0;
+		if (dropUneven) {
+			win = ar.length / windowSize;
+		} else {
+			win = ar.length / windowSize;
+			rem =  ar.length % windowSize;
+			if (rem > 0) {
+				++win;
+			}
+		}
+		double[][] wAr = new double[win][];
+		for (int i = 0; i < win; i++) {
+			double[] dAr = null;
+			if (i == win - 1) {
+				if (dropUneven) {
+					dAr = new double[windowSize];
+					System.arraycopy(ar, i * windowSize, dAr, 0, windowSize);
+				} else {
+					if (rem == 0) {
+						dAr = new double[windowSize];
+						System.arraycopy(ar, i * windowSize, dAr, 0, windowSize);
+					} else {
+						dAr = new double[rem];
+						System.arraycopy(ar, i * windowSize, dAr, 0, rem);
+					}
+				}
+			} else {
+				dAr = new double[windowSize];
+				System.arraycopy(ar, i * windowSize, dAr, 0, windowSize);
+			}
+			wAr[i] = dAr;
+		}
+		return wAr;
+	}
+	
+	/**
+	 * ENDSECTION - WINDOWING
+	 * ----------------------------------------------------------------------------
+	 */
+	
+	
+	/**
+	 * ---------------------------------------------------------------------------
 	 * SECTION - SIGNAL CORRECTIONS
 	 */
 	
@@ -367,8 +426,10 @@ public class MathArray {
 	 * @param ar
 	 * @return
 	 */
-	public static double max(double ar[]) {
-		double maxVal = 0;
+	public static double max(double[] ar) {
+		checkForNull(ar);
+		checkForEmpty(ar);
+		double maxVal = ar[0];
 		for(double d : ar) {
 			if(maxVal > d) {
 				// do nothing
@@ -384,8 +445,10 @@ public class MathArray {
 	 * @param ar
 	 * @return
 	 */
-	public static double min(double ar[]) {
-		double minVal = 0;
+	public static double min(double[] ar) {
+		checkForNull(ar);
+		checkForEmpty(ar);
+		double minVal = ar[0];
 		for(double d : ar) {
 			if(minVal > d) {
 				minVal = d;
@@ -395,6 +458,31 @@ public class MathArray {
 		}
 		return minVal;
 	}
+	
+	/**
+	 * returns the span value of {@code ar}
+	 *<br>Example:
+	 *<br>span({1.0, 2.5, 3.4}) --> 3.4 - 1.0 = 2.4 
+	 * @param ar
+	 * @return
+	 */
+	public static double span(double[] ar) {
+		double maxVal = ar[0];
+		double minVal = ar[0];
+		for(double d : ar) {
+			if(maxVal > d) {
+				// do nothing
+			} else {
+				maxVal = d;
+			}
+			if(minVal > d) {
+				minVal = d;
+			} else {
+				// do nothing
+			}
+		}
+		return maxVal - minVal;
+	}
 		
 	/**
 	 * computes the sum product of {@code ar1} with {@code ar2}
@@ -402,7 +490,7 @@ public class MathArray {
 	 * @param ar2
 	 * @return
 	 */
-	public static double sumprod(double ar1[], double ar2[]) {
+	public static double sumprod(double[] ar1, double[] ar2) {
 		checkForEqualDimensions(ar1, ar2);
 		double sumprod = 0;
 		for(int i = 0; i < ar1.length; i++) {
@@ -417,7 +505,7 @@ public class MathArray {
 	 * @param k
 	 * @return
 	 */
-	public static double[] max(double ar[], int k) {
+	public static double[] max(double[] ar, int k) {
 		double[] maxVals = new double[k];
 		Arrays.sort(ar);
 		int kk = 0;
@@ -437,7 +525,7 @@ public class MathArray {
 	 * @param k
 	 * @return
 	 */
-	public static int[] maxInd(double ar[], int k) {
+	public static int[] maxInd(double[] ar, int k) {
 		int[] sortInds = SortArray.quicksort2(ar);
 		int[] maxInds = new int[k];
 		int kk = 0;
@@ -655,6 +743,18 @@ public class MathArray {
 	private static void checkForFirstSmallerSecond(double d1, double d2) {
 		if (d1 >= d2) {
 			throw new IllegalArgumentException("d1[" + d1 + "] must be smaller than d2[" + d2 + "]");
+		}
+	}
+	
+	private static void checkForNull(double[] ar) {
+		if (ar == null) {
+			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
+	private static void checkForEmpty(double[] ar) {
+		if (ar.length == 0) {
+			throw new IllegalArgumentException("ar must not be empty");
 		}
 	}
 }

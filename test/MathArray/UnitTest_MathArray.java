@@ -2,6 +2,7 @@ package MathArray;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.Test;
@@ -120,5 +121,36 @@ public class UnitTest_MathArray {
 		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
 		
 		assertEquals(MathArray.isStrictMonotone(ar, false), true);
+	}
+	
+	@Test
+	public void test015() {
+		
+		int i = 3;
+		int j = 2;
+		
+		System.out.println("" + (i / j));
+	}
+	
+	@Test
+	public void test016() {
+		
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
+		
+		double[][] wAr = MathArray.fixedWindows(ar, 2, true);
+		
+		System.out.println(Arrays.deepToString(wAr));
+		
+	}
+	
+	@Test
+	public void test017() {
+		
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
+		
+		double[][] wAr = MathArray.fixedWindows(ar, 2, false);
+		
+		System.out.println(Arrays.deepToString(wAr));
+		
 	}
 }

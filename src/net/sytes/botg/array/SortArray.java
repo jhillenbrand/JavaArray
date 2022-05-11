@@ -125,18 +125,51 @@ public class SortArray {
 		return o;
 	}
 	
+	/**
+	 * flips the passed doubleArray
+	 * <br>last element is new first element, and so on
+	 * <br>Example:
+	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * @param doubleArray
+	 */
 	public static void flip(double[] doubleArray) {
 		ArrayUtils.reverse(doubleArray);
 		return;
 	}
 	
+	/**
+	 * flips the passed intArray
+	 * <br>last element is new first element, and so on
+	 * <br>Example:
+	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * @param intArray
+	 */
 	public static void flip(int[] intArray) {
 		ArrayUtils.reverse(intArray);
 		return;
 	}
 	
+	/**
+	 * flips the passed longArray
+	 * <br>last element is new first element, and so on
+	 * <br>Example:
+	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * @param longArray
+	 */
 	public static void flip(long[] longArray) {
 		ArrayUtils.reverse(longArray);
+		return;
+	}
+	
+	/**
+	 * flips the passed shortArray
+	 * <br>last element is new first element, and so on
+	 * <br>Example:
+	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * @param shortArray
+	 */
+	public static void flip(short[] shortArray) {
+		ArrayUtils.reverse(shortArray);
 		return;
 	}
 	
