@@ -89,7 +89,7 @@ public class ConvertArray {
 	 * @param objAr
 	 * @return
 	 */
-	public static double[] objectToDouble(Object[] objAr) {
+	public static double[] toDouble(Object[] objAr) {
 		double[] doubleAr = new double[objAr.length];
 		for (int d = 0; d < doubleAr.length; d++) {
 			doubleAr[d] = (double) objAr[d];
@@ -102,7 +102,7 @@ public class ConvertArray {
 	 * @param objAr
 	 * @return
 	 */
-	public static double[] objectToDouble2(Object[] objAr) {
+	public static double[] toDouble2(Object[] objAr) {
 		return Arrays.stream(objAr).mapToDouble(num -> (double) num).toArray();
 	}
 	
@@ -111,7 +111,7 @@ public class ConvertArray {
 	 * @param intAr
 	 * @return
 	 */
-	public static double[] intToDouble(int[] intAr) {
+	public static double[] toDouble(int[] intAr) {
 	    double[] doubleAr = new double[intAr.length];
 	    for(int i=0; i < intAr.length; i++) {
 	    	doubleAr[i] = intAr[i];
@@ -330,6 +330,19 @@ public class ConvertArray {
         for (int i = 0; i < array.length; i++) {
             final Double b = array[i];
             result[i] = (b == null ? valueForNull : b.doubleValue());
+        }
+        return result;
+    }
+    
+    public static Double[] wrap(final double[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Double[] result = new Double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
         }
         return result;
     }

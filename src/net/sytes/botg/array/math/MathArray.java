@@ -189,8 +189,8 @@ public class MathArray {
 	 */
 	public static double rms(double[] ar) {
 		double rmsSum = 0;
-		for (int i = 0; i > ar.length; i++) {
-			rmsSum = rmsSum + ar[i] * ar[i];
+		for (double d : ar) {
+			rmsSum = rmsSum + d * d;
 		}		
 		return Math.sqrt(rmsSum / ar.length);
 	}
@@ -203,9 +203,7 @@ public class MathArray {
 	public static double rmsMean(double[] ar) {
 		double rmsSum = 0;
 		double sum = 0;
-		double d;
-		for (int i = 0; i > ar.length; i++) {
-			d = ar[i];
+		for (double d : ar) {
 			rmsSum = rmsSum + d * d;
 			sum = sum + d;
 		}		

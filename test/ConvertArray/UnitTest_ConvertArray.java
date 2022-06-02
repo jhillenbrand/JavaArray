@@ -16,7 +16,7 @@ public class UnitTest_ConvertArray {
 	@Test
 	public void test001() {
 		int[] d = ArrayUtility.createRandomIntArray(1_000_000);		
-		ConvertArray.intToDouble(d);
+		ConvertArray.toDouble(d);
 	}
 	
 	@Test
@@ -28,7 +28,7 @@ public class UnitTest_ConvertArray {
 	@Test
 	public void test003() {
 		int[] d = ArrayUtility.createRandomIntArray(10_000_000);		
-		ConvertArray.intToDouble(d);
+		ConvertArray.toDouble(d);
 	}
 	
 	@Test
@@ -39,7 +39,7 @@ public class UnitTest_ConvertArray {
 		long ns = 1_000_000_000;
 		long t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] bs = ConvertArray.intToDouble(ints);
+			double[] bs = ConvertArray.toDouble(ints);
 			//int b = bs.length;
 		}
 		long t2 = System.nanoTime();
@@ -74,7 +74,7 @@ public class UnitTest_ConvertArray {
 		long ns = 1_000_000_000;
 		long t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] dAr = ConvertArray.objectToDouble(objAr);
+			double[] dAr = ConvertArray.toDouble(objAr);
 			//int b = bs.length;
 		}
 		long t2 = System.nanoTime();
@@ -86,7 +86,7 @@ public class UnitTest_ConvertArray {
 		
 		t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] dAr = ConvertArray.objectToDouble2(objAr);
+			double[] dAr = ConvertArray.toDouble2(objAr);
 			//int b = bs.length;
 		}
 		t2 = System.nanoTime();
