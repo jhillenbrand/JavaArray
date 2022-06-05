@@ -2,7 +2,6 @@ package net.sytes.botg.array;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.stream.LongStream;
 
 /**
  * the unwrapping code is taken from org.apache.commons.lang3.ArrayUtils
