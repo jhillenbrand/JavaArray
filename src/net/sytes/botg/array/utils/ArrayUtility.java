@@ -25,7 +25,7 @@ public class ArrayUtility {
 		}
 	}
 	
-	public static double[] createRandomArray(long size) {
+	public static double[] createRandomDoubleArray(long size) {
 		double[] data;
 		if (size < BETTER_OF_AS_STREAM_SIZE && size < Integer.MAX_VALUE) {
 			data = new double[(int) size];

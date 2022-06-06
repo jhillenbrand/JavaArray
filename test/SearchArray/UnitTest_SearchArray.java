@@ -10,8 +10,8 @@ import net.sytes.botg.array.utils.ArrayUtility;
 public class UnitTest_SearchArray {
 
 	double[] ar = {100, Double.NaN, 129812.9, 120.2174914, Double.NaN};
-	double[] ar1 = ArrayUtility.createRandomArray(1000);
-	double[] ar2 = ArrayUtility.createRandomArray(998);
+	double[] ar1 = ArrayUtility.createRandomDoubleArray(1000);
+	double[] ar2 = ArrayUtility.createRandomDoubleArray(998);
 	
 	@Test
 	public void test01() {

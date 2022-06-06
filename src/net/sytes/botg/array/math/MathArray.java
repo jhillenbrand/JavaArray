@@ -211,11 +211,25 @@ public class MathArray {
 	}
 	
 	/**
-	 * sum of @code ar
+	 * sum of @code ar	 * 
+	 * <br>is way faster than sum2
 	 * @param ar
 	 * @return
 	 */
 	public static double sum(double[] ar) {
+		double sum = 0;
+		for(double d : ar) {
+			sum = sum + d;
+		}
+		return sum;
+	}
+	
+	/**
+	 * returns the sum of Object primitive Double[]
+	 * @param ar
+	 * @return
+	 */
+	public static double sum(Double[] ar) {
 		double sum = 0;
 		for(double d : ar) {
 			sum = sum + d;
@@ -293,6 +307,15 @@ public class MathArray {
 	 * @return double
 	 */
 	public static double mean(double[] data) {
+		return sum(data) / data.length;
+	}
+	
+	/**
+	 * computes the mean value of the given {@code data} as Object Primitives Double[]
+	 * @param data
+	 * @return
+	 */
+	public static double mean(Double[] data) {
 		return sum(data) / data.length;
 	}
 	

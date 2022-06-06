@@ -21,7 +21,7 @@ public class UnitTest_ArrayUtils {
 	@Test
 	public void test01() {
 		
-		ArrayUtility.createRandomArray(SIZE);
+		ArrayUtility.createRandomDoubleArray(SIZE);
 		
 	}
 	

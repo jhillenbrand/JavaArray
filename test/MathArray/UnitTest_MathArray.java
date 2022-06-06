@@ -27,7 +27,7 @@ public class UnitTest_MathArray {
 	
 	@Test
 	public void test02() {
-		double[] data = ArrayUtility.createRandomArray(10000);
+		double[] data = ArrayUtility.createRandomDoubleArray(10000);
 		
 	}
 	
@@ -151,6 +151,40 @@ public class UnitTest_MathArray {
 		double[][] wAr = MathArray.fixedWindows(ar, 2, false);
 		
 		System.out.println(Arrays.deepToString(wAr));
+		
+	}
+	
+	@Test
+	public void test018() {
+		int n = 1_000_000;
+		
+		double[] ar1 = ArrayUtility.createRandomDoubleArray(1_000);
+		
+		long st = System.nanoTime();
+		double s = 0;
+		for (int i = 0; i < n; i++) {
+			s = MathArray.sum(ar1);
+		}
+		long et = System.nanoTime();
+		System.out.println("Sum: " + s);
+		
+		double el = et - st;
+		double sp = el / n; 
+		
+		System.out.println("Sum -> Sampling Period per Summation [ns]: " + sp);
+		
+		st = System.nanoTime();
+		
+		for (int i = 0; i < n; i++) {
+			s = MathArray.sum2(ar1);
+		}
+		et = System.nanoTime();
+		System.out.println("Sum: " + s);
+		
+		el = et - st;
+		sp = el / n; 
+		
+		System.out.println("Sum2 -> Sampling Period per Summation [ns]: " + sp);
 		
 	}
 }
