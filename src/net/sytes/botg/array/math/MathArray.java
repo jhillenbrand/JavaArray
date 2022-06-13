@@ -613,6 +613,38 @@ public class MathArray {
 	}
 	
 	/**
+	 * element wise addition of array values
+	 * @param ar1
+	 * @param ar2
+	 * @return
+	 */
+	public static double[] plus(double[] ar1, double[] ar2){
+		checkForEqualDimensions(ar1, ar2);
+		int L = ar1.length;
+		double[] ar3 = new double[L];
+		for (int i = 0; i < L; i++) {
+			ar3[i] = ar1[i] + ar2[i];
+		}
+		return ar3;
+	}
+	
+	/**
+	 * element wise subtraction of array values
+	 * @param ar1
+	 * @param ar2
+	 * @return
+	 */
+	public static double[] minus(double[] ar1, double[] ar2){
+		checkForEqualDimensions(ar1, ar2);
+		int L = ar1.length;
+		double[] ar3 = new double[L];
+		for (int i = 0; i < L; i++) {
+			ar3[i] = ar1[i] - ar2[i];
+		}
+		return ar3;
+	}
+	
+	/**
 	 * checks if the {@code ar} is strictly monotone increasing or decreasing
 	 * @param ar
 	 * @param increasing
