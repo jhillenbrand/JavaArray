@@ -2,8 +2,8 @@ package ConvertArray;
 
 import org.junit.Test;
 
+import net.sytes.botg.array.ArrayUtility;
 import net.sytes.botg.array.ConvertArray;
-import net.sytes.botg.array.utils.ArrayUtility;
 
 public class UnitTest_ConvertArray {
 

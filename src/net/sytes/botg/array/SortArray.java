@@ -9,6 +9,11 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class SortArray {
 	
+	// Suppress default constructor for noninstantiability
+	private SortArray() {
+		throw new AssertionError();
+	}
+	
 	public static <T> T[] removeEmpty(T[] ar) {
 		List<T> list = new ArrayList<T>();
 		for (int a = 0; a < ar.length; a++) {

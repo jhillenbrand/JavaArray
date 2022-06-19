@@ -14,7 +14,7 @@ package net.sytes.botg.array.math;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public class LinearRegression {
+public class LinRegr {
 	
 	private final double intercept, slope;
     private final double r2;
@@ -27,7 +27,7 @@ public class LinearRegression {
      * @param  y the corresponding values of the response variable
      * @throws IllegalArgumentException if the lengths of the two arrays are not equal
      */
-    public LinearRegression(double[] x, double[] y) {
+    public LinRegr(double[] x, double[] y) {
         if (x.length != y.length) {
             throw new IllegalArgumentException("array lengths are not equal");
         }
@@ -125,6 +125,19 @@ public class LinearRegression {
      */
     public double predict(double x) {
         return this.slope * x + this.intercept;
+    }
+    
+    /**
+     * returns the regression result for input {@code x}.
+     * @param x
+     * @return
+     */
+    public double[] predict(double[] x) {
+    	double[] y = new double[x.length];
+    	for (int i = 0; i < x.length; i++) {
+    		y[i] = this.predict(x[i]);
+    	}
+    	return y;
     }
 
    /**

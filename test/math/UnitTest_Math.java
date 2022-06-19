@@ -1,4 +1,4 @@
-package MathArray;
+package math;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,10 +8,11 @@ import java.util.Random;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import net.sytes.botg.array.math.MathArray;
-import net.sytes.botg.array.utils.ArrayUtility;
+import net.sytes.botg.array.ArrayUtility;
+import net.sytes.botg.array.math.Vec2Mat;
+import net.sytes.botg.array.math.Vec2Scalar;
 
-public class UnitTest_MathArray {
+public class UnitTest_Math {
 
 	private double[] ar1 = {12.32, 231234.0, 123123.023, 123123.09, 123, 1231239, 123123.0213, 12356.089, 978997.0324};
 	private double[] ar2 = new Random().doubles(1_000_000).toArray();
@@ -19,9 +20,9 @@ public class UnitTest_MathArray {
 	@Test
 	public void test01() {
 		
-		assertEquals(MathArray.closestExponentForBase2(1024), 10);
+		assertEquals(ArrayUtility.closestExponentForBase2(1024), 10);
 		
-		assertEquals(MathArray.closestExponentForBase2(2047), 10);
+		assertEquals(ArrayUtility.closestExponentForBase2(2047), 10);
 		
 	}
 	
@@ -34,13 +35,13 @@ public class UnitTest_MathArray {
 	@Test
 	public void test03() {
 		//System.out.println(MathArray.sum2(ar2));
-		MathArray.sum2(ar2);
+		Vec2Scalar.sum2(ar2);
 	}
 	
 	@Test
 	public void test04() {
 		//System.out.println(MathArray.sum(ar2));
-		MathArray.sum(ar2);
+		Vec2Scalar.sum(ar2);
 	}
 	
 	@Test
@@ -48,7 +49,7 @@ public class UnitTest_MathArray {
 	public void test05() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isMonotone(ar, true), true);
+		assertEquals(ArrayUtility.isMonotone(ar, true), true);
 	}
 	
 	@Test
@@ -56,7 +57,7 @@ public class UnitTest_MathArray {
 	public void test06() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isMonotone(ar, false), false);
+		assertEquals(ArrayUtility.isMonotone(ar, false), false);
 	}
 	
 	@Test
@@ -64,7 +65,7 @@ public class UnitTest_MathArray {
 	public void test07() {
 		double[] ar = {1.0, 1.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isMonotone(ar, true), true);
+		assertEquals(ArrayUtility.isMonotone(ar, true), true);
 	}
 	
 	@Test
@@ -72,7 +73,7 @@ public class UnitTest_MathArray {
 	public void test08() {
 		double[] ar = {1.0, 0.99, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isMonotone(ar, true), false);
+		assertEquals(ArrayUtility.isMonotone(ar, true), false);
 	}
 	
 	@Test
@@ -80,7 +81,7 @@ public class UnitTest_MathArray {
 	public void test09() {
 		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
 		
-		assertEquals(MathArray.isMonotone(ar, false), true);
+		assertEquals(ArrayUtility.isMonotone(ar, false), true);
 	}
 	
 	@Test
@@ -88,7 +89,7 @@ public class UnitTest_MathArray {
 	public void test10() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isStrictMonotone(ar, true), true);
+		assertEquals(ArrayUtility.isStrictMonotone(ar, true), true);
 	}
 	
 	@Test
@@ -96,7 +97,7 @@ public class UnitTest_MathArray {
 	public void test11() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isStrictMonotone(ar, false), false);
+		assertEquals(ArrayUtility.isStrictMonotone(ar, false), false);
 	}
 	
 	@Test
@@ -104,7 +105,7 @@ public class UnitTest_MathArray {
 	public void test12() {
 		double[] ar = {1.0, 1.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isStrictMonotone(ar, true), false);
+		assertEquals(ArrayUtility.isStrictMonotone(ar, true), false);
 	}
 	
 	@Test
@@ -112,7 +113,7 @@ public class UnitTest_MathArray {
 	public void test13() {
 		double[] ar = {1.0, 0.99, 3.0, 4.0, 4.1};
 		
-		assertEquals(MathArray.isStrictMonotone(ar, true), false);
+		assertEquals(ArrayUtility.isStrictMonotone(ar, true), false);
 	}
 	
 	@Test
@@ -120,7 +121,7 @@ public class UnitTest_MathArray {
 	public void test14() {
 		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
 		
-		assertEquals(MathArray.isStrictMonotone(ar, false), true);
+		assertEquals(ArrayUtility.isStrictMonotone(ar, false), true);
 	}
 	
 	@Test
@@ -137,7 +138,7 @@ public class UnitTest_MathArray {
 		
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
 		
-		double[][] wAr = MathArray.fixedWindows(ar, 2, true);
+		double[][] wAr = Vec2Mat.fixedWindows(ar, 2, true);
 		
 		System.out.println(Arrays.deepToString(wAr));
 		
@@ -148,7 +149,7 @@ public class UnitTest_MathArray {
 		
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
 		
-		double[][] wAr = MathArray.fixedWindows(ar, 2, false);
+		double[][] wAr = Vec2Mat.fixedWindows(ar, 2, false);
 		
 		System.out.println(Arrays.deepToString(wAr));
 		
@@ -163,7 +164,7 @@ public class UnitTest_MathArray {
 		long st = System.nanoTime();
 		double s = 0;
 		for (int i = 0; i < n; i++) {
-			s = MathArray.sum(ar1);
+			s = Vec2Scalar.sum(ar1);
 		}
 		long et = System.nanoTime();
 		System.out.println("Sum: " + s);
@@ -176,7 +177,7 @@ public class UnitTest_MathArray {
 		st = System.nanoTime();
 		
 		for (int i = 0; i < n; i++) {
-			s = MathArray.sum2(ar1);
+			s = Vec2Scalar.sum2(ar1);
 		}
 		et = System.nanoTime();
 		System.out.println("Sum: " + s);

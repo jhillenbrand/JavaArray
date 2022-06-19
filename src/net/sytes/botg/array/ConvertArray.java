@@ -11,6 +11,11 @@ import java.util.Arrays;
  */
 public class ConvertArray {
 	
+	// Suppress default constructor for noninstantiability
+	private ConvertArray() {
+		throw new AssertionError();
+	}
+	
 	/**
 	 * concatenate two byte[] arrays
 	 * @param b1

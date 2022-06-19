@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import net.sytes.botg.array.ArrayUtility;
 import net.sytes.botg.array.SearchArray;
-import net.sytes.botg.array.utils.ArrayUtility;
 
 public class UnitTest_SearchArray {
 

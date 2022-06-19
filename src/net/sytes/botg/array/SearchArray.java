@@ -3,10 +3,14 @@ package net.sytes.botg.array;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sytes.botg.array.math.MathArray;
-import net.sytes.botg.array.utils.ArrayUtility;
+import net.sytes.botg.array.math.Vec2Scalar;
 
 public class SearchArray {
+	
+	// Suppress default constructor for noninstantiability
+	private SearchArray() {
+		throw new AssertionError();
+	}
 	
 	public static boolean isArray(Object o) {
 		if (o != null && o.getClass().isArray()) {
@@ -83,7 +87,7 @@ public class SearchArray {
 	 * @return double[]
 	 */
 	public static double[] elementsAt(boolean[] inds, double[] data) {
-		int n = MathArray.sum(inds);
+		int n = Vec2Scalar.sum(inds);
 		double[] newData = new double[n];
 		int j = 0;
 		for (int i = 0; i < data.length; i++) {

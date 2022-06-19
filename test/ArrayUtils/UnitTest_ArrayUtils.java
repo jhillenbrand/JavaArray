@@ -5,7 +5,8 @@ import java.util.Arrays;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
-import net.sytes.botg.array.utils.ArrayUtility;
+import net.sytes.botg.array.ArrayUtility;
+import net.sytes.botg.array.math.Vec2Vec;
 
 public class UnitTest_ArrayUtils {
 
@@ -34,7 +35,7 @@ public class UnitTest_ArrayUtils {
 		System.out.println(Arrays.toString(ar));
 		System.out.println(d);
 		
-		Double[] nAr = ArrayUtility.add(d, ar);
+		Double[] nAr = Vec2Vec.append(ar, d);
 		System.out.println(Arrays.toString(nAr));
 	}
 	
@@ -47,7 +48,7 @@ public class UnitTest_ArrayUtils {
 		System.out.println(Arrays.toString(ar));
 		System.out.println(d);
 		
-		double[] nAr = ArrayUtility.add(d, ar);
+		double[] nAr = Vec2Vec.append(ar, d);
 		System.out.println(Arrays.toString(nAr));
 	}
 	

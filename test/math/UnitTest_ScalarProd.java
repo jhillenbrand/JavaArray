@@ -1,10 +1,10 @@
-package MathArray;
+package math;
 
 import java.util.Random;
 
 import org.junit.Test;
 
-import net.sytes.botg.array.math.MathArray;
+import net.sytes.botg.array.math.Vec2Scalar;
 
 public class UnitTest_ScalarProd {
 	
@@ -19,7 +19,7 @@ public class UnitTest_ScalarProd {
 	@Test
 	public void testScalarProd01() {
 		long t1 = System.nanoTime();
-		MathArray.scalarProd(ar1, ar2);
+		Vec2Scalar.scalarProd(ar1, ar2);
 		long t2 = System.nanoTime();
 		System.out.println("01 - " + (t2 - t1) + " ns");
 	}
