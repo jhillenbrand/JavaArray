@@ -354,4 +354,62 @@ public class Vec2Vec {
 		}
 		return ar;
 	}
+	
+	/**
+	 * computes the span for {@code ar} in each window defined by {@code win} and returns new double array
+	 * @param ar
+	 * @param win
+	 * @param dropUneven if set to true, uneven samples due to windowing in {@code ar} will be dropped
+	 * @return
+	 */
+	public static double[] windowedSpan(double[] ar, int win, boolean dropUneven) {
+		int numOfWin = ar.length / win;
+		if (!dropUneven) {
+			if (ar.length % win > 0) {
+				numOfWin = ar.length / win + 1;
+			} 
+		}
+		
+		double[] newAr = new double[numOfWin];
+		int iw = 0;
+		int iwLast = 0;
+		int c = 0;
+		
+		double maxVal = ar[0];
+		double minVal = ar[0];
+		
+		
+		for (int i = 0; i < ar.length; i++) {		
+			if (iw != iwLast) {
+				maxVal = ar[i];
+				minVal = ar[i];
+			}
+			
+			if(maxVal < ar[i]) {
+				maxVal = ar[i];
+			}
+			
+			if (minVal > ar[i]) {
+				minVal = ar[i];
+			}
+			
+			++c;
+			iwLast = iw;
+			if (!dropUneven) {
+				if (c >= win || i == ar.length - 1) {
+					newAr[iw] = maxVal - minVal;
+					++iw;
+					c = 0;
+				}
+			} else {
+				if (c >= win) {
+					newAr[iw] = maxVal - minVal;
+					++iw;
+					c = 0;
+				}
+			}
+		}		
+		
+		return newAr;
+	}
 }

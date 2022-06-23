@@ -188,4 +188,15 @@ public class UnitTest_Math {
 		System.out.println("Sum2 -> Sampling Period per Summation [ns]: " + sp);
 		
 	}
+	
+	@Test
+	public void test019() {
+		
+		double d = 1.8;
+		
+		int i = (int) (d / 1);
+		
+		System.out.println(i);
+		
+	}
 }
