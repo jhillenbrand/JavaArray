@@ -12,7 +12,51 @@ public class Vec2Vec {
 	private Vec2Vec() {
 		throw new AssertionError();
 	}
-		
+	
+	/**
+	 * upsamples the given array {@code x} by factor {@code n}
+	 * <br>
+	 * the implementation uses no recursion to be faster
+	 * <br>
+	 * Example: upsample(x, 10) will create an array of length x.length * 10
+	 * @param x
+	 * @param n
+	 * @return
+	 */
+	public static double[] upsample(double[] x, int n) {
+		double[] newAr = new double[x.length * n];
+		// TODO implementation
+		// ...
+		for (int i = 0; i < newAr.length; i++) {
+			// ....
+		}
+		return newAr;
+	}
+	
+	/**
+	 * upsamples the given array {@code x} by factor {@code n} using recursion
+	 * <br>therefore being slower than upsample()
+	 * @param x
+	 * @param n
+	 * @return
+	 */
+	public static double[] upsample2(double[] x, int n) {
+		if (n > 0) {
+			if (n > 1) {
+				x = upsample2(x, n - 1);
+			}
+			double[] xUp = new double[x.length * 2 - 1];			
+			for (int i = 0; i < x.length; i++) {
+				xUp[2 * i] = x[i];
+				if (i != x.length - 1) {
+					xUp[2 * i + 1] = (x[i] + x[i + 1]) / 2;
+				}
+			}
+			return xUp;
+		} else {
+			return x;
+		}
+	}
 
 	/**
 	 * methods removes the offset and mirrors negative values above ZERO
@@ -85,6 +129,12 @@ public class Vec2Vec {
 		return newData;
 	}
 	
+	/**
+	 * rounds {@code x} to new double[] array with only {@code decimals} places after comma
+	 * @param x
+	 * @param decimals
+	 * @return
+	 */
 	public static double[] roundToDecimals(double[] x, int decimals) {
 		double[] newX = new double[x.length];
 		double scale = 0;
@@ -97,6 +147,12 @@ public class Vec2Vec {
 		return newX;
 	}
 	
+	/**
+	 * rounds {@code x} to new Number[] array with only {@code decimals} places after comma
+	 * @param x
+	 * @param decimals
+	 * @return
+	 */	
 	public static double[] roundToDecimals(Number[] x, int decimals) {
 		double[] newX = new double[x.length];
 		double scale = 0;

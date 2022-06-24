@@ -30,4 +30,15 @@ public class UnitTest_Vec2Vec {
 		System.out.println(Arrays.toString(newAr));
 		
 	}
+	
+	@Test
+	public void test020() {
+		
+		double[] x = {22.2,	22.25,	22.3,	22.25,	22.2,	22.3,	22.2,	22.4,	22.4};
+		
+		double[] xUp = Vec2Vec.upsample2(x, 3);
+		
+		System.out.println(Arrays.toString(xUp));
+	}
+	
 }
