@@ -134,7 +134,35 @@ public class ArrayUtility {
 		}
 		return data;
 	}
-		
+	
+	/**
+	 * returns a sub array starting at 0 and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double[] subArray(double[] ar, int e) {
+		return subArray(ar, 0, e);
+	}
+	
+	/**
+	 * returns a sub array starting at index s and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double[] subArray(double[] ar, int s, int e) {
+		if (s >= 0 && e < ar.length) {
+			double[] ar2 = new double[e - s];
+			System.arraycopy(ar, s, ar2, 0, ar2.length);
+			return ar2;
+		} else {
+			throw new IndexOutOfBoundsException("Index out of Range, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+				
 	/**
 	 * checks if the {@code ar} is strictly monotone increasing or decreasing
 	 * @param ar

@@ -1,4 +1,4 @@
-package ArrayUtils;
+package ArrayUtility;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import org.junit.Test;
 import net.sytes.botg.array.ArrayUtility;
 import net.sytes.botg.array.math.Vec2Vec;
 
-public class UnitTest_ArrayUtils {
+public class UnitTest_ArrayUtility {
 
 	private static final int SIZE = 10_000_000;
 	
@@ -62,6 +62,28 @@ public class UnitTest_ArrayUtils {
 		char[] c = ArrayUtils.toPrimitive(cw);
 		
 		System.out.println(c);		
+	}
+	
+	@Test
+	public void test050() {
+		
+		double[] d = ArrayUtility.createRandomDoubleArray(100);
+		
+		double[] dd = ArrayUtility.subArray(d, 0, 100);
+		
+		System.out.println(Arrays.toString(dd));
+		
+	}
+	
+	@Test
+	public void test060() {
+		
+		double[] d = ArrayUtility.createRandomDoubleArray(100);
+		
+		double[] dd = ArrayUtility.subArray(d, 1, 90);
+		
+		System.out.println(Arrays.toString(dd));
+		
 	}
 
 }
