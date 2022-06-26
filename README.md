@@ -26,7 +26,8 @@ The repo also contains code samples for MATLAB and C (compiled under Windows10),
 * Java		-> 20.000 - 35.000 µs
 * C    		-> 25.000 - 45.000 µs
 * MATLAB	-> 300.000 - 1e6 µs
-<br>I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that I can continue with my Signal Processing being done in Java (:P)
+
+<br>I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that there's hope for me doing my Signal Processing in Java (:P)
 
 ### Licenses used
 this Project: MIT
