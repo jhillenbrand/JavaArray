@@ -1,4 +1,6 @@
-package SortArray;
+package array;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -35,6 +37,16 @@ public class UnitTest_SortArray {
 		
 		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
 		System.out.println("sr=" + sr + "[Hz]");
+	}
+	
+	@Test
+	public void testOddEven() {
+		
+		double[] ar1 = {1, 2, 3, 4, 5}; 
+		System.out.println(Arrays.toString(SortArray.even(ar1)));
+		
+		System.out.println(Arrays.toString(SortArray.odd(ar1)));
+		
 	}
 	
 }

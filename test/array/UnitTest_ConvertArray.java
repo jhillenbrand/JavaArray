@@ -1,4 +1,4 @@
-package ConvertArray;
+package array;
 
 import org.junit.Test;
 

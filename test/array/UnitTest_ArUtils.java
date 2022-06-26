@@ -1,4 +1,4 @@
-package ArrayUtility;
+package array;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.ConvertArray;
 import net.sytes.botg.array.math.Vec;
 
-public class UnitTest_ArrayUtility {
+public class UnitTest_ArUtils {
 
 	private static final int SIZE = 10_000_000;
 	

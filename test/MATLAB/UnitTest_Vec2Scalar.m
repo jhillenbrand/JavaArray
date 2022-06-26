@@ -7,6 +7,6 @@ t1 = cputime;
 s = dot(ar1, ar2);
 t_el = cputime - t1;
 
-disp(['elapsed [s]: ' num2str(t_el)]);
+disp(['elapsed [µs]: ' num2str(t_el * 10e6)]);
 
 %%

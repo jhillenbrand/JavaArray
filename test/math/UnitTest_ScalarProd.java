@@ -21,6 +21,6 @@ public class UnitTest_ScalarProd {
 		long t1 = System.nanoTime();
 		Vec2Scalar.scalarProd(ar1, ar2);
 		long t2 = System.nanoTime();
-		System.out.println("01 - " + (t2 - t1) + " ns");
+		System.out.println("elapsed [µs]: " + (double) (t2 - t1) / 1000);
 	}
 }

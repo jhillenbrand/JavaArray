@@ -48,7 +48,7 @@ int main(int argc, char*argv[]){
     gettimeofday(&tv,NULL);
     unsigned long endTime = 1000000 * tv.tv_sec + tv.tv_usec;
     cpu_time_used = endTime - startTime;
-    printf("scalar: %0.3f; elapsed [Âµs]: %d\n", s, cpu_time_used);
+    printf("scalar: %0.3f; elapsed [µs]: %d\n", s, cpu_time_used);
     //fclose(f); 
     free(ar1);
     free(ar2);
