@@ -1,17 +1,25 @@
 # JavaArray
 
-Java project containing classes with static methods to manipulate arrays
+Java project containing classes with static methods to manipulate arrays, doing math operations,  signal processing and more ...
+
+## Packages
+
+### array
 
 * [ArUtils](src/net/sytes/botg/array/ArUtils.java)
 * [ConvertArray](src/net/sytes/botg/array/ConvertArray.java)
 * [SortArray](src/net/sytes/botg/array/SortArray.java)
 * [SearchArray](src/net/sytes/botg/array/SearchArray.java)
 
+### math
+
 and Math functions for signal processing and feature extractions and many more ...
 * [Scalar](src/net/sytes/botg/array/math/Scalar.java)
 * [Vec](src/net/sytes/botg/array/math/Vec.java)
 * [Vec2Mat](src/net/sytes/botg/array/math/Vec2Mat.java)
 * [Vec2Scalar](src/net/sytes/botg/array/math/Vec2Scalar.java)
+
+## Testing
 
 unit tests with examples can be found here:
 * [ArUtils](test/array/UnitTest_ArUtils.java)
@@ -29,7 +37,10 @@ The repo also contains code samples for MATLAB and C (compiled under Windows10),
 
 <br>I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that there's hope for me doing my Signal Processing in Java (:P)
 
-### Licenses used
+## Releases
+this repo contains *.jar releases for every release/snapshot branch (except master), there will be a downloadable *.jar, that can be intergrated into your project, if you do not wish to compile the src yourself.
+
+## Licenses used
 this Project: MIT
 
 code used within Project is subject to EPL 2.0
