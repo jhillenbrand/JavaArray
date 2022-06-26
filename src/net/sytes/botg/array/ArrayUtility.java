@@ -256,6 +256,19 @@ public class ArrayUtility {
 	}
 	
 	/**
+	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
+	 * @param ar1
+	 * @param ar2
+	 */
+	public static void checkForEqualDimensions(int[] ar1, int[] ar2) {
+		if (ar1.length == ar2.length) {
+			// do nothing
+		} else {
+			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
+		}
+	}
+	
+	/**
 	 * checks if the first argument is smaller than the second and throws {@code IllegalArgumentException} if true
 	 * @param d1
 	 * @param d2

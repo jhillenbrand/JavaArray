@@ -333,4 +333,34 @@ public class Vec2Scalar {
 		}
 		return scalar;
 	}
+	
+	/**
+	 * computes the mean squared error between two double arrays
+	 * @param ar1
+	 * @param ar2
+	 * @return
+	 */
+	public static double mse(double[] ar1, double[] ar2) {
+		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		double sum = 0.0;
+		for (int i = 0; i < ar1.length; i++) {			
+			sum = sum + Math.pow(ar1[i] - ar2[i], 2);
+		}
+		return sum / ar1.length;
+	}
+	
+	/**
+	 * computes the mean squared error between two int arrays
+	 * @param ar1
+	 * @param ar2
+	 * @return 
+	 */
+	public static double mse(int[] ar1, int[] ar2) {
+		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		double sum = 0.0;
+		for (int i = 0; i < ar1.length; i++) {			
+			sum = sum + Math.pow(ar1[i] - ar2[i], 2);
+		}
+		return (double) sum / ar1.length;
+	}
 }

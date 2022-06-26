@@ -130,6 +130,36 @@ public class Vec2Vec {
 	}
 	
 	/**
+	 * returns the indices of the original array {@code ar}, where a zero crossing happened
+	 * @param ar
+	 * @return
+	 */
+	public int[] locateZeroCrossings(double[] ar) {
+		/* COUNTZEROCROSSINGS returns the number of zero crossings in
+        signal and their location
+        signal = signal(:);
+        signedSignal = sign(signal);
+        shiftedSignedSignal = [signedSignal(1); signedSignal(1 : end - 1)];
+        diffSignedSignal = shiftedSignedSignal + signedSignal;
+        inds = (diffSignedSignal == 0);
+        count = sum(inds);
+        */		
+		return null;
+	}
+	
+	/**
+	 * returns the indices of the original array {@code ar}, where a zero crossing happened
+	 * <br>if {@code minDistance} > 0, then additional zerocrossings within this minDistance in indices are ignored
+	 * @param ar
+	 * @param minDistance
+	 * @return
+	 */
+	public int[] locateZeroCrossings(double[] ar, int minDistance) {
+		
+		return null;
+	}
+	
+	/**
 	 * rounds {@code x} to new double[] array with only {@code decimals} places after comma
 	 * @param x
 	 * @param decimals
@@ -467,5 +497,85 @@ public class Vec2Vec {
 		}		
 		
 		return newAr;
+	}
+	
+	/**
+	 * returns RMS values computed based on moving window (with overlap = 1) of {@code ar}
+	 * <br>{@code w} specifies the size of the window
+	 * @param ar
+	 * @param w 
+	 * @return
+	 */
+	public double[] movingWindowRMS(double[] ar, int w) {
+		double[] r = new double[ar.length];
+		int n = ar.length;
+		for (int i = 0; i < n; i++) {
+			
+			// special case i == 1
+			if (i == 1) {
+			
+				
+			// special cases n < i + w + 1
+			} else if (n < i + w + 1) {
+				
+			}
+			
+			
+			
+		}
+		/*		
+		%GETMOVINGRMS(x, w) with overlap 1
+	            % x: raw data [n x m]
+	            % w : window size [scalar]
+	            n = size(x, 1);
+	            r = zeros(size(x));
+	             
+	            version = 1;
+	            
+	            switch (version)
+	                case 1
+	                    for i = 1 : n
+	                        % special case i = 1 
+	                        if i == 1 
+	                            r(i) = rms(x(i : w, :));
+
+	                        % special cases n < i + w + 1
+	                        elseif n < i + w + 1
+	                            %r(i) = sqrt(1 / (n - i) * (-x(i - 1, :) .^ 2) + r(i - 1, :) .^ 2);    
+	                            w_s = n - i - 1;                            
+	                            r(i) = sqrt(1 / w_s * (x(i + w_s, :) .^ 2 - x(i - 1, :) .^ 2) + r(i - 1, :) .^ 2); 
+	                            
+	                        % otherwise
+	                        else
+	                            r(i) = sqrt(1 / w * (x(i + w, :) .^ 2 - x(i - 1, :) .^ 2) + r(i - 1, :) .^ 2);     
+	                        end
+	                        %if ~isreal(r)
+	                            %disp('test')
+	                        %end
+	                    end
+
+	                case 2
+	                    overlap = 1;
+	                    for i = 1 : n
+	                        if w + i - 1 > n
+	                            r(i) = rms(x(i : n, :));
+	                        else
+	                            r(i) = rms(x(i : w + i - 1, :)); 
+	                        end
+	                    end
+	            end
+	        end
+	        */
+		return r;
+	}
+	
+	public double[] sign(double[] ar) {
+		ArrayUtility.checkForNull(ar);
+		ArrayUtility.checkForEmpty(ar);
+		double[] sg = new double[ar.length];
+		for (int i = 0; i < sg.length; i++) {
+			sg[i] = Scalar2Scalar.sign(ar[i]);
+		}
+		return sg;
 	}
 }
