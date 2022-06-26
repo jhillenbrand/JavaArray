@@ -2,11 +2,11 @@ package ArrayUtility;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
-import net.sytes.botg.array.ArrayUtility;
-import net.sytes.botg.array.math.Vec2Vec;
+import net.sytes.botg.array.ArUtils;
+import net.sytes.botg.array.ConvertArray;
+import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_ArrayUtility {
 
@@ -22,7 +22,7 @@ public class UnitTest_ArrayUtility {
 	@Test
 	public void test01() {
 		
-		ArrayUtility.createRandomDoubleArray(SIZE);
+		ArUtils.createRandomDoubleArray(SIZE);
 		
 	}
 	
@@ -35,7 +35,7 @@ public class UnitTest_ArrayUtility {
 		System.out.println(Arrays.toString(ar));
 		System.out.println(d);
 		
-		Double[] nAr = Vec2Vec.append(ar, d);
+		Double[] nAr = Vec.append(ar, d);
 		System.out.println(Arrays.toString(nAr));
 	}
 	
@@ -48,7 +48,7 @@ public class UnitTest_ArrayUtility {
 		System.out.println(Arrays.toString(ar));
 		System.out.println(d);
 		
-		double[] nAr = Vec2Vec.append(ar, d);
+		double[] nAr = Vec.append(ar, d);
 		System.out.println(Arrays.toString(nAr));
 	}
 	
@@ -59,7 +59,7 @@ public class UnitTest_ArrayUtility {
 		cw[0] = 'A';
 		cw[1] = 'B';
 		
-		char[] c = ArrayUtils.toPrimitive(cw);
+		char[] c = ConvertArray.unwrap(cw);
 		
 		System.out.println(c);		
 	}
@@ -67,9 +67,9 @@ public class UnitTest_ArrayUtility {
 	@Test
 	public void test050() {
 		
-		double[] d = ArrayUtility.createRandomDoubleArray(100);
+		double[] d = ArUtils.createRandomDoubleArray(100);
 		
-		double[] dd = ArrayUtility.subArray(d, 0, 100);
+		double[] dd = ArUtils.subArray(d, 0, 100);
 		
 		System.out.println(Arrays.toString(dd));
 		
@@ -78,9 +78,9 @@ public class UnitTest_ArrayUtility {
 	@Test
 	public void test060() {
 		
-		double[] d = ArrayUtility.createRandomDoubleArray(100);
+		double[] d = ArUtils.createRandomDoubleArray(100);
 		
-		double[] dd = ArrayUtility.subArray(d, 1, 90);
+		double[] dd = ArUtils.subArray(d, 1, 90);
 		
 		System.out.println(Arrays.toString(dd));
 		

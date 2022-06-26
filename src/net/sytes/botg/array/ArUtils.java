@@ -3,12 +3,12 @@ package net.sytes.botg.array;
 import java.util.Arrays;
 import java.util.Random;
 
-import net.sytes.botg.array.math.Scalar2Scalar;
+import net.sytes.botg.array.math.Scalar;
 
-public class ArrayUtility {
+public class ArUtils {
 
 	// Suppress default constructor for noninstantiability
-	private ArrayUtility() {
+	private ArUtils() {
 		throw new AssertionError();
 	}
 	
@@ -238,7 +238,7 @@ public class ArrayUtility {
 	 * @return
 	 */
 	public static int closestExponentForBase2(int n) {
-		int m = (int) Scalar2Scalar.log2(n);		
+		int m = (int) Scalar.log2(n);		
 		return m;
 	}
 	

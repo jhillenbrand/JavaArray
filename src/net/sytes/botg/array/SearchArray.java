@@ -50,7 +50,7 @@ public class SearchArray {
 			int e = window -1;
 			for (int i = 0; i < w; i++) {
 				if (i == w - 1 && rem > 0) {
-					double[] nanAr = ArrayUtility.nan(rem);
+					double[] nanAr = ArUtils.nan(rem);
 					s = window * i;
 					System.arraycopy(data, s, dataWindows[i], 0, rem);
 					System.arraycopy(nanAr, 0, dataWindows[i], rem, e - rem + 1);

@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 public class SortArray {
 	
 	// Suppress default constructor for noninstantiability
@@ -131,15 +129,25 @@ public class SortArray {
 	}
 	
 	/**
-	 * flips the passed doubleArray
+	 * flips the passed double array
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
 	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
-	 * @param doubleArray
+	 * <br>
+	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
+	 * @param ar
 	 */
-	public static void flip(double[] doubleArray) {
-		ArrayUtils.reverse(doubleArray);
-		return;
+	public static void flip(double[] ar) {
+		double tmp;
+		int i = 0;
+		int j = ar.length;
+        while (j > i) {
+            tmp = ar[j];
+            ar[j] = ar[i];
+            ar[i] = tmp;
+            j--;
+            i++;
+        }
 	}
 	
 	/**
@@ -147,11 +155,21 @@ public class SortArray {
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
 	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
-	 * @param intArray
+	 * <br>
+	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
+	 * @param ar
 	 */
-	public static void flip(int[] intArray) {
-		ArrayUtils.reverse(intArray);
-		return;
+	public static void flip(int[] ar) {
+		int tmp;
+		int i = 0;
+		int j = ar.length;
+        while (j > i) {
+            tmp = ar[j];
+            ar[j] = ar[i];
+            ar[i] = tmp;
+            j--;
+            i++;
+        }
 	}
 	
 	/**
@@ -159,11 +177,21 @@ public class SortArray {
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
 	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * <br>
+	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
 	 * @param longArray
 	 */
-	public static void flip(long[] longArray) {
-		ArrayUtils.reverse(longArray);
-		return;
+	public static void flip(long[] ar) {
+		long tmp;
+		int i = 0;
+		int j = ar.length;
+        while (j > i) {
+            tmp = ar[j];
+            ar[j] = ar[i];
+            ar[i] = tmp;
+            j--;
+            i++;
+        }
 	}
 	
 	/**
@@ -171,11 +199,21 @@ public class SortArray {
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
 	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * <br>
+	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
 	 * @param shortArray
 	 */
-	public static void flip(short[] shortArray) {
-		ArrayUtils.reverse(shortArray);
-		return;
+	public static void flip(short[] ar) {
+		short tmp;
+		int i = 0;
+		int j = ar.length;
+        while (j > i) {
+            tmp = ar[j];
+            ar[j] = ar[i];
+            ar[i] = tmp;
+            j--;
+            i++;
+        }
 	}
 	
 	public static double[] merge(final double[] ...arrays ) {

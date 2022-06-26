@@ -2,14 +2,14 @@ package net.sytes.botg.array.math;
 
 import java.util.Arrays;
 
-import net.sytes.botg.array.ArrayUtility;
+import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.SearchArray;
 import net.sytes.botg.array.SortArray;
 
-public class Vec2Vec {
+public class Vec {
 
 	// Suppress default constructor for noninstantiability
-	private Vec2Vec() {
+	private Vec() {
 		throw new AssertionError();
 	}
 	
@@ -93,7 +93,7 @@ public class Vec2Vec {
 	 * @return double[]
 	 */
 	public static double[] removeDataOutOfRange(double[] data, double lowerLimit, double upperLimit) {
-		ArrayUtility.checkForFirstSmallerSecond(lowerLimit, upperLimit);
+		ArUtils.checkForFirstSmallerSecond(lowerLimit, upperLimit);
 		boolean[] inRange = SearchArray.isInRange(data, lowerLimit, upperLimit);
 		int n = Vec2Scalar.sum(inRange);
 		double[] newData = new double[n];
@@ -115,7 +115,7 @@ public class Vec2Vec {
 	 * @return
 	 */
 	public static double[] removeDataInRange(double[] data, double lowerLimit, double upperLimit) {
-		ArrayUtility.checkForFirstSmallerSecond(lowerLimit, upperLimit);
+		ArUtils.checkForFirstSmallerSecond(lowerLimit, upperLimit);
 		boolean[] inRange = SearchArray.isInRange(data, lowerLimit, upperLimit);
 		int n = Vec2Scalar.sum(inRange);
 		double[] newData = new double[n];
@@ -306,7 +306,7 @@ public class Vec2Vec {
 	 * @return
 	 */
 	public static double[] diff(double[] t, double[] ar) {
-		ArrayUtility.checkForEqualDimensions(t, ar);
+		ArUtils.checkForEqualDimensions(t, ar);
 		if (ar.length < 2) {
 			throw new IllegalArgumentException("ar must at least have to elements");
 		}
@@ -326,7 +326,7 @@ public class Vec2Vec {
 	 * @return
 	 */
 	public static double[] plus(double[] ar1, double[] ar2){
-		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
 		int L = ar1.length;
 		double[] ar3 = new double[L];
 		for (int i = 0; i < L; i++) {
@@ -342,7 +342,7 @@ public class Vec2Vec {
 	 * @return
 	 */
 	public static double[] minus(double[] ar1, double[] ar2){
-		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
 		int L = ar1.length;
 		double[] ar3 = new double[L];
 		for (int i = 0; i < L; i++) {
@@ -570,11 +570,11 @@ public class Vec2Vec {
 	}
 	
 	public double[] sign(double[] ar) {
-		ArrayUtility.checkForNull(ar);
-		ArrayUtility.checkForEmpty(ar);
+		ArUtils.checkForNull(ar);
+		ArUtils.checkForEmpty(ar);
 		double[] sg = new double[ar.length];
 		for (int i = 0; i < sg.length; i++) {
-			sg[i] = Scalar2Scalar.sign(ar[i]);
+			sg[i] = Scalar.sign(ar[i]);
 		}
 		return sg;
 	}

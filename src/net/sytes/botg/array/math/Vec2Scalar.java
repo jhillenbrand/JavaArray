@@ -2,7 +2,7 @@ package net.sytes.botg.array.math;
 
 import java.util.Arrays;
 
-import net.sytes.botg.array.ArrayUtility;
+import net.sytes.botg.array.ArUtils;
 
 public class Vec2Scalar {
 
@@ -17,8 +17,8 @@ public class Vec2Scalar {
 	 * @return
 	 */
 	public static double max(double[] ar) {
-		ArrayUtility.checkForNull(ar);
-		ArrayUtility.checkForEmpty(ar);
+		ArUtils.checkForNull(ar);
+		ArUtils.checkForEmpty(ar);
 		double maxVal = ar[0];
 		for(double d : ar) {
 			if(maxVal > d) {
@@ -36,8 +36,8 @@ public class Vec2Scalar {
 	 * @return
 	 */
 	public static double min(double[] ar) {
-		ArrayUtility.checkForNull(ar);
-		ArrayUtility.checkForEmpty(ar);
+		ArUtils.checkForNull(ar);
+		ArUtils.checkForEmpty(ar);
 		double minVal = ar[0];
 		for(double d : ar) {
 			if(minVal > d) {
@@ -311,7 +311,7 @@ public class Vec2Scalar {
 	 * @return
 	 */
 	public static double sumprod(double[] ar1, double[] ar2) {
-		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
 		double sumprod = 0;
 		for(int i = 0; i < ar1.length; i++) {
 			sumprod = sumprod + ar1[i] * ar2[i];
@@ -326,7 +326,7 @@ public class Vec2Scalar {
 	 * @return
 	 */
 	public static double scalarProd(double[] ar1, double[] ar2) {
-		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
 		double scalar = 0.0;
 		for (int i = 0; i < ar1.length; i++) {
 			scalar = scalar + ar1[i] * ar2[i];
@@ -341,7 +341,7 @@ public class Vec2Scalar {
 	 * @return
 	 */
 	public static double mse(double[] ar1, double[] ar2) {
-		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
 		double sum = 0.0;
 		for (int i = 0; i < ar1.length; i++) {			
 			sum = sum + Math.pow(ar1[i] - ar2[i], 2);
@@ -356,7 +356,7 @@ public class Vec2Scalar {
 	 * @return 
 	 */
 	public static double mse(int[] ar1, int[] ar2) {
-		ArrayUtility.checkForEqualDimensions(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
 		double sum = 0.0;
 		for (int i = 0; i < ar1.length; i++) {			
 			sum = sum + Math.pow(ar1[i] - ar2[i], 2);

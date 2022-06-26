@@ -8,7 +8,7 @@ import java.util.Random;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import net.sytes.botg.array.ArrayUtility;
+import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.math.Vec2Mat;
 import net.sytes.botg.array.math.Vec2Scalar;
 
@@ -20,15 +20,15 @@ public class UnitTest_Math {
 	@Test
 	public void test01() {
 		
-		assertEquals(ArrayUtility.closestExponentForBase2(1024), 10);
+		assertEquals(ArUtils.closestExponentForBase2(1024), 10);
 		
-		assertEquals(ArrayUtility.closestExponentForBase2(2047), 10);
+		assertEquals(ArUtils.closestExponentForBase2(2047), 10);
 		
 	}
 	
 	@Test
 	public void test02() {
-		double[] data = ArrayUtility.createRandomDoubleArray(10000);
+		double[] data = ArUtils.createRandomDoubleArray(10000);
 		
 	}
 	
@@ -49,7 +49,7 @@ public class UnitTest_Math {
 	public void test05() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isMonotone(ar, true), true);
+		assertEquals(ArUtils.isMonotone(ar, true), true);
 	}
 	
 	@Test
@@ -57,7 +57,7 @@ public class UnitTest_Math {
 	public void test06() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isMonotone(ar, false), false);
+		assertEquals(ArUtils.isMonotone(ar, false), false);
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class UnitTest_Math {
 	public void test07() {
 		double[] ar = {1.0, 1.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isMonotone(ar, true), true);
+		assertEquals(ArUtils.isMonotone(ar, true), true);
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class UnitTest_Math {
 	public void test08() {
 		double[] ar = {1.0, 0.99, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isMonotone(ar, true), false);
+		assertEquals(ArUtils.isMonotone(ar, true), false);
 	}
 	
 	@Test
@@ -81,7 +81,7 @@ public class UnitTest_Math {
 	public void test09() {
 		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
 		
-		assertEquals(ArrayUtility.isMonotone(ar, false), true);
+		assertEquals(ArUtils.isMonotone(ar, false), true);
 	}
 	
 	@Test
@@ -89,7 +89,7 @@ public class UnitTest_Math {
 	public void test10() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isStrictMonotone(ar, true), true);
+		assertEquals(ArUtils.isStrictMonotone(ar, true), true);
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class UnitTest_Math {
 	public void test11() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isStrictMonotone(ar, false), false);
+		assertEquals(ArUtils.isStrictMonotone(ar, false), false);
 	}
 	
 	@Test
@@ -105,7 +105,7 @@ public class UnitTest_Math {
 	public void test12() {
 		double[] ar = {1.0, 1.0, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isStrictMonotone(ar, true), false);
+		assertEquals(ArUtils.isStrictMonotone(ar, true), false);
 	}
 	
 	@Test
@@ -113,7 +113,7 @@ public class UnitTest_Math {
 	public void test13() {
 		double[] ar = {1.0, 0.99, 3.0, 4.0, 4.1};
 		
-		assertEquals(ArrayUtility.isStrictMonotone(ar, true), false);
+		assertEquals(ArUtils.isStrictMonotone(ar, true), false);
 	}
 	
 	@Test
@@ -121,7 +121,7 @@ public class UnitTest_Math {
 	public void test14() {
 		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
 		
-		assertEquals(ArrayUtility.isStrictMonotone(ar, false), true);
+		assertEquals(ArUtils.isStrictMonotone(ar, false), true);
 	}
 	
 	@Test
@@ -159,7 +159,7 @@ public class UnitTest_Math {
 	public void test018() {
 		int n = 1_000_000;
 		
-		double[] ar1 = ArrayUtility.createRandomDoubleArray(1_000);
+		double[] ar1 = ArUtils.createRandomDoubleArray(1_000);
 		
 		long st = System.nanoTime();
 		double s = 0;

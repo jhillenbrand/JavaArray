@@ -1,9 +1,9 @@
 package net.sytes.botg.array.math;
 
-public class Scalar2Scalar {
+public class Scalar {
 
 	// Suppress default constructor for noninstantiability
-	private Scalar2Scalar() {
+	private Scalar() {
 		throw new AssertionError();
 	}
 		
