@@ -8,7 +8,7 @@ public class Vec2Scalar {
 
 	// Suppress default constructor for noninstantiability
 	private Vec2Scalar() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public class Vec2Scalar {
 	 * @param ar
 	 * @return
 	 */
-	public static double sum(int[] ar) {
+	public static double sum (int[] ar) {
 		int sum = 0;
 		for(int d : ar) {
 			sum = sum + d;

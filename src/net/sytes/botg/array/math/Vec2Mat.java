@@ -4,12 +4,13 @@ public class Vec2Mat {
 
 	// Suppress default constructor for noninstantiability
 	private Vec2Mat() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	/**
 	 * separates the given double array into windows of size windowSize
 	 * <br>if dropUneven is true, then the remaining last ar.length % windowSize elements are dropped
+	 * <br>dimensions --> double[win][windowSize]
 	 * @param ar
 	 * @param windowSize
 	 * @param dropUneven

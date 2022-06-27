@@ -10,7 +10,7 @@ public class Vec {
 
 	// Suppress default constructor for noninstantiability
 	private Vec() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	/**
@@ -502,74 +502,84 @@ public class Vec {
 	/**
 	 * returns RMS values computed based on moving window (with overlap = 1) of {@code ar}
 	 * <br>{@code w} specifies the size of the window
+	 * <br> TODO not working
 	 * @param ar
 	 * @param w 
 	 * @return
 	 */
-	public double[] movingWindowRMS(double[] ar, int w) {
+	public static double[] movingWindowRMS(double[] ar, int w) {
 		double[] r = new double[ar.length];
 		int n = ar.length;
-		for (int i = 0; i < n; i++) {
-			
-			// special case i == 1
-			if (i == 1) {
-			
-				
-			// special cases n < i + w + 1
-			} else if (n < i + w + 1) {
-				
-			}
-			
-			
-			
+		int i = 0;
+		r[i] = Vec2Scalar.rms(ArUtils.subArray(ar, i, i + w - 1));
+		for (i = 0; i < n - 1; i++) {			
+			if (i + w > n - 1) {
+				int wr = n - i - 1;
+				r[i + 1] = Vec2Scalar.rms(ArUtils.subArray(ar, i, i + wr));
+			} else {
+				r[i + 1] = Math.sqrt(1.0 / w * (Math.pow(ar[i + w], 2) - Math.pow(ar[i], 2)) + Math.pow(r[i], 2)); 
+			}			
 		}
-		/*		
-		%GETMOVINGRMS(x, w) with overlap 1
-	            % x: raw data [n x m]
-	            % w : window size [scalar]
-	            n = size(x, 1);
-	            r = zeros(size(x));
-	             
-	            version = 1;
-	            
-	            switch (version)
-	                case 1
-	                    for i = 1 : n
-	                        % special case i = 1 
-	                        if i == 1 
-	                            r(i) = rms(x(i : w, :));
-
-	                        % special cases n < i + w + 1
-	                        elseif n < i + w + 1
-	                            %r(i) = sqrt(1 / (n - i) * (-x(i - 1, :) .^ 2) + r(i - 1, :) .^ 2);    
-	                            w_s = n - i - 1;                            
-	                            r(i) = sqrt(1 / w_s * (x(i + w_s, :) .^ 2 - x(i - 1, :) .^ 2) + r(i - 1, :) .^ 2); 
-	                            
-	                        % otherwise
-	                        else
-	                            r(i) = sqrt(1 / w * (x(i + w, :) .^ 2 - x(i - 1, :) .^ 2) + r(i - 1, :) .^ 2);     
-	                        end
-	                        %if ~isreal(r)
-	                            %disp('test')
-	                        %end
-	                    end
-
-	                case 2
-	                    overlap = 1;
-	                    for i = 1 : n
-	                        if w + i - 1 > n
-	                            r(i) = rms(x(i : n, :));
-	                        else
-	                            r(i) = rms(x(i : w + i - 1, :)); 
-	                        end
-	                    end
-	            end
-	        end
-	        */
 		return r;
 	}
 	
-	public double[] sign(double[] ar) {
+	/**
+	 * returns RMS values computed based on moving window and specified overlap of {@code ar}
+	 * <br>{@code w} specifies the size of the window
+	 * <br> TODO not working
+	 * @param ar
+	 * @param w 
+	 * @return
+	 */
+	public static double[] movingWindowRMS(double[] ar, int w, int overlap) {
+		if (overlap > w) {
+			throw new IllegalArgumentException("overlap=" + overlap + " > w=" + w+ "; overlap must be smaller than w!");
+		}
+		int n = ar.length;
+		int wins = n / overlap;
+		if (n % overlap > 0) {
+			++wins;
+		}
+		double[] r = new double[wins];
+		int c = 0;
+		for (int i = 0; i < n; i++) {
+			int s = i;
+			int e = i + w - 1;
+			if (e >= n) {
+				int wr = n - i - 1;
+				e = s + wr;
+			}
+			r[c] = Vec2Scalar.rms(ArUtils.subArray(ar, s, e));
+			++c;
+			i = i + overlap - 1;
+		}
+		return r;
+	}
+	
+	/**
+	 * returns RMS values computed based on moving window (with overlap = 1) of {@code ar}
+	 * <br>{@code w} specifies the size of the window, SLOW Implementation
+	 * @param ar
+	 * @param w 
+	 * @return
+	 */
+	public static double[] movingWindowRMS2(double[] ar, int w) {
+		double[] r = new double[ar.length];
+		int n = ar.length;
+		int i = 0;
+		for (i = 0; i < n; i++) {
+			int s = i;
+			int e = i + w - 1;
+			if (e >= n) {
+				int wr = n - i - 1;
+				e = s + wr;
+			}
+			r[i] = Vec2Scalar.rms(ArUtils.subArray(ar, s, e));					
+		}
+		return r;
+	}
+	
+	public static double[] sign(double[] ar) {
 		ArUtils.checkForNull(ar);
 		ArUtils.checkForEmpty(ar);
 		double[] sg = new double[ar.length];
@@ -577,5 +587,23 @@ public class Vec {
 			sg[i] = Scalar.sign(ar[i]);
 		}
 		return sg;
+	}
+	
+	/**
+	 * sets the elements of {@code ar} in specified range [{@code s}, {@code e}] to zero
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double[] zeroRange(double[] ar, int s, int e) {
+		ArUtils.checkForNull(ar);
+		ArUtils.checkForEmpty(ar);
+		ArUtils.checkForFirstSmallerSecond(s, e);
+		ArUtils.checkForIndicesInBounds(ar, s, e);
+		double[] ar2 = ar.clone();
+		double[] zeros = ArUtils.zeros(ar2.length);
+		System.arraycopy(zeros, s, ar2, s, e - s + 1);
+		return ar2;
 	}
 }

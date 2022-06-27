@@ -9,7 +9,7 @@ public class SortArray {
 	
 	// Suppress default constructor for noninstantiability
 	private SortArray() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	public static <T> T[] removeEmpty(T[] ar) {

@@ -9,7 +9,7 @@ public class SearchArray {
 	
 	// Suppress default constructor for noninstantiability
 	private SearchArray() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	public static boolean isArray(Object o) {

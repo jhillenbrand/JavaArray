@@ -5,8 +5,9 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import net.sytes.botg.array.math.Vec;
+import net.sytes.botg.array.math.Vec2Mat;
 
-public class UnitTest_Vec2Vec {
+public class UnitTest_Vec {
 
 	
 	@Test
@@ -39,6 +40,17 @@ public class UnitTest_Vec2Vec {
 		double[] xUp = Vec.upsample2(x, 3);
 		
 		System.out.println(Arrays.toString(xUp));
+	}
+	
+	@Test
+	public void test030() {
+		
+		double[] x = {22.2,	22.25,	22.3,	22.25,	22.2,	22.3,	22.2,	22.4,	22.4};
+		
+		double[] y = Vec.zeroRange(x, 2, 5);
+		
+		System.out.println(Arrays.toString(x));
+		System.out.println(Arrays.toString(y));
 	}
 	
 }

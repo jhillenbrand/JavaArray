@@ -3,33 +3,35 @@ package net.sytes.botg.array;
 import java.util.Arrays;
 import java.util.Random;
 
-import net.sytes.botg.array.math.Scalar;
-
 public class ArUtils {
 
 	// Suppress default constructor for noninstantiability
 	private ArUtils() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
-	
-	public static void print2DArray(Object[][] ar) {
-		for (int i = 0; i < ar.length; i++) {
-			System.out.println(Arrays.toString(ar[i]));
-		}
+		
+	/**
+	 * returns an array of size n with 0's
+	 * @param n
+	 * @return
+	 */
+	public static double[] zeros(int n) {
+		return new double[n];
 	}
 	
-	public static void print2DArray(double[][] ar) {
-		for (int i = 0; i < ar.length; i++) {
-			System.out.println(Arrays.toString(ar[i]));
+	/**
+	 * returns an array of size n with 1's
+	 * @param n
+	 * @return
+	 */
+	public static double[] ones(int n) {
+		double[] ar = new double[n];
+		for (int i = 0; i > n; i++) {
+			ar[i] = 1;
 		}
-	}
-	
-	public static void print2DArray(int[][] ar) {
-		for (int i = 0; i < ar.length; i++) {
-			System.out.println(Arrays.toString(ar[i]));
-		}
+		return ar;
 	}
 	
 	public static int getRandomNumberInRange(int min, int max) {
@@ -58,10 +60,10 @@ public class ArUtils {
 		return randomValue;
 	}
 	
-	public static double[] createRandomDoubleArray(long size) {
+	public static double[] createRandomDoubleArray(int size) {
 		double[] data;
-		if (size < BETTER_OF_AS_STREAM_SIZE && size < Integer.MAX_VALUE) {
-			data = new double[(int) size];
+		if (size < BETTER_OF_AS_STREAM_SIZE) {
+			data = new double[size];
 			Random r = new Random();
 			for (int i = 0; i < size; i++) {
 				data[i] = r.nextDouble();
@@ -72,10 +74,10 @@ public class ArUtils {
 		return data;
 	}
 	
-	public static int[] createRandomIntArray(long size) {
+	public static int[] createRandomIntArray(int size) {
 		int[] data;
-		if (size < BETTER_OF_AS_STREAM_SIZE && size < Integer.MAX_VALUE) {
-			data = new int[(int) size];
+		if (size < BETTER_OF_AS_STREAM_SIZE) {
+			data = new int[size];
 			Random r = new Random();
 			for (int i = 0; i < size; i++) {
 				data[i] = r.nextInt();
@@ -95,11 +97,11 @@ public class ArUtils {
 	 */
 	public static double[] linspace(double start, double end, double step) {
 		int size = (int) ((end - start ) / step);
-		double[] data = new double[size];
+		double[] ar = new double[size];
 		for (int i = 0; i < size; i++) {
-			data[i] = start + step * i;
+			ar[i] = start + step * i;
 		}
-		return data;
+		return ar;
 	}
 	
 	/**
@@ -110,12 +112,28 @@ public class ArUtils {
 	 * @return
 	 */
 	public static double[] linspace(double start, double end, int size) {
-		double[] data = new double[size];
+		double[] ar = new double[size];
 		double step = (end - start) / (size - 1);
 		for (int i = 0; i < size; i++) {
-			data[i] = start + step * i;
+			ar[i] = start + step * i;
 		}
-		return data;
+		return ar;
+	}
+	
+	/**
+	 * returns a double array starting from {@code start} with {@code size} steps of {@code step}
+	 * @param start
+	 * @param size
+	 * @param step
+	 * @return
+	 */
+	public static double[] linspace(double start, int size, double step) {
+		double[] ar = new double[size];
+		ar[0] = start;
+		for (int i = 1; i < size; i++) {
+			ar[i] = ar[i - 1] + step;
+		}
+		return ar;
 	}
 	
 	/**
@@ -124,7 +142,7 @@ public class ArUtils {
 	 * @return
 	 */
 	public static double[] linspace(int size) {
-		return linspace(0, size, size);
+		return linspace(0, size, 1.0);
 	}
 	
 	public static double[] nan(int size) {
@@ -154,13 +172,10 @@ public class ArUtils {
 	 * @return
 	 */
 	public static double[] subArray(double[] ar, int s, int e) {
-		if (s >= 0 && e < ar.length) {
-			double[] ar2 = new double[e - s];
-			System.arraycopy(ar, s, ar2, 0, ar2.length);
-			return ar2;
-		} else {
-			throw new IndexOutOfBoundsException("Index out of Range, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
-		}
+		checkForIndicesInBounds(ar, s, e);
+		double[] ar2 = new double[e - s + 1];
+		System.arraycopy(ar, s, ar2, 0, ar2.length);
+		return ar2;
 	}
 				
 	/**
@@ -215,33 +230,6 @@ public class ArUtils {
 		return true;
 	}
 	
-
-	/**
-	 * If a number is divisible by 2 then it has its least significant bit (LSB) set to 0,
-	 * 	if divisible by 4 then two LSB’s set to 0, if by 8 then three LSB’s set to 0 and so on.
-	 * 	Keeping this in mind, a number n is divisible by 2m if (n & ((1 << m) – 1)) is equal to 0 else not.
-	 * @param n
-	 * @param m
-	 * @return
-	 */
-	public static boolean isDivByPow(int n, int m) {
-		if ((n & ((1 << m) - 1)) == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * computes the closest exponent for base 2 for {@code n}
-	 * @param n
-	 * @return
-	 */
-	public static int closestExponentForBase2(int n) {
-		int m = (int) Scalar.log2(n);		
-		return m;
-	}
-	
 	/**
 	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
 	 * @param ar1
@@ -288,6 +276,36 @@ public class ArUtils {
 	public static void checkForEmpty(double[] ar) {
 		if (ar.length == 0) {
 			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
+	/**
+	 * checks if the start and end indices are within array bounds
+	 * @param ar
+	 * @param s
+	 * @param e
+	 */
+	public static void checkForIndicesInBounds(double[] ar, int s, int e) {
+		if (s < 0 || e >= ar.length) {
+			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+
+	public static void print2DArray(Object[][] ar) {
+		for (int i = 0; i < ar.length; i++) {
+			System.out.println(Arrays.toString(ar[i]));
+		}
+	}
+	
+	public static void print2DArray(double[][] ar) {
+		for (int i = 0; i < ar.length; i++) {
+			System.out.println(Arrays.toString(ar[i]));
+		}
+	}
+	
+	public static void print2DArray(int[][] ar) {
+		for (int i = 0; i < ar.length; i++) {
+			System.out.println(Arrays.toString(ar[i]));
 		}
 	}
 }

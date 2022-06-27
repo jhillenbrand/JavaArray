@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
 import net.sytes.botg.array.ArUtils;
+import net.sytes.botg.array.math.Scalar;
 import net.sytes.botg.array.math.Vec2Mat;
 import net.sytes.botg.array.math.Vec2Scalar;
 
@@ -20,9 +21,9 @@ public class UnitTest_Math {
 	@Test
 	public void test01() {
 		
-		assertEquals(ArUtils.closestExponentForBase2(1024), 10);
+		assertEquals(Scalar.closestExponentForBase2(1024), 10);
 		
-		assertEquals(ArUtils.closestExponentForBase2(2047), 10);
+		assertEquals(Scalar.closestExponentForBase2(2047), 10);
 		
 	}
 	

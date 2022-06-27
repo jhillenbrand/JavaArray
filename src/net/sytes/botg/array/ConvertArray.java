@@ -13,7 +13,7 @@ public class ConvertArray {
 	
 	// Suppress default constructor for noninstantiability
 	private ConvertArray() {
-		throw new AssertionError();
+		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
 	/**
