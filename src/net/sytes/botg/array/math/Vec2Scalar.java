@@ -335,6 +335,24 @@ public class Vec2Scalar {
 	}
 	
 	/**
+	 * computes the distance between two points in 1D and greater
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	public static double distance(double[] p1, double[] p2) {
+		ArUtils.checkForNull(p1);
+		ArUtils.checkForNull(p2);
+		ArUtils.checkForEqualDimensions(p1, p2);
+		int n = p1.length;
+		double sum = 0;
+		for (int i = 0; i < n; i++) {
+			sum = sum + Math.pow(p1[i] - p2[i], 2);
+		}
+		return Math.sqrt(sum);
+	}
+		
+	/**
 	 * computes the mean squared error between two double arrays
 	 * @param ar1
 	 * @param ar2

@@ -22,6 +22,35 @@ public class ArUtils {
 	}
 	
 	/**
+	 * returns an float array of size n with 0's
+	 * @param n
+	 * @return
+	 */
+	public static float[] zerosF(int n) {
+		return new float[n];
+	}
+	
+	/**
+	 * return an array with zeros of size [n, m]
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static double[][] zeros(int n, int m) {
+		return new double[n][m];
+	}
+	
+	/**
+	 * return an float array with zeros of size [n, m]
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static float[][] zerosF(int n, int m) {
+		return new float[n][m];
+	}
+	
+	/**
 	 * returns an array of size n with 1's
 	 * @param n
 	 * @return
@@ -30,6 +59,85 @@ public class ArUtils {
 		double[] ar = new double[n];
 		for (int i = 0; i > n; i++) {
 			ar[i] = 1;
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns an float array of size n with 1's
+	 * @param n
+	 * @return
+	 */
+	public static float[] onesF(int n) {
+		float[] ar = new float[n];
+		for (int i = 0; i > n; i++) {
+			ar[i] = 1;
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns an 2D array with 1's, where {@code n} is the number of rows and {@code m} the number of columns
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static double[][] ones(int n, int m){
+		double[][] ar = new double[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				
+			}
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns an 2D float array with 1's, where {@code n} is the number of rows and {@code m} the number of columns
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static float[][] onesF(int n, int m){
+		float[][] ar = new float[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				
+			}
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns a squared unit matrix of size {@code n}
+	 * <br> Example for n = 3
+	 * <br>| 1, 0, 0 |
+	 * <br>| 0, 1, 0 | 
+	 * <br>| 0, 0, 1 |
+	 * @param n
+	 * @return
+	 */
+	public static double[][] unitMatrix(int n){
+		double[][] ar = zeros(n, n);
+		for (int i = 0; i < n; i++) {
+			ar[i][i] = 1;
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns a unit square float matrix of size {@code n}
+	 * <br> Example for n = 3
+	 * <br>| 1f, 0,  0 |
+	 * <br>| 0, 1f,  0 | 
+	 * <br>| 0,  0, 1f |
+	 * @param n
+	 * @return
+	 */
+	public static float[][] unitMatrixF(int n){
+		float[][] ar = zerosF(n, n);
+		for (int i = 0; i < n; i++) {
+			ar[i][i] = 1;
 		}
 		return ar;
 	}
@@ -248,6 +356,19 @@ public class ArUtils {
 	 * @param ar1
 	 * @param ar2
 	 */
+	public static void checkForEqualDimensions(float[] ar1, float[] ar2) {
+		if (ar1.length == ar2.length) {
+			// do nothing
+		} else {
+			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
+		}
+	}
+	
+	/**
+	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
+	 * @param ar1
+	 * @param ar2
+	 */
 	public static void checkForEqualDimensions(int[] ar1, int[] ar2) {
 		if (ar1.length == ar2.length) {
 			// do nothing
@@ -273,7 +394,19 @@ public class ArUtils {
 		}
 	}
 	
+	public static void checkForNull(double[][] ar) {
+		if (ar == null) {
+			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
 	public static void checkForEmpty(double[] ar) {
+		if (ar.length == 0) {
+			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
+	public static void checkForEmpty(double[][] ar) {
 		if (ar.length == 0) {
 			throw new IllegalArgumentException("ar must not be empty");
 		}
@@ -291,19 +424,27 @@ public class ArUtils {
 		}
 	}
 
-	public static void print2DArray(Object[][] ar) {
+	public static void print(Object[][] ar) {
 		for (int i = 0; i < ar.length; i++) {
 			System.out.println(Arrays.toString(ar[i]));
 		}
 	}
 	
-	public static void print2DArray(double[][] ar) {
+	public static void print(double[][] ar) {
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < ar.length; i++) {
-			System.out.println(Arrays.toString(ar[i]));
+			if (i == ar.length - 1) {
+				sb.append(" " + Arrays.toString(ar[i]).replace("[", ""));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(ar[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(ar[i]).replace("[", "").replace("]", ";\n"));
+			}
 		}
+		System.out.println(sb.toString());
 	}
 	
-	public static void print2DArray(int[][] ar) {
+	public static void print(int[][] ar) {
 		for (int i = 0; i < ar.length; i++) {
 			System.out.println(Arrays.toString(ar[i]));
 		}
