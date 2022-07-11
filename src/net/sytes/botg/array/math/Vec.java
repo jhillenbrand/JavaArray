@@ -422,11 +422,27 @@ public class Vec {
 	 * @param d
 	 * @return
 	 */
-	public static double[] multiply(double[] ar, double d) {
+	public static double[] prod(double[] ar, double d) {
 		for (int i = 0; i <= ar.length - 1; i++) {
 			ar[i] = ar[i] * d;
 		}
 		return ar;
+	}
+	
+	/**
+	 * multiplies {@code ar1} and {@code ar2} elementwise and returns result
+	 * @param ar1
+	 * @param ar2
+	 * @return
+	 */
+	public static double[] prod(double[] ar1, double[] ar2) {
+		ArUtils.checkForNull2(ar1, ar2);
+		ArUtils.checkForEqualDimensions(ar1, ar2);
+		double[] ar3 = new double[ar1.length];
+		for (int i = 0; i < ar1.length; i++) {
+			ar3[i] = ar1[i] * ar2[i];
+		}
+		return ar3;
 	}
 	
 	/**

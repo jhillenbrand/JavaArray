@@ -388,9 +388,25 @@ public class ArUtils {
 		}
 	}
 	
+	/**
+	 * check if argument not NULL
+	 * @param ar
+	 */
 	public static void checkForNull(double[] ar) {
 		if (ar == null) {
 			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
+	/**
+	 * check if arguments are not NULL
+	 * @param ar
+	 */
+	public static void checkForNull2(double[] ... ar) {
+		for (int a = 0; a < ar.length; a++) {
+			if (ar[a] == null) {
+				throw new IllegalArgumentException("arrays must not be NULL");
+			}
 		}
 	}
 	
