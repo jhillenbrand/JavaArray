@@ -14,6 +14,54 @@ public class Vec {
 	}
 	
 	/**
+	 * normalization of vector {@code x} into range [0, 1]
+	 * @param x
+	 * @return
+	 */
+	public static double[] normalize(double[] x) {
+		double xMax = Vec2Scalar.max(x);
+		double xMin = Vec2Scalar.min(x);
+		int n = x.length;
+		double[] xn = new double[n];
+		for (int i = 0; i < n; i++) {
+			xn[i] = (x[i] - xMin) / (xMax - xMin);
+		}
+		return xn;
+	}
+	
+	/**
+	 * normalization of vector {@code x} into range [-1, 1]
+	 * @param x
+	 * @return
+	 */
+	public static double[] normalize2(double[] x) {
+		double xMax = Vec2Scalar.max(x);
+		double xMin = Vec2Scalar.min(x);
+		int n = x.length;
+		double[] xn = new double[n];
+		for (int i = 0; i < n; i++) {
+			xn[i] = 2 * ((x[i] - xMin) / (xMax - xMin) - 0.5);
+		}
+		return xn;
+	}
+	
+	/**
+	 * normalization of vector {@code x} with zscore
+	 * @param x
+	 * @return
+	 */
+	public static double[] zscore(double[] x) {
+		double mean = Vec2Scalar.mean(x);
+		double sigma = Vec2Scalar.variance(x);
+		int n = x.length;
+		double[] z = new double[n];
+		for (int i = 0; i < n; i++) {
+			z[i] = (x[i] - mean) / sigma;
+		}
+		return z;
+	}
+	
+	/**
 	 * upsamples the given array {@code x} by factor {@code n}
 	 * <br>
 	 * the implementation uses no recursion to be faster

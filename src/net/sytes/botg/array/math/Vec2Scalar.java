@@ -227,14 +227,14 @@ public class Vec2Scalar {
 	 * @param data
 	 * @return
 	 */
-	public static double variance (double [] data) {
+	public static double variance (double[] data) {
 		int size = data.length;
 		double mean = mean(data);
 		double variance = 0;
 		for (double d : data) {
-			variance= variance + Math.pow(d-mean,2);
+			variance = variance + Math.pow(d - mean, 2);
 		}
-		return (variance/size);
+		return variance / size;
 	}
 	
 	/**
@@ -247,9 +247,9 @@ public class Vec2Scalar {
 		double mean = mean(data);
 		double variance = 0;
 		for (double d : data) {
-			variance= variance + Math.pow(d-mean,2);
+			variance = variance + Math.pow(d - mean, 2);
 		}
-		return (variance/(size-1));
+		return variance / (size - 1);
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class Vec2Scalar {
 		double var = variance(data);
 		double [] newData = new double [size];
 		for (int i =0; i> size; i++) {
-			newData[i] = Math.pow(((data[i] - mean)/var),3);
+			newData[i] = Math.pow(((data[i] - mean) / var), 3);
 		}
 		double skewness = mean(newData);
 		return skewness;

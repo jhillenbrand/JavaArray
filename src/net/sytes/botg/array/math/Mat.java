@@ -60,5 +60,34 @@ public class Mat {
 		}
 		return D_ij;		
 	}
-		
+	
+	public static double[][] norm(double[][] x){
+		int n = x.length;
+		int m = x[0].length;		
+		double xMin = Mat2Scalar.min(x);
+		double xMax = Mat2Scalar.max(x);
+		double[][] xn = new double[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				xn[i][j] = (x[i][j] - xMin) / (xMax - xMin);
+			}
+		}
+		return xn;
+	}
+	
+	/**
+	 * normalization of vector {@code x} with zscore
+	 * @param x
+	 * @return
+	 */
+	public static double[][] zscore(double[][] x) {
+		double mean = Vec2Scalar.mean(x);
+		double sigma = Vec2Scalar.variance(x);
+		int n = x.length;
+		double[][] z = new double[n];
+		for (int i = 0; i < n; i++) {
+			z[i] = (x[i] - mean) / sigma;
+		}
+		return z;
+	}	
 }
