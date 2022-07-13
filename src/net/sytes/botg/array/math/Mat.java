@@ -81,12 +81,16 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] zscore(double[][] x) {
-		double mean = Vec2Scalar.mean(x);
-		double sigma = Vec2Scalar.variance(x);
+		ArUtils.checkForEmpty(x);
+		double mean = Mat2Scalar.mean(x);
+		double sigma = Mat2Scalar.variance(x);
 		int n = x.length;
-		double[][] z = new double[n];
+		int m = x[0].length;
+		double[][] z = new double[n][m];
 		for (int i = 0; i < n; i++) {
-			z[i] = (x[i] - mean) / sigma;
+			for (int j = 0; j < m; j++) {
+				z[i][j] = (x[i][j] - mean) / sigma;
+			}
 		}
 		return z;
 	}	

@@ -85,5 +85,18 @@ public class UnitTest_ArUtils {
 		System.out.println(Arrays.toString(dd));
 		
 	}
+	
+	@Test
+	public void test070() {
+		
+		double[] x = ArUtils.linspace(-1.0, 1.0, 10);
+		double[] y = ArUtils.linspace(-1.0, 1.0, 5);
+		
+		double[][][] XY = ArUtils.meshgrid(x, y);
+				
+		ArUtils.print(XY[0]);
+		ArUtils.print(XY[1]);
+		
+	}
 
 }

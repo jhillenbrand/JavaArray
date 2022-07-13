@@ -253,6 +253,35 @@ public class ArUtils {
 		return linspace(0, size, 1.0);
 	}
 	
+	/**
+	 * creates a meshgrid of the two input vectors
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static double[][][] meshgrid(double[] x, double[] y){
+		
+		int n = x.length;
+		int m = y.length;
+		
+		double[][] X = new double[m][n];
+		double[][] Y = new double[m][n];
+		
+		for (int i = 0; i < n; i++) {			
+			for (int j = 0; j < m; j++) {
+				X[j][i] = x[i];
+				Y[j][i] = y[j];
+			}			
+		}
+		
+		double[][][] XY = new double[2][][];
+		XY[0] = X;
+		XY[1] = Y;
+		
+		return XY;
+		
+	}
+	
 	public static double[] nan(int size) {
 		double[] data = new double[size];
 		for (int i = 0; i < size; i++) {
