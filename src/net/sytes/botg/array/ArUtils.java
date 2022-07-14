@@ -264,13 +264,13 @@ public class ArUtils {
 		int n = x.length;
 		int m = y.length;
 		
-		double[][] X = new double[m][n];
-		double[][] Y = new double[m][n];
+		double[][] X = new double[n][m];
+		double[][] Y = new double[n][m];
 		
 		for (int i = 0; i < n; i++) {			
 			for (int j = 0; j < m; j++) {
-				X[j][i] = x[i];
-				Y[j][i] = y[j];
+				X[i][j] = x[i];
+				Y[i][j] = y[j];
 			}			
 		}
 		
