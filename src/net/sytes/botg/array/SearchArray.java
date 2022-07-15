@@ -1,6 +1,8 @@
 package net.sytes.botg.array;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import net.sytes.botg.array.math.Vec2Scalar;
@@ -12,55 +14,61 @@ public class SearchArray {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
+	/**
+	 * returns an array with unique elements based on values in {@code x}
+	 * <br>faster than unique2 for smaller arrays
+	 * @param x
+	 * @return
+	 */
+	public static double[] unique(final double[] x) {
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(x);
+		int n = x.length;
+		int u = 1;
+		double[] tmp = new double[n];
+		tmp[0] = x[0];
+		for (int i = 1; i < n; i++) {
+			boolean found = false;
+			for (int j = 0; j < u; j++) {
+				if (tmp[j] == x[i]) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				tmp[u] = x[i];
+				++u;
+			}
+		}
+		double[] xu = new double[u];
+		System.arraycopy(tmp, 0, xu, 0, u);
+		return xu;
+	}
+
+	
+	/**
+	 * returns an array with unique elements based on values in {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static double[] unique2(final double[] x) {
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(x);
+		int n = x.length;
+		//HashMap<Double, Double> xu = new LinkedHashMap<Double, Double>();
+		HashMap<Double, Double> xu = new HashMap<Double, Double>();
+		for (int i = 0; i < n; i++) {
+			xu.put(x[i], x[i]);
+		}
+		return ConvertArray.unwrap(xu.values().toArray(new Double[xu.size()]));
+	}
+	
 	public static boolean isArray(Object o) {
 		if (o != null && o.getClass().isArray()) {
 			return true;
 		} else {
 			return false;
 		}
-	}
-	
-	/**
-	 * returns the array {@code data} split into windows of size {@code window}
-	 * if dropUneven is set to {@code false}, then the remaining elements are filled with NaN
-	 * @param data
-	 * @param window
-	 * @param dropUneven
-	 * @return double[][]
-	 */
-	public static double[][] separateDataIntoWindows(double[] data, int window, boolean dropUneven){
-		double[][] dataWindows = null;
-		if (dropUneven) {
-			int w = data.length / window;
-			dataWindows = new double[w][window];
-			int s = 0;
-			int e = window;
-			for (int i = 0; i < w; i++) {
-				s = window * i;
-				System.arraycopy(data, s, dataWindows[i], 0, e);
-			}
-		} else {
-			int w = data.length / window;
-			int rem = data.length % window;
-			if (rem > 0) {
-				 ++w;
-			}
-			dataWindows = new double[w][window];
-			int s = 0;
-			int e = window -1;
-			for (int i = 0; i < w; i++) {
-				if (i == w - 1 && rem > 0) {
-					double[] nanAr = ArUtils.nan(rem);
-					s = window * i;
-					System.arraycopy(data, s, dataWindows[i], 0, rem);
-					System.arraycopy(nanAr, 0, dataWindows[i], rem, e - rem + 1);
-				} else {
-					s = window * i;
-					System.arraycopy(data, s, dataWindows[i], 0, e);
-				}
-			}			
-		}
-		return dataWindows;
 	}
 	
 	/**

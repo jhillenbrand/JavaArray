@@ -12,7 +12,7 @@ public class SortArray {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	
-	public static <T> T[] removeEmpty(T[] ar) {
+	public static <T> T[] removeEmpty(final T[] ar) {
 		List<T> list = new ArrayList<T>();
 		for (int a = 0; a < ar.length; a++) {
 			if (ar[a] != null) {
@@ -32,7 +32,7 @@ public class SortArray {
 		return list.toArray(Arrays.copyOf(ar, list.size()));
 	}
 	
-	public static void reverseByteArray(byte[] array) {
+	public static void flip(byte[] array) {
 		//long start = System.nanoTime();
 		int i = 0;
 		byte b;
@@ -46,14 +46,19 @@ public class SortArray {
 	}
 	
 	// DEBUGGING NOT WORKING DUE TO LIST IMPLEMENTATION
-	public static void reverseByteArray2(byte[] array) {
+	public static void flip2(byte[] array) {
 		//long start = System.nanoTime();
 		List<byte[]> bL = Arrays.asList(array);
 		Collections.reverse(bL);
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 
-	public static byte[] reverseByteArray3(byte[] array) {
+	/**
+	 * 
+	 * @param array
+	 * @return
+	 */
+	public static byte[] flip3(byte[] array) {
 		//long start = System.nanoTime();
 		int i, j, n;
 		n = array.length;
@@ -68,11 +73,12 @@ public class SortArray {
 	}
 	
 	/**
-	 * faster than switchOddToEvenBytes2
+	 * switches values at odd indices to even indices and vice versa
+	 * <br>faster than oddToEven
 	 * @param array
 	 * @return
 	 */
-	public static byte[] switchOddToEvenBytes(byte[] array) {
+	public static byte[] oddToEven(byte[] array) {
 		//long start = System.nanoTime();
 		byte[] newArray = new byte[array.length];
 		if (array.length < 2) {
@@ -86,7 +92,11 @@ public class SortArray {
 		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
-	public static void switchOddToEvenBytes2(byte[] array) {
+	/**
+	 * switches values at odd indices to even indices and vice versa 
+	 * @param array
+	 */
+	public static void oddToEven2(byte[] array) {
 		if (array.length < 2) {
 			throw new RuntimeException("array must contain at least 2 elements");
 		}
@@ -98,6 +108,25 @@ public class SortArray {
 			array[i - 1] = b1;
 			array[i] = b2;
 		}
+	}
+	
+	/**
+	 * switches values at odd indices to even indices and vice versa
+	 * @param array
+	 * @return
+	 */
+	public static double[] oddToEven(double[] array) {
+		//long start = System.nanoTime();
+		double[] newArray = new double[array.length];
+		if (array.length < 2) {
+			throw new RuntimeException("array must contain at least 2 elements");
+		}
+		for (int i = 1; i < array.length; i += 2) {
+			newArray[i - 1] = array[i];
+			newArray[i] = array[i - 1];
+		}
+		return newArray;
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
 	}
 	
 	/**

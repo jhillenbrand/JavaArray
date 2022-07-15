@@ -16,7 +16,7 @@ public class UnitTest_SortArray {
 		long ns = 1_000_000_000;
 		long t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			SortArray.switchOddToEvenBytes(bs);
+			SortArray.oddToEven(bs);
 			//int b = bs.length;
 		}
 		long t2 = System.nanoTime();
@@ -27,7 +27,7 @@ public class UnitTest_SortArray {
 		System.out.println("sr=" + sr + "[Hz]");
 		
 		for (int i = 0; i < n; i++) {
-			SortArray.switchOddToEvenBytes2(bs);
+			SortArray.oddToEven2(bs);
 			//int b = bs.length;
 		}
 		

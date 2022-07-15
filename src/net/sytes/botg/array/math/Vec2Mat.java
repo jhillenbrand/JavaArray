@@ -1,5 +1,7 @@
 package net.sytes.botg.array.math;
 
+import net.sytes.botg.array.ArUtils;
+
 public class Vec2Mat {
 
 	// Suppress default constructor for noninstantiability
@@ -105,6 +107,49 @@ public class Vec2Mat {
 			wAr[i] = dAr;
 		}
 		return wAr;
+	}
+
+	/**
+	 * returns the array {@code data} split into windows of size {@code window}
+	 * if dropUneven is set to {@code false}, then the remaining elements are filled with NaN
+	 * @param data
+	 * @param window
+	 * @param dropUneven
+	 * @return double[][]
+	 */
+	public static double[][] separateDataIntoWindows(double[] data, int window, boolean dropUneven){
+		double[][] dataWindows = null;
+		if (dropUneven) {
+			int w = data.length / window;
+			dataWindows = new double[w][window];
+			int s = 0;
+			int e = window;
+			for (int i = 0; i < w; i++) {
+				s = window * i;
+				System.arraycopy(data, s, dataWindows[i], 0, e);
+			}
+		} else {
+			int w = data.length / window;
+			int rem = data.length % window;
+			if (rem > 0) {
+				 ++w;
+			}
+			dataWindows = new double[w][window];
+			int s = 0;
+			int e = window -1;
+			for (int i = 0; i < w; i++) {
+				if (i == w - 1 && rem > 0) {
+					double[] nanAr = ArUtils.nan(rem);
+					s = window * i;
+					System.arraycopy(data, s, dataWindows[i], 0, rem);
+					System.arraycopy(nanAr, 0, dataWindows[i], rem, e - rem + 1);
+				} else {
+					s = window * i;
+					System.arraycopy(data, s, dataWindows[i], 0, e);
+				}
+			}			
+		}
+		return dataWindows;
 	}
 	
 }

@@ -31,6 +31,28 @@ public class Vec2Scalar {
 	}
 	
 	/**
+	 * retrieves the maximum valueand the index it was found in {@code ar}
+	 * <br>both results are stored in double[], where [0] -> max value and [1] -> index
+	 * @param ar
+	 * @return
+	 */
+	public static double[] maxI(double[] ar) {
+		ArUtils.checkForNull(ar);
+		ArUtils.checkForEmpty(ar);
+		double maxVal = ar[0];
+		int maxInd = -1;
+		for(int i = 0; i < ar.length; i++) {
+			if(maxVal > ar[i]) {
+				// do nothing
+			} else {
+				maxVal = ar[i];
+				maxInd = i;
+			}
+		}
+		return new double[] {maxVal, maxInd};
+	}
+	
+	/**
 	 * retrieves the minimum in {@code ar}
 	 * @param ar
 	 * @return
