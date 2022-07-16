@@ -296,26 +296,6 @@ public class Vec {
 	}
 	
 	/**
-	 * return the indices of the k highest elements from ar[]
-	 * @param ar
-	 * @param k
-	 * @return
-	 */
-	public static int[] maxInd(double[] ar, int k) {
-		int[] sortInds = SortArray.quicksort2(ar);
-		int[] maxInds = new int[k];
-		int kk = 0;
-		for(int i = sortInds.length - 1; i > 0; i--) {
-			kk = kk + 1;
-			maxInds[kk - 1] = sortInds[i];
-			if(kk == k - 1) {
-				return maxInds;
-			}
-		}
-		return null;
-	}
-	
-	/**
 	 * computes the difference from one element to the next, numeric differentiation
 	 * @param ar
 	 * @return

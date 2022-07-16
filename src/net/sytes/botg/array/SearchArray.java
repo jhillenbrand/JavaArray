@@ -2,7 +2,6 @@ package net.sytes.botg.array;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import net.sytes.botg.array.math.Vec2Scalar;
@@ -12,6 +11,26 @@ public class SearchArray {
 	// Suppress default constructor for noninstantiability
 	private SearchArray() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
+	}
+	
+	/**
+	 * return the indices of the k highest elements from ar[]
+	 * @param ar
+	 * @param k
+	 * @return
+	 */
+	public static int[] maxInd(double[] ar, int k) {
+		int[] sortInds = SortArray.quicksort2(ar);
+		int[] maxInds = new int[k];
+		int kk = 0;
+		for(int i = sortInds.length - 1; i > 0; i--) {
+			kk = kk + 1;
+			maxInds[kk - 1] = sortInds[i];
+			if(kk == k - 1) {
+				return maxInds;
+			}
+		}
+		return null;
 	}
 	
 	/**
