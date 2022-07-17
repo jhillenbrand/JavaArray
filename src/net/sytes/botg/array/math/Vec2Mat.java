@@ -63,7 +63,7 @@ public class Vec2Mat {
 	/**
 	 * separates the given double array into windows of size windowSize
 	 * <br>if dropUneven is true, then the remaining last ar.length % windowSize elements are dropped
-	 * <br>dimensions --> double[win][windowSize]
+	 * <br>dimensions --&gt; double[win][windowSize]
 	 * @param ar
 	 * @param windowSize
 	 * @param dropUneven

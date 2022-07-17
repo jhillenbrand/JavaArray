@@ -28,7 +28,7 @@ public class Mat {
 	 * <br>point[1][2] = 3;
 	 * <hr>The result returned is a symmetric matrix D_ij, that reads in the following way:
 	 * <br>D_ij is the distance between Point i and Point j
-	 * <br>all values D_ii are 0 (reads: distance from Point i to Point i --> 0)
+	 * <br>all values D_ii are 0 (reads: distance from Point i to Point i --&gt; 0)
 	 * @param points
 	 * @return
 	 */

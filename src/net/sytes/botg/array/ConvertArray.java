@@ -142,13 +142,13 @@ public class ConvertArray {
 	
 	/**
 	 * convert long[] to double[]
-	 * @param intAr
+	 * @param ar
 	 * @return
 	 */
-	public static double[] longToDouble(long[] longAr) {
-	    double[] doubleAr = new double[longAr.length];
-	    for(int i=0; i < longAr.length; i++) {
-	    	doubleAr[i] = longAr[i];
+	public static double[] longToDouble(long[] ar) {
+	    double[] doubleAr = new double[ar.length];
+	    for(int i=0; i < ar.length; i++) {
+	    	doubleAr[i] = ar[i];
 	    }
 	    return doubleAr;
 	}

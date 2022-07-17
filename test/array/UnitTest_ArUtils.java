@@ -98,5 +98,39 @@ public class UnitTest_ArUtils {
 		ArUtils.print(XY[1]);
 		
 	}
+	
+	@Test
+	public void test080() {
+		
+		int s = 1_000;
+		int n = 100_000;		
+
+		//int[] ints = ArUtils.createRandomIntArray(s);
+		int[] ints = ArUtils.linspace(1, 100);
+				
+		long t1 = System.nanoTime();
+		
+		
+		for (int i = 0; i < ints.length; i++) {
+			ArUtils.checkForGreaterEqualZero2(ints);
+		}
+		
+		long t2 = System.nanoTime();
+		long t_e = t2 - t1;
+		
+		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
+		
+		
+		
+		t1 = System.nanoTime();		
+		for (int i = 0; i < ints.length; i++) {
+			ArUtils.checkForGreaterEqualZero(ints);
+		}
+		
+		t2 = System.nanoTime();
+		t_e = t2 - t1;
+		
+		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
+	}
 
 }

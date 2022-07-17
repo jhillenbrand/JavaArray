@@ -161,7 +161,7 @@ public class SortArray {
 	 * flips the passed double array
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
-	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * <br>[1, 2, 3, 4, 5] -&gt; [5, 4, 3, 2, 1]
 	 * <br>
 	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
 	 * @param ar
@@ -183,7 +183,7 @@ public class SortArray {
 	 * flips the passed intArray
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
-	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * <br>[1, 2, 3, 4, 5] -&gt; [5, 4, 3, 2, 1]
 	 * <br>
 	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
 	 * @param ar
@@ -205,10 +205,10 @@ public class SortArray {
 	 * flips the passed longArray
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
-	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * <br>[1, 2, 3, 4, 5] -&gt; [5, 4, 3, 2, 1]
 	 * <br>
 	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
-	 * @param longArray
+	 * @param ar
 	 */
 	public static void flip(long[] ar) {
 		long tmp;
@@ -227,10 +227,10 @@ public class SortArray {
 	 * flips the passed shortArray
 	 * <br>last element is new first element, and so on
 	 * <br>Example:
-	 * <br>[1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]
+	 * <br>[1, 2, 3, 4, 5] -&gt; [5, 4, 3, 2, 1]
 	 * <br>
 	 * <br>this code is based on org.apache.commons.commons-lang3.ArrayUtils.reverse()
-	 * @param shortArray
+	 * @param ar
 	 */
 	public static void flip(short[] ar) {
 		short tmp;

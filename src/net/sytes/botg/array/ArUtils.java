@@ -3,6 +3,12 @@ package net.sytes.botg.array;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * This class contains helper methods for array creation, function checks for size, indices, etc.
+ * <br>and 2D console print methods for MATLAB like output
+ * @author hillenbrand
+ *
+ */
 public class ArUtils {
 
 	// Suppress default constructor for noninstantiability
@@ -213,6 +219,22 @@ public class ArUtils {
 	}
 	
 	/**
+	 * returns a int array starting from {@code start} to {@code end} with {@code step}
+	 * @param start
+	 * @param end
+	 * @param step
+	 * @return
+	 */
+	public static int[] linspace(int start, int end, int step) {
+		int size = (int) ((end - start ) / step);
+		int[] ar = new int[size];
+		for (int i = 0; i < size; i++) {
+			ar[i] = start + step * i;
+		}
+		return ar;
+	}
+	
+	/**
 	 * returns a double array starting from {@code start} to {@code end} with equally spaced steps, so that the {@code size} is met
 	 * @param start
 	 * @param end
@@ -224,6 +246,21 @@ public class ArUtils {
 		double step = (end - start) / (size - 1);
 		for (int i = 0; i < size; i++) {
 			ar[i] = start + step * i;
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns a int array starting from {@code start} to {@code end} with step size 1
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static int[] linspace(int start, int end) {
+		int size = (int) ((end - start ) / 1);
+		int[] ar = new int[size];
+		for (int i = 0; i < size; i++) {
+			ar[i] = start + 1 * i;
 		}
 		return ar;
 	}
@@ -293,7 +330,6 @@ public class ArUtils {
 	/**
 	 * returns a sub array starting at 0 and ending at index e from ar
 	 * @param ar
-	 * @param s
 	 * @param e
 	 * @return
 	 */
@@ -468,14 +504,56 @@ public class ArUtils {
 			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
 		}
 	}
+	
+	/**
+	 * checks if the given {@code inds} are greater than 0
+	 * @param inds
+	 */
+	public static void checkForGreaterZero(final int ... inds) {
+		for (int i : inds) {
+			if (i < 0) {
+				throw new IllegalArgumentException("Indices must be greater than 0.");
+			}
+		}
+	}
+	
+	/**
+	 * checks if the given {@code inds} are greater than or equal to 0
+	 * <br>(the input array is final)
+	 * @param inds
+	 */
+	public static void checkForGreaterEqualZero(final int ... inds) {
+		for (int i : inds) {
+			if (i <= 0) {
+				throw new IllegalArgumentException("Indices must be greater than or equal to0.");
+			}
+		}
+	}
+	
+	public static void checkForGreaterEqualZero2(int ... inds) {
+		for (int i : inds) {
+			if (i <= 0) {
+				throw new IllegalArgumentException("Indices must be greater than or equal to0.");
+			}
+		}
+	}
 
-	public static void print(Object[][] ar) {
+	/**
+	 * prints the 2D object array
+	 * @param ar
+	 */
+	public static void print(final Object[][] ar) {
 		for (int i = 0; i < ar.length; i++) {
 			System.out.println(Arrays.toString(ar[i]));
 		}
 	}
 	
-	public static void print(double[][] ar) {
+	/**
+	 * prints the 2D double array
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param ar
+	 */
+	public static void print(final double[][] ar) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < ar.length; i++) {
 			if (i == ar.length - 1) {
@@ -489,9 +567,22 @@ public class ArUtils {
 		System.out.println(sb.toString());
 	}
 	
-	public static void print(int[][] ar) {
+	/**
+	 * prints the 2D int array
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param ar
+	 */
+	public static void print(final int[][] ar) {
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < ar.length; i++) {
-			System.out.println(Arrays.toString(ar[i]));
+			if (i == ar.length - 1) {
+				sb.append(" " + Arrays.toString(ar[i]).replace("[", ""));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(ar[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(ar[i]).replace("[", "").replace("]", ";\n"));
+			}
 		}
+		System.out.println(sb.toString());
 	}
 }

@@ -82,7 +82,7 @@ public class Scalar {
 	/**
 	 * If a number is divisible by 2 then it has its least significant bit (LSB) set to 0,
 	 * 	if divisible by 4 then two LSB’s set to 0, if by 8 then three LSB’s set to 0 and so on.
-	 * 	Keeping this in mind, a number n is divisible by 2m if (n & ((1 << m) – 1)) is equal to 0 else not.
+	 * 	Keeping this in mind, a number n is divisible by 2m if (n &amp; ((1 &lt;&lt; m) – 1)) is equal to 0 else not.
 	 * @param n
 	 * @param m
 	 * @return

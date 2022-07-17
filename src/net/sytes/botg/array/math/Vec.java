@@ -4,13 +4,28 @@ import java.util.Arrays;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.SearchArray;
-import net.sytes.botg.array.SortArray;
 
 public class Vec {
 
 	// Suppress default constructor for noninstantiability
 	private Vec() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
+	}
+	
+	/**
+	 * removes {@code start} samples from the beginning of the {@code ar} and {@code end} samples from the end of {@code ar} 
+	 * <br>and returns the result as new double[] array 
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static double[] trim(double[] ar, int start, int end) {
+		ArUtils.checkForGreaterEqualZero(new int[]{start, end});
+		int n = ar.length;
+		if (start + end > n) {
+			throw new IllegalArgumentException("sum of start and end must be smaller than length of ar");
+		}
+		return ArUtils.subArray(ar, start, n - end); 
 	}
 	
 	/**
@@ -197,7 +212,7 @@ public class Vec {
 	
 	/**
 	 * returns the indices of the original array {@code ar}, where a zero crossing happened
-	 * <br>if {@code minDistance} > 0, then additional zerocrossings within this minDistance in indices are ignored
+	 * <br>if {@code minDistance} &gt; 0, then additional zerocrossings within this minDistance in indices are ignored
 	 * @param ar
 	 * @param minDistance
 	 * @return
@@ -245,8 +260,8 @@ public class Vec {
 		
 	/**
 	 * takes every element in {@code ar} to the power of {@code p}
-	 * @param data
-	 * @param power
+	 * @param ar
+	 * @param p
 	 * @return
 	 */
 	public static double[] power(double[] ar, int p) {
@@ -365,9 +380,9 @@ public class Vec {
 	
 	/**
 	 * element wise subtraction of array values
-	 * @param ar1
-	 * @param ar2
-	 * @return
+	 * @param ar1 double[] ar
+	 * @param ar2 double[] ar
+	 * @return double[] array
 	 */
 	public static double[] minus(double[] ar1, double[] ar2){
 		ArUtils.checkForEqualDimensions(ar1, ar2);
@@ -381,10 +396,10 @@ public class Vec {
 
 	/**
 	 * add the element x to the end of the array ar and return the new array
-	 * @param <T>
-	 * @param x
-	 * @param ar
-	 * @return
+	 * @param <T> generic type
+	 * @param x new sample
+	 * @param ar existing array
+	 * @return generic array T[] 
 	 */
 	public static <T> T[] append(T[] ar, T x) {
 		T[] newAr = Arrays.copyOf(ar, ar.length + 1);

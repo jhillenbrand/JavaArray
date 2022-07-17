@@ -32,7 +32,7 @@ public class Vec2Scalar {
 	
 	/**
 	 * retrieves the maximum valueand the index it was found in {@code ar}
-	 * <br>both results are stored in double[], where [0] -> max value and [1] -> index
+	 * <br>both results are stored in double[], where [0] -&gt; max value and [1] -&gt; index
 	 * @param ar
 	 * @return
 	 */
@@ -74,7 +74,7 @@ public class Vec2Scalar {
 	/**
 	 * returns the span value of {@code ar}
 	 *<br>Example:
-	 *<br>span({1.0, 2.5, 3.4}) --> 3.4 - 1.0 = 2.4 
+	 *<br>span({1.0, 2.5, 3.4}) --&gt; 3.4 - 1.0 = 2.4 
 	 * @param ar
 	 * @return
 	 */
