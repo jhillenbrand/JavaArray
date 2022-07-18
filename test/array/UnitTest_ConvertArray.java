@@ -9,31 +9,31 @@ public class UnitTest_ConvertArray {
 
 	@Test
 	public void test000() {
-		int[] d = ArUtils.createRandomIntArray(1_000_000);		
+		int[] d = ArUtils.randInt(1_000_000);		
 		ConvertArray.intToDouble2(d);
 	}
 	
 	@Test
 	public void test001() {
-		int[] d = ArUtils.createRandomIntArray(1_000_000);		
+		int[] d = ArUtils.randInt(1_000_000);		
 		ConvertArray.toDouble(d);
 	}
 	
 	@Test
 	public void test002() {
-		int[] d = ArUtils.createRandomIntArray(10_000_000);		
+		int[] d = ArUtils.randInt(10_000_000);		
 		ConvertArray.intToDouble2(d);
 	}
 	
 	@Test
 	public void test003() {
-		int[] d = ArUtils.createRandomIntArray(10_000_000);		
+		int[] d = ArUtils.randInt(10_000_000);		
 		ConvertArray.toDouble(d);
 	}
 	
 	@Test
 	public void test004() {
-		int[] ints = ArUtils.createRandomIntArray(100_000);
+		int[] ints = ArUtils.randInt(100_000);
 		
 		int n = 10_000;
 		long ns = 1_000_000_000;

@@ -22,7 +22,7 @@ public class UnitTest_ArUtils {
 	@Test
 	public void test01() {
 		
-		ArUtils.createRandomDoubleArray(SIZE);
+		ArUtils.rand(SIZE);
 		
 	}
 	
@@ -67,7 +67,7 @@ public class UnitTest_ArUtils {
 	@Test
 	public void test050() {
 		
-		double[] d = ArUtils.createRandomDoubleArray(100);
+		double[] d = ArUtils.rand(100);
 		
 		double[] dd = ArUtils.subArray(d, 0, 100);
 		
@@ -78,7 +78,7 @@ public class UnitTest_ArUtils {
 	@Test
 	public void test060() {
 		
-		double[] d = ArUtils.createRandomDoubleArray(100);
+		double[] d = ArUtils.rand(100);
 		
 		double[] dd = ArUtils.subArray(d, 1, 90);
 		
@@ -133,4 +133,30 @@ public class UnitTest_ArUtils {
 		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
 	}
 
+	@Test
+	public void test090() {
+		double[] nans = ArUtils.nan(10);
+		
+		System.out.println(Arrays.toString(nans));
+		
+	}
+	
+	@Test
+	public void test100() {
+		double[] nans = ArUtils.nan(10);
+		double[] rands = ArUtils.rand(10);
+		
+		double[] prods = Vec.prod(rands, nans);
+		
+		System.out.println(Arrays.toString(prods));
+		
+	}
+	
+	@Test
+	public void test110() {
+		
+		double[] logspace = ArUtils.logspace(1, 10, 10);
+		System.out.println(Arrays.toString(logspace));
+		
+	}
 }

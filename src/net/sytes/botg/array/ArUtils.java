@@ -148,15 +148,61 @@ public class ArUtils {
 		return ar;
 	}
 	
-	public static int getRandomNumberInRange(int min, int max) {
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
+	/**
+	 * creates a new random double array with values in [0, 1]
+	 * @param n
+	 * @return
+	 */
+	public static double[] rand(int n) {
+		Random r = new Random();
+		double[] ar = new double[n];
+		for (int i = 0; i < n; i++) {
+			ar[i] = r.nextDouble();
 		}
+		return ar;
+	}
+	
+	/**
+	 * creates a new random double array with values in [{@code start},{@code end}]
+	 * @param n
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static double[] rand(int n, double start, double end) {
+		ArUtils.checkForFirstSmallerSecond(start, end);
+		Random r = new Random();
+		double[] ar = new double[n];
+		for (int i = 0; i < n; i++) {
+			ar[i] = (end - start) * r.nextDouble() + start;
+		}
+		return ar;
+	}
+	
+	/**
+	 * returns a 2D matrix with random values in [0, 1] of size [{@code n},{@code m}]
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static double[][] rand(int n, int m){
+		Random r = new Random();
+		double[][] ar = new double[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				ar[i][j] = r.nextDouble();
+			}
+		}
+		return ar;
+	}
+	
+	public static int randInt(int min, int max) {
+		ArUtils.checkForFirstSmallerSecond(min, max);
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
 	
-	public static int[] getRandomNumberInRange(int n, int min, int max) {
+	public static int[] randInt(int n, int min, int max) {
 		if (min >= max) {
 			throw new IllegalArgumentException("max must be greater than min");
 		}
@@ -168,27 +214,13 @@ public class ArUtils {
 		return rInts;
 	}
 	
-	public static double getRandomDoubleInRange(double min, double max) {
+	public static double rand(double min, double max) {
 		Random r = new Random();
 		double randomValue = min + (max - min) * r.nextDouble();
 		return randomValue;
 	}
 	
-	public static double[] createRandomDoubleArray(int size) {
-		double[] data;
-		if (size < BETTER_OF_AS_STREAM_SIZE) {
-			data = new double[size];
-			Random r = new Random();
-			for (int i = 0; i < size; i++) {
-				data[i] = r.nextDouble();
-			}
-		} else {
-			data = new Random().doubles(size).toArray();
-		}
-		return data;
-	}
-	
-	public static int[] createRandomIntArray(int size) {
+	public static int[] randInt(int size) {
 		int[] data;
 		if (size < BETTER_OF_AS_STREAM_SIZE) {
 			data = new int[size];
@@ -291,6 +323,22 @@ public class ArUtils {
 	}
 	
 	/**
+	 * Create vector of {@code n} logarithmically spaced values between {@code start} and {@code end} 
+	 * @param start
+	 * @param end
+	 * @param n
+	 * @return
+	 */
+	public static double[] logspace(double start, double end, int n) {
+		double[] ar = new double[n];
+		double step = (end - start) / (n - 1);
+		for (int i = 0; i < n; i++) {
+			ar[i] = Math.pow(start + step * i, 10);
+		}
+		return ar;
+	}
+	
+	/**
 	 * creates a meshgrid of the two input vectors
 	 * @param x
 	 * @param y
@@ -319,9 +367,14 @@ public class ArUtils {
 		
 	}
 	
-	public static double[] nan(int size) {
-		double[] data = new double[size];
-		for (int i = 0; i < size; i++) {
+	/**
+	 * returns a vector with NaN values of length {@code n}
+	 * @param size
+	 * @return
+	 */
+	public static double[] nan(int n) {
+		double[] data = new double[n];
+		for (int i = 0; i < n; i++) {
 			data[i] = Double.NaN;
 		}
 		return data;

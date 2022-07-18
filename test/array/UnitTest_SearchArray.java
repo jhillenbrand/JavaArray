@@ -5,16 +5,14 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import net.sytes.botg.array.ArUtils;
-import net.sytes.botg.array.ConvertArray;
 import net.sytes.botg.array.SearchArray;
-import net.sytes.botg.array.math.Vec;
 import net.sytes.botg.array.math.Vec2Mat;
 
 public class UnitTest_SearchArray {
 
 	double[] ar = {100, Double.NaN, 129812.9, 120.2174914, Double.NaN};
-	double[] ar1 = ArUtils.createRandomDoubleArray(1000);
-	double[] ar2 = ArUtils.createRandomDoubleArray(998);
+	double[] ar1 = ArUtils.rand(1000);
+	double[] ar2 = ArUtils.rand(998);
 	
 	@Test
 	public void test01() {

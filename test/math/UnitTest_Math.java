@@ -29,7 +29,7 @@ public class UnitTest_Math {
 	
 	@Test
 	public void test02() {
-		double[] data = ArUtils.createRandomDoubleArray(10000);
+		double[] data = ArUtils.rand(10000);
 		
 	}
 	
@@ -160,7 +160,7 @@ public class UnitTest_Math {
 	public void test018() {
 		int n = 1_000_000;
 		
-		double[] ar1 = ArUtils.createRandomDoubleArray(1_000);
+		double[] ar1 = ArUtils.rand(1_000);
 		
 		long st = System.nanoTime();
 		double s = 0;

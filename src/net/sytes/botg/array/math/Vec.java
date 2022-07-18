@@ -13,6 +13,54 @@ public class Vec {
 	}
 	
 	/**
+	 * 1D linear interpolation
+	 * @param x original x-value vector
+	 * @param y original y-value vector
+	 * @param xi new x-value vector to interpolate for
+	 * @return yi interpolated y-values as double[] 
+	 */
+	public static double[] interp1Lin(double[] x, double[] y, double[] xi) {
+		// TODO finish impl
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(y);
+		ArUtils.checkForNull(xi);
+		ArUtils.checkForEqualDimensions(x, y);
+		int n = x.length;
+		int ni = xi.length;
+		double[] yi = new double[ni];
+		
+		int i = 0;
+		int j = 0;
+		
+		double dx = 0.0;
+		double dy = 0.0;
+		double dxi = 0.0;
+		
+		// check if xi starts lower than x, then interpolate accordingly
+		while(xi[i] <= x[j]) {
+			dx = x[j + 1] - x[j];
+			dy = y[j + 1] - y[j];
+			dxi = x[j] - xi[i];
+			yi[i] = y[i] - dy * dxi / dx;
+			++i;
+		}
+		
+		++j;
+		
+		// go through rest
+		while (i < n) {
+			
+			// find closest lower x
+			
+			// find closest upper x
+			
+			++i;
+		}
+		
+		return yi;
+	}
+	
+	/**
 	 * removes {@code start} samples from the beginning of the {@code ar} and {@code end} samples from the end of {@code ar} 
 	 * <br>and returns the result as new double[] array 
 	 * @param start
