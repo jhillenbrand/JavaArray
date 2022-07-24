@@ -373,6 +373,29 @@ public class Vec2Scalar {
 		}
 		return Math.sqrt(sum);
 	}
+	
+	/**
+	 * computation of area of triangle defined by 3 points [x1, y1], [x2, y2] and [x3, y3]
+	 * and Heron' Formula (<a href="https://en.wikipedia.org/wiki/Heron%27s_formula">Link</a>)
+	 * <br>
+	 * <a href="https://en.wikipedia.org/wiki/File:Triangle_with_notations_2_without_points.svg">Triangle</a>
+	 * <br>
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param x3
+	 * @param y3
+	 * @return
+	 */
+	public static double areaOfTriangle(double[] p1, double[] p2, double[] p3) {
+		double a = distance(p1, p2);
+		double b = distance(p2, p3);
+		double c = distance(p3, p1);
+		double s = (a + b + c) / 2;
+		double A = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+		return A;
+	}
 		
 	/**
 	 * computes the mean squared error between two double arrays

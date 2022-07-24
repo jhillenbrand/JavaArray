@@ -2,13 +2,15 @@ package math;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
+import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.math.Vec;
 import net.sytes.botg.array.math.Vec2Mat;
 
 public class UnitTest_Vec {
-
+	
 	
 	@Test
 	public void test000() {
@@ -51,6 +53,55 @@ public class UnitTest_Vec {
 		
 		System.out.println(Arrays.toString(x));
 		System.out.println(Arrays.toString(y));
+	}
+	
+	@Test
+	public void test040() {
+		double[] ar = ArUtils.linspace(0.0, 10.0, 100);
+		
+		double[] ar2 = Vec.downsampleBruteForce(ar, 100);
+		
+		System.out.println(Arrays.toString(ar2));
+	}
+	
+	@Test
+	public void test041() {
+		double[] ar = ArUtils.linspace(0.0, 10.0, 100);
+		
+		double[] ar2 = Vec.downsampleBruteForce(ar, 50);
+		System.out.println(Arrays.toString(ar2));
+	}
+	
+	@Test
+	public void test042() {
+		double[] ar = ArUtils.linspace(0.0, 10.0, 100);
+		
+		double[] ar2 = Vec.downsampleBruteForce(ar, 33);
+		System.out.println(Arrays.toString(ar2));
+	}
+	
+	@Test
+	public void test043() {
+		
+		int f = 11;
+		
+		double[] ar = ArUtils.linspace(0.0, 10.0, 100);
+		
+		double[] ar2 = Vec.downsampleBruteForce(ar, ar.length / f);
+		
+		System.out.println(Arrays.toString(ar2));
+	}
+	
+	@Test
+	public void test044() {
+		
+		int m = 5;
+		
+		double[] ar = {0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0};
+		
+		double[] ar2 = Vec.downsampleMax(ar, m);
+		
+		System.out.println(Arrays.toString(ar2));
 	}
 	
 }

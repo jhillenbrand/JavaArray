@@ -7,6 +7,10 @@ import net.sytes.botg.array.SearchArray;
 
 public class Vec {
 
+	public enum DownsamplingAlgorithm {
+		BRUTE_FORCE, MAX, MEAN, LARGEST_TRIANGLE_THREE_BUCKETS, LARGEST_TRIANGLE_ONE_BUCKET, LONGEST_LINE_BUCKET
+	}
+	
 	// Suppress default constructor for noninstantiability
 	private Vec() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
@@ -122,6 +126,170 @@ public class Vec {
 			z[i] = (x[i] - mean) / sigma;
 		}
 		return z;
+	}
+	
+	/**
+	 * downsamples an array using the specified {@code algorithm}
+	 * <br><a href="https://skemman.is/bitstream/1946/15343/3/SS_MSthesis.pdf">Link</a>
+	 * @param ar
+	 * @param threshold
+	 * @param algorithm Options -> BRUTE_FORCE | MAX | MEAN | LARGEST_TRIANGLE_THREE_BUCKETS | LARGEST_TRIANGLE_ONE_BUCKET | LONGEST_LINE_BUCKET
+	 * @return double[]
+	 */
+	public static double[] downsample(double[] ar, int m, DownsamplingAlgorithm algorithm) {		
+		switch(algorithm) {
+			case BRUTE_FORCE:
+				return downsampleBruteForce(ar, ar.length / m);
+				
+			case LARGEST_TRIANGLE_ONE_BUCKET:
+				return downsampleLargestTriangleOneBucket(ar, m);
+				
+			case LARGEST_TRIANGLE_THREE_BUCKETS:
+				throw new UnsupportedOperationException(algorithm  + " is not implemented yet.");
+				
+			case LONGEST_LINE_BUCKET:
+				throw new UnsupportedOperationException(algorithm  + " is not implemented yet.");
+				
+			case MAX:
+				return downsampleMax(ar, m);
+				
+			case MEAN:
+				return downsampleMean(ar, m);
+				
+			default:
+				throw new UnsupportedOperationException(algorithm  + " is not implemented yet.");		
+		}
+	}
+	
+	/**
+	 * downsamples an array {@code ar} by returning only every n-th value in new array, where n = ar.length / m
+	 * <br>this is a brute force approach, very fast but quality depends on data, works better with smooth data
+	 * @param ar
+	 * @param n
+	 * @return
+	 */
+	public static double[] downsampleBruteForce(double[] ar, int m) {
+		ArUtils.checkForNull(ar);
+		int f = ar.length / m;
+		ArUtils.checkForIndicesInBounds(ar, f - 1, 0);
+		int n = ar.length;	
+		double[] newAr = new double[m];
+		// retain first and last sample
+		newAr[0] = ar[0];
+		newAr[m - 1] = ar[n - 1]; 
+		int j = 0; 
+		int imax = ar.length - m % 2 - f;
+		for (int i = f; i < imax; i += f) {
+			++j;
+			newAr[j] = ar[i];
+		}
+		return newAr;
+	}
+	
+	/**
+	 * downsampling {@code ar} to an array of size {@code m}, where the maximum value in a window is used as representative value
+	 * @param ar
+	 * @param m
+	 * @return
+	 */
+	public static double[] downsampleMax(double[] ar, int m) {
+		int n = ar.length;		
+		double[] newAr = new double[m];
+		int winSize = ar.length / m;
+		int w = 0;
+		// retain first and last sample
+		newAr[0] = ar[0];
+		newAr[m - 1] = ar[n - 1];
+		int j = 1;
+		double max = Double.MIN_VALUE;
+		for (int i = 1; i < n - 1; i++) {
+			if (w >= winSize) {
+				newAr[j] = max;
+				++j;
+				w = 0;
+				max = Double.MIN_VALUE;
+			}
+			if (ar[i] > max) {
+				max = ar[i];
+			}
+			++w;
+		}		
+		return newAr;
+	}
+	
+	/**
+	 * downsampling {@code ar} to an array of size {@code m}, where the mean value in a window is used as representative value
+	 * @param ar
+	 * @param m
+	 * @return
+	 */
+	public static double[] downsampleMean(double[] ar, int m) {
+		int n = ar.length;		
+		double[] newAr = new double[m];
+		int winSize = ar.length / m;
+		int w = 0;
+		// retain first and last sample
+		newAr[0] = ar[0];
+		newAr[m - 1] = ar[n - 1];
+		int j = 1;
+		double sum = 0.0;
+		for (int i = 1; i < n - 1; i++) {
+			if (w >= winSize) {
+				newAr[j] = sum / winSize;
+				++j;
+				w = 0;
+				sum = 0;
+			}
+			sum = sum + ar[i];
+			++w;
+		}		
+		return newAr;
+	}
+	
+	/**
+	 * downsampling {@code ar} to an array of size {@code m} using the Largest-Triangle-One-Bucket Algorithm
+	 * <br><a href="https://skemman.is/bitstream/1946/15343/3/SS_MSthesis.pdf">Link</a>
+	 * @param ar original array
+	 * @param m number of buckets | new size of output array
+	 * @return
+	 */
+	public static double[] downsampleLargestTriangleOneBucket(double[] ar, int m) {
+		int n = ar.length;		
+		double[] newAr = new double[m];
+		// define bucket/window size
+		int winSize = ar.length / m;
+		int w = 0;
+		// retain first and last sample
+		newAr[0] = ar[0];
+		newAr[m - 1] = ar[n - 1];
+		int j = 1;
+		double maxArea = 0;
+		double area = 0;
+		int maxAreaInd = 1;
+		for (int i = 1; i < n - 1; i++) {
+			// assemble neighbouring points
+			double[] p1 = new double[] {0.0, ar[i - 1]}; 
+			double[] p2 = new double[] {1.0, ar[i]};
+			double[] p3 = new double[] {2.0, ar[i + 1]};
+			// compute triangle area for these points
+			area = Vec2Scalar.areaOfTriangle(p1, p2, p3);
+			
+			// check if switching to next bucket | window			
+			if (w >= winSize) {
+				newAr[j] = ar[maxAreaInd];
+				++j;
+				w = 0;
+				maxArea = 0;
+				maxAreaInd = i;
+			}
+			if (area > maxArea) {
+				// keep max area and index 
+				maxArea = area;
+				maxAreaInd = i;
+			}
+			++w;
+		}		
+		return newAr;
 	}
 	
 	/**
