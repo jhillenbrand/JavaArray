@@ -31,14 +31,14 @@ unit tests with examples can be found here:
 
 The repo also contains code samples for MATLAB and C (compiled under Win10), that compare execution time with the UnitTest_ScalarProd:
 <br>for comparison the scalar product of two double arrays with 10e6 elements is computed
-* Java		-> 20.000 - 35.000 µs
-* C    		-> 25.000 - 45.000 µs
-* MATLAB	-> 300.000 - 1e6 µs
+* Java		-> 20.000 - 35.000 Âµs
+* C    		-> 25.000 - 45.000 Âµs
+* MATLAB	-> 300.000 - 1e6 Âµs
 
 <br>I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that there's hope for doing my signal processing in Java (:P)
 
 ## Documentation
-Please refer to [doc](doc/index.html) for an overview of all classes and methods
+Please download and see the attached [doc](doc/) folder for an overview of all classes and methods
 
 ## Releases
 this repo contains *.jar releases for every release/snapshot branch (except master), there will be a downloadable *.jar, that can be intergrated into your project, if you do not wish to compile the src yourself.
