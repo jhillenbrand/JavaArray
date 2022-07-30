@@ -159,6 +159,24 @@ public class SearchArray {
 	}
 	
 	/**
+	 * returns the index of {@code str} found in {@code ar}
+	 * <br>if {@code ar} does not contain {@code str}, then -1 is returned 
+	 * @param ar
+	 * @param str
+	 * @return
+	 */
+	public static int indexAt(final String[] ar, final String str) {
+		int i = -1;
+		for (int s = 0; s < ar.length; s++) {
+			if (ar[s].contentEquals(str)) {
+				i = s;
+				break;
+			}
+		}
+		return i;
+	}
+	
+	/**
 	 * method returns true/false whether any of the array elements ar are contained in String s
 	 * @param s
 	 * @param ar
