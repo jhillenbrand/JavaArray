@@ -104,4 +104,24 @@ public class UnitTest_Vec {
 		System.out.println(Arrays.toString(ar2));
 	}
 	
+	@Test
+	public void test050() {
+		double[] ar = {0.0, 1.0, 2.0, 1.0, 0.0, -1.0, -1.0, 1.0, 0.0, 1.0};
+		
+		int[] inds = Vec.zeroCrossings(ar);
+		
+		System.out.println(Arrays.toString(inds));
+		
+	}
+	
+	@Test
+	public void test051() {
+		double[] ar = {0.0, 1.0, 2.0, 1.0, 0.0, -1.0, -1.0, 1.0, 0.0, 1.0};
+		
+		int[] inds = Vec.zeroCrossings(ar, 3);
+		
+		System.out.println(Arrays.toString(inds));
+		
+	}
+	
 }

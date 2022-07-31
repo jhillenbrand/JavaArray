@@ -113,7 +113,10 @@ public class SearchArray {
 	 * @param data
 	 * @return double[]
 	 */
-	public static double[] elementsAt(boolean[] inds, double[] data) {
+	public static double[] elementsAt(double[] data, boolean[] inds) {
+		if (data.length != inds.length) {
+			throw new IllegalArgumentException("length of data and inds array must have same length");
+		}
 		int n = Vec2Scalar.sum(inds);
 		double[] newData = new double[n];
 		int j = 0;
@@ -124,6 +127,21 @@ public class SearchArray {
 			}
 		}
 		return newData;
+	}
+	
+	/**
+	 * returns the elements at indices {@code inds} in {@code ar} into new array
+	 * @param inds
+	 * @param data
+	 * @return double[]
+	 */
+	public static double[] elementsAt(double[] ar, int[] inds) {
+		int n = inds.length;
+		double[] ar2 = new double[n];
+		for (int i = 0; i < n; i++) {
+			ar2[i] = ar[inds[i]];
+		}
+		return ar2;
 	}
 	
 	/**

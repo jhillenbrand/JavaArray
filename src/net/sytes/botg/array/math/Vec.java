@@ -1,6 +1,8 @@
 package net.sytes.botg.array.math;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.SearchArray;
@@ -342,7 +344,7 @@ public class Vec {
 	 * @param data
 	 * @return
 	 */
-	public static double[] rectify(double[] data) {
+	public static double[] rectify(final double[] data) {
 		return abs(removeOffset(data));
 	}
 	
@@ -351,7 +353,7 @@ public class Vec {
 	 * @param data
 	 * @return
 	 */
-	public static double[] removeOffset(double[] data) {
+	public static double[] removeOffset(final double[] data) {
 		return offset(data, -Vec2Scalar.mean(data));
 	}
 	
@@ -361,7 +363,7 @@ public class Vec {
 	 * @return double[]
 	 */
 	public static double[] removeNaN(double[] data) {
-		return SearchArray.elementsAt(SearchArray.isNaN(data), data);
+		return SearchArray.elementsAt(data, SearchArray.isNaN(data));
 	}
 	
 	/**
@@ -410,20 +412,29 @@ public class Vec {
 	
 	/**
 	 * returns the indices of the original array {@code ar}, where a zero crossing happened
+	 * <br>Example:
+	 * <br>[0.0, 1.0, 2.0, 1.0, 0.0, -1.0, -1.0, 1.0, 0.0, 1.0] --> [5, 7]
 	 * @param ar
 	 * @return
 	 */
-	public int[] locateZeroCrossings(double[] ar) {
-		/* COUNTZEROCROSSINGS returns the number of zero crossings in
-        signal and their location
-        signal = signal(:);
-        signedSignal = sign(signal);
-        shiftedSignedSignal = [signedSignal(1); signedSignal(1 : end - 1)];
-        diffSignedSignal = shiftedSignedSignal + signedSignal;
-        inds = (diffSignedSignal == 0);
-        count = sum(inds);
-        */		
-		return null;
+	public static int[] zeroCrossings(double[] ar) {
+		int[] inds = new int[ar.length];
+		int c = 0;
+		double lastSign = Scalar.sign(ar[0]);
+		for (int i = 1; i < ar.length - 1; i++) {
+			double sign = Scalar.sign(ar[i]);
+			if ((sign == 1.0 & lastSign == -1.0) || (sign == -1.0 & lastSign == 1.0)) {
+				inds[c] = i;
+				++c;
+				lastSign = sign;
+			} else {
+				if (sign != 0.0) {
+					lastSign = sign;
+				}
+			}
+		}
+		
+		return ArUtils.subArray(inds, c - 1);
 	}
 	
 	/**
@@ -433,9 +444,28 @@ public class Vec {
 	 * @param minDistance
 	 * @return
 	 */
-	public int[] locateZeroCrossings(double[] ar, int minDistance) {
+	public static int[] zeroCrossings(double[] ar, int minDistance) {
+		int[] inds = new int[ar.length];
+		int c = 0;
+		double lastSign = Scalar.sign(ar[0]);
+		int lastI = 0;
+		for (int i = 1; i < ar.length - 1; i++) {
+			double sign = Scalar.sign(ar[i]);
+			if ((sign == 1.0 & lastSign == -1.0) || (sign == -1.0 & lastSign == 1.0)) {
+				if (i - lastI >= minDistance) {					
+					inds[c] = i;
+					++c;
+					lastI = i;					
+				}
+				lastSign = sign;				
+			} else {
+				if (sign != 0.0) {
+					lastSign = sign;
+				}
+			}
+		}
 		
-		return null;
+		return ArUtils.subArray(inds, c - 1);
 	}
 	
 	/**

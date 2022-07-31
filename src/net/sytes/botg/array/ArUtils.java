@@ -397,9 +397,33 @@ public class ArUtils {
 	 * @param e
 	 * @return
 	 */
-	public static double[] subArray(double[] ar, int s, int e) {
+	public static double[] subArray(final double[] ar, int s, int e) {
 		checkForIndicesInBounds(ar, s, e);
 		double[] ar2 = new double[e - s + 1];
+		System.arraycopy(ar, s, ar2, 0, ar2.length);
+		return ar2;
+	}
+	
+	/**
+	 * returns a sub array starting at 0 and ending at index e from ar
+	 * @param ar
+	 * @param e
+	 * @return
+	 */
+	public static int[] subArray(int[] ar, int e) {
+		return subArray(ar, 0, e);
+	}
+	
+	/**
+	 * returns a sub array starting at index s and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static int[] subArray(final int[] ar, int s, int e) {
+		checkForIndicesInBounds(ar, s, e);
+		int[] ar2 = new int[e - s + 1];
 		System.arraycopy(ar, s, ar2, 0, ar2.length);
 		return ar2;
 	}
@@ -559,6 +583,18 @@ public class ArUtils {
 	}
 	
 	/**
+	 * checks if the start and end indices are within array bounds
+	 * @param ar
+	 * @param s
+	 * @param e
+	 */
+	public static void checkForIndicesInBounds(int[] ar, int s, int e) {
+		if (s < 0 || e >= ar.length) {
+			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+	
+	/**
 	 * checks if the given {@code inds} are greater than 0
 	 * @param inds
 	 */
@@ -591,6 +627,30 @@ public class ArUtils {
 		}
 	}
 
+	/**
+	 * prints a 1D Object[] array
+	 * @param ar
+	 */
+	public static void print(final Object[] ar) {
+		System.out.println(Arrays.toString(ar));
+	}
+	
+	/**
+	 * prints a 1D double[] array
+	 * @param ar
+	 */
+	public static void print(final double[] ar) {
+		System.out.println(Arrays.toString(ar));
+	}
+	
+	/**
+	 * prints a 1D int[] array
+	 * @param ar
+	 */
+	public static void print(final int[] ar) {
+		System.out.println(Arrays.toString(ar));
+	}
+	
 	/**
 	 * prints the 2D object array
 	 * @param ar
