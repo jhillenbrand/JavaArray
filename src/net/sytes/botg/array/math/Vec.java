@@ -1,8 +1,6 @@
 package net.sytes.botg.array.math;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.SearchArray;
@@ -16,6 +14,42 @@ public class Vec {
 	// Suppress default constructor for noninstantiability
 	private Vec() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
+	}
+	
+	/**
+	 * apply a highpass on {@code x} defined by {@code dt} and {@code fc}
+	 * @param x
+	 * @param dt equidistant time period between samples
+	 * @param f_c cutoff frequency
+	 * @return
+	 */
+	public static double[] highpass(double[] x, double dt, double f_c) {
+		int L = x.length;
+		double[] x_f = new double[L];
+		double alpha = 1 / (1 + 2 * Math.PI * f_c * dt);
+		x_f[0] = x[0];
+		for (int i = 1; i < L; i++) {
+			x_f[i] = alpha * x_f[i - 1] + alpha * (x[i] - x[i - 1]);
+		}
+		return x_f;
+	}
+	
+	/**
+	 * apply a lowpass on {@code x} defined by {@code dt} and {@code fc}
+	 * @param x
+	 * @param dt equidistant time period between samples
+	 * @param f_c cutoff frequency
+	 * @return
+	 */
+	public static double[] lowpass(double[] x, double dt, double f_c) {
+		int L = x.length;
+		double[] x_f = new double[L];
+		double alpha = dt / (dt + 1 / (2 * Math.PI * f_c));
+		x_f[0] = alpha * x[0];
+		for (int i = 1; i < L; i++) {
+			x_f[i] = alpha * x[i] + (1 - alpha) * x_f[i - 1];
+		}
+		return x_f;
 	}
 	
 	/**
