@@ -37,13 +37,22 @@ public class ConvertArray {
 	 * @param d2
 	 * @return
 	 */
-	public static double[] concat(double[] d1, double[] d2) {
-		int len1 = d1.length;
-	    int len2 = d2.length;
-	    double[] dn = new double[len1 + len2];
-	    System.arraycopy(d1, 0, dn, 0, len1);
-	    System.arraycopy(d2, 0, dn, len1, len2);	
-		return dn;
+	public static double[] concat(double[] ar1, double[] ar2) {
+		int len1 = ar1.length;
+	    int len2 = ar2.length;
+	    double[] ar = new double[len1 + len2];
+	    System.arraycopy(ar1, 0, ar, 0, len1);
+	    System.arraycopy(ar2, 0, ar, len1, len2);	
+		return ar;
+	}
+	
+	public static int[] concat(int[] ar1, int[] ar2) {
+		int len1 = ar1.length;
+	    int len2 = ar2.length;
+	    int[] ar = new int[len1 + len2];
+	    System.arraycopy(ar1, 0, ar, 0, len1);
+	    System.arraycopy(ar2, 0, ar, len1, len2);	
+		return ar;
 	}
 	
 	/**

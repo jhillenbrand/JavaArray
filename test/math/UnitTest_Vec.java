@@ -124,4 +124,26 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test060() {
+		
+		double[] ar = {0.0, 0.0, -1.0, -0.5, 0.0, 1.5, 2.0, 2.4, 2.3, 2.3, 2.8, 1.0};
+		
+		int[] extrema = Vec.findLocalExtrema(ar);
+		
+		System.out.println(Arrays.toString(extrema));
+		
+	}
+	
+	@Test
+	public void test061() {
+		
+		double[] ar = {0.0, 0.0, -1.0, -0.5, 0.0, 1.5, 2.0, 2.4, 2.3, 2.3, 2.8, 1.0};
+		
+		int[] extrema = Vec.findLocalExtrema(ar, 5);
+		
+		System.out.println(Arrays.toString(extrema));
+		
+	}
+	
 }
