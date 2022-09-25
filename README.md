@@ -16,6 +16,7 @@ Java project containing classes with static methods to manipulate arrays, doing 
 and Math functions for signal processing and feature extractions and many more ...
 * [Scalar](src/net/sytes/botg/array/math/Scalar.java)
 * [Vec](src/net/sytes/botg/array/math/Vec.java)
+  * ```` public static double[] highpass(double[] x, double dt, double f_c) ````
 * [Vec2Mat](src/net/sytes/botg/array/math/Vec2Mat.java)
 * [Vec2Scalar](src/net/sytes/botg/array/math/Vec2Scalar.java)
 
