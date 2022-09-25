@@ -17,6 +17,13 @@ and Math functions for signal processing and feature extractions and many more .
 * [Scalar](src/net/sytes/botg/array/math/Scalar.java)
 * [Vec](src/net/sytes/botg/array/math/Vec.java)
   * ```` public static double[] highpass(double[] x, double dt, double f_c) ````
+  * ```` public static double[] lowpass(double[] x, double dt, double f_c) ````
+  * ```` public static double[] normalize(double[] x) ````
+  * ```` public static double[] zscore(double[] x) ````
+  * ```` public static double[] downsample(double[] ar, int m, DownsamplingAlgorithm algorithm) ````
+  * ```` public static double[] upsample2(double[] x, int n) ````
+  * ```` public static int[] findLocalExtrema(double[] x, int minDistance) ````
+  * ```` public static double[] diff(double[] ar) ````
 * [Vec2Mat](src/net/sytes/botg/array/math/Vec2Mat.java)
 * [Vec2Scalar](src/net/sytes/botg/array/math/Vec2Scalar.java)
 
