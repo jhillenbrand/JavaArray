@@ -207,12 +207,14 @@ public class Vec2Scalar {
 	 * @return
 	 */
 	public static double median(double ar[]) {
-		Arrays.sort(ar);
+		// array must be cloned before sorting, otherwise the original array is sorted
+		double[] sAr = ar.clone();
+		Arrays.sort(sAr);
 		double med = 0;
-		if (ar.length % 2 == 0) {
-		    med = (ar[ar.length / 2] + ar[ar.length / 2 - 1]) / 2;
+		if (sAr.length % 2 == 0) {
+		    med = (sAr[sAr.length / 2] + sAr[sAr.length / 2 - 1]) / 2;
 		} else {
-		    med = ar[ar.length / 2];
+		    med = sAr[sAr.length / 2];
 		}
 		return med;
 	}
