@@ -207,17 +207,14 @@ public class Vec {
 	public static double[] downsampleBruteForce(double[] ar, int m) {
 		ArUtils.checkForNull(ar);
 		int f = ar.length / m;
-		ArUtils.checkForIndicesInBounds(ar, f - 1, 0);
 		int n = ar.length;	
 		double[] newAr = new double[m];
 		// retain first and last sample
 		newAr[0] = ar[0];
 		newAr[m - 1] = ar[n - 1]; 
 		int j = 0; 
-		int imax = ar.length - m % 2 - f;
-		for (int i = f; i < imax; i += f) {
-			++j;
-			newAr[j] = ar[i];
+		for (int i = 1; i < m - 1; i++) {
+			newAr[i] = ar[i * f];
 		}
 		return newAr;
 	}
