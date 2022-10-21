@@ -1,8 +1,11 @@
 package net.sytes.botg.array.math;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import net.sytes.botg.array.ArUtils;
+import net.sytes.botg.array.ConvertArray;
 import net.sytes.botg.array.SearchArray;
 
 public class Vec {
@@ -53,6 +56,7 @@ public class Vec {
 	}
 	
 	/**
+	 * TODO not implemented
 	 * 1D linear interpolation
 	 * @param x original x-value vector
 	 * @param y original y-value vector
@@ -497,6 +501,122 @@ public class Vec {
 		}
 		
 		return ArUtils.subArray(inds, c - 1);
+	}
+	
+	/**
+	 * finds local extrema in the source array {@code x} and returns their position as int[] array
+	 * @param x
+	 * @return
+	 */
+	public static int[] findLocalExtrema(double[] x) {
+		int[] extremeInds = new int[x.length - 2];
+		int c = 0;
+		double s = 0.0;
+		double m = 0.0;
+		double e = 0.0;
+		for (int i = 0; i < extremeInds.length; i++) {
+			s = x[i];
+			m = x[i + 1];
+			e = x[i + 2];
+			// differentiate cases
+			// a) local maximum
+			if (s < m && m > e) {
+				extremeInds[c] = i + 1;
+				++c;
+				continue;
+			}			
+			// b) local minimum
+			if (s > m && m < e) {
+				extremeInds[c] = i + 1;
+				++c;
+				continue;
+			}
+		}		
+		return ArUtils.subArray(extremeInds, c - 1);
+	}
+	
+	/**
+	 * Finds local extrema in the source array {@code x} and returns their position as int[] array.
+	 * <br>As an additional constraint minima and maxima must be at least minDistance elements away from each other to be included.
+	 * <br>If two or more extrema are too close to each other, the more extreme element is chosen.
+	 * <br>
+	 * <br>Remark: findLocalExtrema(x, 0) ^= findLocalExtrema(x)
+	 * @param x
+	 * @param minDistance
+	 * @return
+	 */
+	public static int[] findLocalExtrema(double[] x, int minDistance) {
+		int[] minInds = new int[(x.length - 2) / 2];
+		int[] maxInds = new int[(x.length -2) / 2];
+		int c1 = 0;
+		int c2 = 0;
+		
+		double s = 0.0;
+		double m = 0.0;
+		double e = 0.0;
+		
+		double lastMax = Double.NEGATIVE_INFINITY;
+		double lastMin = Double.POSITIVE_INFINITY;
+		
+		int remDistance = minDistance;
+		boolean minInDistance = false;
+		boolean maxInDistance = false;
+		
+		for (int i = 0; i < x.length - 2; i++) {
+			
+			s = x[i];
+			m = x[i + 1];
+			e = x[i + 2];
+			
+			// differentiate cases
+			// a) local maximum
+			if (s < m && m > e) {
+				if (lastMax < x[i + 1]) {
+					maxInds[c1] = i + 1;
+					lastMax = x[i + 1];
+					maxInDistance = true;
+				}
+			}			
+			// b) local minimum
+			if (s > m && m < e) {
+				if (lastMin > x[i + 1]) {
+					minInds[c2] = i + 1;
+					lastMin = x[i + 1];
+					minInDistance = true;
+				}
+			}
+			
+			--remDistance;
+			if (remDistance < 0) {
+				if (maxInDistance) {
+					++c1;
+					maxInDistance = false;
+				}
+				if (minInDistance) {
+					++c2;
+					minInDistance = false;
+				}
+				remDistance = minDistance;
+				lastMax = Double.NEGATIVE_INFINITY;
+				lastMin = Double.POSITIVE_INFINITY;
+			}
+		}
+		
+		if (maxInDistance) {
+			maxInds = ArUtils.subArray(maxInds, c1);
+		} else {
+			maxInds = ArUtils.subArray(maxInds, c1 - 1);
+		}
+		if (minInDistance) {
+			minInds = ArUtils.subArray(minInds, c2);
+		} else {
+			minInds = ArUtils.subArray(minInds, c2 - 1);
+		}
+		
+		int[] extremeInds = ConvertArray.concat(minInds, maxInds);
+		Arrays.sort(extremeInds);
+		
+		return extremeInds;
 	}
 	
 	/**
