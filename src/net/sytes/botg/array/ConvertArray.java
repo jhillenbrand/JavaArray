@@ -111,6 +111,39 @@ public class ConvertArray {
 	}
 	
 	/**
+	 * converts an arbitrary object array into double array
+	 * <br>by brute force parsing and casting the data types back to double
+	 * @param objAr
+	 * @return
+	 */
+	public static double[] parseToDouble(Object[] objAr) {
+		double[] doubles = new double[objAr.length];
+		int i = 0;
+		for (Object o : objAr) {
+			Class<?> clazz = o.getClass();
+			if (clazz.equals(Double.class) || clazz.equals(double.class)) {
+				doubles[i] = (double) o;
+			} else if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
+				doubles[i] = (double) ((int) o);
+			} else if (clazz.equals(Short.class) || clazz.equals(short.class)) {
+				doubles[i] = (double) ((short) o);
+			} else if (clazz.equals(Long.class) || clazz.equals(long.class) || clazz.equals(Long[].class) || clazz.equals(long[].class)) {
+				doubles[i] = (double) ((long) o);
+			} else if (clazz.equals(String.class)) {
+				doubles[i] = Double.parseDouble(o.toString());
+			} else if (clazz.equals(Float.class) || clazz.equals(float.class)) {
+				doubles[i] = (double) ((float) o);
+			} else if (clazz.equals(Boolean.class) || clazz.equals(boolean.class)) {
+				doubles[i] = (((boolean) o) ? 1.0 : 0.0);
+			} else {
+				doubles[i] = Double.NaN;
+			}
+			++i;
+		}
+		return doubles;
+	}
+	
+	/**
 	 * convert object[] to double[] using {@code Arrays.stream}
 	 * @param objAr
 	 * @return
@@ -347,6 +380,11 @@ public class ConvertArray {
         return result;
     }
     
+    /**
+     * wraps an primitive double[] array into its Object wrapper
+     * @param array
+     * @return
+     */
     public static Double[] wrap(final double[] array) {
     	if (array == null) {
             return null;
@@ -444,6 +482,24 @@ public class ConvertArray {
         for (int i = 0; i < array.length; i++) {
             final Integer b = array[i];
             result[i] = (b == null ? valueForNull : b.intValue());
+        }
+        return result;
+    }
+    
+    /**
+     * wraps an primitive int[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Integer[] wrap(final int[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Integer[] result = new Integer[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
         }
         return result;
     }
