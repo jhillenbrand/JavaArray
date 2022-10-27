@@ -384,12 +384,21 @@ public class Vec {
 	}
 	
 	/**
-	 * removes the offset of {@code data}
+	 * removes the offset (mean) of {@code data}
 	 * @param data
 	 * @return
 	 */
 	public static double[] removeOffset(final double[] data) {
 		return offset(data, -Vec2Scalar.mean(data));
+	}
+	
+	/**
+	 * removes the median of {@code data}
+	 * @param data
+	 * @return
+	 */
+	public static double[] removeMedian(final double[] data) {
+		return offset(data, -Vec2Scalar.median(data));
 	}
 	
 	/**
@@ -818,29 +827,43 @@ public class Vec {
 	}
 	
 	/**
-	 * offsets every element in {@code ar} by {@code o}  
+	 * offsets every element in {@code ar} by {@code o} and returns new array
 	 * @param ar
 	 * @param o
 	 * @return double[]
 	 */
-	public static double[] offset(double[] ar, double o) {
+	public static double[] offset(double[] ar, double o) {		
+		double[] newAr = new double[ar.length];
 		for (int i = 0; i <= ar.length - 1; i++) {
-			ar[i] = ar[i] + o;
+			newAr[i] = ar[i] + o;
 		}
-		return ar;
+		return newAr;
 	}
 	
 	/**
-	 * offsets every element in {@code ar} by {@code o} 
+	 * offsets every element in {@code ar} by {@code o}
+	 * @param ar
+	 * @param o
+	 * @return double[]
+	 */
+	public static void offset2(double[] ar, double o) {		
+		for (int i = 0; i <= ar.length - 1; i++) {
+			ar[i] = ar[i] + o;
+		}
+	}
+	
+	/**
+	 * offsets every element in {@code ar} by {@code o} and returns new array
 	 * @param ar
 	 * @param o
 	 * @return
 	 */
 	public static long[] offset(long[] ar, long o) {
+		long[] newAr = new long[ar.length];
 		for (int i = 0; i <= ar.length - 1; i++) {
-			ar[i] = ar[i] + o;
+			newAr[i] = ar[i] + o;
 		}
-		return ar;
+		return newAr;
 	}
 	
 	/**
@@ -849,11 +872,52 @@ public class Vec {
 	 * @param o
 	 * @return
 	 */
-	public static int[] offset(int[] ar, int o) {
+	public static long[] offset2(long[] ar, long o) {
 		for (int i = 0; i <= ar.length - 1; i++) {
 			ar[i] = ar[i] + o;
 		}
 		return ar;
+	}
+	
+	/**
+	 * offsets every element in {@code ar} by {@code o} and returns new array
+	 * @param ar
+	 * @param o
+	 * @return
+	 */
+	public static int[] offset(int[] ar, int o) {
+		int[] newAr = new int[ar.length];
+		for (int i = 0; i <= ar.length - 1; i++) {
+			newAr[i] = ar[i] + o;
+		}
+		return newAr;
+	}
+	
+	/**
+	 * offsets every element in {@code ar} by {@code o} 
+	 * @param ar
+	 * @param o
+	 * @return
+	 */
+	public static int[] offset2(int[] ar, int o) {
+		for (int i = 0; i <= ar.length - 1; i++) {
+			ar[i] = ar[i] + o;
+		}
+		return ar;
+	}
+	
+	/**
+	 * multiplies {@code d} to every element in {@code ar} and returns new array
+	 * @param ar
+	 * @param d
+	 * @return
+	 */
+	public static double[] prod(double[] ar, double d) {
+		double[] newAr = new double[ar.length];
+		for (int i = 0; i <= ar.length - 1; i++) {
+			newAr[i] = ar[i] * d;
+		}
+		return newAr;
 	}
 	
 	/**
@@ -862,7 +926,7 @@ public class Vec {
 	 * @param d
 	 * @return
 	 */
-	public static double[] prod(double[] ar, double d) {
+	public static double[] prod2(double[] ar, double d) {
 		for (int i = 0; i <= ar.length - 1; i++) {
 			ar[i] = ar[i] * d;
 		}
@@ -886,11 +950,24 @@ public class Vec {
 	}
 	
 	/**
-	 * squares every element in {@code ar}
+	 * squares every element in {@code ar} and returns new array
 	 * @param ar
 	 * @return
 	 */
 	public static double[] square(double[] ar) {
+		double[] newAr = new double[ar.length];
+		for (int i = 0; i <= ar.length - 1; i++) {
+			newAr[i] = ar[i] * ar[i];
+		}
+		return newAr;
+	}
+	
+	/**
+	 * squares every element in {@code ar}
+	 * @param ar
+	 * @return
+	 */
+	public static double[] square2(double[] ar) {
 		for (int i = 0; i <= ar.length - 1; i++) {
 			ar[i] = ar[i] * ar[i];
 		}
