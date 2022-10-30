@@ -556,7 +556,7 @@ public class Vec {
 	 */
 	public static int[] findLocalExtrema(double[] x, int minDistance) {
 		int[] minInds = new int[(x.length - 2) / 2];
-		int[] maxInds = new int[(x.length -2) / 2];
+		int[] maxInds = new int[(x.length - 2) / 2];
 		int c1 = 0;
 		int c2 = 0;
 		
@@ -626,6 +626,241 @@ public class Vec {
 		Arrays.sort(extremeInds);
 		
 		return extremeInds;
+	}
+	
+	/**
+	 * finds local maxima in {@code x} and returns their position as int[]
+	 * @param x
+	 * @return
+	 */
+	public static int[] findLocalMaxima(double[] x) {
+		int[] maxInds = new int[x.length - 2];
+		int c = 0;
+		double s = 0.0;
+		double m = 0.0;
+		double e = 0.0;
+		for (int i = 0; i < maxInds.length; i++) {
+			
+			s = x[i];
+			m = x[i + 1];
+			e = x[i + 2];
+			
+			// local maximum
+			if (s < m && m > e) {
+				maxInds[c] = i + 1;
+				++c;
+			}
+		}		
+		return ArUtils.subArray(maxInds, c - 1);
+	}
+	
+	
+	/**
+	 * find local maxima in the source array {@code x} and returns their position as int[] array.
+	 * <br>As an additional constraint maxima must be at least minDistance elements away from each other to be included
+	 * <br>If two or more maxima are too close to each other, the larger element is chosen.
+	 * @param x
+	 * @param minDistance
+	 * @return 
+	 */
+	public static int[] findLocalMaxima(double[] x, int minDistance) {
+		int n = x.length;
+		if (n < minDistance) {
+			throw new IllegalArgumentException("x must contain more elements than minDistance");
+		}
+
+		int[] maxInds = new int[n / minDistance + 1];
+		int c1 = 0;
+		
+		double s = 0.0;
+		double m = 0.0;
+		double e = 0.0;
+		
+		double lastMax = Double.NEGATIVE_INFINITY;
+		int lastMaxInd = Integer.MIN_VALUE;
+		
+		int i = 0;
+		int j = 0;
+		boolean alreadyAdded = false;
+		while (i + minDistance < n) {
+			boolean maxFound = false;
+			for (j = i; j < i + minDistance; j++) {				
+				s = x[j];
+				m = x[j + 1];
+				e = x[j + 2];
+				
+				// find local maximum
+				if (s < m && m > e) {
+					if (lastMax < x[j + 1]) {
+						maxInds[c1] = j + 1;
+						lastMax = x[j + 1];
+						lastMaxInd = j + 1;
+						maxFound = true;
+						break;
+					}
+				}
+			}
+			if (maxFound) {
+				i = lastMaxInd;
+				alreadyAdded = true;
+			} else {
+				i = j;
+				if (alreadyAdded) {
+					++c1;
+					alreadyAdded = false;
+				}
+			}
+		}
+		// go through rest
+		if (n - j > 0) {
+			for (int k = j; k < n - 2; k++) {
+				
+				s = x[k];
+				m = x[k + 1];
+				e = x[k + 2];
+				
+				// find local maximum
+				if (s < m && m > e) {
+					if (lastMax < x[k + 1]) {
+						maxInds[c1] = k + 1;
+						lastMax = x[k + 1];
+						lastMaxInd = k + 1;
+					} else if (k - lastMaxInd > minDistance) {
+						++c1;
+						maxInds[c1] = k + 1;
+						lastMax = x[k + 1];
+						lastMaxInd = k + 1;
+					}
+				}
+			}
+		}
+	
+		maxInds = ArUtils.subArray(maxInds, c1);
+				
+		return maxInds;
+	}
+	
+	/**
+	 * find local maxima in the source array {@code x} and returns their position as int[] array.
+	 * <br>As an additional constraint maxima must be at least minDistance elements away from each other to be included
+	 * <br>If two or more maxima are too close to each other, the larger element is chosen.
+	 * @param x
+	 * @param minDistance
+	 * @return 
+	 */
+	public static int[] findLocalMaxima2(double[] x, int minDistance) {
+		// find all maxima first
+		int[] maxIndsTemp = findLocalMaxima(x);
+		
+		// then sort out the once that are within minDistance of each other
+		int n = x.length;
+		int[] maxInds = new int[(n - 2) / minDistance + 1];
+		int c = 0;
+		
+		double lastMax = Double.NEGATIVE_INFINITY;
+		int lastMaxInd = 0;
+		int ind = 0;
+		double max = 0.0;
+		for (int i = 0; i < maxIndsTemp.length; i++) {
+			ind = maxIndsTemp[i];
+			max = x[maxIndsTemp[i]];
+			if (ind - lastMaxInd > minDistance) {
+				++c;
+				maxInds[c] = ind;
+				lastMax = max;
+				lastMaxInd = ind;
+			} else {
+				if (max > lastMax) {
+					maxInds[c] = ind;
+					lastMax = max;
+					lastMaxInd = ind;
+				}
+			}
+		}
+		
+		maxInds = ArUtils.subArray(maxInds, c);
+		
+		return maxInds;
+	}	
+	
+	/**
+	 * find local minima in the source array {@code x} and returns their position as int[] array.
+	 * <br>As an additional constraint minima must be at least minDistance elements away from each other to be included
+	 * <br>If two or more minima are too close to each other, the larger element is chosen.
+	 * @param x
+	 * @param minDistance
+	 * @return 
+	 */
+	public static int[] findLocalMinima(double[] x, int minDistance) {
+		int n = x.length;
+		if (n < minDistance) {
+			throw new IllegalArgumentException("x must contain more elements than minDistance");
+		}
+
+		int[] minInds = new int[n / minDistance + 1];
+		int c1 = 0;
+		
+		double s = 0.0;
+		double m = 0.0;
+		double e = 0.0;
+		
+		double lastMin = Double.POSITIVE_INFINITY;
+		int lastMinInd = Integer.MIN_VALUE;
+		
+		int i = 0;
+		int j = 0;
+		while (i + minDistance < n) {
+			boolean minFound = false;
+			for (j = i; j < i + minDistance; j++) {				
+				s = x[j];
+				m = x[j + 1];
+				e = x[j + 2];
+				
+				// find local minimum
+				if (s > m && m < e) {
+					if (lastMin > x[j + 1]) {
+						minInds[c1] = j + 1;
+						lastMin = x[j + 1];
+						lastMinInd = j + 1;
+						minFound = true;
+						break;
+					}
+				}
+			}
+			if (minFound) {
+				i = lastMinInd;
+			} else {
+				i = j;
+				++c1;
+			}
+		}
+		// go through rest
+		if (n - j > 0) {
+			for (int k = j; k < n - 2; k++) {
+				
+				s = x[k];
+				m = x[k + 1];
+				e = x[k + 2];
+				
+				// find local maximum
+				if (s > m && m < e) {
+					if (lastMin > x[k + 1]) {
+						minInds[c1] = k + 1;
+						lastMin = x[k + 1];
+						lastMinInd = k + 1;
+					} else if (k - lastMinInd > minDistance) {
+						++c1;
+						minInds[c1] = k + 1;
+						lastMin = x[k + 1];
+						lastMinInd = k + 1;
+					}
+				}
+			}
+		}
+		
+		minInds = ArUtils.subArray(minInds, c1);
+				
+		return minInds;
 	}
 	
 	/**
