@@ -9,7 +9,7 @@ public class COSTransform {
 	 * @return
 	 */
 	public static double[][] rotateX(double[][] xyz, double theta){
-		
+		return null;
 	}
 	
 }
