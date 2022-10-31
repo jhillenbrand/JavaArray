@@ -558,6 +558,14 @@ public class ArUtils {
 		}
 	}
 	
+	public static void checkForNull(double[][] ... ar) {
+		for (int i = 0; i < ar.length; i++) {
+			if (ar[i] == null) {
+				throw new IllegalArgumentException("ar must not be null");
+			}
+		}
+	}
+	
 	public static void checkForEmpty(double[] ar) {
 		if (ar.length == 0) {
 			throw new IllegalArgumentException("ar must not be empty");
@@ -567,6 +575,14 @@ public class ArUtils {
 	public static void checkForEmpty(double[][] ar) {
 		if (ar.length == 0) {
 			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
+	public static void checkForEmpty(double[][] ... ar) {
+		for (int i = 0; i < ar.length; i++) {
+			if (ar.length == 0) {
+				throw new IllegalArgumentException("ar must not be empty");
+			}
 		}
 	}
 	

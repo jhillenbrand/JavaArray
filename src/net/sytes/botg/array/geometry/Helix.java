@@ -48,6 +48,7 @@ public class Helix extends Curve3D {
 			this.yHandle = new FunctionHandle() {
 				@Override
 				public double apply(double t) {
+					// negative sign for left pitch direction
 					return - D / 2.0 * Math.sin(2 * Math.PI * t);
 				}
 			};

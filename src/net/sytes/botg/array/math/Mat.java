@@ -61,37 +61,54 @@ public class Mat {
 		return D_ij;		
 	}
 	
-	public static double[][] norm(double[][] x){
-		int n = x.length;
-		int m = x[0].length;		
-		double xMin = Mat2Scalar.min(x);
-		double xMax = Mat2Scalar.max(x);
+	public static double[][] norm(double[][] X){
+		int n = X.length;
+		int m = X[0].length;		
+		double xMin = Mat2Scalar.min(X);
+		double xMax = Mat2Scalar.max(X);
 		double[][] xn = new double[n][m];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				xn[i][j] = (x[i][j] - xMin) / (xMax - xMin);
+				xn[i][j] = (X[i][j] - xMin) / (xMax - xMin);
 			}
 		}
 		return xn;
-	}
+	} 
 	
 	/**
 	 * normalization of vector {@code x} with zscore
-	 * @param x
+	 * @param X
 	 * @return
 	 */
-	public static double[][] zscore(double[][] x) {
-		ArUtils.checkForEmpty(x);
-		double mean = Mat2Scalar.mean(x);
-		double sigma = Mat2Scalar.variance(x);
-		int n = x.length;
-		int m = x[0].length;
+	public static double[][] zscore(double[][] X) {
+		ArUtils.checkForEmpty(X);
+		double mean = Mat2Scalar.mean(X);
+		double sigma = Mat2Scalar.variance(X);
+		int n = X.length;
+		int m = X[0].length;
 		double[][] z = new double[n][m];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				z[i][j] = (x[i][j] - mean) / sigma;
+				z[i][j] = (X[i][j] - mean) / sigma;
 			}
 		}
 		return z;
-	}	
+	}
+	
+	public static double[][] prod(double[][] X, double[][] Y){
+		ArUtils.checkForNull(X, Y);
+		checkMatrixProdDimensions(X, Y);
+		
+		int n1 = X.length;
+		int m1 = X[0].length;
+		
+		
+		return null;
+	}
+	
+	private static  void checkMatrixProdDimensions(double[][] X, double[][] Y) {
+		if (X[0].length != Y.length) {
+			throw new IllegalArgumentException("Dimension mismatch for matrix multiplication");
+		}
+	}
 }
