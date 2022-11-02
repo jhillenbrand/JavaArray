@@ -1,8 +1,6 @@
 package net.sytes.botg.array.math;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.ConvertArray;

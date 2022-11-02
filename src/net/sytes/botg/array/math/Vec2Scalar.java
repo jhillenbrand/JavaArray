@@ -266,7 +266,7 @@ public class Vec2Scalar {
 	 * @param data
 	 * @return
 	 */
-	public static double varianceCorrected (double [] data) {
+	public static double varianceCorrected(double [] data) {
 		int size = data.length;
 		double mean = mean(data);
 		double variance = 0;
@@ -316,7 +316,7 @@ public class Vec2Scalar {
 	 * @param ar
 	 * @return
 	 */
-	public static double kurtosis (double[] ar) {
+	public static double kurtosis(double[] ar) {
 		int size = ar.length;
 		double mean = mean(ar);
 		double var = variance(ar);
@@ -377,17 +377,48 @@ public class Vec2Scalar {
 	}
 	
 	/**
+	 * computes the norm (length) of the vector {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static double norm(double[] x){
+		double squaredSum = 0.0;
+		for (int i = 0; i < x.length; i++) {
+			squaredSum = squaredSum + x[i] * x[i];
+		}
+		return Math.sqrt(squaredSum);
+	}
+	
+	/**
+	 * computes the norm (length) of the vector defined by [x, y]
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static double norm(double x, double y) {
+		return norm(x, y, 0.0);
+	}
+	
+	/**
+	 * computes the norm (length) of the vector defined by [x, y, z]
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public static double norm(double x, double y, double z) {
+		return Math.sqrt(x * x + y * y + z * z);
+	}
+	
+	/**
 	 * computation of area of triangle defined by 3 points [x1, y1], [x2, y2] and [x3, y3]
 	 * and Heron' Formula (<a href="https://en.wikipedia.org/wiki/Heron%27s_formula">Link</a>)
 	 * <br>
 	 * <a href="https://en.wikipedia.org/wiki/File:Triangle_with_notations_2_without_points.svg">Triangle</a>
 	 * <br>
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
-	 * @param x3
-	 * @param y3
+	 * @param p1
+	 * @param p2
+	 * @param p3
 	 * @return
 	 */
 	public static double areaOfTriangle(double[] p1, double[] p2, double[] p3) {

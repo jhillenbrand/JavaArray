@@ -61,7 +61,37 @@ public class Mat {
 		return D_ij;		
 	}
 	
-	public static double[][] norm(double[][] X){
+	/**
+	 * assuming {@code XYZ} is a matrix with 3 vectors of x-,y-,z-values of a position vector,
+	 * <br>this methods returns the normed vectors
+	 * @param XYZ
+	 * @return
+	 */
+	public static double[][] normVectors(double[][] XYZ){
+		ArUtils.checkForNull(XYZ);
+		ArUtils.checkForEmpty(XYZ);
+		int n = XYZ.length;
+		int m = XYZ[0].length;
+		double[][] XYZ_n = new double[n][m];
+		for (int j = 0; j < m; j++) {
+			double squaredSum = 0.0;
+			for (int i = 0; i < n; i++) {
+				squaredSum = squaredSum + XYZ[i][j] * XYZ[i][j]; 
+			}
+			double vecLen = Math.sqrt(squaredSum);
+			for (int i = 0; i < n; i++) {
+				XYZ_n[i][j] = XYZ[i][j] / vecLen;
+			}
+		}
+		return XYZ_n;
+	}
+	
+	/**
+	 * normalize matrix entries in range from 0 to 1
+	 * @param X
+	 * @return
+	 */
+	public static double[][] normalize(double[][] X){
 		int n = X.length;
 		int m = X[0].length;		
 		double xMin = Mat2Scalar.min(X);
