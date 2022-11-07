@@ -141,4 +141,15 @@ public class Mat {
 			throw new IllegalArgumentException("Dimension mismatch for matrix multiplication");
 		}
 	}
+	
+	/**
+	 * check if both matrices have same dimensions
+	 * @param X
+	 * @param Y
+	 */
+	public static void checkForMatchingDimensions(double[][] X, double[][] Y) {
+		if (X.length != Y.length || X[0].length != Y[0].length) {
+			throw new IllegalArgumentException("Dimension mismatch of matrices");
+		}
+	}
 }

@@ -460,13 +460,13 @@ public class Vec {
 	 * @return
 	 */
 	public static int[] zeroCrossings(double[] ar) {
-		int[] inds = new int[ar.length];
+		int[] z = new int[ar.length];
 		int c = 0;
 		double lastSign = Scalar.sign(ar[0]);
 		for (int i = 1; i < ar.length - 1; i++) {
 			double sign = Scalar.sign(ar[i]);
 			if ((sign == 1.0 & lastSign == -1.0) || (sign == -1.0 & lastSign == 1.0)) {
-				inds[c] = i;
+				z[c] = i;
 				++c;
 				lastSign = sign;
 			} else {
@@ -476,9 +476,9 @@ public class Vec {
 			}
 		}
 		
-		return ArUtils.subArray(inds, c - 1);
+		return ArUtils.subArray(z, c - 1);
 	}
-	
+		
 	/**
 	 * returns the indices of the original array {@code ar}, where a zero crossing happened
 	 * <br>if {@code minDistance} &gt; 0, then additional zerocrossings within this minDistance in indices are ignored
@@ -486,28 +486,67 @@ public class Vec {
 	 * @param minDistance
 	 * @return
 	 */
-	public static int[] zeroCrossings(double[] ar, int minDistance) {
-		int[] inds = new int[ar.length];
+	public static int[] zeroCrossings(double[] x, int minDistance) {
+		// retrieve all zero crossings
+		int[] zTemp = zeroCrossings(x);
+		
+		// then sort out the once that are within minDistance of each other
+		int n1 = (x.length - 2) / minDistance + 1;
+		int n2 = zTemp.length;
+		int[] zInds;
+		if (n2 > n1) {
+			zInds = new int[n1];
+		} else {
+			zInds = new int[n2];
+		}
 		int c = 0;
-		double lastSign = Scalar.sign(ar[0]);
-		int lastI = 0;
-		for (int i = 1; i < ar.length - 1; i++) {
-			double sign = Scalar.sign(ar[i]);
-			if ((sign == 1.0 & lastSign == -1.0) || (sign == -1.0 & lastSign == 1.0)) {
-				if (i - lastI >= minDistance) {					
-					inds[c] = i;
-					++c;
-					lastI = i;					
-				}
-				lastSign = sign;				
+		
+		double lastZGradient = 0.0;
+		int lastZInd = 0;
+		int ind = 0;
+		double zGradient = 0.0;
+		for (int i = 0; i < zTemp.length; i++) {
+			ind = zTemp[i];
+			zGradient = Math.abs(x[ind] - x[ind - 1]); 
+			if (ind - lastZInd > minDistance) {
+				++c;
+				zInds[c] = ind;
+				lastZGradient = zGradient;
+				lastZInd = ind;
 			} else {
-				if (sign != 0.0) {
-					lastSign = sign;
+				if (zGradient > lastZGradient) {
+					zInds[c] = ind;
+					lastZGradient = zGradient;
+					lastZInd = ind;
 				}
 			}
 		}
 		
-		return ArUtils.subArray(inds, c - 1);
+		zInds = ArUtils.subArray(zInds, c);
+		
+		return zInds;		
+	}
+	
+	/**
+	 * detects the period durations of a wavy signal (vibration) by recognizing zero crossings
+	 * <br>in the offset removed signal {@code x} using {@code f_s} as sample rate [Hz]
+	 * <br>if {@code minDistance}  
+	 * @param x
+	 * @param f_s
+	 * @param minDistance
+	 * @return
+	 */
+	public static double[] periodDurationOfVibrations(double[] x, double f_s, int minDistance) {
+		
+		double[] x_2 = removeOffset(x);
+		
+		int[] z = zeroCrossings(x_2, minDistance);
+		
+		// take the sample distance of every 2 neighboring zerocrossings to assume a period duration
+		
+		
+		
+		return null;
 	}
 	
 	/**
@@ -541,91 +580,7 @@ public class Vec {
 		}		
 		return ArUtils.subArray(extremeInds, c - 1);
 	}
-	
-	/**
-	 * Finds local extrema in the source array {@code x} and returns their position as int[] array.
-	 * <br>As an additional constraint minima and maxima must be at least minDistance elements away from each other to be included.
-	 * <br>If two or more extrema are too close to each other, the more extreme element is chosen.
-	 * <br>
-	 * <br>Remark: findLocalExtrema(x, 0) ^= findLocalExtrema(x)
-	 * @param x
-	 * @param minDistance
-	 * @return
-	 */
-	public static int[] findLocalExtrema(double[] x, int minDistance) {
-		int[] minInds = new int[(x.length - 2) / 2];
-		int[] maxInds = new int[(x.length - 2) / 2];
-		int c1 = 0;
-		int c2 = 0;
 		
-		double s = 0.0;
-		double m = 0.0;
-		double e = 0.0;
-		
-		double lastMax = Double.NEGATIVE_INFINITY;
-		double lastMin = Double.POSITIVE_INFINITY;
-		
-		int remDistance = minDistance;
-		boolean minInDistance = false;
-		boolean maxInDistance = false;
-		
-		for (int i = 0; i < x.length - 2; i++) {
-			
-			s = x[i];
-			m = x[i + 1];
-			e = x[i + 2];
-			
-			// differentiate cases
-			// a) local maximum
-			if (s < m && m > e) {
-				if (lastMax < x[i + 1]) {
-					maxInds[c1] = i + 1;
-					lastMax = x[i + 1];
-					maxInDistance = true;
-				}
-			}			
-			// b) local minimum
-			if (s > m && m < e) {
-				if (lastMin > x[i + 1]) {
-					minInds[c2] = i + 1;
-					lastMin = x[i + 1];
-					minInDistance = true;
-				}
-			}
-			
-			--remDistance;
-			if (remDistance < 0) {
-				if (maxInDistance) {
-					++c1;
-					maxInDistance = false;
-				}
-				if (minInDistance) {
-					++c2;
-					minInDistance = false;
-				}
-				remDistance = minDistance;
-				lastMax = Double.NEGATIVE_INFINITY;
-				lastMin = Double.POSITIVE_INFINITY;
-			}
-		}
-		
-		if (maxInDistance) {
-			maxInds = ArUtils.subArray(maxInds, c1);
-		} else {
-			maxInds = ArUtils.subArray(maxInds, c1 - 1);
-		}
-		if (minInDistance) {
-			minInds = ArUtils.subArray(minInds, c2);
-		} else {
-			minInds = ArUtils.subArray(minInds, c2 - 1);
-		}
-		
-		int[] extremeInds = ConvertArray.concat(minInds, maxInds);
-		Arrays.sort(extremeInds);
-		
-		return extremeInds;
-	}
-	
 	/**
 	 * finds local maxima in {@code x} and returns their position as int[]
 	 * @param x
@@ -652,90 +607,30 @@ public class Vec {
 		return ArUtils.subArray(maxInds, c - 1);
 	}
 	
-	
 	/**
-	 * find local maxima in the source array {@code x} and returns their position as int[] array.
-	 * <br>As an additional constraint maxima must be at least minDistance elements away from each other to be included
-	 * <br>If two or more maxima are too close to each other, the larger element is chosen.
+	 * finds local minima in {@code x} and returns their positions as int[]
 	 * @param x
-	 * @param minDistance
-	 * @return 
+	 * @return
 	 */
-	public static int[] findLocalMaxima(double[] x, int minDistance) {
-		int n = x.length;
-		if (n < minDistance) {
-			throw new IllegalArgumentException("x must contain more elements than minDistance");
-		}
-
-		int[] maxInds = new int[n / minDistance + 1];
-		int c1 = 0;
-		
+	public static int[] findLocalMinima(double[] x) {
+		int[] minInds = new int[x.length - 2];
+		int c = 0;
 		double s = 0.0;
 		double m = 0.0;
 		double e = 0.0;
-		
-		double lastMax = Double.NEGATIVE_INFINITY;
-		int lastMaxInd = Integer.MIN_VALUE;
-		
-		int i = 0;
-		int j = 0;
-		boolean alreadyAdded = false;
-		while (i + minDistance < n) {
-			boolean maxFound = false;
-			for (j = i; j < i + minDistance; j++) {				
-				s = x[j];
-				m = x[j + 1];
-				e = x[j + 2];
-				
-				// find local maximum
-				if (s < m && m > e) {
-					if (lastMax < x[j + 1]) {
-						maxInds[c1] = j + 1;
-						lastMax = x[j + 1];
-						lastMaxInd = j + 1;
-						maxFound = true;
-						break;
-					}
-				}
+		for (int i = 0; i < minInds.length; i++) {
+			
+			s = x[i];
+			m = x[i + 1];
+			e = x[i + 2];
+			
+			// local maximum
+			if (s > m && m < e) {
+				minInds[c] = i + 1;
+				++c;
 			}
-			if (maxFound) {
-				i = lastMaxInd;
-				alreadyAdded = true;
-			} else {
-				i = j;
-				if (alreadyAdded) {
-					++c1;
-					alreadyAdded = false;
-				}
-			}
-		}
-		// go through rest
-		if (n - j > 0) {
-			for (int k = j; k < n - 2; k++) {
-				
-				s = x[k];
-				m = x[k + 1];
-				e = x[k + 2];
-				
-				// find local maximum
-				if (s < m && m > e) {
-					if (lastMax < x[k + 1]) {
-						maxInds[c1] = k + 1;
-						lastMax = x[k + 1];
-						lastMaxInd = k + 1;
-					} else if (k - lastMaxInd > minDistance) {
-						++c1;
-						maxInds[c1] = k + 1;
-						lastMax = x[k + 1];
-						lastMaxInd = k + 1;
-					}
-				}
-			}
-		}
-	
-		maxInds = ArUtils.subArray(maxInds, c1);
-				
-		return maxInds;
+		}		
+		return ArUtils.subArray(minInds, c - 1);
 	}
 	
 	/**
@@ -746,7 +641,7 @@ public class Vec {
 	 * @param minDistance
 	 * @return 
 	 */
-	public static int[] findLocalMaxima2(double[] x, int minDistance) {
+	public static int[] findLocalMaxima(double[] x, int minDistance) {
 		// find all maxima first
 		int[] maxIndsTemp = findLocalMaxima(x);
 		
@@ -790,74 +685,37 @@ public class Vec {
 	 * @return 
 	 */
 	public static int[] findLocalMinima(double[] x, int minDistance) {
-		int n = x.length;
-		if (n < minDistance) {
-			throw new IllegalArgumentException("x must contain more elements than minDistance");
-		}
-
-		int[] minInds = new int[n / minDistance + 1];
-		int c1 = 0;
+		// find all minima first
+		int[] minIndsTemp = findLocalMinima(x);
 		
-		double s = 0.0;
-		double m = 0.0;
-		double e = 0.0;
+		// then sort out the once that are within minDistance of each other
+		int n = x.length;
+		int[] minInds = new int[(n - 2) / minDistance + 1];
+		int c = 0;
 		
 		double lastMin = Double.POSITIVE_INFINITY;
-		int lastMinInd = Integer.MIN_VALUE;
-		
-		int i = 0;
-		int j = 0;
-		while (i + minDistance < n) {
-			boolean minFound = false;
-			for (j = i; j < i + minDistance; j++) {				
-				s = x[j];
-				m = x[j + 1];
-				e = x[j + 2];
-				
-				// find local minimum
-				if (s > m && m < e) {
-					if (lastMin > x[j + 1]) {
-						minInds[c1] = j + 1;
-						lastMin = x[j + 1];
-						lastMinInd = j + 1;
-						minFound = true;
-						break;
-					}
-				}
-			}
-			if (minFound) {
-				i = lastMinInd;
+		int lastMinInd = 0;
+		int ind = 0;
+		double min = 0.0;
+		for (int i = 0; i < minIndsTemp.length; i++) {
+			ind = minIndsTemp[i];
+			min = x[minIndsTemp[i]];
+			if (ind - lastMinInd > minDistance) {
+				++c;
+				minInds[c] = ind;
+				lastMin = min;
+				lastMinInd = ind;
 			} else {
-				i = j;
-				++c1;
-			}
-		}
-		// go through rest
-		if (n - j > 0) {
-			for (int k = j; k < n - 2; k++) {
-				
-				s = x[k];
-				m = x[k + 1];
-				e = x[k + 2];
-				
-				// find local maximum
-				if (s > m && m < e) {
-					if (lastMin > x[k + 1]) {
-						minInds[c1] = k + 1;
-						lastMin = x[k + 1];
-						lastMinInd = k + 1;
-					} else if (k - lastMinInd > minDistance) {
-						++c1;
-						minInds[c1] = k + 1;
-						lastMin = x[k + 1];
-						lastMinInd = k + 1;
-					}
+				if (min < lastMin) {
+					minInds[c] = ind;
+					lastMin = min;
+					lastMinInd = ind;
 				}
 			}
 		}
 		
-		minInds = ArUtils.subArray(minInds, c1);
-				
+		minInds = ArUtils.subArray(minInds, c);
+		
 		return minInds;
 	}
 	
