@@ -17,5 +17,17 @@
     	</plugins>
   	</build>
   	<dependencies>
+  		<!--
+  		<dependency>
+  			<groupId>com.github.psambit9791</groupId>
+  			<artifactId>jdsp</artifactId>
+  			<version>0.5.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-math3</artifactId>
+		    <version>3.6.1</version>
+		</dependency>
+		-->
   	</dependencies>
 </project>

@@ -36,6 +36,26 @@ public class Vec {
 	}
 	
 	/**
+	 * applies a discrete 1st order low pass filter on the input data {@code x}
+	 * <br>specified by resistance {@code R}, capacity {@code C} and sampling period {@code T_s}
+	 * <br>returning the filtered signal as double array  
+	 * @param x
+	 * @param R
+	 * @param C
+	 * @param T_s
+	 * @return
+	 */
+	public static double[] lowpass(double[] x, double R, double C, double T_s) {
+		double[] y = new double[x.length];
+		double c = Math.exp(- T_s / R / C);
+		y[0] = x[0];
+		for (int i = 1; i < y.length; i++) {
+			y[i] = (1 - c) * x[i] + c * y[i - 1];
+		}
+		return y;
+	}
+	
+	/**
 	 * apply a lowpass on {@code x} defined by {@code dt} and {@code fc}
 	 * @param x
 	 * @param dt equidistant time period between samples
