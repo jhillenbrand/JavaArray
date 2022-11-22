@@ -680,20 +680,30 @@ public class ArUtils {
 	/**
 	 * prints the 2D double array
 	 * <br>(Format corresponds with MATLAB matrix print out)
-	 * @param ar
+	 * @param matrix
 	 */
-	public static void print(final double[][] ar) {
+	public static void print(final double[][] matrix) {
+		System.out.println(toString(matrix));
+	}
+	
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(double[][] matrix) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < ar.length; i++) {
-			if (i == ar.length - 1) {
-				sb.append(" " + Arrays.toString(ar[i]).replace("[", ""));
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
 			} else if (i == 0) {
-				sb.append(Arrays.toString(ar[i]).replace("]", ";\n"));
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
 			} else {
-				sb.append(" " + Arrays.toString(ar[i]).replace("[", "").replace("]", ";\n"));
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
 			}
 		}
-		System.out.println(sb.toString());
+		return sb.toString();
 	}
 	
 	/**
@@ -713,5 +723,13 @@ public class ArUtils {
 			}
 		}
 		System.out.println(sb.toString());
+	}
+		
+	public static String matrixDimensionsToString(double[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
 	}
 }

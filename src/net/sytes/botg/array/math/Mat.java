@@ -2,6 +2,14 @@ package net.sytes.botg.array.math;
 
 import net.sytes.botg.array.ArUtils;
 
+/**
+ * Class that contains matrix to matrix operations
+ * <br>if not specified in the method description, the matrices adhere the following dimension nomenclature:
+ * <br>>> double[][] X = new double[m][n],
+ * <br>where n is the number of rows and m the number of columns
+ * @author hillenbrand
+ *
+ */
 public class Mat {
 		
 	// Suppress default constructor for noninstantiability
@@ -134,6 +142,34 @@ public class Mat {
 		
 		
 		return null;
+	}
+	
+	/**
+	 * combine two matrices based on their dimensions
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static double[][] appendByColumn(double[][] X, double[][] Y){
+		int n1 = X[0].length;
+		int m1 = X.length;
+		int n2 = Y[0].length;
+		int m2 = Y.length;
+		if (n1 == n2) {
+			double[][] Z = new double[m1 + m2][n1];
+			int c;
+			for (c = 0; c < m1; c++) {
+				Z[c] = X[c];
+			}
+			int c2 = c;
+			for (c = 0; c < m2; c++) {
+				Z[c2] = Y[c];
+				c2 = c2 + c;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + ArUtils.matrixDimensionsToString(X) + " and Y" + ArUtils.matrixDimensionsToString(Y) + " do not have matching rows for appending by column!");
+		}
 	}
 	
 	private static  void checkMatrixProdDimensions(double[][] X, double[][] Y) {
