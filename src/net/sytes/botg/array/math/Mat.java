@@ -133,6 +133,7 @@ public class Mat {
 		return z;
 	}
 	
+	
 	public static double[][] prod(double[][] X, double[][] Y){
 		ArUtils.checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
@@ -140,17 +141,41 @@ public class Mat {
 		int n1 = X.length;
 		int m1 = X[0].length;
 		
+		// TODO
 		
 		return null;
 	}
 	
 	/**
-	 * combine two matrices based on their dimensions
+	 * transposes the matrix {@code X}
+	 * <br>X_ij --> X_ji 
+	 * @param X
+	 * @return
+	 */
+	public static double[][] transpose(double[][] X){
+		
+		int m = X.length;
+		int n = X[0].length;
+		
+		double[][] Y = new double[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				Y[i][j] = X[j][i];
+			}
+		}
+		
+		return Y;		
+	}
+	
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new columns
+	 * <br>if dimensions match
 	 * @param X
 	 * @param Y
 	 * @return
 	 */
-	public static double[][] appendByColumn(double[][] X, double[][] Y){
+	public static double[][] appendByColumns(double[][] X, double[][] Y){
 		int n1 = X[0].length;
 		int m1 = X.length;
 		int n2 = Y[0].length;
@@ -169,6 +194,30 @@ public class Mat {
 			return Z;
 		} else {
 			throw new IllegalArgumentException("matrices X" + ArUtils.matrixDimensionsToString(X) + " and Y" + ArUtils.matrixDimensionsToString(Y) + " do not have matching rows for appending by column!");
+		}
+	}
+	
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static double[][] appendByRows(double[][] X, double[][] Y){
+		int n1 = X[0].length;
+		int m1 = X.length;
+		int n2 = Y[0].length;
+		int m2 = Y.length;
+		if (m1 == m2) {
+			double[][] Z = new double[m1][n1 + n2];
+			for (int c = 0; c < m1; c++) {
+				System.arraycopy(X[c], 0, Z[c], 0, n1);
+				System.arraycopy(Y[c], 0, Z[c], n1, n2);
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + ArUtils.matrixDimensionsToString(X) + " and Y" + ArUtils.matrixDimensionsToString(Y) + " do not have matching columns for appending by row!");
 		}
 	}
 	

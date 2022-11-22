@@ -40,11 +40,41 @@ public class UnitTest_Mat {
 		m1[0] = new double[] {0.0, 0.1, 0.2};
 		m1[1] = new double[] {1.0, 1.1, 1.2};
 		
-		m2[0] = new double[] {2.0, 2.1, 2.2, 2.3};
+		m2[0] = new double[] {2.0, 2.1, 2.2};
 		
-		double[][] m3 = Mat.appendByColumn(m1, m2);
+		double[][] m3 = Mat.appendByColumns(m1, m2);
 		
 		ArUtils.print(m3);
+	}
+	
+	@Test
+	public void test020() {
+		
+		double[][] m1 = new double[2][3];
+		double[][] m2 = new double[2][4];
+		
+		m1[0] = new double[] {0.0, 0.1, 0.2};
+		m1[1] = new double[] {1.0, 1.1, 1.2};
+		
+		m2[0] = new double[] {2.0, 2.1, 2.2, 2.3};
+		m2[1] = new double[] {3.0, 3.1, 3.2, 3.3};
+		
+		double[][] m3 = Mat.appendByRows(m1, m2);
+		
+		ArUtils.print(m3);
+	}
+	
+	@Test
+	public void test030() {
+		
+		double[][] m1 = new double[2][3];
+		
+		m1[0] = new double[] {0.0, 0.1, 0.2};
+		m1[1] = new double[] {1.0, 1.1, 1.2};
+		
+		double[][] m2 = Mat.transpose(m1);
+		
+		ArUtils.print(m2);
 	}
 	
 }
