@@ -427,6 +427,20 @@ public class ArUtils {
 		System.arraycopy(ar, s, ar2, 0, ar2.length);
 		return ar2;
 	}
+	
+	/**
+	 * returns a sub array starting at index s and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static String[] subArray(final String[] ar, int s, int e) {
+		checkForIndicesInBounds(ar, s, e);
+		String[] ar2 = new String[e - s + 1];
+		System.arraycopy(ar, s, ar2, 0, ar2.length);
+		return ar2;
+	}
 				
 	/**
 	 * checks if the {@code ar} is strictly monotone increasing or decreasing
@@ -605,6 +619,18 @@ public class ArUtils {
 	 * @param e
 	 */
 	public static void checkForIndicesInBounds(int[] ar, int s, int e) {
+		if (s < 0 || e >= ar.length) {
+			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+	
+	/**
+	 * checks if the start and end indices are within array bounds
+	 * @param ar
+	 * @param s
+	 * @param e
+	 */
+	public static void checkForIndicesInBounds(String[] ar, int s, int e) {
 		if (s < 0 || e >= ar.length) {
 			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
 		}
