@@ -3,7 +3,6 @@ package net.sytes.botg.array.math;
 import java.util.Arrays;
 
 import net.sytes.botg.array.ArUtils;
-import net.sytes.botg.array.ConvertArray;
 import net.sytes.botg.array.SearchArray;
 
 public class Vec {
