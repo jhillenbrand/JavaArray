@@ -381,6 +381,19 @@ public class ArUtils {
 	}
 	
 	/**
+	 * returns 2D matrix with NaN values of length {@code n}
+	 * @param size
+	 * @return
+	 */
+	public static double[][] nan(int n, int m) {
+		double[][] mat = new double[m][n];
+		for (int j = 0; j < m; j++) {
+			mat[j] = nan(n);
+		}
+		return mat;
+	}
+	
+	/**
 	 * returns a sub array starting at 0 and ending at index e from ar
 	 * @param ar
 	 * @param e

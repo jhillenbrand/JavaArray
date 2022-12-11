@@ -142,6 +142,14 @@ public class UnitTest_ArUtils {
 	}
 	
 	@Test
+	public void test091() {
+		double[][] nans = ArUtils.nan(10, 2);
+		
+		System.out.println(Arrays.deepToString(nans));
+		
+	}
+	
+	@Test
 	public void test100() {
 		double[] nans = ArUtils.nan(10);
 		double[] rands = ArUtils.rand(10);
