@@ -314,6 +314,22 @@ public class ArUtils {
 	}
 	
 	/**
+	 * returns a long array starting from {@code start} with size {@code size} and steps of {@code step}
+	 * @param start
+	 * @param size
+	 * @param step
+	 * @return
+	 */
+	public static long[] linspace(long start, int size, long step) {
+		long[] ar = new long[size];
+		ar[0] = start;
+		for (int i = 1; i < size; i++) {
+			ar[i] = ar[i - 1] + step;
+		}
+		return ar;
+	}
+	
+	/**
 	 * returns a double array starting from 0 and incrementing by 1 for {@code size} times
 	 * @param size
 	 * @return
