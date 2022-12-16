@@ -521,10 +521,11 @@ public class Vec {
 		int c = 0;
 		
 		double lastZGradient = 0.0;
-		int lastZInd = 0;
 		int ind = 0;
 		double zGradient = 0.0;
-		for (int i = 0; i < zTemp.length; i++) {
+		zInds[0] = zTemp[0];
+		int lastZInd = zTemp[0];
+		for (int i = 1; i < zTemp.length; i++) {
 			ind = zTemp[i];
 			zGradient = Math.abs(x[ind] - x[ind - 1]); 
 			if (ind - lastZInd > minDistance) {
