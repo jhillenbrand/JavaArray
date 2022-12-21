@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.SearchArray;
+import net.sytes.botg.array.spectrum.WindowFunction;
+import net.sytes.botg.array.spectrum.WindowFunction.WindowType;
 
 public class Vec {
 
@@ -472,7 +474,7 @@ public class Vec {
 	}
 	
 	/**
-	 * returns the moving average of {@code ar} with window size {@code w}
+	 * returns the moving average of {@code ar} with a rectangular window of size {@code w}
 	 * @param ar
 	 * @param window
 	 * @return
@@ -482,9 +484,11 @@ public class Vec {
 		double[] newAr = new double[n];
 		for (int i = 0; i < n; i++) {
 			
+			/* DEBUG
 			if (i == 6841) {
 				System.out.println(i);
 			}
+			*/
 			
 			int e = i + 1;
 			int s = e - w;
@@ -498,6 +502,45 @@ public class Vec {
 			newAr[i] = sum / (e - s);
 		}
 		return newAr;
+	}
+	
+	/**
+	 * returns the moving average of {@code ar} with a triangular window of size {@code w}
+	 * TODO not properly symmetric window
+	 * @param ar
+	 * @param w
+	 * @return
+	 */
+	public static double[] movingAverageTriangular(double[] ar, int w) {
+		int n = ar.length;
+		double[] newAr = new double[n];
+		double[] triWin = WindowFunction.generate(WindowType.TRIANGULAR, w);
+		for (int i = 0; i < n; i++) {					
+			int e = i + 1;
+			int s = e - w;
+			if (s < 0) {
+				s = 0;
+			}
+			double sum = 0;
+			if (e - s != w) {
+				triWin = WindowFunction.generate(WindowType.TRIANGULAR, e - s);
+				if (triWin.length == 1) {
+					triWin[0] = 1.0;
+				} else if (triWin.length == 2) {
+					triWin[0] = 0.5;
+					triWin[1] = 0.5;
+				}
+			}
+			int k = 0;
+			double wn = 0;
+			for (int j = s; j < e; j++) {
+				sum = sum + ar[j] * triWin[k];
+				wn = wn + triWin[k];
+				++k;
+			}
+			newAr[i] = sum / wn;
+		}
+		return newAr;		
 	}
 	
 	/**

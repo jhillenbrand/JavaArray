@@ -31,7 +31,7 @@ public class WindowFunction {
 	 * @param n
 	 * @return
 	 */
-	public double generate(WindowType wt, int i, int n) {
+	public static double generate(WindowType wt, int i, int n) {
 		switch (wt) {
 			case BARTLET_HANN:
 				break;
@@ -104,7 +104,7 @@ public class WindowFunction {
 	 * @param n
 	 * @return
 	 */
-	public double[] generate(WindowType wt, int n) {
+	public static double[] generate(WindowType wt, int n) {
 		switch (wt) {
 			case BARTLET_HANN:
 				break;
@@ -177,7 +177,7 @@ public class WindowFunction {
 	 * @param x
 	 * @return
 	 */
-	public double[] apply(WindowType wt, double[] x) {
+	public static double[] apply(WindowType wt, double[] x) {
 		int n = x.length;
 		double[] x_w = new double[n];
 		switch (wt) {
@@ -270,7 +270,7 @@ public class WindowFunction {
 	 * @param x_i
 	 * @return
 	 */
-	public double apply(WindowType wt, int i, int n, double x_i) {
+	public static double apply(WindowType wt, int i, int n, double x_i) {
 		switch (wt) {
 			case BARTLET_HANN:
 				break;
