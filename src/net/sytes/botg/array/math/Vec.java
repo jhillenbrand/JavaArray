@@ -472,6 +472,35 @@ public class Vec {
 	}
 	
 	/**
+	 * returns the moving average of {@code ar} with window size {@code w}
+	 * @param ar
+	 * @param window
+	 * @return
+	 */
+	public static double[] movingAverage(double[] ar, int w) {
+		int n = ar.length;
+		double[] newAr = new double[n];
+		for (int i = 0; i < n; i++) {
+			
+			if (i == 6841) {
+				System.out.println(i);
+			}
+			
+			int e = i + 1;
+			int s = e - w;
+			if (s < 0) {
+				s = 0;
+			}
+			double sum = 0;
+			for (int j = s; j < e; j++) {
+				sum = sum + ar[j];
+			}
+			newAr[i] = sum / (e - s);
+		}
+		return newAr;
+	}
+	
+	/**
 	 * returns the indices of the original array {@code ar}, where a zero crossing happened
 	 * <br>Example:
 	 * <br>[0.0, 1.0, 2.0, 1.0, 0.0, -1.0, -1.0, 1.0, 0.0, 1.0] --> [5, 7]
@@ -521,10 +550,11 @@ public class Vec {
 		int c = 0;
 		
 		double lastZGradient = 0.0;
-		int lastZInd = 0;
 		int ind = 0;
 		double zGradient = 0.0;
-		for (int i = 0; i < zTemp.length; i++) {
+		zInds[0] = zTemp[0];
+		int lastZInd = zTemp[0];
+		for (int i = 1; i < zTemp.length; i++) {
 			ind = zTemp[i];
 			zGradient = Math.abs(x[ind] - x[ind - 1]); 
 			if (ind - lastZInd > minDistance) {
