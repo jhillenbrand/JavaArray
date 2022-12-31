@@ -133,17 +133,52 @@ public class Mat {
 		return z;
 	}
 	
-	
+	/**
+	 * returns the matrix multiplication of {@code X} and {@code Y}
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
 	public static double[][] prod(double[][] X, double[][] Y){
 		ArUtils.checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
 		
-		int n1 = X.length;
-		int m1 = X[0].length;
+        double[][] Z = new double[X.length][Y[0].length];
+        for (int i = 0; i < X.length; i++) {
+            for (int j = 0; j < Y[0].length; j++) {
+                double sum = 0;
+                for (int k = 0; k < X[i].length; k++) {
+                    sum += X[i][k] * Y[k][j];
+                }
+                Z[i][j] = sum;
+            }
+        }
+        return Z;
+	}
+	
+	/**
+	 * solve the linear equation system y<sub>j</sub> = A<sub>ij</sub> x<sub>i</sub> for x<sub>i</sub>
+	 * @param A
+	 * @param y
+	 * @return
+	 */
+	public static double[] linSolve(double[][] A, double[] y) {
 		
-		// TODO
+		if (A.length != y.length) {
+			throw new IllegalArgumentException("First matrix dimension of A (" + A.length + ") and length of vector y (" + y.length + ") must be equal");
+		}
 		
-		return null;
+		int n = A.length;
+		
+		// put y-vector into matrix Y for matrix multiplication
+		double[][] Y = Vec2Mat.vec2Mat(y, n, 1, false);
+		
+		double[][] X = Mat.prod(Mat.inverse(A), Y); 
+		
+		// reshape the result matrix back to vector
+		double[] x = Mat2Vec.mat2Vec(X, true);
+		
+		return x; 
 	}
 	
 	/**
@@ -167,6 +202,82 @@ public class Mat {
 		
 		return Y;		
 	}
+		
+	/**
+	 * invert matrix {@code X}
+	 * @param X
+	 * @return
+	 */
+    public static double[][] inverse(double[][] X) {
+    	
+    	if (X.length != X[0].length) {
+    		throw new IllegalArgumentException("Only quadratic matrices can be inverted");
+    	}
+    	
+        double[][] X_inv = new double[X.length][X.length];
+
+        // minors and cofactors
+        for (int i = 0; i < X.length; i++) {
+            for (int j = 0; j < X[i].length; j++) {
+                X_inv[i][j] = Math.pow(-1, i + j) * det(sub(X, i, j));
+            }
+        }
+        // adjugate and determinant
+        double det = 1.0 / det(X);
+        for (int i = 0; i < X_inv.length; i++) {
+            for (int j = 0; j <= i; j++) {
+                double temp = X_inv[i][j];
+                X_inv[i][j] = X_inv[j][i] * det;
+                X_inv[j][i] = temp * det;
+            }
+        }
+
+        return X_inv;
+    }
+	
+	/**
+	 * returns a submatrix by eliminating values from {@code X} in {@code row} and {@code column} 
+	 * @param X
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	public static double[][] sub(double[][] X, int row, int column){
+		double[][] Y = new double[X.length - 1][X.length - 1];
+        for (int i = 0; i < X.length; i++) {
+        	for (int j = 0; i != row && j < X[i].length; j++) {
+        		if (j != column) {
+                    Y[i < row ? i : i - 1][j < column ? j : j - 1] = X[i][j];
+        		}
+        	}
+        }
+        return Y;
+	}	
+	
+	/**
+	 * returns the determinant of matrix {@code X}
+	 * @param X
+	 * @return
+	 */
+	public static double det(double[][] X) {
+        if (X.length != X[0].length) {
+            throw new IllegalArgumentException("determinant can only be computed for quadratic matrices");
+        }
+
+        if (X.length == 1 && X[0].length == 1) {
+        	return X[0][0];
+        }
+        
+        if (X.length == 2) {
+            return X[0][0] * X[1][1] - X[0][1] * X[1][0];
+        }
+            
+        double det = 0;
+        for (int i = 0; i < X[0].length; i++) {
+            det += Math.pow(-1, i) * X[0][i] * det(sub(X, 0, i));
+        }
+        return det;
+    }
 	
 	/**
 	 * appends the matrix {@code X} by matrix {@code Y} as new columns
@@ -223,7 +334,7 @@ public class Mat {
 	
 	private static  void checkMatrixProdDimensions(double[][] X, double[][] Y) {
 		if (X[0].length != Y.length) {
-			throw new IllegalArgumentException("Dimension mismatch for matrix multiplication");
+            throw new IllegalArgumentException("Invalid matrix dimensions for multiplication, " + ArUtils.matrixDimensionsToString(X) + " --> " + ArUtils.matrixDimensionsToString(Y));
 		}
 	}
 	

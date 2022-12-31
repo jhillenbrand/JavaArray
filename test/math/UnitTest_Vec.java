@@ -1,15 +1,18 @@
 package math;
 
 import java.util.Arrays;
+import java.util.Random;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.math.Vec;
-import net.sytes.botg.array.math.Vec2Mat;
+import net.sytes.botg.array.math.Vec2Scalar;
 
 public class UnitTest_Vec {
+
+	private double[] ar1 = {12.32, 231234.0, 123123.023, 123123.09, 123, 1231239, 123123.0213, 12356.089, 978997.0324};
+	private double[] ar2 = new Random().doubles(1_000_000).toArray();
 	
 	
 	@Test
@@ -133,6 +136,19 @@ public class UnitTest_Vec {
 		
 		System.out.println(Arrays.toString(extrema));
 		
+	}
+	
+	@Test
+	public void test070() {
+		//System.out.println(MathArray.sum2(ar2));
+		Vec2Scalar.sum2(ar2);
+	}
+	
+	
+	@Test
+	public void test071() {
+		//System.out.println(MathArray.sum(ar2));
+		Vec2Scalar.sum(ar2);
 	}
 	
 }

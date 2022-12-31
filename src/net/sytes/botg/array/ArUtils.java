@@ -57,29 +57,42 @@ public class ArUtils {
 	}
 	
 	/**
-	 * returns an array of size n with 1's
+	 * returns an array of size {@code n} with 1's
 	 * @param n
 	 * @return
 	 */
 	public static double[] ones(int n) {
 		double[] ar = new double[n];
-		for (int i = 0; i > n; i++) {
+		for (int i = 0; i < n; i++) {
 			ar[i] = 1;
 		}
 		return ar;
 	}
 	
 	/**
-	 * returns an float array of size n with 1's
+	 * returns an float array of size {@code n} with 1's
 	 * @param n
 	 * @return
 	 */
 	public static float[] onesF(int n) {
-		float[] ar = new float[n];
-		for (int i = 0; i > n; i++) {
-			ar[i] = 1;
+		float[] x = new float[n];
+		for (int i = 0; i < n; i++) {
+			x[i] = 1;
 		}
-		return ar;
+		return x;
+	}
+	
+	/**
+	 * returns an int array of size {@code n} with 1's
+	 * @param n
+	 * @return
+	 */
+	public static int[] onesI(int n) {
+		int[] x = new int[n];
+		for (int i = 0; i < n; i++) {
+			x[i] = 1;
+		}
+		return x;
 	}
 	
 	/**
@@ -92,7 +105,7 @@ public class ArUtils {
 		double[][] ar = new double[n][m];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				
+				ar[i][j] = 1.0;
 			}
 		}
 		return ar;
@@ -108,7 +121,7 @@ public class ArUtils {
 		float[][] ar = new float[n][m];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				
+				ar[i][j] = 1.0f;
 			}
 		}
 		return ar;
@@ -214,12 +227,6 @@ public class ArUtils {
 		return rInts;
 	}
 	
-	public static double rand(double min, double max) {
-		Random r = new Random();
-		double randomValue = min + (max - min) * r.nextDouble();
-		return randomValue;
-	}
-	
 	public static int[] randInt(int size) {
 		int[] data;
 		if (size < BETTER_OF_AS_STREAM_SIZE) {
@@ -232,6 +239,23 @@ public class ArUtils {
 			data = new Random().ints(size).toArray();
 		}
 		return data;
+	}
+	
+	/**
+	 * returns a matrix X € R<sup>nxm</sup> with elements increasing from 0 to k = {@code n} * {@code m}
+	 * @param n
+	 * @param m
+	 * @return
+	 */
+	public static double[][] incrementMat(int n, int m) {
+		int k = n * m;
+		double[][] X = new double[n][m];		
+		for (int i = 0; i < k; i++) {
+			int r = i / m;
+			int c = i % m;
+			X[r][c] = i;
+		}
+		return X;
 	}
 	
 	/**
@@ -470,6 +494,46 @@ public class ArUtils {
 		System.arraycopy(ar, s, ar2, 0, ar2.length);
 		return ar2;
 	}
+	
+	public static double[] copy(double[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * deep clone an matrix {@code X}
+	 * @param X
+	 * @return
+	 */
+	public static double[][] copy(double[][] X){
+		checkForNull(X);
+		checkForEmpty(X);
+		int m = X.length;
+		int n = X[0].length;
+		double[][] Y = new double[m][n];
+		for (int j = 0; j < m; j++) {
+			System.arraycopy(X[j], 0, Y[j], 0, X[j].length);
+		}
+		return Y;
+	}
+	
+	/**
+	 * deep clone an matrix {@code X} using loop
+	 * @param X
+	 * @return
+	 */
+	public static double[][] copy2(double[][] X){
+		checkForNull(X);
+		checkForEmpty(X);
+		int m = X.length;
+		int n = X[0].length;
+		double[][] Y = new double[m][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				Y[j][i] = X[j][i];
+			}
+		}
+		return Y;
+	}
 				
 	/**
 	 * checks if the {@code ar} is strictly monotone increasing or decreasing
@@ -615,9 +679,15 @@ public class ArUtils {
 		}
 	}
 	
-	public static void checkForEmpty(double[][] ar) {
-		if (ar.length == 0) {
-			throw new IllegalArgumentException("ar must not be empty");
+	public static void checkForEmpty(double[][] X) {
+		if (X.length == 0) {
+			throw new IllegalArgumentException("matrix X must not be empty");
+		} else {
+			for (int i = 0; i < X.length; i++) {
+				if (X[i].length == 0) {
+					throw new IllegalArgumentException("matrix X must not contain empty vectors");
+				}
+			}
 		}
 	}
 	

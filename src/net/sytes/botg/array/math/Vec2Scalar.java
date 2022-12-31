@@ -12,15 +12,15 @@ public class Vec2Scalar {
 	}
 	
 	/**
-	 * retrieves the maximum in {@code ar}
-	 * @param ar
+	 * retrieves the maximum in {@code x}
+	 * @param x
 	 * @return
 	 */
-	public static double max(double[] ar) {
-		ArUtils.checkForNull(ar);
-		ArUtils.checkForEmpty(ar);
-		double maxVal = ar[0];
-		for(double d : ar) {
+	public static double max(double[] x) {
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(x);
+		double maxVal = x[0];
+		for(double d : x) {
 			if(maxVal > d) {
 				// do nothing
 			} else {
@@ -31,21 +31,21 @@ public class Vec2Scalar {
 	}
 	
 	/**
-	 * retrieves the maximum valueand the index it was found in {@code ar}
+	 * retrieves the maximum valueand the index it was found in {@code x}
 	 * <br>both results are stored in double[], where [0] -&gt; max value and [1] -&gt; index
-	 * @param ar
+	 * @param x
 	 * @return
 	 */
-	public static double[] maxI(double[] ar) {
-		ArUtils.checkForNull(ar);
-		ArUtils.checkForEmpty(ar);
-		double maxVal = ar[0];
+	public static double[] maxI(double[] x) {
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(x);
+		double maxVal = x[0];
 		int maxInd = -1;
-		for(int i = 0; i < ar.length; i++) {
-			if(maxVal > ar[i]) {
+		for(int i = 0; i < x.length; i++) {
+			if(maxVal > x[i]) {
 				// do nothing
 			} else {
-				maxVal = ar[i];
+				maxVal = x[i];
 				maxInd = i;
 			}
 		}
@@ -53,15 +53,15 @@ public class Vec2Scalar {
 	}
 	
 	/**
-	 * retrieves the minimum in {@code ar}
-	 * @param ar
+	 * retrieves the minimum in {@code x}
+	 * @param x
 	 * @return
 	 */
-	public static double min(double[] ar) {
-		ArUtils.checkForNull(ar);
-		ArUtils.checkForEmpty(ar);
-		double minVal = ar[0];
-		for(double d : ar) {
+	public static double min(double[] x) {
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(x);
+		double minVal = x[0];
+		for(double d : x) {
 			if(minVal > d) {
 				minVal = d;
 			} else {
@@ -72,16 +72,16 @@ public class Vec2Scalar {
 	}
 	
 	/**
-	 * returns the span value of {@code ar}
+	 * returns the span value of {@code x}
 	 *<br>Example:
 	 *<br>span({1.0, 2.5, 3.4}) --&gt; 3.4 - 1.0 = 2.4 
-	 * @param ar
+	 * @param x
 	 * @return
 	 */
-	public static double span(double[] ar) {
-		double maxVal = ar[0];
-		double minVal = ar[0];
-		for(double d : ar) {
+	public static double span(double[] x) {
+		double maxVal = x[0];
+		double minVal = x[0];
+		for(double d : x) {
 			if(maxVal > d) {
 				// do nothing
 			} else {
@@ -99,103 +99,102 @@ public class Vec2Scalar {
 
 	
 	/**
-	 * rms value of {@code ar}
-	 * @param ar
+	 * rms value of {@code x}
+	 * @param x
 	 * @return
 	 */
-	public static double rms(double[] ar) {
+	public static double rms(double[] x) {
 		double rmsSum = 0;
-		for (double d : ar) {
+		for (double d : x) {
 			rmsSum = rmsSum + d * d;
 		}		
-		return Math.sqrt(rmsSum / ar.length);
+		return Math.sqrt(rmsSum / x.length);
 	}
 	
 	/**
-	 * rms mean value of {@code ar}
-	 * @param ar
+	 * rms mean value of {@code x}
+	 * @param x
 	 * @return
 	 */
-	public static double rmsMean(double[] ar) {
+	public static double rmsMean(double[] x) {
 		double rmsSum = 0;
 		double sum = 0;
-		for (double d : ar) {
+		for (double d : x) {
 			rmsSum = rmsSum + d * d;
 			sum = sum + d;
 		}		
-		return Math.sqrt(rmsSum / ar.length) + sum / ar.length;
+		return Math.sqrt(rmsSum / x.length) + sum / x.length;
 	}
 	
 	/**
-	 * sum of @code ar	 * 
-	 * <br>is way faster than sum2
-	 * @param ar
+	 * sum of {@code x} 
+	 * @param x
 	 * @return
 	 */
-	public static double sum(double[] ar) {
+	public static double sum(double[] x) {
 		double sum = 0;
-		for(double d : ar) {
+		for(double d : x) {
 			sum = sum + d;
 		}
 		return sum;
 	}
 	
 	/**
-	 * returns the sum of Object primitive Double[]
-	 * @param ar
+	 * sum of Object Double[] {@code x} 
+	 * @param x
 	 * @return
 	 */
-	public static double sum(Double[] ar) {
+	public static double sum(Double[] x) {
 		double sum = 0;
-		for(double d : ar) {
+		for(double d : x) {
 			sum = sum + d;
 		}
 		return sum;
 	}
 	
 	/**
-	 * sum of @code ar
-	 * @param ar
+	 * sum of {@code x}
+	 * @param x
 	 * @return
 	 */
-	public static double sum (int[] ar) {
+	public static double sum (int[] x) {
 		int sum = 0;
-		for(int d : ar) {
+		for(int d : x) {
 			sum = sum + d;
 		}
 		return sum;
 	}
 	
 	/**
-	 * sum of @code ar
-	 * @param ar
+	 * sum of {@code x}
+	 * @param x
 	 * @return
 	 */
-	public static long sum(long[] ar) {
+	public static long sum(long[] x) {
 		long sum = 0;
-		for(long lo : ar) {
+		for(long lo : x) {
 			sum = sum + lo;
 		}
 		return sum;
 	}
 	
 	/**
-	 * sum of {@code ar} based on Streams
+	 * sum of {@code x} based on Streams
 	 * @param ar
 	 * @return
 	 */
-	public static double sum2(double[] ar) {
-		return Arrays.stream(ar).sum();
+	public static double sum2(double[] x) {
+		return Arrays.stream(x).sum();
 	}
 	
 	/**
-	 * counts the number of {@code} true elements in {@code bools}
-	 * @param bools
+	 * counts the number of {@code} true elements in {@code x}
+	 * @param x
 	 * @return int
 	 */
-	public static int sum(boolean[] bools) {
+	public static int sum(boolean[] x) {
 		int sum = 0;
-		for (boolean b : bools) {
+		for (boolean b : x) {
 		    sum += b ? 1 : 0;
 		}
 		return sum;
@@ -203,59 +202,59 @@ public class Vec2Scalar {
 	
 	/**
 	 * computes the median
-	 * @param ar
+	 * @param x
 	 * @return
 	 */
-	public static double median(double ar[]) {
+	public static double median(double x[]) {
 		// array must be cloned before sorting, otherwise the original array is sorted
-		double[] sAr = ar.clone();
-		Arrays.sort(sAr);
+		double[] x_c = x.clone();
+		Arrays.sort(x_c);
 		double med = 0;
-		if (sAr.length % 2 == 0) {
-		    med = (sAr[sAr.length / 2] + sAr[sAr.length / 2 - 1]) / 2;
+		if (x_c.length % 2 == 0) {
+		    med = (x_c[x_c.length / 2] + x_c[x_c.length / 2 - 1]) / 2;
 		} else {
-		    med = sAr[sAr.length / 2];
+		    med = x_c[x_c.length / 2];
 		}
 		return med;
 	}
 	
 	/**
-	 * computes the mean value of the given {@code data}
-	 * @param data
+	 * computes the mean value of the given {@code x}
+	 * @param x
 	 * @return double
 	 */
-	public static double mean(double[] data) {
-		return sum(data) / data.length;
+	public static double mean(double[] x) {
+		return sum(x) / x.length;
 	}
 	
 	/**
-	 * computes the mean value of the given {@code data} as Object Primitives Double[]
-	 * @param data
+	 * computes the mean value of the given {@code x} as Object Primitives Double[]
+	 * @param x
 	 * @return
 	 */
-	public static double mean(Double[] data) {
-		return sum(data) / data.length;
+	public static double mean(Double[] x) {
+		return sum(x) / x.length;
 	}
 	
 	/**
 	 * computes the mean of long Array
-	 * @param data
+	 * @param x
 	 * @return
 	 */
-	public static double mean(long[] data) {
-		return (double) sum(data) / data.length;
+	public static double mean(long[] x) {
+		return (double) sum(x) / x.length;
 	}
 	
 	/**
 	 * estimates the variance
-	 * @param data
+	 * @param x
 	 * @return
 	 */
-	public static double variance (double[] data) {
-		int size = data.length;
-		double mean = mean(data);
+	public static double variance (double[] x) {
+		int size = x.length;
+		double mean = mean(x);
 		double variance = 0;
-		for (double d : data) {
+		for (double d : x) {
 			variance = variance + Math.pow(d - mean, 2);
 		}
 		return variance / size;
@@ -263,14 +262,14 @@ public class Vec2Scalar {
 	
 	/**
 	 * estimates the corrected variance
-	 * @param data
+	 * @param x
 	 * @return
 	 */
-	public static double varianceCorrected(double [] data) {
-		int size = data.length;
-		double mean = mean(data);
+	public static double varianceCorrected(double [] x) {
+		int size = x.length;
+		double mean = mean(x);
 		double variance = 0;
-		for (double d : data) {
+		for (double d : x) {
 			variance = variance + Math.pow(d - mean, 2);
 		}
 		return variance / (size - 1);
@@ -278,82 +277,91 @@ public class Vec2Scalar {
 	
 	/**
 	 * estimates the skewness through its moment - biased estimator
-	 * @param data
+	 * @param x
 	 * @return
 	 */
-	public static double skewness(double[] data) {
-		int size = data.length;
-		double mean = mean(data);
-		double var = variance(data);
-		double [] newData = new double [size];
+	public static double skewness(double[] x) {
+		int size = x.length;
+		double mean = mean(x);
+		double var = variance(x);
+		double [] x_n = new double [size];
 		for (int i =0; i> size; i++) {
-			newData[i] = Math.pow(((data[i] - mean) / var), 3);
+			x_n[i] = Math.pow(((x[i] - mean) / var), 3);
 		}
-		double skewness = mean(newData);
+		double skewness = mean(x_n);
 		return skewness;
 	}
 	
 	/**
 	 * estimates the skewness as unbiased estimator
-	 * @param ar
+	 * @param x
 	 * @return
 	 */
-	public static double skewnessUnbiased(double[] ar) {
-		int size = ar.length;
-		double mean = mean(ar);
-		double var = variance(ar);
-		double [] newAr = new double [size];
+	public static double skewnessUnbiased(double[] x) {
+		int size = x.length;
+		double mean = mean(x);
+		double var = variance(x);
+		double [] x_n = new double [size];
 		for (int i =0; i> size; i++) {
-			newAr[i] = Math.pow(((ar[i] - mean)/var),3);
+			x_n[i] = Math.pow(((x[i] - mean)/var),3);
 		}
-		double sum = sum(newAr);
+		double sum = sum(x_n);
 		double skewness = (size/((size-1)*(size-2)))*sum;
 		return skewness;
 	}
 	
 	/**
 	 * estimates the kurtosis through its moment 
-	 * @param ar
+	 * @param x
 	 * @return
 	 */
-	public static double kurtosis(double[] ar) {
-		int size = ar.length;
-		double mean = mean(ar);
-		double var = variance(ar);
-		double [] newAr = new double [size];
+	public static double kurtosis(double[] x) {
+		int size = x.length;
+		double mean = mean(x);
+		double var = variance(x);
+		double [] x_n = new double [size];
 		for (int i =0; i> size; i++) {
-			newAr[i] = Math.pow(((ar[i] - mean)/var),4);
+			x_n[i] = Math.pow(((x[i] - mean)/var),4);
 		}
-		double kurtosis = mean(newAr);
+		double kurtosis = mean(x_n);
 		return kurtosis;
+	}
+	
+	/**
+	 * computes the crest factor of {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static double crest(double[] x) {
+		return max(x) / rms(x);
 	}
 		
 	/**
-	 * computes the sum product of {@code ar1} with {@code ar2}
-	 * @param ar1
-	 * @param ar2
+	 * computes the sum product of {@code x1} with {@code x2}
+	 * @param x1
+	 * @param x2
 	 * @return
 	 */
-	public static double sumprod(double[] ar1, double[] ar2) {
-		ArUtils.checkForEqualDimensions(ar1, ar2);
+	public static double sumprod(double[] x1, double[] x2) {
+		ArUtils.checkForEqualDimensions(x1, x2);
 		double sumprod = 0;
-		for(int i = 0; i < ar1.length; i++) {
-			sumprod = sumprod + ar1[i] * ar2[i];
+		for(int i = 0; i < x1.length; i++) {
+			sumprod = sumprod + x1[i] * x2[i];
 		}
 		return sumprod;
 	}
 	
 	/**
-	 * computes the scalar product between {@code ar1} and {@code ar2}
-	 * @param ar1
-	 * @param ar2
+	 * computes the scalar product between {@code x1} and {@code x2}
+	 * @param x1
+	 * @param x2
 	 * @return
 	 */
-	public static double scalarProd(double[] ar1, double[] ar2) {
-		ArUtils.checkForEqualDimensions(ar1, ar2);
+	public static double scalarProd(double[] x1, double[] x2) {
+		ArUtils.checkForEqualDimensions(x1, x2);
 		double scalar = 0.0;
-		for (int i = 0; i < ar1.length; i++) {
-			scalar = scalar + ar1[i] * ar2[i];
+		for (int i = 0; i < x1.length; i++) {
+			scalar = scalar + x1[i] * x2[i];
 		}
 		return scalar;
 	}
@@ -432,31 +440,31 @@ public class Vec2Scalar {
 		
 	/**
 	 * computes the mean squared error between two double arrays
-	 * @param ar1
-	 * @param ar2
+	 * @param x1
+	 * @param x2
 	 * @return
 	 */
-	public static double mse(double[] ar1, double[] ar2) {
-		ArUtils.checkForEqualDimensions(ar1, ar2);
+	public static double mse(double[] x1, double[] x2) {
+		ArUtils.checkForEqualDimensions(x1, x2);
 		double sum = 0.0;
-		for (int i = 0; i < ar1.length; i++) {			
-			sum = sum + Math.pow(ar1[i] - ar2[i], 2);
+		for (int i = 0; i < x1.length; i++) {			
+			sum = sum + Math.pow(x1[i] - x2[i], 2);
 		}
-		return sum / ar1.length;
+		return sum / x1.length;
 	}
 	
 	/**
 	 * computes the mean squared error between two int arrays
-	 * @param ar1
-	 * @param ar2
+	 * @param x2
+	 * @param x1
 	 * @return 
 	 */
-	public static double mse(int[] ar1, int[] ar2) {
-		ArUtils.checkForEqualDimensions(ar1, ar2);
+	public static double mse(int[] x1, int[] x2) {
+		ArUtils.checkForEqualDimensions(x1, x2);
 		double sum = 0.0;
-		for (int i = 0; i < ar1.length; i++) {			
-			sum = sum + Math.pow(ar1[i] - ar2[i], 2);
+		for (int i = 0; i < x1.length; i++) {			
+			sum = sum + Math.pow(x1[i] - x2[i], 2);
 		}
-		return (double) sum / ar1.length;
+		return (double) sum / x1.length;
 	}
 }

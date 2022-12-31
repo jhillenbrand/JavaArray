@@ -1,8 +1,11 @@
 package array;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.ConvertArray;
@@ -19,15 +22,22 @@ public class UnitTest_ArUtils {
 		System.out.println(Integer.MAX_VALUE);
 	}	
 	
+
 	@Test
-	public void test01() {
+	public void test010() {
+		double[] data = ArUtils.rand(10000);
+		
+	}
+	
+	@Test
+	public void test011() {
 		
 		ArUtils.rand(SIZE);
 		
 	}
 	
 	@Test
-	public void test02() {
+	public void test020() {
 		
 		Double[] ar = {10.0, 128.234, 3984.123};
 		Double d = 10.9877;
@@ -40,7 +50,7 @@ public class UnitTest_ArUtils {
 	}
 	
 	@Test
-	public void test03() {
+	public void test030() {
 		
 		double[] ar = {10.0, 128.234, 3984.123};
 		double d = 10.9877;
@@ -167,4 +177,159 @@ public class UnitTest_ArUtils {
 		System.out.println(Arrays.toString(logspace));
 		
 	}
+	
+
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 1")
+	public void test120() {
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isMonotone(ar, true), true);
+	}
+	
+
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 2")
+	public void test121() {
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isMonotone(ar, false), false);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 3")
+	public void test122() {
+		double[] ar = {1.0, 1.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isMonotone(ar, true), true);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 4")
+	public void test123() {
+		double[] ar = {1.0, 0.99, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isMonotone(ar, true), false);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 5")
+	public void test124() {
+		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
+		
+		assertEquals(ArUtils.isMonotone(ar, false), true);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isStrictMonotone() - 1")
+	public void test125() {
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isStrictMonotone(ar, true), true);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isStrictMonotone() - 2")
+	public void test126() {
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isStrictMonotone(ar, false), false);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isStrictMonotone() - 3")
+	public void test127() {
+		double[] ar = {1.0, 1.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isStrictMonotone(ar, true), false);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isStrictMonotone() - 4")
+	public void test128() {
+		double[] ar = {1.0, 0.99, 3.0, 4.0, 4.1};
+		
+		assertEquals(ArUtils.isStrictMonotone(ar, true), false);
+	}
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isStrictMonotone() - 5")
+	public void test129() {
+		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
+		
+		assertEquals(ArUtils.isStrictMonotone(ar, false), true);
+	}
+	
+	@Test
+	public void test130() {
+		
+		int n = 100;
+		int r = 20_000;
+		
+		double[][] X = ArUtils.unitMatrix(n);
+		double[][] Y = null;
+		
+		long st = System.nanoTime();
+		for (int i = 0; i < r; i++) {
+			
+			Y = ArUtils.copy2(X);
+			
+		}
+		
+		long et = System.nanoTime();
+		double el = et - st;
+		double sp = el / n; 
+		
+		System.out.println("copy2 -> Sampling Period per Element [ns]: " + sp);
+		
+		st = System.nanoTime();
+		for (int i = 0; i < r; i++) {
+			
+			Y = ArUtils.copy(X);
+			
+		}
+		
+		et = System.nanoTime();
+		el = et - st;
+		sp = el / n; 
+		
+		System.out.println("copy -> Sampling Period per Element [ns]: " + sp);
+		
+		System.out.println("X = [" + X[0].length + ", " + X.length + "], Y = [" + Y[0].length + ", " + Y.length + "]");
+		
+	}
+	
+	@Test
+	public void test140() {
+		
+		double[] x = new double[] {1.0, 2.0, 3.0};
+		
+		double[] y = ArUtils.copy(x);
+		
+		y[0] = 0.0;
+		
+		System.out.println(Arrays.toString(x));
+		
+	}
+	
+	@Test
+	public void test150() {
+		double[][] X = ArUtils.incrementMat(3,  3);
+		ArUtils.print(X);
+	}
+	
+	@Test
+	public void test151() {
+		double[][] X = ArUtils.incrementMat(2,  5);
+		ArUtils.print(X);
+	}
+	
+	@Test
+	public void test152() {
+		double[][] X = ArUtils.incrementMat(5,  3);
+		ArUtils.print(X);
+	}
+	
 }

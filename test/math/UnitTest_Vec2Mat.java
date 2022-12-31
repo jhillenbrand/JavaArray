@@ -1,6 +1,7 @@
 package math;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
@@ -148,5 +149,14 @@ public class UnitTest_Vec2Mat {
 		
 		ArUtils.print(w);
 		
-	}	
+	}
+	
+	@Test
+	public void test020() {
+		double[] x = ArUtils.linspace(9);
+		double[][] X = Vec2Mat.vec2Mat(x, 3, 3, false);
+		
+		ArUtils.print(X);
+	}
+	
 }

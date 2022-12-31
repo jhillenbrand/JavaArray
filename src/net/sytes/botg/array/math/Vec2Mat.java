@@ -8,7 +8,69 @@ public class Vec2Mat {
 	private Vec2Mat() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}	
-		
+	
+	/**
+	 * reshapes the vector into matrix defined by {@code rows}
+	 * <br>the elements are sorted column by column
+	 * @param x
+	 * @param rows
+	 * @return
+	 */
+	public static double[][] vec2Mat(double[] x, int rows){
+		return vec2Mat(x, rows, true);
+	}
+	
+	/**
+	 * reshapes the vector into matrix defined by {@code rows}
+	 * <br>the elements are sorted column by column if {@code columnByColumn} is set to true
+	 * @param x
+	 * @param rows
+	 * @param columnByColumn
+	 * @return
+	 */
+	public static double[][] vec2Mat(double[] x, int rows, boolean columnByColumn){
+		ArUtils.checkForNull(x);
+		int n = x.length;
+		if (n % rows != 0) {
+			throw new IllegalArgumentException("the length of vector x (" + n + ") must be divisble by the number of rows (" + rows + ")");
+		}
+		int columns = n / rows;
+		return vec2Mat(x, rows, columns, columnByColumn);
+	}
+	
+	/**
+	 * reshapes the vector into matrix defined by {@code rows} and {@code columns}
+	 * <br>the elements are sorted column by column if {@code columnByColumn} is set to true
+	 * @param x
+	 * @param rows
+	 * @param columns
+	 * @param columnByColumn
+	 * @return
+	 */
+	public static double[][] vec2Mat(double[] x, int rows, int columns, boolean columnByColumn){
+		ArUtils.checkForNull(x);
+		ArUtils.checkForEmpty(x);
+		int n = x.length;
+		if (n != rows * columns) {
+			throw new IllegalArgumentException("vector x (" + n + ") must have the same length as rows x columns (" + (rows * columns) + ")");
+		}
+		double[][] X = new double[rows][columns];
+		if (!columnByColumn) {
+			for (int i = 0; i < n; i++) {
+				int r = i / columns;
+				int c = i % columns;
+				X[r][c] = x[i];
+			}
+		} else {
+			for (int i = 0; i < n; i++) {
+				int c = i / columns;
+				int r = i % columns;
+				X[r][c] = x[i];
+			}
+		}
+		return X;
+	}
+	
 	/**
 	 * separates the given double array {@code ar}
 	 * @param ar

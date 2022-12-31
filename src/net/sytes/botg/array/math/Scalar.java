@@ -1,5 +1,7 @@
 package net.sytes.botg.array.math;
 
+import java.util.Random;
+
 public class Scalar {
 
 	// Suppress default constructor for noninstantiability
@@ -103,5 +105,17 @@ public class Scalar {
 	public static int closestExponentForBase2(int n) {
 		int m = (int) Scalar.log2(n);		
 		return m;
+	}
+	
+	/**
+	 * create a random double between{@code min} and {@code max}
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static double rand(double min, double max) {
+		Random r = new Random();
+		double randomValue = min + (max - min) * r.nextDouble();
+		return randomValue;
 	}
 }
