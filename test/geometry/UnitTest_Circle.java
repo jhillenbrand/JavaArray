@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.geometry.Circle;
+import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_Circle {
 
@@ -18,7 +18,7 @@ public class UnitTest_Circle {
 				.y_0(5.0)
 				.build();
 		
-		double[] t = ArUtils.linspace(0.0, 1.0, 100);
+		double[] t = Vec.linspace(0.0, 1.0, 100);
 		
 		c.create(t);
 		

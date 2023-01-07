@@ -2,7 +2,7 @@ package spectrum;
 
 import org.junit.jupiter.api.Test;
 
-import net.sytes.botg.array.ArUtils;
+import net.sytes.botg.array.math.Vec;
 import net.sytes.botg.array.spectrum.Spectrum;
 
 public class UnitTest_Spectrum {
@@ -12,7 +12,7 @@ public class UnitTest_Spectrum {
 		
 		int n = 10;
 		
-		double[] t = ArUtils.linspace(0, 4 * 2 * Math.PI, 2048);
+		double[] t = Vec.linspace(0, 4 * 2 * Math.PI, 2048);
 		double[] s = new double[t.length];
 		for (int i = 0; i < s.length; i++) {
 			s[i] = Math.cos(5 * t[i]);

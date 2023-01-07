@@ -1,6 +1,6 @@
 package net.sytes.botg.array.spectrum;
 
-import net.sytes.botg.array.ArUtils;
+import net.sytes.botg.array.math.Vec;
 
 /**
  * Utility class that provides various window types that can be applied on sample vectors
@@ -340,7 +340,7 @@ public class WindowFunction {
 	}
 	
 	private static double[] rectangular(int n) {
-		return ArUtils.ones(n);
+		return Vec.ones(n);
 	}
 	
 	private static double triangular(int i, int n) {

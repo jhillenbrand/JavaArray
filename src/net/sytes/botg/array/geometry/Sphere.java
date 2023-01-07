@@ -75,7 +75,7 @@ public class Sphere extends Surface3D {
 		
 		this.x = ConvertArray.concat(ss.x(), ss.x());
 		this.y = ConvertArray.concat(ss.y(), ss.y());
-		this.z = ConvertArray.concat(ss.z(), Vec.prod(ss.z(), -1.0));
+		this.z = ConvertArray.concat(ss.z(), Vec.product(ss.z(), -1.0));
 		
 	}
 }

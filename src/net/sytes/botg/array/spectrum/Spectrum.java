@@ -2,7 +2,6 @@ package net.sytes.botg.array.spectrum;
 
 import net.sytes.botg.array.math.Scalar;
 import net.sytes.botg.array.math.Vec;
-import net.sytes.botg.array.math.Vec2Mat;
 
 public class Spectrum {
 	
@@ -21,7 +20,7 @@ public class Spectrum {
 	 * @return
 	 */
 	public static double[][] spectrogram(double[] x, int windowSize, int overlapFactor, double[] windowFunction) {
-		double[][] windows = Vec2Mat.overlapWindows(x, windowSize, overlapFactor);
+		double[][] windows = Vec.overlapWindows(x, windowSize, overlapFactor);
 		
 		int w = windows.length;
 				

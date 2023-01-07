@@ -10,6 +10,33 @@ public class Scalar {
 	}
 	
 	/**
+	 * --------------------------------------------------------------------------
+	 * Scalar to Scalar
+	 * --------------------------------------------------------------------------
+	 */
+	
+	/**
+	 * computes the norm (length) of the vector defined by [x, y]
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static double norm(double x, double y) {
+		return norm(x, y, 0.0);
+	}
+	
+	/**
+	 * computes the norm (length) of the vector defined by [x, y, z]
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public static double norm(double x, double y, double z) {
+		return Math.sqrt(x * x + y * y + z * z);
+	}
+	
+	/**
 	 * rounds a double to {@code decimals}
 	 * @param x
 	 * @param decimals
@@ -82,6 +109,52 @@ public class Scalar {
 	}
 	
 	/**
+	 * computes the closest exponent for base 2 for {@code n}
+	 * @param n
+	 * @return
+	 */
+	public static int closestExponentForBase2(int n) {
+		int m = (int) Scalar.log2(n);		
+		return m;
+	}
+	
+	/**
+	 * --------------------------------------------------------------------------
+	 * Scalar Generation Methods
+	 * --------------------------------------------------------------------------
+	 */
+	
+	/**
+	 * returns a random int between {@code min} and {@code max}
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static int randInt(int min, int max) {
+		Scalar.checkForFirstSmallerSecond(min, max);
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+	}
+
+	/**
+	 * create a random double between{@code min} and {@code max}
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static double rand(double min, double max) {
+		Random r = new Random();
+		double randomValue = min + (max - min) * r.nextDouble();
+		return randomValue;
+	}
+	
+	/**
+	 * --------------------------------------------------------------------------
+	 * Scalar Utility Methods
+	 * --------------------------------------------------------------------------
+	 */
+	
+	/**
 	 * If a number is divisible by 2 then it has its least significant bit (LSB) set to 0,
 	 * 	if divisible by 4 then two LSB’s set to 0, if by 8 then three LSB’s set to 0 and so on.
 	 * 	Keeping this in mind, a number n is divisible by 2m if (n &amp; ((1 &lt;&lt; m) – 1)) is equal to 0 else not.
@@ -98,24 +171,13 @@ public class Scalar {
 	}
 	
 	/**
-	 * computes the closest exponent for base 2 for {@code n}
-	 * @param n
-	 * @return
+	 * checks if the first argument is smaller than the second and throws {@code IllegalArgumentException} if true
+	 * @param d1
+	 * @param d2
 	 */
-	public static int closestExponentForBase2(int n) {
-		int m = (int) Scalar.log2(n);		
-		return m;
-	}
-	
-	/**
-	 * create a random double between{@code min} and {@code max}
-	 * @param min
-	 * @param max
-	 * @return
-	 */
-	public static double rand(double min, double max) {
-		Random r = new Random();
-		double randomValue = min + (max - min) * r.nextDouble();
-		return randomValue;
+	public static void checkForFirstSmallerSecond(double d1, double d2) {
+		if (d1 >= d2) {
+			throw new IllegalArgumentException("d1[" + d1 + "] must be smaller than d2[" + d2 + "]");
+		}
 	}
 }

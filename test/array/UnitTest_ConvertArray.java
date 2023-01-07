@@ -2,38 +2,40 @@ package array;
 
 import org.junit.Test;
 
-import net.sytes.botg.array.ArUtils;
 import net.sytes.botg.array.ConvertArray;
+import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_ConvertArray {
 
+
+	
 	@Test
 	public void test000() {
-		int[] d = ArUtils.randInt(1_000_000);		
+		int[] d = Vec.randInt(1_000_000);		
 		ConvertArray.intToDouble2(d);
 	}
 	
 	@Test
 	public void test001() {
-		int[] d = ArUtils.randInt(1_000_000);		
+		int[] d = Vec.randInt(1_000_000);		
 		ConvertArray.toDouble(d);
 	}
 	
 	@Test
 	public void test002() {
-		int[] d = ArUtils.randInt(10_000_000);		
+		int[] d = Vec.randInt(10_000_000);		
 		ConvertArray.intToDouble2(d);
 	}
 	
 	@Test
 	public void test003() {
-		int[] d = ArUtils.randInt(10_000_000);		
+		int[] d = Vec.randInt(10_000_000);		
 		ConvertArray.toDouble(d);
 	}
 	
 	@Test
 	public void test004() {
-		int[] ints = ArUtils.randInt(100_000);
+		int[] ints = Vec.randInt(100_000);
 		
 		int n = 10_000;
 		long ns = 1_000_000_000;
@@ -95,6 +97,18 @@ public class UnitTest_ConvertArray {
 		
 		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
 		System.out.println("sr=" + sr + "[Hz]");
+	}
+	
+	@Test
+	public void test020() {
+		
+		Character[] cw = new Character[2];
+		cw[0] = 'A';
+		cw[1] = 'B';
+		
+		char[] c = ConvertArray.unwrap(cw);
+		
+		System.out.println(c);		
 	}
 	
 }
