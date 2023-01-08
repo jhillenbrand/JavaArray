@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Mat {
 	
-	private static final double GAUSSIAN_EPSILON = 1e-10;
+	private static final double GAUSSIAN_EPSILON = 1e-20;
 	
 	// Suppress default constructor for noninstantiability
 	private Mat() {

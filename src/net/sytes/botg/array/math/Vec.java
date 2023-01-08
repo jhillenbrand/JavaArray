@@ -553,21 +553,38 @@ public class Vec {
 		return yi;
 	}
 	
+	/**
+	 * returns the upper envelope of signal {@code y} based on a local maxima search with {@code minDistance}
+	 * <br>and a spline interpolation through the found maximas
+	 * @param y
+	 * @param minDistance
+	 * @return
+	 */
 	public static double[] upperEnvelope(double[] y, int minDistance) {
 		int n = y.length;
-		double[] x_ue = new double[n];
+		double[] x = linspace(n);
+		int[] minInds = findLocalMaxima(y, minDistance);
+		double[] x_s = elementsAt(x, minInds);
+		double[] y_s = elementsAt(y, minInds);
+		double[] y_ue = splineInterp(x_s, y_s, x);
+		return y_ue;
+	}
+	
+	/**
+	 * returns the lower envelope of signal {@code y} based on a local minima search with {@code minDistance}
+	 * <br>and a spline interpolation through the found minimas
+	 * @param y
+	 * @param minDistance
+	 * @return
+	 */
+	public static double[] lowerEnvelope(double[] y, int minDistance) {
+		int n = y.length;
 		double[] x = linspace(n);
 		int[] minInds = findLocalMinima(y, minDistance);
 		double[] x_s = elementsAt(x, minInds);
 		double[] y_s = elementsAt(y, minInds);
-		
-		return x_ue;
-	}
-	
-	public static double[] lowerEnvelope(double[] x, int minDistance) {
-		int n = x.length;
-		double[] x_ue = new double[n];
-		return x_ue;
+		double[] y_le = splineInterp(x_s, y_s, x);
+		return y_le;
 	}
 	
 	/**
