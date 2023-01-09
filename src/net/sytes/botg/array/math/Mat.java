@@ -991,10 +991,9 @@ public class Mat {
 		checkForNull(X);
 		checkForEmpty(X);
 		int m = X.length;
-		int n = X[0].length;
-		double[][] Y = new double[m][n];
+		double[][] Y = new double[m][];
 		for (int j = 0; j < m; j++) {
-			System.arraycopy(X[j], 0, Y[j], 0, X[j].length);
+			Y[j] = X[j].clone();
 		}
 		return Y;
 	}

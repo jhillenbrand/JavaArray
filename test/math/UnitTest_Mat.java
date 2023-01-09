@@ -501,6 +501,20 @@ public class UnitTest_Mat {
 		
 	}
 
+	@Test
+	public void test131() {
+		
+		double[][] X = Mat.unitMatrix(3);
+		
+		double[][] Y = Mat.copy(X);
+		
+		Y[0][0] = 2.0;
+		
+		Mat.print(X);
+		Mat.print(Y);
+		
+	}
+	
 	
 	@Test
 	public void test074() {
