@@ -94,6 +94,27 @@ public class Vec {
 	}	
 	
 	/**
+	 * retrieves the maximum of subarray of {@code x} defined by start index {@code s} and end index {@code e}
+	 * @param x
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double max(double[] x, int s, int e) {
+		checkForNull(x);
+		checkForEmpty(x);
+		double maxVal = x[s];
+		for(int i = s + 1; i <= e; i++) {
+			if(maxVal > x[i]) {
+				// do nothing
+			} else {
+				maxVal = x[i];
+			}
+		}
+		return maxVal;
+	}
+	
+	/**
 	 * rms value of {@code x}
 	 * @param x
 	 * @return
@@ -1897,12 +1918,64 @@ public class Vec {
 		return r;
 	}
 	
-	public static double[] sign(double[] ar) {
-		checkForNull(ar);
-		checkForEmpty(ar);
-		double[] sg = new double[ar.length];
+	/**
+	 * returns a double[] with the maximums of {@code x} for a sliding window of size {@code w} with step {@code s} 
+	 * @param x
+	 * @param w
+	 * @param s number of steps the window moves forward each iteration
+	 * @return
+	 */
+	public static double[] slidingMax(double[] x, int w, int s) {
+		/*
+		if (s == 1) {
+			int n = x.length;
+			double lastMax = Double.NEGATIVE_INFINITY;
+			int lastMaxInd = 0;
+			for (int i = 0; i < n; i++) {
+				if (i < w) {
+					
+				} else {
+					
+				}
+			}
+		} else {
+		*/
+			int m = x.length;
+			int n = m / s;
+			if (m % s != 0) {
+				n = n + 1;
+			}
+			double[] y = new double[n];
+			int start = 0;
+			int end = 1;
+			int j = 0;
+			while (start < n) {
+				y[j] = Vec.max(x, start, end);
+				end = end + s;
+				if (end > m) {
+					end = m;
+				}
+				start = end - w;
+				if (start < 0) {
+					start = 0;
+				}
+				++j;
+			}
+			return y;
+		//}
+	}
+	
+	/**
+	 * returns the sign of all elements in {@code x} as new double array
+	 * @param x
+	 * @return
+	 */
+	public static double[] sign(double[] x) {
+		checkForNull(x);
+		checkForEmpty(x);
+		double[] sg = new double[x.length];
 		for (int i = 0; i < sg.length; i++) {
-			sg[i] = Scalar.sign(ar[i]);
+			sg[i] = Scalar.sign(x[i]);
 		}
 		return sg;
 	}
@@ -1926,7 +1999,7 @@ public class Vec {
 	}
 	
 	/**
-	 * retrieves the maximum valueand the index it was found in {@code x}
+	 * retrieves the maximum value and the index it was found in {@code x}
 	 * <br>both results are stored in double[], where [0] -&gt; max value and [1] -&gt; index
 	 * @param x
 	 * @return
