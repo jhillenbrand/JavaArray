@@ -15,6 +15,10 @@ public class Vec {
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
 	
+	public enum Feature {
+		SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM
+	}
+
 	public enum DownsamplingAlgorithm {
 		BRUTE_FORCE, MAX, MEAN, LARGEST_TRIANGLE_THREE_BUCKETS, LARGEST_TRIANGLE_ONE_BUCKET, LONGEST_LINE_BUCKET
 	}
@@ -29,6 +33,70 @@ public class Vec {
 	 * Vector to Scalar
 	 * ----------------------------------------------------------------------------
 	 */
+	
+	/**
+	 * returns the scalar {@code feature} for {@code x}
+	 * <br>e.g. {@code SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM}
+	 * @param x
+	 * @param feature
+	 * @return
+	 */
+	public static double feature(double[] x, Feature feature) {
+		switch (feature) {
+			case MAX:
+				return max(x);
+			case MEAN:
+				return mean(x);
+			case MEDIAN:
+				return median(x);
+			case MIN:
+				return min(x);
+			case SPAN:
+				return span(x);
+			case RMS:
+				return rms(x);
+			case RMSMEAN:
+				return rmsMean(x);
+			case SUM:
+				return sum(x);
+			case VARIANCE:
+				return variance(x);
+			case SKEWNESS:
+				return skewness(x);
+			case KURTOSIS:
+				return kurtosis(x);
+			case CREST:
+				return crest(x);
+			case NORM:
+				return norm(x);
+			default:
+				return Double.NaN;			
+		}
+	}
+	
+	/**
+	 * returns the scalar {@code feature} for {@code x} between {@code s} and {@code e}
+	 * <br>e.g. {@code MAX, MEAN, MEDIAN, RMS}
+	 * @param x
+	 * @param s
+	 * @param e
+	 * @param feature
+	 * @return
+	 */
+	public static double feature(double[] x, int s, int e, Feature feature) {
+		switch (feature) {
+			case MAX:
+				return max(x, s, e);
+			case MEAN:
+				return mean(x, s, e);
+			case MEDIAN:
+				return median(x, s, e);
+			case RMS:
+				return rms(x, s, e);
+			default:
+				return Double.NaN;
+		}
+	}
 	
 	/**
 	 * retrieves the minimum in {@code x}
@@ -94,17 +162,15 @@ public class Vec {
 	}	
 	
 	/**
-	 * retrieves the maximum of subarray of {@code x} defined by start index {@code s} and end index {@code e}
+	 * retrieves the maximum of subarray {@code x} defined by start index {@code s} and end index {@code e}
 	 * @param x
 	 * @param s
 	 * @param e
 	 * @return
 	 */
 	public static double max(double[] x, int s, int e) {
-		checkForNull(x);
-		checkForEmpty(x);
 		double maxVal = x[s];
-		for(int i = s + 1; i <= e; i++) {
+		for(int i = s; i <= e; i++) {
 			if(maxVal > x[i]) {
 				// do nothing
 			} else {
@@ -120,11 +186,28 @@ public class Vec {
 	 * @return
 	 */
 	public static double rms(double[] x) {
+		checkForNull(x);
+		checkForEmpty(x);
 		double rmsSum = 0;
 		for (double d : x) {
 			rmsSum = rmsSum + d * d;
 		}		
 		return Math.sqrt(rmsSum / x.length);
+	}
+	
+	/**
+	 * retrieves the rms of subarray {@code x} defined by start index {@code s} and end index {@code e}
+	 * @param x
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double rms(double[] x, int s, int e) {
+		double rmsSum = 0;
+		for (int i = s; i <= e; ++i) {
+			rmsSum = rmsSum + x[i] * x[i];
+		}		
+		return Math.sqrt(rmsSum / (e - s + 1));
 	}
 	
 	/**
@@ -235,12 +318,56 @@ public class Vec {
 	}
 	
 	/**
+	 * computes the median for the elements in {@code x} from index {@code s} to {@code e}
+	 * @param x
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double median(double[] x, int s, int e) {
+		checkForNull(x);
+		checkForEmpty(x);
+		double med = 0.0;
+		/*
+		double[] tmp = new double[e - s + 1];
+		int j = 0;
+		for (int i = s; i <= e; i++) {
+			tmp[j] = x[i];
+			++j;
+		}
+		*/
+		double[] tmp = Vec.sub(x, s, e);
+		quicksort(tmp);
+		if (tmp.length % 2 == 0) {
+		    med = (tmp[tmp.length / 2] + tmp[tmp.length / 2 - 1]) / 2;
+		} else {
+		    med = tmp[tmp.length / 2];
+		}
+		return med;
+	}
+	
+	/**
 	 * computes the mean value of the given {@code x}
 	 * @param x
 	 * @return double
 	 */
 	public static double mean(double[] x) {
 		return sum(x) / x.length;
+	}
+	
+	/**
+	 * retrieves the mean of subarray {@code x} defined by start index {@code s} and end index {@code e}
+	 * @param x
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double mean(double[] x, int s, int e) {
+		double sum = 0;
+		for (int i = s; i <= e; ++i) {
+			sum = sum + x[i];
+		}		
+		return sum / (e - s + 1);
 	}
 	
 	/**
@@ -266,7 +393,7 @@ public class Vec {
 	 * @param x
 	 * @return
 	 */
-	public static double variance (double[] x) {
+	public static double variance(double[] x) {
 		int size = x.length;
 		double mean = mean(x);
 		double variance = 0;
@@ -462,12 +589,60 @@ public class Vec {
 		}
 		return (double) sum / x1.length;
 	}
-	
+		
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector to Vector
 	 * ----------------------------------------------------------------------------
 	 */
+	
+	/**
+	 * returns the specified {@code feature} for {@code x} with a sliding window of size {@code w} and step {@code s}
+	 * <br>e.g. {@code MAX, MEDIAN, MEAN}
+	 * @param x
+	 * @param w
+	 * @param s
+	 * @return
+	 */
+	public static double[] slidingFeature(double[] x, int w, int s, Feature feature) {
+		int m = x.length;
+		int n = m / s;
+		if (m % s != 0) {
+			n = n + 1;
+		}
+		double[] y = new double[n];
+		int start = 0;
+		int end = 1;
+		boolean keepStart = false;
+		for (int i = 0; i < n; i++) {
+			switch (feature) {
+				case MAX:
+					y[i] = max(x, start, end);	
+				case MEAN:
+					y[i] = mean(x, start, end);
+				case MEDIAN:
+					y[i] = median(x, start, end);
+				case RMS:
+					y[i] = rms(x, start, end);
+				default:
+					y[i] = Double.NaN;
+			}			
+			end = end + s;
+			if (keepStart) {
+				start = start + s;
+			} else {
+				start = end - w;
+			}
+			if (end > m - 1) {
+				end = m - 1;
+				keepStart = true;
+			}				
+			if (start < 0) {
+				start = 0;
+			}
+		}
+		return y;
+	}
 	
 	/**
 	 * apply a highpass on {@code x} defined by {@code dt} and {@code fc}
@@ -1926,43 +2101,111 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] slidingMax(double[] x, int w, int s) {
-		/*
-		if (s == 1) {
-			int n = x.length;
-			double lastMax = Double.NEGATIVE_INFINITY;
-			int lastMaxInd = 0;
-			for (int i = 0; i < n; i++) {
-				if (i < w) {
-					
-				} else {
-					
-				}
-			}
-		} else {
-		*/
-			int m = x.length;
-			int n = m / s;
-			if (m % s != 0) {
-				n = n + 1;
-			}
-			double[] y = new double[n];
-			int start = 0;
-			int end = 1;
-			int j = 0;
-			while (start < n) {
-				y[j] = Vec.max(x, start, end);
-				end = end + s;
-				if (end > m) {
-					end = m;
-				}
+		int m = x.length;
+		int n = m / s;
+		if (m % s != 0) {
+			n = n + 1;
+		}
+		double[] y = new double[n];
+		int start = 0;
+		int end = 1;
+		boolean keepStart = false;
+		for (int i = 0; i < n; i++) {
+			y[i] = Vec.max(x, start, end);
+			end = end + s;
+			if (keepStart) {
+				start = start + s;
+			} else {
 				start = end - w;
-				if (start < 0) {
-					start = 0;
-				}
-				++j;
 			}
-			return y;
-		//}
+			if (end > m - 1) {
+				end = m - 1;
+				keepStart = true;
+			}				
+			if (start < 0) {
+				start = 0;
+			}
+		}
+		return y;
+	}
+	
+	/**
+	 * returns a Number[][] with the maximums of {@code x} for a sliding window of size {@code w} with step {@code s} and the corresponding indices,
+	 * <br>where double[0][] contains indices and double[1][] --> maximum values
+	 * @param x
+	 * @param w
+	 * @param s number of steps the window moves forward each iteration
+	 * @return
+	 */
+	public static double[][] slidingMax2(double[] x, int w, int s) {
+		int m = x.length;
+		int n = m / s;
+		if (m % s != 0) {
+			n = n + 1;
+		}
+		double[] y = new double[n];
+		double[] inds = new double[n];
+		int start = 0;
+		int end = 1;
+		boolean keepStart = false;
+		for (int i = 0; i < n; i++) {
+			y[i] = Vec.max(x, start, end);
+			if (s == 1) {
+				inds[i] = i;
+			} else {
+				inds[i] = (int) ((start + end) / 2);
+			}
+			end = end + s;
+			if (keepStart) {
+				start = start + s;
+			} else {
+				start = end - w;
+			}
+			if (end > m - 1) {
+				end = m - 1;
+				keepStart = true;
+			}				
+			if (start < 0) {
+				start = 0;
+			}
+		}
+		return new double[][] {inds, y};
+	}
+	
+	/**
+	 * returns a double[] with the medians of {@code x} for a sliding window of size {@code w} with step {@code s} 
+	 * @param x
+	 * @param w
+	 * @param s
+	 * @return
+	 */
+	public static double[] slidingMedian(double[]x , int w, int s) {
+		int m = x.length;
+		int n = m / s;
+		if (m % s != 0) {
+			n = n + 1;
+		}
+		double[] y = new double[n];
+		int start = 0;
+		int end = 1;
+		boolean keepStart = false;
+		for (int i = 0; i < n; i++) {
+			y[i] = Vec.median(x, start, end);
+			end = end + s;
+			if (keepStart) {
+				start = start + s;
+			} else {
+				start = end - w;
+			}
+			if (end > m - 1) {
+				end = m - 1;
+				keepStart = true;
+			}				
+			if (start < 0) {
+				start = 0;
+			}
+		}
+		return y;
 	}
 	
 	/**
@@ -2238,6 +2481,20 @@ public class Vec {
 	 */
 	
 	public static double[] bubbleSort(double[] ar) {
+		double[] newAr = copy(ar); 
+		for (int a = newAr.length - 1; a > 0; a--) {
+			for (int b = 0; b < a; b++) {
+				if (newAr[b] > newAr[b + 1]) {
+					double temp = newAr[b];
+					newAr[b] = newAr[b + 1];
+					newAr[b + 1] = temp;
+				}
+			}
+		}		
+		return newAr;
+	}
+	
+	public static void bubbleSort2(double[] ar) {
 		for (int a = ar.length - 1; a > 0; a--) {
 			for (int b = 0; b < a; b++) {
 				if (ar[b] > ar[b + 1]) {
@@ -2247,8 +2504,6 @@ public class Vec {
 				}
 			}
 		}
-		
-		return ar;
 	}
 	
 	/**
@@ -2891,6 +3146,21 @@ public class Vec {
 	}
 	
 	/**
+	 * returns the elements at indices {@code inds} in {@code ar} into new array
+	 * @param inds
+	 * @param data
+	 * @return double[]
+	 */
+	public static double[] elementsAt(double[] ar, double[] inds) {
+		int n = inds.length;
+		double[] ar2 = new double[n];
+		for (int i = 0; i < n; i++) {
+			ar2[i] = ar[(int) inds[i]];
+		}
+		return ar2;
+	}
+	
+	/**
 	 * returns an boolean[] array that is true for every element in {@code data} with {@code NaN}
 	 * @param data
 	 * @return boolean[]
@@ -3408,7 +3678,23 @@ public class Vec {
 			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
 		}
 	}
-		
+	
+	/**
+	 * checks whether specified {@code arrays} have same length
+	 * @param arrays
+	 */
+	public static void checkForEqualDimensions(double[] ... arrays) {
+		if (arrays.length == 0) {
+			throw new IllegalArgumentException("specified arrays were empty");
+		}		
+		int n = arrays[0].length;
+		for (double[] ar : arrays) {
+			if (ar.length != n) {
+				throw new IllegalArgumentException("not all specified arrays have the same length");
+			}
+		}
+	}
+	
 	/**
 	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
 	 * @param ar1
