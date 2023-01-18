@@ -1,3 +1,4 @@
+# README is not up-to-date
 # JavaArray
 
 Java project containing classes with static methods to manipulate arrays, doing math operations,  signal processing and more ...
