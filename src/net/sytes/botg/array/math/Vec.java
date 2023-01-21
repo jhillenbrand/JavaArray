@@ -2480,20 +2480,52 @@ public class Vec {
 	 * ----------------------------------------------------------------------------
 	 */
 	
+	/**
+	 * returns a sorted copy of {@code ar} with the bubble sort algorithm in ascending order
+	 * @param ar
+	 * @return
+	 */
 	public static double[] bubbleSort(double[] ar) {
+		return bubbleSort(ar, true);
+	}
+	
+	/**
+	 * returns a sorted copy of {@code ar} with the bubble sort algorithm
+	 * <br>if ascending is false, the array is sorted in descending order
+	 * @param ar
+	 * @return
+	 */
+	public static double[] bubbleSort(double[] ar, boolean ascending) {
 		double[] newAr = copy(ar); 
-		for (int a = newAr.length - 1; a > 0; a--) {
-			for (int b = 0; b < a; b++) {
-				if (newAr[b] > newAr[b + 1]) {
-					double temp = newAr[b];
-					newAr[b] = newAr[b + 1];
-					newAr[b + 1] = temp;
+		if (ascending) {
+			for (int a = newAr.length - 1; a > 0; a--) {
+				for (int b = 0; b < a; b++) {
+					if (newAr[b] > newAr[b + 1]) {
+						double temp = newAr[b];
+						newAr[b] = newAr[b + 1];
+						newAr[b + 1] = temp;
+					}
 				}
 			}
-		}		
+		} else {
+			for (int a = newAr.length - 1; a > 0; a--) {
+				for (int b = 0; b < a; b++) {
+					if (newAr[b] < newAr[b + 1]) {
+						double temp = newAr[b];
+						newAr[b] = newAr[b + 1];
+						newAr[b + 1] = temp;
+					}
+				}
+			}
+		}
 		return newAr;
 	}
 	
+	/**
+	 * sorts an array in ascending order with bubble sort algorithm
+	 * <br>the original array is sorted not a copy
+	 * @param ar
+	 */
 	public static void bubbleSort2(double[] ar) {
 		for (int a = ar.length - 1; a > 0; a--) {
 			for (int b = 0; b < a; b++) {
@@ -2504,6 +2536,112 @@ public class Vec {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * returns an int[] array containing the resulting indices after sorting {@code ar}
+	 * <br>the specified array is not modified
+	 * @param ar
+	 * @return
+	 */
+	public static int[] bubbleSortInd(double[] ar) {
+		double[] newAr = copy(ar); 
+		int[] inds = linspace(0, ar.length - 1);
+		for (int a = newAr.length - 1; a > 0; a--) {
+			for (int b = 0; b < a; b++) {
+				if (newAr[b] > newAr[b + 1]) {
+					double temp = newAr[b];
+					int tempI = inds[b];
+					newAr[b] = newAr[b + 1];
+					inds[b] = inds[b + 1];
+					newAr[b + 1] = temp;
+					inds[b + 1] = tempI;
+				}
+			}
+		}		
+		return inds;
+	}
+	
+	/**
+	 * returns an int[] array containing the resulting indices after sorting {@code ar}
+	 * <br>the specified array is not modified
+	 * <br>if ascending is set to true, the array is sorted in descending order
+	 * @param ar
+	 * @param ascending
+	 * @return
+	 */
+	public static int[] bubbleSortInd(double[] ar, boolean ascending) {
+		double[] newAr = copy(ar); 
+		int[] inds = linspace(0, ar.length - 1);
+		if (ascending) {
+			for (int a = newAr.length - 1; a > 0; a--) {
+				for (int b = 0; b < a; b++) {
+					if (newAr[b] > newAr[b + 1]) {
+						double temp = newAr[b];
+						int tempI = inds[b];
+						newAr[b] = newAr[b + 1];
+						inds[b] = inds[b + 1];
+						newAr[b + 1] = temp;
+						inds[b + 1] = tempI;
+					}
+				}
+			}
+		} else {
+			for (int a = newAr.length - 1; a > 0; a--) {
+				for (int b = 0; b < a; b++) {
+					if (newAr[b] < newAr[b + 1]) {
+						double temp = newAr[b];
+						int tempI = inds[b];
+						newAr[b] = newAr[b + 1];
+						inds[b] = inds[b + 1];
+						newAr[b + 1] = temp;
+						inds[b + 1] = tempI;
+					}
+				}
+			}
+		}
+		return inds;
+	}
+	
+	/**
+	 * returns an int[] array containing the resulting indices after sorting {@code ar}
+	 * <br>the specified array is not modified
+	 * <br>if ascending is set to true, the array is sorted in descending order
+	 * @param ar
+	 * @param ascending
+	 * @return
+	 */
+	public static int[] bubbleSortInd(int[] ar, boolean ascending) {
+		int[] newAr = copy(ar); 
+		int[] inds = linspace(0, ar.length - 1);
+		if (ascending) {
+			for (int a = newAr.length - 1; a > 0; a--) {
+				for (int b = 0; b < a; b++) {
+					if (newAr[b] > newAr[b + 1]) {
+						int temp = newAr[b];
+						int tempI = inds[b];
+						newAr[b] = newAr[b + 1];
+						inds[b] = inds[b + 1];
+						newAr[b + 1] = temp;
+						inds[b + 1] = tempI;
+					}
+				}
+			}
+		} else {
+			for (int a = newAr.length - 1; a > 0; a--) {
+				for (int b = 0; b < a; b++) {
+					if (newAr[b] < newAr[b + 1]) {
+						int temp = newAr[b];
+						int tempI = inds[b];
+						newAr[b] = newAr[b + 1];
+						inds[b] = inds[b + 1];
+						newAr[b + 1] = temp;
+						inds[b + 1] = tempI;
+					}
+				}
+			}
+		}
+		return inds;
 	}
 	
 	/**
@@ -2953,6 +3091,25 @@ public class Vec {
 	}
 	
 	/**
+	 * returns a sub array of {@code x} between {@code start} and {@code end} with {@code step}
+	 * @param x
+	 * @param start
+	 * @param end
+	 * @param step
+	 * @return
+	 */
+	public static double[] sub(double[] x, int start, int end, int step) {
+		int n = (end - start + 1) / step;
+		double[] y = new double[n];
+		int j = 0;
+		for (int i = start; i < end; i = i + step) {
+			y[j] = x[i];
+			++j;
+		}
+		return y;
+	}
+	
+	/**
 	 * returns a sub array starting at 0 and ending at index e from ar
 	 * @param ar
 	 * @param e
@@ -3161,6 +3318,21 @@ public class Vec {
 	}
 	
 	/**
+	 * returns the elements at indices {@code inds} in {@code ar} into new array
+	 * @param inds
+	 * @param data
+	 * @return int[]
+	 */
+	public static int[] elementsAt(int[] ar, int[] inds) {
+		int n = inds.length;
+		int[] ar2 = new int[n];
+		for (int i = 0; i < n; i++) {
+			ar2[i] = ar[inds[i]];
+		}
+		return ar2;
+	}	
+	
+	/**
 	 * returns an boolean[] array that is true for every element in {@code data} with {@code NaN}
 	 * @param data
 	 * @return boolean[]
@@ -3231,7 +3403,16 @@ public class Vec {
 		}
 		return list.toArray(Arrays.copyOf(ar, list.size()));
 	}
+	
+	
+	public static double[][] findKneePoint(double[] x, double[] y){
+		if (x == null) {
+			x = linspace(y.length);
+		}
 		
+		return null;
+	}
+	
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector Generation Methods
@@ -3353,6 +3534,22 @@ public class Vec {
 	}
 	
 	/**
+	 * returns a vector containing a random permutation of the integers from 0 to n - 1 without repeating elements.
+	 * @param n
+	 * @return
+	 */
+	public static int[] randperm(int n) {
+		int[] ints = linspace(0, n - 1);
+		Random rand = new Random();
+		for (int i = 0; i < n; i++) {
+			int r = rand.nextInt(n);
+			int tmp = ints[r];
+			ints[i] = tmp;
+		}
+		return ints;
+	}
+	
+	/**
 	 * returns a double array starting from {@code start} to {@code end} with {@code step}
 	 * @param start
 	 * @param end
@@ -3407,7 +3604,7 @@ public class Vec {
 	 * @return
 	 */
 	public static int[] linspace(int start, int end) {
-		int size = (int) ((end - start ) / 1);
+		int size = end - start + 1;
 		int[] ar = new int[size];
 		for (int i = 0; i < size; i++) {
 			ar[i] = start + 1 * i;
@@ -3521,6 +3718,15 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] copy(double[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static int[] copy(int[] x) {
 		return x.clone();
 	}
 	

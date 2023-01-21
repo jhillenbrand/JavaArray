@@ -667,4 +667,18 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test410() {
+		
+		int[] r = Vec.randInt(10, 1, 10);
+		
+		int[] inds = Vec.bubbleSortInd(r, true);
+		
+		Vec.print(r);
+		Vec.print(inds);
+		
+		Vec.print(Vec.elementsAt(r, inds));
+		
+	}
+	
 }
