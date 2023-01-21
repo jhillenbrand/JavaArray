@@ -510,6 +510,33 @@ public class Vec {
 	}
 	
 	/**
+	 * returns the cross product of vectors {@code a} and {@code b}
+	 * <br>the cross product is not implemented for dimensions greater 3
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static double[] crossProduct(double[] a, double[] b) {
+		checkForEqualDimensions(a, b);
+		double[] c = new double[3];		
+		if (a.length == 1) {
+			throw new IllegalArgumentException("crossProduct is not defined for Dimension 1");
+		} else if (a.length == 2) {
+			c[0] = 0;
+			c[1] = 0;
+			c[3] = a[0] * b[1] - a[1] * b[0];
+			return c;
+		} else if (a.length == 3) {
+			c[0] = a[1] * b[2] - a[2] * b[1];
+			c[1] = a[2] * b[0] - a[0] * b[2];
+			c[3] = a[0] * b[1] - a[1] * b[0];
+			return c;
+		} else {
+			throw new IllegalArgumentException("crossProduct is not implemented for Dimension > 3");
+		}
+	}
+	
+	/**
 	 * computes the distance between two points in 1D and greater
 	 * @param p1
 	 * @param p2
@@ -525,6 +552,24 @@ public class Vec {
 			sum += Math.pow(p1[i] - p2[i], 2);
 		}
 		return Math.sqrt(sum);
+	}
+	
+	/**
+	 * computes the distance of point {@code p} from a line defined by the points {@code start} and {@code end}
+	 * @param start
+	 * @param end
+	 * @param p
+	 * @return
+	 */
+	public static double distanceToLine(double[] start, double[] end, double[] p) {
+		checkForEqualDimensions(start, end, p);
+		double[] a = start;
+		double[] b = minus(end, start);		
+		double[] c = minus(p, a);
+		double[] cp = crossProduct(c, b);		
+		double numerator = norm(cp);
+		double denominator = norm(b);
+		return numerator / denominator;
 	}
 	
 	/**
@@ -3404,13 +3449,39 @@ public class Vec {
 		return list.toArray(Arrays.copyOf(ar, list.size()));
 	}
 	
-	
-	public static double[][] findKneePoint(double[] x, double[] y){
-		if (x == null) {
-			x = linspace(y.length);
+	/**
+	 * returns the knee point {x_kp, y_kp} for the coordinate values of {@code x} and {@code y}	
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static double[] findKneePoint(double[] x, double[] y, boolean sort){
+		checkForNull(y);
+		double[] ys = y;
+		double[] xs = x;
+		if (xs == null) {
+			xs = linspace(ys.length);
 		}
-		
-		return null;
+		if (sort) {
+			int[] is = bubbleSortInd(y);
+			ys = elementsAt(y, is);
+			xs = elementsAt(x, is);
+		}
+		double[] start = {xs[0], ys[0]};
+		double[] end = {xs[xs.length - 1], ys[ys.length - 1]};
+		double[] p = new double[2];
+		double dMax = 0;
+		int iMax = 0;
+		for (int i = 1; i < xs.length - 1;  i++) {
+			p[0] = xs[i];
+			p[1] = ys[i];
+			double d = distanceToLine(start, end, p);
+			if (d > dMax) {
+				dMax = d;
+				iMax = i;
+			}
+		}	
+		return new double[] {xs[iMax], ys[iMax]};
 	}
 	
 	/**

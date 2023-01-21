@@ -706,8 +706,7 @@ public class Mat {
 	public static float[][] zerosF(int n, int m) {
 		return new float[n][m];
 	}
-	
-	
+		
 	/**
 	 * returns an 2D array with 1's, where {@code n} is the number of rows and {@code m} the number of columns
 	 * @param n
@@ -848,6 +847,19 @@ public class Mat {
 			mat[j] = Vec.nan(n);
 		}
 		return mat;
+	}
+	
+	/**
+	 * TODO
+	 * creates the Levi-Civita Matrix &epsilon;<sub>ijk...</sub> based on dimension {@code d}
+	 * @param d
+	 * @return
+	 */
+	public static double[][] leviCivita(int d){
+		if (d == 1 || d > 3) {
+			throw new IllegalArgumentException("");
+		}
+		return null;
 	}
 	
 	/**
