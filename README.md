@@ -1,6 +1,4 @@
-# README is not up-to-date
 # JavaArray
-
 Java project containing classes with static methods to manipulate arrays, doing math operations, signal processing, geometry and more ...
 
 ## Packages
@@ -50,10 +48,10 @@ and Math functions for signal processing and feature extractions and many more .
   ```
 * [Mat](src/net/sytes/botg/array/math/Mat.java)
 
-## spectrum
+### spectrum
 // TODO description missing
 
-## geometry
+### geometry
 // TODO description missing
 
 ## Testing
