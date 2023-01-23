@@ -1,16 +1,17 @@
 # README is not up-to-date
 # JavaArray
 
-Java project containing classes with static methods to manipulate arrays, doing math operations,  signal processing and more ...
+Java project containing classes with static methods to manipulate arrays, doing math operations, signal processing, geometry and more ...
 
 ## Packages
 
 ### array
 
-* [ArUtils](src/net/sytes/botg/array/ArUtils.java)
 * [ConvertArray](src/net/sytes/botg/array/ConvertArray.java)
-* [SortArray](src/net/sytes/botg/array/SortArray.java)
-* [SearchArray](src/net/sytes/botg/array/SearchArray.java)
+  <br><i>wrapping and concatenation for arrays</i>
+  ```java
+
+  ```
 
 ### math
 
