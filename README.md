@@ -10,7 +10,11 @@ Java project containing classes with static methods to manipulate arrays, doing 
 * [ConvertArray](src/net/sytes/botg/array/ConvertArray.java)
   <br><i>wrapping and concatenation for arrays</i>
   ```java
-
+  public static Double[] wrap(final double[] array)
+  public static double[] unwrap(final Double[] array)
+  public static double[] toDouble(int[] intAr)
+  public static double[] shortToDouble(short[] shortAr)
+  ...
   ```
 
 ### math
