@@ -21,19 +21,40 @@ Java project containing classes with static methods to manipulate arrays, doing 
 
 and Math functions for signal processing and feature extractions and many more ...
 * [Scalar](src/net/sytes/botg/array/math/Scalar.java)
-* [Vec](src/net/sytes/botg/array/math/Vec.java)
+  <br><i>methods that operate on scalar input</i>
   ```java
-  public static double[] highpass(double[] x, double dt, double f_c)
+  public static double roundToDecimals(double x, int decimals)
+  public static int randInt(int min, int max)
+  public static int closestExponentForBase2(int n)
+  public static boolean isDivByPow(int n, int m)
+  ...
+  ```
+* [Vec](src/net/sytes/botg/array/math/Vec.java)
+  <i><br>Collection of methods that operates on vectors (mainly double[]) as method input
+  <br>it contains methods that transform vectors into scalars, vectors into vectors, vectors into matrices,<br>generates vectors, searches in vectors, permutates vectors and more</i>
+  ```java
+  public static double max(double[] x)
+  public static double rms(double[] x)
+  public static double[] slidingMax(double[] x, int w, int s)
   public static double[] lowpass(double[] x, double dt, double f_c)
   public static double[] normalize(double[] x)
   public static double[] zscore(double[] x)
   public static double[] downsample(double[] ar, int m, DownsamplingAlgorithm algorithm)
   public static double[] upsample2(double[] x, int n)
   public static int[] findLocalExtrema(double[] x, int minDistance)
-  public static double[] diff(double[] ar) 
+  public static double[] diff(double[] ar)
+  public static double[] sub(final double[] ar, int s, int e)
+  public static double[] linspace(double start, double end, double step)
+  public static double[] nan(int n)
+  ...
   ```
-* [Vec2Mat](src/net/sytes/botg/array/math/Vec2Mat.java)
-* [Vec2Scalar](src/net/sytes/botg/array/math/Vec2Scalar.java)
+* [Mat](src/net/sytes/botg/array/math/Mat.java)
+
+## spectrum
+// TODO description missing
+
+## geometry
+// TODO description missing
 
 ## Testing
 

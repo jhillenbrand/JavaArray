@@ -681,4 +681,17 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test420() {
+		
+		double[] x = Vec.linspace(5);
+		double[] y = Vec.rand(5);
+		
+		double[] y_reg = Vec.linReg(x, y);
+		
+		Vec.print(y);
+		Vec.print(y_reg);
+		
+	}
+	
 }

@@ -11,6 +11,13 @@ import net.sytes.botg.array.ConvertArray;
 import net.sytes.botg.array.spectrum.WindowFunction;
 import net.sytes.botg.array.spectrum.WindowFunction.WindowType;
 
+/**
+ * Collection of methods that operates on vectors (mainly double[]) as method input
+ * <br>it contains methods that transform vectors into scalars, vectors into vectors, vectors into matrices
+ * <br>generates vectors, searches in vectors, permutates vectors and more
+ * @author hillenbrand
+ *
+ */
 public class Vec {
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
@@ -27,6 +34,7 @@ public class Vec {
 	private Vec() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
+	
 	
 	/**
 	 * ----------------------------------------------------------------------------
@@ -635,6 +643,7 @@ public class Vec {
 		return (double) sum / x1.length;
 	}
 		
+	
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector to Vector
@@ -642,6 +651,7 @@ public class Vec {
 	 */
 	
 	/**
+	
 	 * returns the specified {@code feature} for {@code x} with a sliding window of size {@code w} and step {@code s}
 	 * <br>e.g. {@code MAX, MEDIAN, MEAN}
 	 * @param x
@@ -2307,6 +2317,90 @@ public class Vec {
 		}
 		return new double[] {maxVal, maxInd};
 	}	
+	
+	/**
+	 * returns a curve fit for {@code x} based on a linear regression for {@code x, y}
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static double[] linReg(double[] x, double[] y) {
+		double[] coeff = linRegCoefficients(x, y, false);
+		double[] y_reg = new double[x.length]; 
+		for (int i = 0; i < x.length; i++) {
+			y_reg[i] = coeff[0] + coeff[1] * x[i];
+		}
+		return y_reg;
+	}
+	
+	/**
+	 * The method {@code linRegCoefficients} performs a simple linear regression
+	 * on an set of <em>n</em> data points (<em>x<sub>i</sub></em>, <em>y<sub>i</sub></em>).
+	 * That is, it fits a straight line <em>y</em> = &alpha; + &beta; <em>x</em>,
+	 * (where <em>y</em> is the response variable, <em>x</em> is the predictor variable,
+	 * &alpha; is the <em>y-intercept</em>, and &beta; is the <em>slope</em>)
+	 * that minimizes the sum of squared residuals of the linear regression model.
+	 * It also computes associated statistics, including the coefficient of
+	 * determination <em>R</em><sup>2</sup> and the standard deviation of the
+	 * estimates for the slope &sigma;<sup>2</sup><sub>&alpha;</sub> and <em>y</em>-intercept &sigma;<sup>2</sup><sub>&beta;</sub>.
+	 * <br>If withStats is set to true, the result array contains
+	 * <br>{&alpha;, &beta;, <em>R</em><sup>2</sup>, &sigma;<sup>2</sup><sub>&alpha;</sub>, &sigma;<sup>2</sup><sub>&beta;</sub>}
+	 * <br>If withStats is set to false, the result array contains
+	 * <br>{&alpha;, &beta;}
+	 * <br>source: <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/LinearRegression.java.html">https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/LinearRegression.java.html</a>
+	 * @param x
+	 * @param y
+	 * @param withStats
+	 * @return
+	 */
+	public static double[] linRegCoefficients(double[] x, double[] y, boolean withStats) {
+		checkForEqualDimensions(x, y);
+		
+		int n = x.length;
+
+        // first pass
+        double sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
+        for (int i = 0; i < n; i++) {
+            sumx  += x[i];
+            sumx2 += x[i]*x[i];
+            sumy  += y[i];
+        }
+        double xbar = sumx / n;
+        double ybar = sumy / n;
+
+        // second pass: compute summary statistics
+        double xxbar = 0.0, yybar = 0.0, xybar = 0.0;
+        for (int i = 0; i < n; i++) {
+            xxbar += (x[i] - xbar) * (x[i] - xbar);
+            yybar += (y[i] - ybar) * (y[i] - ybar);
+            xybar += (x[i] - xbar) * (y[i] - ybar);
+        }
+        double beta  = xybar / xxbar;
+        double alpha = ybar - beta * xbar;
+
+        // more statistical analysis
+        double rss = 0.0;      // residual sum of squares
+        double ssr = 0.0;      // regression sum of squares
+        for (int i = 0; i < n; i++) {
+            double fit = beta*x[i] + alpha;
+            rss += (fit - y[i]) * (fit - y[i]);
+            ssr += (fit - ybar) * (fit - ybar);
+        }
+
+        int degreesOfFreedom = n - 2;
+        double R2 = ssr / yybar;
+        double svar  = rss / degreesOfFreedom;
+        double sigmaBeta = svar / xxbar;
+        double sigmaAlpha = svar / n + xbar * xbar * sigmaBeta;
+        
+        double[] coeff;
+		if (withStats) {
+			coeff = new double[]{alpha, beta, R2, sigmaAlpha, sigmaBeta};			
+		} else {
+			coeff = new double[] {alpha, beta};
+		}        
+		return coeff;
+	}
 	
 	/**
 	 * ----------------------------------------------------------------------------
