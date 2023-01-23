@@ -56,13 +56,8 @@ and Math functions for signal processing and feature extractions and many more .
 
 ## Testing
 
-unit tests with examples can be found here:
-* [ArUtils](test/array/UnitTest_ArUtils.java)
-* [ConvertArray](test/array/UnitTest_ConvertArray.java)
-* [SearchArray](test/array/UnitTest_SearchArray.java)
-* [SortArray](test/array/UnitTest_SortArray.java)
-* [Vec2Vec](test/math/UnitTest_Vec2Vec.java)
-* [ScalarProd](test/math/UnitTest_ScalarProd.java)
+unit tests with examples can be found here for the corresponding package:
+* [test](test/)
 
 The repo also contains code samples for MATLAB and C (compiled under Win10), that compare execution time with the UnitTest_ScalarProd:
 <br>for comparison the scalar product of two double arrays with 10e6 elements is computed
@@ -70,7 +65,7 @@ The repo also contains code samples for MATLAB and C (compiled under Win10), tha
 * C    		-> 25.000 - 45.000 µs
 * MATLAB	-> 300.000 - 1e6 µs
 
-<br>I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that there's hope for doing my signal processing in Java (:P)
+<br>DISCLAIMER: I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that there's hope for doing my signal processing in Java (:P)
 
 ## Licenses used
 this Project: MIT
