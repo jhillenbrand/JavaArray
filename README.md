@@ -74,12 +74,6 @@ The repo also contains code samples for MATLAB and C (compiled under Win10), tha
 
 <br>I'm not claiming that my Java code is faster than native C, because probably the implementation is not using all advantages of native C, but it shows me that there's hope for doing my signal processing in Java (:P)
 
-## Documentation
-Please download and see the attached [doc](doc/) folder for an overview of all classes and methods
-
-## Releases
-this repo contains *.jar releases for every release/snapshot branch (except master), there will be a downloadable *.jar, that can be intergrated into your project, if you do not wish to compile the src yourself.
-
 ## Licenses used
 this Project: MIT
 
