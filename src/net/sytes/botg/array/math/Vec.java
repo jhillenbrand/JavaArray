@@ -2403,6 +2403,16 @@ public class Vec {
 	}
 	
 	/**
+	 * compute the unit vector of length 1 of {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static double[] unitVector(double[] x) {
+		double len = norm(x);
+		return product(x, 1 / len);
+	}
+	
+	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector to Matrix
 	 * ----------------------------------------------------------------------------
@@ -3845,6 +3855,40 @@ public class Vec {
 			data[i] = Double.NaN;
 		}
 		return data;
+	}
+	
+	/**
+	 * computes the directional vector between two points {@code p1, p2}
+	 * @param x1
+	 * @param x2
+	 * @return
+	 */
+	public static double[] directionalVector(double[] p1, double[] p2) {
+		checkForEqualDimensions(p1, p2);
+		return minus(p2, p1);
+	}
+	
+	/**
+	 * computes the center of a circle defined by two points on the circle {@code {xs, ys}, {xe, ye}} and its radius {@code r}
+	 * @param xs
+	 * @param ys
+	 * @param xe
+	 * @param ye
+	 * @param r
+	 * @return a double[] array with {xc, yc}
+	 */
+	public static double[] centerCircle(double xs, double ys, double xe, double ye, double r) {
+		double[] s = new double[] {xs, ys};
+		double[] e = new double[] {xe, ye};
+		double d = distance(s, e);
+		double[] v = directionalVector(s, e);
+		double[] vo = new double[] {-v[1], v[0]};
+		double[] von = unitVector(vo);
+		double dh = d / 2;
+		double l1 = r * r - dh * dh;
+		double[] vm = plus(s, product(v, 0.5));
+		double[] c = plus(vm, product(von, l1));
+		return c;
 	}
 	
 	/**

@@ -694,4 +694,14 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test430() {
+		
+		double[] x = {1, 1};
+		double[] xn = Vec.unitVector(x);
+		
+		Vec.print(xn);
+		
+	}
+	
 }
