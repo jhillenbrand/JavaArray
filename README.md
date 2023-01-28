@@ -49,7 +49,12 @@ and Math functions for signal processing and feature extractions and many more .
 * [Mat](src/net/sytes/botg/array/math/Mat.java)
 
 ### spectrum
-// TODO description missing
+  ```java
+  public static double[][] spectrogram(double[] x, int windowSize, int overlapFactor, double[] windowFunction)
+  public static double[] dft(double[] x, boolean onlyPositive)
+  public static double[] singleSidedSpectrum(double[] x)
+  ...
+  ```
 
 ### geometry
 // TODO description missing
