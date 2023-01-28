@@ -71,3 +71,9 @@ The repo also contains code samples for MATLAB and C (compiled under Win10), tha
 this Project: MIT
 
 code used within Project is subject to EPL 2.0
+
+## Releases
+If you want to include src sode, that does not change anymore, see the list of releases
+
+## Dependencies
+see [pom.xml](pom.xml)
