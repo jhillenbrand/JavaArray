@@ -3,7 +3,6 @@ package math;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
-import java.util.Random;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
