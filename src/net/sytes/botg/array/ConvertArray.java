@@ -99,15 +99,41 @@ public class ConvertArray {
 	
 	/**
 	 * convert object[] to double[]
-	 * @param objAr
+	 * @param ar
 	 * @return
 	 */
-	public static double[] toDouble(Object[] objAr) {
-		double[] doubleAr = new double[objAr.length];
+	public static double[] toDouble(Object[] ar) {
+		double[] doubleAr = new double[ar.length];
 		for (int d = 0; d < doubleAr.length; d++) {
-			doubleAr[d] = (double) objAr[d];
+			doubleAr[d] = (double) ar[d];
 		}
 		return doubleAr;
+	}
+	
+	/**
+	 * converts the Double[] {@code ar} to Object[]
+	 * @param ar
+	 * @return
+	 */
+	public static Object[] toObjects(Double[] ar) {
+		Object[] objAr = new Object[ar.length];
+		for (int d = 0; d < objAr.length; d++) {
+			objAr[d] = (Object) ar[d];
+		}
+		return objAr;
+	}
+	
+	/**
+	 * converts the double[] {@code ar} to Object[]
+	 * @param ar
+	 * @return
+	 */
+	public static Object[] toObjects(double[] ar) {
+		Object[] objAr = new Object[ar.length];
+		for (int d = 0; d < objAr.length; d++) {
+			objAr[d] = (Object) ar[d];
+		}
+		return objAr;
 	}
 	
 	/**
@@ -590,5 +616,30 @@ public class ConvertArray {
             result[i] = (b == null ? valueForNull : b.shortValue());
         }
         return result;
-    }	
+    }
+    
+    /**
+     * unwraps {@code objects} into a 2D Object[][] array if elements are actually arrays
+     * @param objects
+     * @return
+     */
+    public static Object[][] unwrap(Object[] objects){
+    	int m = objects.length;
+    	Object o = objects[0];
+    	if (o.getClass().isArray()) {
+    		Object[] row0 = (Object[]) o;
+    		int n = row0.length;
+    		Object[][] matObjs = new Object[m][n];
+    		for (int j = 0; j < m; j++) {
+    			Object[] row = (Object[]) objects[j];
+    			for (int k = 0; k < n; k++) {
+    				matObjs[j][k] = row[k];
+    			}
+    		}
+    		return matObjs;
+    	} else {
+    		return null;
+    	}		
+    }
+    
 }
