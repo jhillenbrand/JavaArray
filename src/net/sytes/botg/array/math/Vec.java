@@ -78,7 +78,7 @@ public class Vec {
 			case NORM:
 				return norm(x);
 			default:
-				return Double.NaN;			
+				throw new IllegalArgumentException(Feature.class.getSimpleName() + " " + feature.toString() + " is not implemented!");			
 		}
 	}
 	
@@ -672,15 +672,19 @@ public class Vec {
 		for (int i = 0; i < n; i++) {
 			switch (feature) {
 				case MAX:
-					y[i] = max(x, start, end);	
+					y[i] = max(x, start, end);
+					break;
 				case MEAN:
 					y[i] = mean(x, start, end);
+					break;
 				case MEDIAN:
 					y[i] = median(x, start, end);
+					break;
 				case RMS:
 					y[i] = rms(x, start, end);
+					break;
 				default:
-					y[i] = Double.NaN;
+					throw new IllegalArgumentException(Feature.class.getSimpleName() + " " + feature.toString() + " is not implemented!");
 			}			
 			end = end + s;
 			if (keepStart) {
@@ -2262,6 +2266,48 @@ public class Vec {
 		}
 		return y;
 	}
+	
+	/**
+	 * returns the sliding mean of {@code x} for non-uniform spacing with {@code t} with window size {@code w}
+	 * <br>NOTE: this is an experimental implementation, TODO faulty implementation, change to slidingMean(double[] t, double[] x, int w, int s, int e)
+	 * <br>computation scheme:
+	 * <br>x&#773;<sub>i</sub>=x&#773;<sub>i-1</sub>+(x<sub>i</sub>-x<sub>i-1</sub>)&middot;(t<sub>i+1</sub>-t<sub>i-1</sub>)/(t<sub>i+1</sub>-t<sub>i-1-w</sub>)
+	 * <br>with x&#773;<sub>0</sub>=x<sub>1</sub>,  t<sub>i</sub> = t<sub>0</sub> &#8704; i < 0 and t<sub>n + 1</sub> = 2&middot;t<sub>n</sub>-t<sub>n-1</sub>
+	 * @param t
+	 * @param x
+	 * @param w
+	 * @return
+	 */
+	public static double[] slidingMean(double[] t, double[] x, int w) {
+		checkForEqualDimensions(t, x);
+		checkForAtLeastNElements(x, 2);
+		int n = x.length;
+		double[] sm = new double[n];
+		// set first element
+		sm[0] = x[0];
+		double t_start;
+		double t_end;
+		for (int i = 1; i < n - 1; i++) {
+			if (i - 1 - w >= 0) {
+				t_start = t[i - 1 - w];
+			} else {
+				t_start = t[0];
+			}
+			t_end = t[i + 1];
+			sm[i] = sm[i - 1] + (x[i] - x[i - 1]) * (t_end - t[i - 1]) / (t_end - t_start);
+		}
+		
+		if (n - 1 - w >= 0) {
+			t_start = t[n - 1 - w];
+		} else {
+			t_start = t[0];
+		}
+		t_end = 2 * t[n - 1] - t[n - 2];
+		// set last element
+		sm[n - 1] = sm[n - 2] + (x[n - 1] - x[n - 2]) * (t_end - t[n - 1]) / (t_end - t_start); 
+		
+		return sm;		
+	}	
 	
 	/**
 	 * returns the sign of all elements in {@code x} as new double array
@@ -4136,6 +4182,17 @@ public class Vec {
 		}
 	}
 
+	/**
+	 * checks whether there are at least {@code n} elements in {@code ar}
+	 * @param ar
+	 * @param n
+	 */
+	public static void checkForAtLeastNElements(double[] ar, int n) {
+		if (ar.length < n) {
+			throw new IllegalArgumentException("ar must have at least " + n + " elements");
+		}
+	}
+	
 	/**
 	 * checks if the {@code ar} is strictly monotone increasing or decreasing
 	 * @param ar
