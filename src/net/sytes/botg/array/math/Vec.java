@@ -650,8 +650,7 @@ public class Vec {
 	 * ----------------------------------------------------------------------------
 	 */
 	
-	/**
-	
+	/**	
 	 * returns the specified {@code feature} for {@code x} with a sliding window of size {@code w} and step {@code s}
 	 * <br>e.g. {@code MAX, MEDIAN, MEAN}
 	 * @param x
@@ -659,7 +658,7 @@ public class Vec {
 	 * @param s
 	 * @return
 	 */
-	public static double[] slidingFeature(double[] x, int w, int s, Feature feature) {
+	public static double[] features(double[] x, int w, int s, Feature feature) {
 		int m = x.length;
 		int n = m / s;
 		if (m % s != 0) {
@@ -702,6 +701,53 @@ public class Vec {
 		}
 		return y;
 	}
+	
+	/**
+	 * returns the specified {@code feature} for {@code x} with non-uniform spacing in {@code t} with a sliding window of size {@code w} and step {@code s}
+	 * <br>e.g. {@code MEAN}
+	 * @param t e.g. time array
+	 * @param x e.g. value array
+	 * @param w window size
+	 * @param s step size
+	 * @param feature {@code Feature} to be used
+	 * @return
+	 */
+	public static double[] features(double[] t, double[] x, int w, int s, Feature feature) {
+		int m = x.length;
+		int n = m / s;
+		if (m % s != 0) {
+			n = n + 1;
+		}
+		double[] y = new double[n];
+		int start = 0;
+		int end = 1;
+		boolean keepStart = false;
+		for (int i = 0; i < n; i++) {
+			switch (feature) {
+				case MEAN:
+					y[i] = mean(t, x, start, end);
+					break;
+				
+				default:
+					throw new IllegalArgumentException(Feature.class.getSimpleName() + " " + feature.toString() + " is not implemented!");
+			}			
+			end = end + s;
+			if (keepStart) {
+				start = start + s;
+			} else {
+				start = end - w;
+			}
+			if (end > m - 1) {
+				end = m - 1;
+				keepStart = true;
+			}				
+			if (start < 0) {
+				start = 0;
+			}
+		}
+		return y;
+	}
+	
 	
 	/**
 	 * apply a highpass on {@code x} defined by {@code dt} and {@code fc}
@@ -2266,48 +2312,47 @@ public class Vec {
 		}
 		return y;
 	}
-	
+		
 	/**
-	 * returns the sliding mean of {@code x} for non-uniform spacing with {@code t} with window size {@code w}
-	 * <br>NOTE: this is an experimental implementation, TODO faulty implementation, change to slidingMean(double[] t, double[] x, int w, int s, int e)
+	 * * returns the sliding mean of {@code x} for non-uniform spacing with {@code t} inside sub array {@code [s, e]}
 	 * <br>computation scheme:
-	 * <br>x&#773;<sub>i</sub>=x&#773;<sub>i-1</sub>+(x<sub>i</sub>-x<sub>i-1</sub>)&middot;(t<sub>i+1</sub>-t<sub>i-1</sub>)/(t<sub>i+1</sub>-t<sub>i-1-w</sub>)
-	 * <br>with x&#773;<sub>0</sub>=x<sub>1</sub>,  t<sub>i</sub> = t<sub>0</sub> &#8704; i < 0 and t<sub>n + 1</sub> = 2&middot;t<sub>n</sub>-t<sub>n-1</sub>
+	 * <br>x&#773;=&sum;<sub>i=s</sub><sup>i=e</sup>x<sub>i</sub>&middot;(t<sub>i+1</sub>-t<sub>i-1</sub>)/(t<sub>e+1</sub>-t<sub>s-1</sub>)
+	 * <br>&#8704; e+1 > n - 1 : t<sub>e+1</sub> = 2&middot;t<sub>e</sub> - t<sub>e-1</sub> and &#8704; s = 0 : t<sub>s - 1</sub> = 2&middot;t<sub>0</sub>-t<sub>1</sub>
 	 * @param t
 	 * @param x
-	 * @param w
+	 * @param s
+	 * @param e
 	 * @return
 	 */
-	public static double[] slidingMean(double[] t, double[] x, int w) {
+	public static double mean(double[] t, double[] x, int s, int e) {
 		checkForEqualDimensions(t, x);
 		checkForAtLeastNElements(x, 2);
+		checkForIndicesInBounds(x, s, e);
 		int n = x.length;
-		double[] sm = new double[n];
-		// set first element
-		sm[0] = x[0];
-		double t_start;
-		double t_end;
-		for (int i = 1; i < n - 1; i++) {
-			if (i - 1 - w >= 0) {
-				t_start = t[i - 1 - w];
+		double sum = 0;
+		double delta_t = 0;
+		double t_ges = 0;
+		for (int i = s; i <= e; ++i) {
+			if (i == 0) {
+				delta_t = 2 * (t[1] - t[0]);
+			} else if (i == n - 1) {
+				delta_t = 2 * (t[n - 1] - t[n - 2]);
 			} else {
-				t_start = t[0];
+				delta_t = t[i + 1] - t[i - 1];
 			}
-			t_end = t[i + 1];
-			sm[i] = sm[i - 1] + (x[i] - x[i - 1]) * (t_end - t[i - 1]) / (t_end - t_start);
-		}
-		
-		if (n - 1 - w >= 0) {
-			t_start = t[n - 1 - w];
-		} else {
-			t_start = t[0];
-		}
-		t_end = 2 * t[n - 1] - t[n - 2];
-		// set last element
-		sm[n - 1] = sm[n - 2] + (x[n - 1] - x[n - 2]) * (t_end - t[n - 1]) / (t_end - t_start); 
-		
-		return sm;		
-	}	
+			if (s == 0 && e < n - 1) {
+				t_ges = t[e + 1] - (t[0] - (t[1] - t[0]));
+			} else if (s == 0 && e == n - 1) {
+				t_ges = (t[e] + (t[e] - t[e - 1])) - (t[0] - (t[1] - t[0]));
+			} else if (s > 0 && e < n - 1) {
+				t_ges = t[e + 1] - t[s - 1];
+			} else if (s > 0 && e == n - 1) {
+				t_ges = (t[e] + (t[e] - t[e - 1])) - t[s - 1];
+			}
+			sum = sum + x[i] * delta_t / t_ges;
+		}		
+		return sum / (e - s + 1);
+	}
 	
 	/**
 	 * returns the sign of all elements in {@code x} as new double array
