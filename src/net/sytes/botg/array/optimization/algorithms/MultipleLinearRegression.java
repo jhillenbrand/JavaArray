@@ -1,4 +1,4 @@
-package net.sytes.botg.array.optimization;
+package net.sytes.botg.array.optimization.algorithms;
 
 public class MultipleLinearRegression {
 
