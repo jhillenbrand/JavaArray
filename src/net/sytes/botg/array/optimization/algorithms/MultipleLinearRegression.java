@@ -31,9 +31,8 @@ public class MultipleLinearRegression extends Algorithm {
 	}
 
 	@Override
-	public double[] run(double[][] X_ij) {
+	public void run(double[][] X_ij) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	
