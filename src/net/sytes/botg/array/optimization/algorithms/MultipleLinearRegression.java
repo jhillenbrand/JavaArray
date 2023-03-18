@@ -1,6 +1,9 @@
 package net.sytes.botg.array.optimization.algorithms;
 
-public class MultipleLinearRegression {
+import net.sytes.botg.array.optimization.Algorithm;
+import net.sytes.botg.array.optimization.ObjectFunction;
+
+public class MultipleLinearRegression extends Algorithm {
 
 	/**
 	 * learn rate
@@ -21,6 +24,17 @@ public class MultipleLinearRegression {
 	 * bias
 	 */
 	private double b;
+	
+	public MultipleLinearRegression(ObjectFunction objectFunction, ObjectFunction gradientFunction) {
+		super(objectFunction, gradientFunction);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public double[] run(double[][] X_ij) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
