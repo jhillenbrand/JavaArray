@@ -85,4 +85,15 @@ public class UnitTest_Scalar {
 		
 	}
 	
+	@Test
+	public void test020() {
+		
+		double x1 = 1.4;
+		double x2 = 1.5;
+		
+		System.out.println("round(" + x1 + ") --> " + Scalar.round(x1));
+		System.out.println("round(" + x2 + ") --> " + Scalar.round(x2));
+		
+	}
+	
 }

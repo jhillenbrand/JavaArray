@@ -49,7 +49,7 @@ public class Scalar {
 		double newX = scaledXInt / scale;
 		return newX;
 	}
-	
+		
 	/**
 	 * rounds Number to {@code decimals} and returns double
 	 * @param x
@@ -62,6 +62,24 @@ public class Scalar {
 		long scaledXInt = (long) scaledX;
 		double newX = scaledXInt / scale;
 		return newX;
+	}
+	
+	/**
+	 * rounds the {@code x} to the next closest int
+	 * <br>Example:
+	 * <br>round(1.4) -> 1
+	 * <br>round(1.5) -> 2
+	 * @param x
+	 * @return
+	 */
+	public static int round(double x) {
+		int i = (int) x;
+		double d = x - i;
+		if (d >= 0.5) {
+			return i + 1;
+		} else {
+			return i;
+		}
 	}
 	
 	/**
