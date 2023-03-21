@@ -3983,6 +3983,40 @@ public class Vec {
 	}
 	
 	/**
+	 * adds zeros at the end of {@code x}, so that the new array is of size {@code n}
+	 * <br>if n <= x.length, then the original array is returned
+	 * @param x
+	 * @param n
+	 * @return
+	 */
+	public static double[] padding(double[] x, int n) {
+		if (n <= x.length) {
+			return x;
+		} else {
+			double[] y = new double[n];
+			System.arraycopy(y, 0, x, 0, x.length);
+			return y;
+		}
+	}
+	
+	/**
+	 * adds {@code d} to the end of {@code x}, so that the new array is of size {@code n}
+	 * <br>if n <= x.length, then the original array is returned
+	 * @param x
+	 * @param n
+	 * @param d
+	 * @return
+	 */
+	public static double[] padding(double[] x, int n, double d) {
+		double[] y = padding(x, n);
+		for (int i = x.length; i < n; i++) {
+			y[i] = d;
+		}
+		return y;
+	}
+	
+	
+	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector Utility Methods
 	 * ----------------------------------------------------------------------------

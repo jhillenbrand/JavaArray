@@ -187,6 +187,22 @@ public class Spectrum {
 		return p;
 	}
 	
+	public static double[][] singleSidedSpectrum2(double[] x, double sampleRate) {
+		Complex[] X = fft(x, true);
+		int L = X.length;		
+		double[][] p = new double[2][L / 2 + 1];
+		double f = 0.0;
+		for (int i = 0; i < L / 2 + 1; i++) {
+			p[1][i] = X[i].multiply(1.0 / (double) L).abs();
+			if (i != 0 && i < L / 2) {
+				p[1][i] = p[1][i] * 2;
+			}
+			f = (double) i / (double) L * sampleRate;
+			p[0][i] = f;			
+		}
+		return p;
+	}
+	
 	/**
 	 * compute fft based on double input
 	 * @param d
@@ -210,7 +226,7 @@ public class Spectrum {
 	        }
     		c = toComplex(d);
     	} else {
-    		int n = Scalar.closestExponentForBase2(d.length);    		
+    		int n = Scalar.nextLowerExponentForBase2(d.length);    		
     		double[] dn = new double[(int) Math.pow(2.0, (double) n)];
     		System.arraycopy(d, 0, dn, 0, dn.length);
     		c = toComplex(dn);
@@ -219,7 +235,7 @@ public class Spectrum {
     }
 	
     /**
-     *  Radix-2 Cooley-Tukey FFT ALGOTRIHM
+     *  Radix-2 Cooley-Tukey FFT ALGORITHM
      *  compute the FFT of x[], assuming its length n is a power of 2
      * @param x
      * @see https://www.ams.org/journals/mcom/1965-19-090/S0025-5718-1965-0178586-1/

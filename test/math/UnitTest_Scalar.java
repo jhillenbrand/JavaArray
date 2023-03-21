@@ -12,12 +12,22 @@ import net.sytes.botg.array.math.Vec;
 public class UnitTest_Scalar {
 
 	@Test
-	public void test01() {
+	public void test001() {
 		
-		assertEquals(Scalar.closestExponentForBase2(1024), 10);
+		assertEquals(Scalar.nextLowerExponentForBase2(1024), 10);
 		
-		assertEquals(Scalar.closestExponentForBase2(2047), 10);
+		assertEquals(Scalar.nextLowerExponentForBase2(2047), 10);
 		
+	}
+	
+	@Test
+	public void test002() {
+		
+		int m = Scalar.nextGreaterExponentForBase2(1024);
+		System.out.println(m + " --> " + Math.pow(2, m));
+		
+		m = Scalar.nextGreaterExponentForBase2(5000);
+		System.out.println(m + " --> " + Math.pow(2, m));
 	}
 	
 	@Test

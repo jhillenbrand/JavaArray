@@ -127,13 +127,27 @@ public class Scalar {
 	}
 	
 	/**
-	 * computes the closest exponent for base 2 for {@code n}
+	 * computes the next closest exponent for base 2 for {@code n}, that is smaller or equal to {@code n}
 	 * @param n
 	 * @return
 	 */
-	public static int closestExponentForBase2(int n) {
+	public static int nextLowerExponentForBase2(int n) {
 		int m = (int) Scalar.log2(n);		
 		return m;
+	}
+	
+	/**
+	 * computes the next greater exponent for base 2 for {@code n}, that is greater or equal to {@code n}
+	 * @param n
+	 * @return
+	 */
+	public static int nextGreaterExponentForBase2(int n) {
+		int m = (int) Scalar.log2(n);
+		if (n == Math.pow(2, m)) {
+			return m;
+		} else {
+			return m + 1;
+		}
 	}
 	
 	/**

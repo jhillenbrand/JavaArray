@@ -26,7 +26,7 @@ public class Complex {
     }
     
     public double abs() {
-    	return Math.sqrt(Math.pow(this.real, 2) + Math.pow(this.imaginary, 2));
+    	return Math.sqrt(this.real * this.real + this.imaginary * this.imaginary);
     }
     
     public Complex multiply(Complex c) {
