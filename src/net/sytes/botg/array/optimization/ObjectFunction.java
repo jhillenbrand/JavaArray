@@ -9,5 +9,9 @@ public abstract class ObjectFunction implements IObjectFunction {
 		this.n = numOfWeights;
 		this.theta_j = new double[this.n];
 	}
+
+	public double[] getWeights() {
+		return this.theta_j;
+	}
 	
 }

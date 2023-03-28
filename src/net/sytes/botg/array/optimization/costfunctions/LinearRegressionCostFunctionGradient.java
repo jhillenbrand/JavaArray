@@ -9,7 +9,13 @@ public class LinearRegressionCostFunctionGradient extends ObjectFunction {
 	}
 
 	@Override
-	public double apply(double[][] X_ij, double[] theta_j) {
+	public double apply(double[][] X_ij) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double apply(double[] x_j) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
