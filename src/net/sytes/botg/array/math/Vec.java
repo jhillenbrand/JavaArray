@@ -3994,7 +3994,7 @@ public class Vec {
 			return x;
 		} else {
 			double[] y = new double[n];
-			System.arraycopy(y, 0, x, 0, x.length);
+			System.arraycopy(x, 0, y, 0, x.length);
 			return y;
 		}
 	}
@@ -4015,6 +4015,49 @@ public class Vec {
 		return y;
 	}
 	
+	/**
+	 * paddes the original array {@code x} by mirroring the values in it, until the size {@code n}
+	 * <br>if {@code n} > 2 * {@code x.length} then the values from {@code x} is repeated multiple  
+	 * @return
+	 */
+	public static double[] mirroredPadding(double[] x, int n) {
+		if (n <= x.length) {
+			return x;
+		} else {
+			if (n > 2 * x.length) {
+				double[] y = padding(x, n);
+				int rem = n - x.length;
+				int i = x.length - 2;
+				int s = -1;
+				int j = x.length;
+				while (rem > 0) {
+					y[j] = x[i]; 
+					if (i == 0) {
+						s = 1;
+					} else if (i == x.length - 1) {
+						s = -1;
+					}
+					i = i + s;
+					++j;
+					--rem;
+				}
+				return y;
+			} else {
+				double[] y = padding(x, n);
+				int j = x.length;
+				int rem = n - x.length;
+				for (int i = x.length - 2; i >= 0; i--) {
+					y[j] = x[i]; 
+					++j;
+					--rem;
+					if (rem == 0) {
+						break;
+					}
+				}
+				return y;
+			}
+		}
+	}
 	
 	/**
 	 * ----------------------------------------------------------------------------

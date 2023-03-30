@@ -703,4 +703,52 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test440() {
+		
+		double[] x = Vec.linspace(10);
+		
+		double[] y = Vec.padding(x, 15);
+		
+		Vec.print(x);
+		Vec.print(y);
+		
+	}
+	
+	@Test
+	public void test441() {
+		
+		double[] x = Vec.linspace(10);
+		
+		double[] y = Vec.padding(x, 15, 1.0);
+		
+		Vec.print(x);
+		Vec.print(y);
+		
+	}
+	
+	@Test
+	public void test442() {
+		
+		double[] x = Vec.linspace(5);
+		
+		double[] y = Vec.mirroredPadding(x, 8);
+		
+		Vec.print(x);
+		Vec.print(y);
+		
+	}
+	
+	@Test
+	public void test443() {
+		
+		double[] x = Vec.linspace(5);
+		
+		double[] y = Vec.mirroredPadding(x, 25);
+		
+		Vec.print(x);
+		Vec.print(y);
+		
+	}
+	
 }
