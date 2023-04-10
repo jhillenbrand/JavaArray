@@ -3,11 +3,13 @@ package net.sytes.botg.datatypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Table implementation in Java based on a {@code LinkedHashMap} for adressing columns by name, the data within a column is represented by {@code ArrayList<Object>} for easy adding and removing of rows
@@ -16,10 +18,18 @@ import java.util.Objects;
  */
 public class Table implements Cloneable {
 
+	
 	private Map<String, List<Object>> data = new LinkedHashMap<String, List<Object>>();	
 	
+	/**
+	 * clones the data on entry into table, making sure 
+	 */
+	private boolean cloneOnEntry;
+	
+	private static final boolean DEFAULT_CLONE_ON_ENTRY = true; 
+	
 	public enum Comparator {
-		EQUALS, SMALLER_THAN, GREATER_THAN, EQUAL_OR_SMALLER, EQUAL_OR_GREATER, LIKE
+		EQUAL, SMALLER_THAN, GREATER_THAN, EQUAL_OR_SMALLER, EQUAL_OR_GREATER, LIKE, NOT_NULL, NOT_EQUAL
 	}
 	
 	public enum MatchMode {
@@ -34,7 +44,17 @@ public class Table implements Cloneable {
 		ASCENDING, DESCENDING, A_TO_Z, Z_TO_A
 	}
 	
-	public Table() {		
+	public Table() {
+		this(null, null, DEFAULT_CLONE_ON_ENTRY);
+	}
+	
+	public Table(boolean cloneOnEntry) {
+		this(null, null, cloneOnEntry);
+	}
+	
+	public Table(String columnName, List<Object> objs, boolean cloneOnEntry) {
+		this.cloneOnEntry = cloneOnEntry;
+		this.addColumn(columnName, objs);
 	}
 	
 	/**
@@ -42,7 +62,7 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(Object[] ar) {
-		this("COL0", ar);
+		this("COL0", Arrays.asList(ar), DEFAULT_CLONE_ON_ENTRY);
 	}
 	
 	/**
@@ -51,15 +71,15 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(String columnName, Object[] ar) {
-		this.data.put(columnName, Arrays.asList(ar));
+		this(columnName, Arrays.asList(ar), DEFAULT_CLONE_ON_ENTRY);
 	}
 	
 	/**
 	 * the object list is stored in data with default columnName
 	 * @param data
 	 */
-	public Table(List<Object> data) {
-		this("COL0", data);
+	public Table(List<Object> data) {		
+		this("COL0", data, DEFAULT_CLONE_ON_ENTRY);
 	}
 	
 	/**
@@ -68,16 +88,17 @@ public class Table implements Cloneable {
 	 * @param data
 	 */
 	public Table(String columnName, List<Object> data) {
-		this.data.put(columnName, data);
+		this(columnName, data, DEFAULT_CLONE_ON_ENTRY);
 	}
 		
 	/**
 	 * the map is interpreted as Columnwise data, where the keys specify the name of the column and the values are Object[] arrays containing the row data
 	 * @param mapData
 	 */
-	public Table(Map<String, Object[]> mapData) {
-		for (Entry<String, Object[]> entry : mapData.entrySet()) {
-			this.data.put(entry.getKey(), Arrays.asList(entry.getValue()));
+	public Table(Map<String, List<Object>> mapData) {
+		this(null, null, DEFAULT_CLONE_ON_ENTRY);
+		for (Entry<String, List<Object>> entry : mapData.entrySet()) {
+			this.addColumn(entry.getKey(), entry.getValue());
 		}
 	}
 	
@@ -88,9 +109,9 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(Object[][] ar) {		
+		this(DEFAULT_CLONE_ON_ENTRY);
 		for (int i = 0; i < ar.length; i++) {
-			this.data.put("COL" + (i), Arrays.asList(ar[i]));
-			++i;
+			this.addColumn("COL" + (i), Arrays.asList(ar[i]));
 		}
 	}
 	
@@ -103,12 +124,13 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(String[] headers, Object[][] ar) {
+		this(DEFAULT_CLONE_ON_ENTRY);
 		if (headers.length != ar.length) {
 			throw new IllegalArgumentException("length of headers array (" + headers.length + ") and number of columns in ar (" + ar.length + ") must match");
 		}
 		int i = 0;
 		for (String h : headers) {
-			this.data.put(h, Arrays.asList(ar[i]));
+			this.addColumn(h, Arrays.asList(ar[i]));
 			++i;
 		}
 	}
@@ -120,6 +142,7 @@ public class Table implements Cloneable {
 	 * @param ar 2D array containing columns with data
 	 */
 	public Table(List<String> headers, Object[][] ar) {
+		this(DEFAULT_CLONE_ON_ENTRY);
 		if (headers.size() != ar.length) {
 			throw new IllegalArgumentException("length of headers list (" + headers.size() + ") and number of columns in ar (" + ar.length + ") must match");
 		}
@@ -131,14 +154,15 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * initializes the Table with empty Columns with headers specified
+	 * initializes the Table with empty Columns with {@code headers} specified
 	 * @param headers
 	 */
 	public Table(String[] headers){
+		this(DEFAULT_CLONE_ON_ENTRY);
 		for (String h : headers) {
 			this.data.put(h, new ArrayList<Object>());
 		}
-	}
+	}	
 	
 	/**
 	 * returns the value at {@code column} at row {@code r}
@@ -195,14 +219,15 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * get the column data as list of objects specified by columnName
-	 * <br>this creates a deep clone of the underlying objects inside the list
+	 * get the column data as list of objects specified by {@code columnName}
+	 * <br>this creates a clone of the {@code ArrayList} containing this column's elements
 	 * @param columnName
 	 * @return
 	 */
 	public List<Object> getColumn(String columnName){
-		List<Object> newList = new ArrayList<Object>();
-		Collections.copy(this.data.get(columnName), newList);
+		List<Object> newList = new ArrayList<Object>(this.data.get(columnName).size());
+		//Collections.copy(newList, this.data.get(columnName));
+		newList.addAll(this.data.get(columnName));
 		return newList;
 	}
 	
@@ -211,18 +236,19 @@ public class Table implements Cloneable {
 	 * @return
 	 */
 	public String[] getColumnNames() {
-		return (String[]) this.data.keySet().toArray();
+		String[] columnNames = this.data.keySet().toArray(new String[] {});
+		return columnNames;
 	}
 	
 	/**
-	 * return columnName at index c
+	 * return columnName at column index {@code c}
 	 * @param c
 	 * @return
 	 */
 	public String getColumnName(int c) {
 		this.checkRange(0, c);
-		String[] columnNames = this.getColumnNames();
-		return columnNames[c];
+		String columnName = this.data.keySet().toArray(new String[] {})[c];
+		return columnName;
 	}
 	
 	/**
@@ -230,11 +256,10 @@ public class Table implements Cloneable {
 	 * @param columnName
 	 */
 	public void addColumn(String columnName) {
-		if (this.getNumberOfRows() == 0) {
+		if (this.getNumberOfElementsInRows() == 0) {
 			this.data.put(columnName, new ArrayList<Object>());
 		} else {
-			Object[] emptyColumn = new Object[this.getNumberOfRows()];
-			this.addColumn(columnName, emptyColumn);
+			this.addColumn(columnName, new ArrayList<Object>());
 		}
 	}
 
@@ -252,11 +277,9 @@ public class Table implements Cloneable {
 	 * @param columnData
 	 */
 	public void addColumn(String columnName, Object[] columnData) {
-		if (this.hasColumn(columnName)) {
-			throw new IllegalArgumentException("a column with name '" + columnName + "' is already present. Try replace or rename the column you want to add.");
-		}
-		this.data.put(columnName, Arrays.asList(columnData));
-		this.fillUpColumns();
+		List<Object> newList = new ArrayList<Object>();
+		newList.addAll(Arrays.asList(columnData));
+		this.addColumn(columnName, newList);
 	}
 	
 	public void addColumn(List<Object> columnData) {
@@ -265,10 +288,23 @@ public class Table implements Cloneable {
 	}
 	
 	public void addColumn(String columnName, List<Object> columnData) {
+		if (columnName == null) {
+			return;
+		}
+		if (columnData == null) {
+			return;
+		}
 		if (this.hasColumn(columnName)) {
 			throw new IllegalArgumentException("a column with name '" + columnName + "' is already present. Try replace or rename the column you want to add.");
 		}
-		this.data.put(columnName, columnData);
+		if (this.cloneOnEntry) {
+			List<Object> clonedData = new ArrayList<Object>(columnData.size());
+			//Collections.copy(clonedData, columnData);
+			clonedData.addAll(columnData);
+			this.data.put(columnName, clonedData);
+		} else {
+			this.data.put(columnName, columnData);
+		}
 		this.fillUpColumns();
 	}
 	
@@ -277,14 +313,9 @@ public class Table implements Cloneable {
 	 * @param rowData
 	 */
 	public void addRow(Object[] rowData) {
-		if (rowData.length != this.getNumberOfColumns()) {
-			throw new IllegalArgumentException("elements in rowData (" + rowData.length + ") does not equal the number of columns (" + this.getNumberOfColumns() + ") in this Table");
-		}
-		int c = 0;
-		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
-			entry.getValue().add(rowData[c]);
-			++c;
-		}
+		List<Object> newList = new ArrayList<Object>();
+		newList.addAll(Arrays.asList(rowData));
+		this.addRow(newList);
 	}
 	
 	/**
@@ -295,6 +326,24 @@ public class Table implements Cloneable {
 		if (rowData.size() != this.getNumberOfColumns()) {
 			throw new IllegalArgumentException("elements in rowData (" + rowData.size() + ") does not equal the number of columns (" + this.getNumberOfColumns() + ") in this Table");
 		}
+		/*
+		if (this.cloneOnEntry) {
+			List<Object> clonedData = new ArrayList<Object>(rowData.size());
+			//Collections.copy(clonedData, rowData);
+			clonedData.addAll(rowData);
+			int c = 0;
+			for (Entry<String, List<Object>> entry : this.data.entrySet()) {
+				entry.getValue().add(clonedData.get(c));
+				++c;
+			}
+		} else {
+			int c = 0;
+			for (Entry<String, List<Object>> entry : this.data.entrySet()) {
+				entry.getValue().add(rowData.get(c));
+				++c;
+			}
+		}
+		*/
 		int c = 0;
 		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
 			entry.getValue().add(rowData.get(c));
@@ -307,7 +356,7 @@ public class Table implements Cloneable {
 	 * @param rowData
 	 */
 	public void addRow(Map<String, Object> rowData) {
-		for (Entry<String, Object> entry : rowData.entrySet()) {
+		for (Entry<String, Object> entry : rowData.entrySet()) {			
 			this.data.get(entry.getKey()).add(entry.getValue());
 		}
 		this.fillUpColumns();
@@ -540,8 +589,9 @@ public class Table implements Cloneable {
 		this.checkColumn(searchColumn);
 		this.checkColumn(lookupColumn);
 		
-		List<Object> searchData = new ArrayList<Object>();
-		Collections.copy(this.data.get(searchColumn), searchData);
+		List<Object> searchData = new ArrayList<Object>(this.data.get(searchColumn).size());
+		//Collections.copy(searchData, this.data.get(searchColumn));
+		searchData.addAll(searchData);
 		switch (searchMode) {
 			case ASCENDING:
 				// WARNING: this is not clean --> TODO Fix for unknown object type
@@ -678,7 +728,7 @@ public class Table implements Cloneable {
 	 */
 	public int[] size() {
 		int[] s = new int[2];
-		s[0] = this.getNumberOfRows();
+		s[0] = this.getNumberOfElementsInRows();
 		s[1] = this.getNumberOfColumns();
 		return s;
 	}
@@ -689,7 +739,7 @@ public class Table implements Cloneable {
 	 * @return
 	 */
 	public int getNumberOfElements() {
-		return this.getNumberOfRows() * this.getNumberOfColumns();
+		return this.getNumberOfElementsInRows() * this.getNumberOfColumns();
 	}
 	
 	/**
@@ -701,18 +751,7 @@ public class Table implements Cloneable {
 			entry.getValue().remove(row);
 		}
 	}
-			
-	/**
-	 * return the number of rows in Table
-	 * @return
-	 */
-	public int getNumberOfRows() {
-		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
-			return entry.getValue().size();
-		}
-		return 0;
-	}
-	
+		
 	/**
 	 * returns true/false whether columnName is present in Table
 	 * @param columnName
@@ -725,26 +764,17 @@ public class Table implements Cloneable {
 			return false;
 		}
 	}
-	
+		
 	/**
 	 * checks whether row is within range in Table
 	 * @param row
 	 */
 	public boolean isRowIndexWithinLimit(int row) {
-		if (this.getNumberOfRows() >= row) {
+		if (this.getNumberOfElementsInRows() >= row) {
 			return true;
 		} else {
 			return false;
 		}
-	}
-	
-	@Override
-	public Table clone() {
-		Table t = new Table();
-		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
-			t.addColumn(entry.getKey(), entry.getValue());
-		}
-		return t;
 	}
 	
 	/**
@@ -752,7 +782,7 @@ public class Table implements Cloneable {
 	 * @param column
 	 */
 	public boolean isColumnIndexWithinLimit(int column) {
-		if (this.getNumberOfColumns() >= column) {
+		if (this.getNumberOfColumns() > column) {
 			return true;
 		} else {
 			return false;
@@ -784,10 +814,10 @@ public class Table implements Cloneable {
 	 */
 	private void checkRange(int row, int col, String columnName) {
 		if (!this.isColumnIndexWithinLimit(col)) {
-			throw new IllegalArgumentException("column index (" + col + ") is out of range!");
+			throw new IndexOutOfBoundsException("column index (" + col + ") is out of range (max index: " + (this.getNumberOfColumns() - 1) + ")");
 		}
 		if (!this.isRowIndexWithinLimit(row)) {
-			throw new IllegalArgumentException("row index (" + row + ") is out of range!");
+			throw new IndexOutOfBoundsException("row index (" + row + ") is out of range (max index: " + (this.getNumberOfElementsInRows() - 1) + ")");
 		}
 		if (columnName != null) {
 			if (!this.hasColumn(columnName)) {
@@ -802,21 +832,10 @@ public class Table implements Cloneable {
 		}
 	}
 
-		
 	/**
-	 * string representation of this Table
+	 * returns the content of this {@code Table} as JSON string
 	 * @return
 	 */
-	@Override
-	public String toString() {
-		String s = Table.class.getSimpleName() + "(" + this.getNumberOfRows() + ", " + this.getNumberOfColumns() + "):\n";
-		String temp = this.data.toString();
-		temp = temp.replace("], ", "]\n\t");
-		temp = temp.replace("{", "{\n\t");
-		temp = temp.replace("}", "\n}");
-		return s + temp;
-	}
-	
 	public String toJson() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{\n");
@@ -833,6 +852,29 @@ public class Table implements Cloneable {
 		}
 		sb.append("}");
 		return sb.toString();
+	}
+		
+	/**
+	 * string representation of this Table
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		String s = Table.class.getSimpleName() + "(" + this.getNumberOfElementsInRows() + ", " + this.getNumberOfColumns() + "):\n";
+		String temp = this.data.toString();
+		temp = temp.replace("], ", "]\n\t");
+		temp = temp.replace("{", "{\n\t");
+		temp = temp.replace("}", "\n}");
+		return s + temp;
+	}
+	
+	@Override
+	public Table clone() {
+		Table t = new Table();
+		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
+			t.addColumn(entry.getKey(), entry.getValue());
+		}
+		return t;
 	}
 	
 }
