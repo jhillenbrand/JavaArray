@@ -3,30 +3,37 @@ package net.sytes.botg.datatypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
 
 /**
- * Table implementation in Java based on a {@code LinkedHashMap} for adressing columns by name, the data within a column is represented by {@code ArrayList<Object>} for easy adding and removing of rows
- * indices of row and column start with 0 
+ * Table implementation in Java based on a {@code LinkedHashMap} for addressing columns by name, the data within a column is represented by {@code ArrayList<Object>} for easy adding and removing of rows
+ * <br>indices of row and column start with 0 
  * <br>the implementation provides functionality like xlookup, removing duplicates or filter functions known from excel tables
  */
 public class Table implements Cloneable {
-
 	
+	/**
+	 * data container for the columnwise data
+	 */
 	private Map<String, List<Object>> data = new LinkedHashMap<String, List<Object>>();	
 	
 	/**
-	 * clones the data on entry into table, making sure 
+	 * defines cloningBehavior of data coming and out of this {@code Table} 
 	 */
-	private boolean cloneOnEntry;
+	private CloningBehavior cloningBehavior;
 	
-	private static final boolean DEFAULT_CLONE_ON_ENTRY = true; 
+	/**
+	 * default cloning behavior config
+	 */
+	private static final CloningBehavior DEFAULT_CLONING_BEHAVIOR = CloningBehavior.CLONE_ON_ENTRY; 
+	
+	public enum CloningBehavior {
+		CLONE_ON_ENTRY, ALWAYS_CLONE, NONE
+	}
 	
 	public enum Comparator {
 		EQUAL, SMALLER_THAN, GREATER_THAN, EQUAL_OR_SMALLER, EQUAL_OR_GREATER, LIKE, NOT_NULL, NOT_EQUAL
@@ -45,15 +52,15 @@ public class Table implements Cloneable {
 	}
 	
 	public Table() {
-		this(null, null, DEFAULT_CLONE_ON_ENTRY);
+		this(null, null, DEFAULT_CLONING_BEHAVIOR);
 	}
 	
-	public Table(boolean cloneOnEntry) {
-		this(null, null, cloneOnEntry);
+	public Table(CloningBehavior cloningBehavior) {
+		this(null, null, cloningBehavior);
 	}
 	
-	public Table(String columnName, List<Object> objs, boolean cloneOnEntry) {
-		this.cloneOnEntry = cloneOnEntry;
+	public Table(String columnName, List<Object> objs, CloningBehavior cloningBehavior) {
+		this.cloningBehavior = cloningBehavior;
 		this.addColumn(columnName, objs);
 	}
 	
@@ -62,7 +69,7 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(Object[] ar) {
-		this("COL0", Arrays.asList(ar), DEFAULT_CLONE_ON_ENTRY);
+		this("COL0", Arrays.asList(ar), DEFAULT_CLONING_BEHAVIOR);
 	}
 	
 	/**
@@ -71,7 +78,7 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(String columnName, Object[] ar) {
-		this(columnName, Arrays.asList(ar), DEFAULT_CLONE_ON_ENTRY);
+		this(columnName, Arrays.asList(ar), DEFAULT_CLONING_BEHAVIOR);
 	}
 	
 	/**
@@ -79,7 +86,7 @@ public class Table implements Cloneable {
 	 * @param data
 	 */
 	public Table(List<Object> data) {		
-		this("COL0", data, DEFAULT_CLONE_ON_ENTRY);
+		this("COL0", data, DEFAULT_CLONING_BEHAVIOR);
 	}
 	
 	/**
@@ -88,7 +95,7 @@ public class Table implements Cloneable {
 	 * @param data
 	 */
 	public Table(String columnName, List<Object> data) {
-		this(columnName, data, DEFAULT_CLONE_ON_ENTRY);
+		this(columnName, data, DEFAULT_CLONING_BEHAVIOR);
 	}
 		
 	/**
@@ -96,7 +103,7 @@ public class Table implements Cloneable {
 	 * @param mapData
 	 */
 	public Table(Map<String, List<Object>> mapData) {
-		this(null, null, DEFAULT_CLONE_ON_ENTRY);
+		this(null, null, DEFAULT_CLONING_BEHAVIOR);
 		for (Entry<String, List<Object>> entry : mapData.entrySet()) {
 			this.addColumn(entry.getKey(), entry.getValue());
 		}
@@ -109,7 +116,7 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(Object[][] ar) {		
-		this(DEFAULT_CLONE_ON_ENTRY);
+		this(DEFAULT_CLONING_BEHAVIOR);
 		for (int i = 0; i < ar.length; i++) {
 			this.addColumn("COL" + (i), Arrays.asList(ar[i]));
 		}
@@ -124,7 +131,7 @@ public class Table implements Cloneable {
 	 * @param ar
 	 */
 	public Table(String[] headers, Object[][] ar) {
-		this(DEFAULT_CLONE_ON_ENTRY);
+		this(DEFAULT_CLONING_BEHAVIOR);
 		if (headers.length != ar.length) {
 			throw new IllegalArgumentException("length of headers array (" + headers.length + ") and number of columns in ar (" + ar.length + ") must match");
 		}
@@ -142,7 +149,7 @@ public class Table implements Cloneable {
 	 * @param ar 2D array containing columns with data
 	 */
 	public Table(List<String> headers, Object[][] ar) {
-		this(DEFAULT_CLONE_ON_ENTRY);
+		this(DEFAULT_CLONING_BEHAVIOR);
 		if (headers.size() != ar.length) {
 			throw new IllegalArgumentException("length of headers list (" + headers.size() + ") and number of columns in ar (" + ar.length + ") must match");
 		}
@@ -158,7 +165,7 @@ public class Table implements Cloneable {
 	 * @param headers
 	 */
 	public Table(String[] headers){
-		this(DEFAULT_CLONE_ON_ENTRY);
+		this(DEFAULT_CLONING_BEHAVIOR);
 		for (String h : headers) {
 			this.data.put(h, new ArrayList<Object>());
 		}
@@ -185,6 +192,64 @@ public class Table implements Cloneable {
 	public Object get(int r, int c) {
 		this.checkRange(r, c);
 		return this.getColumn(c).get(r);
+	}
+	
+
+	/**
+	 * returns a new sub {@code Table} containing all the columns specified by {@code columnNames}
+	 * @param columnNames
+	 * @return
+	 */
+	public Table get(String[] columnNames) {
+		Table t = new Table();	
+		for (String columnName : columnNames) {
+			// check if columnName is present in this table
+			this.checkRange(0, 0, columnName);
+			t.addColumn(columnName, this.getColumn(columnName));
+		}	
+		return t;
+	}
+	
+	/**
+	 * returns row values specified by {@code columnNames} and {@code row} index
+	 * @param columnNames
+	 * @param row
+	 * @return
+	 */
+	public List<Object> get(String[] columnNames, int row) {
+		return this.get(Arrays.asList(columnNames), row);	
+	}
+	
+	/**
+	 * returns row values specified by {@code columnNames} and {@code row} index
+	 * @param columnNames
+	 * @param row
+	 * @return
+	 */
+	public List<Object> get(List<String> columnNames, int row) {
+		this.checkColumn(columnNames);
+		this.checkRange(row);
+		List<Object> rowData = new ArrayList<Object>();
+		for (String columnName : columnNames) {
+			rowData.add(this.data.get(columnName).get(row));
+		}
+		return rowData;		
+	}
+
+	/**
+	 * returns a new sub {@code Table} containing all the columns specified by {@code columnIndices}
+	 * @param columns
+	 * @return
+	 */
+	public Table get(int[] columnIndices) {
+		// check if all column indices are in range
+		Table t = new Table();	
+		for (int c : columnIndices) {
+			this.checkRange(0, c);
+			String columnName = this.getColumnName(c);
+			t.addColumn(columnName, this.getColumn(columnName));
+		}		
+		return t;
 	}
 	
 	/**
@@ -297,13 +362,28 @@ public class Table implements Cloneable {
 		if (this.hasColumn(columnName)) {
 			throw new IllegalArgumentException("a column with name '" + columnName + "' is already present. Try replace or rename the column you want to add.");
 		}
-		if (this.cloneOnEntry) {
-			List<Object> clonedData = new ArrayList<Object>(columnData.size());
-			//Collections.copy(clonedData, columnData);
-			clonedData.addAll(columnData);
-			this.data.put(columnName, clonedData);
-		} else {
-			this.data.put(columnName, columnData);
+		List<Object> clonedData;
+		switch (this.cloningBehavior) {
+			case ALWAYS_CLONE:
+				clonedData = new ArrayList<Object>(columnData.size());
+				//Collections.copy(clonedData, columnData);
+				clonedData.addAll(columnData);
+				this.data.put(columnName, clonedData);
+				break;
+				
+			case CLONE_ON_ENTRY:
+				clonedData = new ArrayList<Object>(columnData.size());
+				//Collections.copy(clonedData, columnData);
+				clonedData.addAll(columnData);
+				this.data.put(columnName, clonedData);
+				break;
+				
+			case NONE:
+				this.data.put(columnName, columnData);
+				break;
+				
+			default:
+				throw new IllegalStateException("");		
 		}
 		this.fillUpColumns();
 	}
@@ -344,6 +424,8 @@ public class Table implements Cloneable {
 			}
 		}
 		*/
+		
+		// TODO here should be some switch case with different cloning behavior
 		int c = 0;
 		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
 			entry.getValue().add(rowData.get(c));
@@ -373,36 +455,49 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * adds all columns from table to this, if overwrite is set to true,
-	 * <br>then the column with the same name in table is kept
+	 * adds a new {@code value} to column specified by index {@code col}
+	 * @param col
+	 * @param value
+	 */
+	public void add(int col, Object value) {
+		int c = 0;
+		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
+			if (c == col) {
+				entry.getValue().add(value);
+			}
+			++c;
+		}
+		this.fillUpColumns();
+	}
+	
+	/**
+	 * adds all columns from {@code table} to this {@code Table} if overwrite is set to true,
+	 * <br>then the column with the same name in {@code table} is kept
 	 * @param table
 	 */
-	public void add(Table table, boolean overwrite) {
+	public void addColumns(Table table, boolean overwrite) {
 		for (Entry<String, List<Object>> entry : table.data.entrySet()) {
 			this.data.put(entry.getKey(), entry.getValue());
-		} 
+		}
+		this.fillUpColumns();
 	}
 	
 	/**
 	 * adds all rows of table to the bottom of this object, if the number of columns is equal
 	 * @param table
 	 */
-	public void append(Table table) {
-		this.append(table, true);
+	public void addRows(Table table) {
+		this.addRows(table, false);
 	}
 		
 	/**
 	 * Adds all rows of table to the bottom of this object, if the number of columns is equal.
-	 * <br>If ignoreColumnNames is true, then only rows of columns from table present in this object are added,
+	 * <br>If ignoreColumnNames is false, then only rows of columns from table present in this object are added,
 	 * <br>else the rows are added to the same index of columns they came from in table
 	 * @param table
 	 * @param ignoreColumnNames
 	 */
-	public void append(Table table, boolean ignoreColumnNames) {
-		// check if column size of table matches this table
-		if (this.getNumberOfColumns() != table.getNumberOfColumns()) {
-			throw new IllegalArgumentException("Number of columns do not match (" + this.getNumberOfColumns()  + " != " + table.getNumberOfColumns() + ")");
-		}
+	public void addRows(Table table, boolean ignoreColumnNames) {
 		if (ignoreColumnNames) {
 			int i = 0;
 			for (Entry<String, List<Object>> entry : this.data.entrySet()) {
@@ -424,14 +519,14 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * replace an element at column specified by columnName and row index with value
+	 * replace an element at column specified by {@code columnName} and {@code row} index with {@code value}
 	 * @param columnName
 	 * @param index
 	 * @param value
 	 */
-	public void set(String columnName, int index, Object value) {
-		this.checkRange(index, 0, columnName);
-		this.data.get(columnName).set(index, value);
+	public void set(String columnName, int row, Object value) {
+		this.checkRange(row, 0, columnName);
+		this.data.get(columnName).set(row, value);
 	}
 	
 	/**
@@ -457,38 +552,32 @@ public class Table implements Cloneable {
 	 * @param value
 	 */
 	public void set(int row, int column, Object value) {
-		this.checkRange(row, column);
-		int c = 0;
-		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
-			if (c == column) {
-				entry.getValue().set(row, value);
-				return;
-			}
-		}
+		String columnName = this.getColumnName(column);
+		this.set(columnName, row, value);
 	}
 	
 	/**
-	 * removes the value specified with columnName and row index
+	 * removes the value specified with {@code columnName} and {@code row} index
 	 * @param columnName
-	 * @param index
+	 * @param row
 	 */
-	public void remove(String columnName, int index) {
+	public void remove(String columnName, int row) {
 		// check if indices are within limits
-		this.checkRange(index, 0, columnName);
-		this.nullifyElement(columnName, index);
-		if (this.isRowRemovable(index)) {
-			this.removeRow(index);
+		this.checkRange(row, 0, columnName);
+		this.nullifyElement(columnName, row);
+		if (this.isRowRemovable(row)) {
+			this.removeRow(row);
 		}
 	}
 	
 	/**
-	 * removes the whole row at index
-	 * @param index
+	 * removes the whole row at {@code row} index
+	 * @param row
 	 */
-	public void remove(int index) {
+	public void remove(int row) {
 		// check if indices are within limits
-		this.checkRange(index);
-		this.removeRow(index);
+		this.checkRange(row);
+		this.removeRow(row);
 	}
 	
 	/**
@@ -506,7 +595,7 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * removes a column specified by columnName
+	 * removes a column specified by {@code columnName}
 	 * @param columnName
 	 */
 	public void remove(String columnName) {
@@ -514,7 +603,7 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * removes the column at index
+	 * removes the column at {@code index}
 	 * @param column
 	 */
 	public void removeColumn(int index) {
@@ -530,60 +619,82 @@ public class Table implements Cloneable {
 	}
 	
 	/**
-	 * removes duplicates in this Table based on every single column in otherTable
-	 * @param otherTable
+	 * removes all duplicate rows in this {@code Table} based on all columns in other rows
+	 * <br>duplicates are removed from top to bottom, that means entries with lower index are kept
 	 */
-	public void removeDuplicates(Table otherTable) {
-		this.removeDuplicates(otherTable, new int[0]);
-	}
-	
-	public void removeDuplicates(Table otherTable, int[] columnIndices) {
-		if (columnIndices.length != 0) {
-			
-		} else {
-			
-		}
-	}
-	
-	public void removeDuplicates(Table otherTable, String[] columnNames) {
-		
+	public void removeDuplicates() {
+		int n = this.getNumberOfElementsInRows();
+		int r = 0;
+		while (r < n) {
+			List<Object> row = this.getRow(r);
+			for (int rr = n - 1; rr > r; rr--) {
+				List<Object> row2 = this.getRow(rr);
+				if (row.equals(row2)) {
+					this.remove(rr);
+				}
+			}
+			++r;
+			n = this.getNumberOfElementsInRows();
+		} 
 	}
 	
 	/**
-	 * extracts all the columns specified by columnNames into new Table
+	 * removes duplicate rows in this {@code Table} based on values in column {@code columnName}
+	 * <br>duplicates are removed from top to bottom, that means entries with lower index are kept
+	 * @param columnName
+	 */
+	public void removeDuplicates(String columnName) {
+		int n = this.getNumberOfElementsInRows();
+		int r = 0;
+		List<Object> columnData = this.getColumn(columnName);
+		while (r < n) {
+			Object value = columnData.get(r);
+			for (int rr = n - 1; rr > r; rr--) {
+				Object value2 = columnData.get(rr);
+				if (value.equals(value2)) {
+					this.remove(rr);
+				}
+			}
+			++r;
+			n = this.getNumberOfElementsInRows();
+		} 
+	}
+	
+	/**
+	 * removes duplicate rows in this {@code Table} based on values in columns specified by {@code columnNames}
+	 * <br>duplicates are removed from top to bottom, that means entries with lower index are kept
 	 * @param columnNames
-	 * @return
 	 */
-	public Table extract(String[] columnNames) {
-		Table t = new Table();	
-		for (String columnName : columnNames) {
-			// check if columnName is present in this table
-			this.checkRange(0, 0, columnName);
-			t.addColumn(columnName, this.getColumn(columnName));
-		}	
-		return t;
+	public void removeDuplicates(String[] columnNames) {
+		this.removeDuplicates(Arrays.asList(columnNames));
 	}
 	
 	/**
-	 * extracts all columns in this table specified by indices in columnIndices
-	 * @param columns
-	 * @return
+	 * removes duplicate rows in this {@code Table} based on values in columns specified by {@code columnNames}
+	 * <br>duplicates are removed from top to bottom, that means entries with lower index are kept
+	 * @param columnNames
 	 */
-	public Table extract(int[] columnIndices) {
-		// check if all column indices are in range
-		Table t = new Table();	
-		for (int c : columnIndices) {
-			this.checkRange(0, c);
-			String columnName = this.getColumnName(c);
-			t.addColumn(columnName, this.getColumn(columnName));
-		}		
-		return t;
+	public void removeDuplicates(List<String> columnNames) {
+		int n = this.getNumberOfElementsInRows();
+		int r = 0;
+		while (r < n) {
+			List<Object> row = this.get(columnNames, r);
+			for (int rr = n - 1; rr > r; rr--) {
+				List<Object> row2 = this.get(columnNames,rr);
+				if (row.equals(row2)) {
+					this.remove(rr);
+				}
+			}
+			++r;
+			n = this.getNumberOfElementsInRows();
+		} 
 	}
-	
+			
 	public void sort(String sortColumn, SortMode sortMode) {
-		
+		// TODO
 	}
 	
+	// TODO
 	public Object xLookup(Object searchValue, String searchColumn, String lookupColumn, MatchMode matchMode, SearchMode searchMode) {
 		Objects.requireNonNull(searchValue);
 		this.checkColumn(searchColumn);
@@ -826,9 +937,36 @@ public class Table implements Cloneable {
 		}
 	}
 	
+	/**
+	 * checks whether columnName is available in this {@code Table}
+	 * <br>if not an {@code IllegalArgumentException} is thrown 
+	 * @param columnName
+	 */
 	private void checkColumn(String columnName) {
 		if (!this.data.containsKey(columnName)) {
 			throw new IllegalArgumentException(this.getClass().getSimpleName() + " does not contain column '" + columnName + "'.");
+		}
+	}
+	
+	/**
+	 * checks whether all columnNames are available in this {@code Table}
+	 * <br>if not an {@code IllegalArgumentException} is thrown
+	 * @param columnNames
+	 */
+	private void checkColumn(List<String> columnNames) {
+		for (String columnName : columnNames) {
+			this.checkColumn(columnName);
+		}
+	}
+	
+	/**
+	 * checks whether all columnNames are available in this {@code Table}
+	 * <br>if not an {@code IllegalArgumentException} is thrown
+	 * @param columnNames
+	 */
+	private void checkColumn(String[] columnNames) {
+		for (int c = 0; c < columnNames.length; c++) {
+			this.checkColumn(columnNames[c]);
 		}
 	}
 

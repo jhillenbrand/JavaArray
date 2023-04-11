@@ -3,12 +3,14 @@ package datatypes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import net.sytes.botg.datatypes.Table;
+import net.sytes.botg.datatypes.Table.CloningBehavior;
 
 public class UnitTest_Table {
 
@@ -30,7 +32,7 @@ public class UnitTest_Table {
 	@Test
 	public void test010() {
 		
-		Table t = new Table(true);
+		Table t = new Table(CloningBehavior.CLONE_ON_ENTRY);
 		
 		Object[] a = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
 		Object[] b = new Object[] {"A", "B", "C", "D", "E"};
@@ -47,7 +49,7 @@ public class UnitTest_Table {
 	@Test
 	public void test020() {
 		
-		Table t = new Table(false);
+		Table t = new Table(CloningBehavior.CLONE_ON_ENTRY);
 		
 		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
 		Object[] c2 = new Object[] {"A", "B", "C", "D", "E"};
@@ -74,10 +76,10 @@ public class UnitTest_Table {
 		Table t = new Table();
 		System.out.println(t.toJson());	
 		
-		t = new Table(true);
+		t = new Table(CloningBehavior.CLONE_ON_ENTRY);
 		System.out.println(t.toJson());	
 				
-		t = new Table("C1", Arrays.asList(c1), true);
+		t = new Table("C1", Arrays.asList(c1), CloningBehavior.CLONE_ON_ENTRY);
 		System.out.println(t.toJson());	
 		
 		t = new Table(c1);
@@ -256,6 +258,325 @@ public class UnitTest_Table {
 	@Test
 	public void test050() {
 		
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "C", "D", "E"};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		
+		Object[] r1 = new Object[] {6.0, "F"};
+		
+		t.addRow(r1);
+		
+		System.out.println(t);
+		
 	}
+	
+	@Test
+	public void test051() {
+		
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "C", "D", "E"};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		
+		List<Object> r1 = new ArrayList<Object>();
+		r1.add(6.0);
+		r1.add("F");
+		
+		t.addRow(r1);
+		
+		System.out.println(t);
+		
+	}
+	
+	@Test
+	public void test052() {
+		
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "C", "D", "E"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+		
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("C1", 6.0);
+		map.put("C3", false);
+		
+		t.addRow(map);
+		
+		System.out.println(t);
+		
+	}
+	
+	@Test
+	public void test060() {
+		
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "C", "D", "E"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+		
+		t.add("C2", "F");
+		
+		System.out.println(t);
+		
+	}
+	
+	@Test
+	public void test061() {
+		
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "C", "D", "E"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+		
+		t.add(1, "F");
+		
+		System.out.println(t);
+		
+	}
+	
+	@Test
+	public void test070() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+				
+		System.out.println(t1);
+		
+		Table t2 = new Table();
+		Object[] c3 = new Object[] {1.0, 2.0, 3.0};
+		t2.addColumn("C3", c3);
+		
+		System.out.println(t2);
+		
+		t1.addColumns(t2, true);
+		
+		System.out.println(t1);		
+	}
+	
+	@Test
+	public void test072() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+				
+		System.out.println(t1);
+		
+		Table t2 = new Table();
+		Object[] c3 = new Object[] {1.0, 2.0, 3.0};
+		t2.addColumn("C1", c3);
+		
+		System.out.println(t2);
+		
+		t1.addRows(t2, true);
+		
+		System.out.println(t1);		
+	}
+	
+	@Test
+	public void test080() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.set("C1", 1, 2.5);
+		
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test081() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.set(1, 1, "Z");
+		
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test082() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.set(1, new Object[]{6.0, "F"});
+		
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test090() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.remove(1, 1);
+		
+		t1.remove("C1", 3);
+		
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test091() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.remove("C1");
+				
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test092() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 3.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.removeColumn(1);
+				
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test093() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 1.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, true, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.removeDuplicates();
+				
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test094() {
+		
+		Table t1 = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 2.0, 1.0, 4.0, 5.0};
+		Object[] c2 = new Object[] {true, false, false, true, false};
+		
+		t1.addColumn("C1", c1);
+		t1.addColumn("C2", c2);
+		
+		System.out.println(t1);
+		
+		t1.removeDuplicates("C1");
+				
+		System.out.println(t1);
+		
+	}
+	
+	@Test
+	public void test095() {
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 3.0, 3.0, 3.0, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "B", "B", "B"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+				
+		System.out.println(t);
+		
+		t.removeDuplicates(new String[] {"C1", "C2"});
+		
+		System.out.println(t);
+		
+	}
+	
 	
 }
