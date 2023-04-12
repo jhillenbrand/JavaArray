@@ -751,9 +751,92 @@ public class Table implements Cloneable {
 		return null;
 	}
 	
+	/**
+	 * filters this {@code Table}'s column {@code filterColumn} for values that match the filter defined by {@code filterValue} and a specified {@code Comparator comparator}
+	 * @param filterValue
+	 * @param filterColumn
+	 * @param comparator
+	 * @return
+	 */
 	public Table filter(Object filterValue, String filterColumn, Comparator comparator) {
+		Table filteredTable = this.clone();
+		List<Object> filterData = this.getColumn(filterColumn);
+		int n = this.getNumberOfElementsInRows();
 		
-		return null;
+		String sFilter;
+		String sObj;
+		
+		double fVal;
+		double objVal;		
+		
+		for (int r = n - 1; r >= 0; r--) {
+			
+			Object obj = filterData.get(r);
+			
+			switch (comparator) {
+				case EQUAL:
+					if (!obj.equals(filterValue)) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				case EQUAL_OR_GREATER:
+					fVal = (double) Objects.requireNonNull(DataType.convertToDataType(filterValue, DataType.convertClassToType(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.convertToDataType(obj, DataType.convertClassToType(obj.getClass()), DataType.DOUBLE));
+					if (objVal < fVal) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				case EQUAL_OR_SMALLER:
+					fVal = (double) Objects.requireNonNull(DataType.convertToDataType(filterValue, DataType.convertClassToType(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.convertToDataType(obj, DataType.convertClassToType(obj.getClass()), DataType.DOUBLE));
+					if (objVal > fVal) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				case GREATER_THAN:
+					fVal = (double) Objects.requireNonNull(DataType.convertToDataType(filterValue, DataType.convertClassToType(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.convertToDataType(obj, DataType.convertClassToType(obj.getClass()), DataType.DOUBLE));
+					if (objVal <= fVal) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				case SMALLER_THAN:
+					fVal = (double) Objects.requireNonNull(DataType.convertToDataType(filterValue, DataType.convertClassToType(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.convertToDataType(obj, DataType.convertClassToType(obj.getClass()), DataType.DOUBLE));
+					if (objVal >= fVal) {
+						filteredTable.removeRow(r);
+					}
+					break;
+										
+				case LIKE:
+					sFilter = (String) Objects.requireNonNull(DataType.convertToDataType(filterValue, DataType.convertClassToType(filterValue.getClass()), DataType.STRING));						
+					sObj = (String) Objects.requireNonNull(DataType.convertToDataType(obj, DataType.convertClassToType(obj.getClass()), DataType.STRING));
+					if (!sObj.contentEquals(sFilter)) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				case NOT_EQUAL:
+					if (obj.equals(filterValue)) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				case NOT_NULL:
+					if (obj == null) {
+						filteredTable.removeRow(r);
+					}
+					break;
+					
+				default:
+					break;			
+			}
+		}
+		return filteredTable;
 	}
 	
 	/**
@@ -1006,11 +1089,16 @@ public class Table implements Cloneable {
 		return s + temp;
 	}
 	
+	/**
+	 * on cloning this {@code Table} all columns are added to a new {@code Table}
+	 */
 	@Override
 	public Table clone() {
 		Table t = new Table();
 		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
-			t.addColumn(entry.getKey(), entry.getValue());
+			List<Object> list = new ArrayList<Object>();
+			list.addAll(entry.getValue());
+			t.addColumn(entry.getKey(), list);
 		}
 		return t;
 	}

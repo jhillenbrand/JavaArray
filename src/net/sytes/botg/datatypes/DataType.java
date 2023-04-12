@@ -523,8 +523,7 @@ public enum DataType {
 		} else {
 			return DataType.OBJECT;
 		}
-	}
-	
+	}	
 
 	/**
 	 * return true/false if the specified string can be parsed as {@code boolean}
@@ -596,7 +595,6 @@ public enum DataType {
 	}
 	
 	public static DataType convertClassToType(Class<?> clazz) {
-		// TODO
 		if (clazz.equals(Double.class) || clazz.equals(double.class) || clazz.equals(Double[].class) || clazz.equals(double[].class)) {
 			return DOUBLE;
 		} else if (clazz.equals(Integer.class) || clazz.equals(int.class) || clazz.equals(Integer[].class) || clazz.equals(int[].class)) {
@@ -612,7 +610,7 @@ public enum DataType {
 		} else if (clazz.equals(Boolean.class) || clazz.equals(boolean.class) || clazz.equals(Boolean[].class) || clazz.equals(boolean[].class)) {
 			return BOOLEAN;
 		} else {
-			return null;
+			return OBJECT;
 		}
 	}
 	

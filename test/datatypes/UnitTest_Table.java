@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import net.sytes.botg.datatypes.Table;
 import net.sytes.botg.datatypes.Table.CloningBehavior;
+import net.sytes.botg.datatypes.Table.Comparator;
 
 public class UnitTest_Table {
 
@@ -576,6 +577,85 @@ public class UnitTest_Table {
 		
 		System.out.println(t);
 		
+	}
+	
+	@Test
+	public void test100() {
+		
+		Object obj = 1;
+		
+		double d = (double) ((int) obj);
+		
+		System.out.println(d);
+	}
+	
+	@Test
+	public void test110() {
+	
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 3.3, 3.0, 3.1, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "B", "B", "B"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+				
+		System.out.println(t);
+		
+		Table t2 = t.filter(3.0, "C1", Comparator.GREATER_THAN);
+		
+		System.out.println(t2);
+		
+		Table t3 = t.filter(3.0, "C1", Comparator.EQUAL_OR_GREATER);
+		
+		System.out.println(t3);
+		
+	}	
+	
+	@Test
+	public void test111() {
+	
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 3.3, 3.0, 3.1, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "B", "B", "B"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+				
+		System.out.println(t);
+		
+		Table t2 = t.filter(3.0, "C1", Comparator.SMALLER_THAN);
+		
+		System.out.println(t2);
+		
+		Table t3 = t.filter(3.0, "C1", Comparator.EQUAL_OR_SMALLER);
+		
+		System.out.println(t3);
+		
+	}	
+	
+	@Test
+	public void test112() {
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 3.3, 3.0, 3.1, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "B", "B", "C"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+				
+		System.out.println(t);
+		
+		Table t2 = t.filter("B", "C2", Comparator.EQUAL);
+		
+		System.out.println(t2);
 	}
 	
 	
