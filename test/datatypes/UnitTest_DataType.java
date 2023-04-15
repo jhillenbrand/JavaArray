@@ -10,82 +10,82 @@ public class UnitTest_DataType {
 
 	@Test
 	public void test000() {		
-		assertEquals(1.0, DataType.convertToDataType(true, DataType.BOOLEAN, DataType.DOUBLE));		
+		assertEquals(1.0, DataType.cast(true, DataType.BOOLEAN, DataType.DOUBLE));		
 	}
 	
 	@Test
 	public void test001() {		
-		assertEquals(0.0, DataType.convertToDataType(false, DataType.BOOLEAN, DataType.DOUBLE));		
+		assertEquals(0.0, DataType.cast(false, DataType.BOOLEAN, DataType.DOUBLE));		
 	}
 	
 	@Test
 	public void test002() {		
-		assertEquals(1L, DataType.convertToDataType(true, DataType.BOOLEAN, DataType.LONG));		
+		assertEquals(1L, DataType.cast(true, DataType.BOOLEAN, DataType.LONG));		
 	}
 	
 	@Test
 	public void test003() {		
-		assertEquals(0L, DataType.convertToDataType(false, DataType.BOOLEAN, DataType.LONG));		
+		assertEquals(0L, DataType.cast(false, DataType.BOOLEAN, DataType.LONG));		
 	}
 	
 	@Test
 	public void test004() {		
-		assertEquals((byte) 0, DataType.convertToDataType(false, DataType.BOOLEAN, DataType.BYTE));		
+		assertEquals((byte) 0, DataType.cast(false, DataType.BOOLEAN, DataType.BYTE));		
 	}
 	
 	@Test
 	public void test005() {		
-		assertEquals("true", DataType.convertToDataType(true, DataType.BOOLEAN, DataType.STRING));		
+		assertEquals("true", DataType.cast(true, DataType.BOOLEAN, DataType.STRING));		
 	}
 	
 	@Test
 	public void test006() {		
-		assertEquals(100.0, DataType.convertToDataType(100L, DataType.LONG, DataType.DOUBLE));		
+		assertEquals(100.0, DataType.cast(100L, DataType.LONG, DataType.DOUBLE));		
 	}
 	
 	@Test
 	public void test007() {		
-		assertEquals(100.0f, DataType.convertToDataType(100L, DataType.LONG, DataType.FLOAT));		
+		assertEquals(100.0f, DataType.cast(100L, DataType.LONG, DataType.FLOAT));		
 	}
 	
 	@Test
 	public void test008() {		
-		assertEquals(100L, DataType.convertToDataType(100L, DataType.LONG, DataType.LONG));		
+		assertEquals(100L, DataType.cast(100L, DataType.LONG, DataType.LONG));		
 	}
 	
 	@Test
 	public void test009() {		
-		assertEquals(100, DataType.convertToDataType(100L, DataType.LONG, DataType.INT));		
+		assertEquals(100, DataType.cast(100L, DataType.LONG, DataType.INT));		
 	}
 	
 	@Test
 	public void test010() {
 		Double d = 100.0;
-		assertEquals(100L, DataType.convertToDataType(d, DataType.DOUBLE, DataType.LONG));		
+		assertEquals(100L, DataType.cast(d, DataType.DOUBLE, DataType.LONG));		
 	}
 	
 	@Test
 	public void test011() {
 		short s = 11;
-		assertEquals(11.0, DataType.convertToDataType(s, DataType.SHORT, DataType.DOUBLE));		
+		assertEquals(11.0, DataType.cast(s, DataType.SHORT, DataType.DOUBLE));		
 	}
 	
 	@Test
 	public void test012() {
 		Short s = 11;
-		assertEquals(11L, DataType.convertToDataType(s, DataType.SHORT, DataType.LONG));		
+		assertEquals(11L, DataType.cast(s, DataType.SHORT, DataType.LONG));		
 	}
 	
 	@Test
 	public void test013() {
 		Short s = 11;
-		assertEquals("11", DataType.convertToDataType(s, DataType.SHORT, DataType.STRING));		
+		assertEquals("11", DataType.cast(s, DataType.SHORT, DataType.STRING));		
 	}
 	
 	@Test
 	public void test014() {
 		long l = 11L;
-		assertEquals((short) 11, DataType.convertToDataType(l, DataType.LONG, DataType.SHORT));		
+		assertEquals((short) 11, DataType.cast(l, DataType.LONG, DataType.SHORT));		
 	}
 	
 	@Test

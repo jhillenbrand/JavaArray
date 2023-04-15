@@ -48,7 +48,7 @@ public class Address {
 		}
 		
 		public Builder dataType(String dataTypeStr) {
-			this.dataType = DataType.convertToType(dataTypeStr);
+			this.dataType = DataType.stringToDataType(dataTypeStr);
 			return this;
 		}
 

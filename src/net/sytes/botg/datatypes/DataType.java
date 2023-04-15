@@ -17,7 +17,7 @@ public enum DataType {
 		this(-1);
 	}
 	
-	public static DataType convertToType(String dataTypeStr) {
+	public static DataType stringToDataType(String dataTypeStr) {
 		if (dataTypeStr == null) {
 			return null;
 		}
@@ -47,46 +47,14 @@ public enum DataType {
 		}
 	}
 	
-	public static Object convert(DataType dataType, String value) {
-		switch (dataType) {
-			case BOOLEAN:
-				return Boolean.parseBoolean(value);
-				
-			case BYTE:
-				return value.getBytes();
-				
-			case DOUBLE:
-				return Double.parseDouble(value);
-				
-			case FLOAT:
-				return Float.parseFloat(value);
-				
-			case SHORT:
-				return Short.parseShort(value);
-				
-			case INT:
-				if (value.contains(".")) {
-					String s = value.substring(0, value.indexOf("."));
-					return Integer.parseInt(s);
-				} else {
-					return Integer.parseInt(value);
-				}
-				
-			case LONG:
-				return Long.parseLong(value);
-								
-			case STRING:
-				return value;
-				
-			case CHAR:
-				return value.toCharArray();
-				
-			case OBJECT:
-				return value;
-				
-			default:
-				return value;			
-		}
+	/**
+	 * converts the passed object to {@code targetType} (by determining the class of  {@code obj} beforehand)
+	 * @param obj
+	 * @param targetType
+	 * @return
+	 */
+	public static Object cast(Object obj, DataType targetType) {
+		return cast(obj, dataTypeOf(obj.getClass()), targetType);
 	}
 	
 	/**
@@ -96,7 +64,7 @@ public enum DataType {
 	 * @param targetType
 	 * @return
 	 */
-	public static Object convertToDataType(Object obj, DataType sourceType, DataType targetType) {
+	public static Object cast(Object obj, DataType sourceType, DataType targetType) {
 		String s = null;
 		switch(sourceType) {
 			case BOOLEAN:
@@ -478,11 +446,11 @@ public enum DataType {
 	 * @param targetType
 	 * @return
 	 */
-	public static Object[] convertToDataType(Object[] objs, DataType sourceType, DataType targetType) {
+	public static Object[] cast(Object[] objs, DataType sourceType, DataType targetType) {
 		Object[] newObjs = new Object[objs.length];
 		int i = 0;
 		for (Object o : objs) {
-			newObjs[i] = convertToDataType(o, sourceType, targetType);
+			newObjs[i] = cast(o, sourceType, targetType);
 			++i;
 		}
 		return newObjs;
@@ -496,10 +464,10 @@ public enum DataType {
 	 * @param targetType
 	 * @return
 	 */
-	public static List<Object> convertToDataType(List<Object> objs, DataType sourceType, DataType targetType) {
+	public static List<Object> cast(List<Object> objs, DataType sourceType, DataType targetType) {
 		List<Object> newObjs = new ArrayList<Object>(objs.size());
 		for (Object o : objs) {
-			newObjs.add(convertToDataType(o, sourceType, targetType));
+			newObjs.add(cast(o, sourceType, targetType));
 		}
 		return newObjs;
 	}
@@ -523,7 +491,16 @@ public enum DataType {
 		} else {
 			return DataType.OBJECT;
 		}
-	}	
+	}
+	
+	/**
+	 * returns the {@code DataType} of this {@code obj}'s {@code Class}
+	 * @param obj
+	 * @return
+	 */
+	public static DataType dataTypeOf(Object obj) {
+		return dataTypeOf(obj.getClass());
+	}
 
 	/**
 	 * return true/false if the specified string can be parsed as {@code boolean}
@@ -594,7 +571,12 @@ public enum DataType {
 	    return true;
 	}
 	
-	public static DataType convertClassToType(Class<?> clazz) {
+	/**
+	 * returns the {@code DataType} of this {@code clazz}
+	 * @param clazz
+	 * @return
+	 */
+	public static DataType dataTypeOf(Class<?> clazz) {
 		if (clazz.equals(Double.class) || clazz.equals(double.class) || clazz.equals(Double[].class) || clazz.equals(double[].class)) {
 			return DOUBLE;
 		} else if (clazz.equals(Integer.class) || clazz.equals(int.class) || clazz.equals(Integer[].class) || clazz.equals(int[].class)) {
@@ -632,11 +614,7 @@ public enum DataType {
 				return null;
 		}		
 	}
-	
-	public Object convertValue(String value) {
-		return convert(this, value);
-	}
-	
+			
 	public void setBytes(int bytes) {
 		this.bytes = bytes;
 	}
