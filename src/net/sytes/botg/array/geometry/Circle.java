@@ -1,5 +1,7 @@
 package net.sytes.botg.array.geometry;
 
+import net.sytes.botg.array.math.Vec;
+
 public class Circle extends Curve2D {
 
 	private double D;
@@ -75,6 +77,25 @@ public class Circle extends Curve2D {
 		}
 		this.x[i] = this.x[0];
 		this.y[i] = this.y[0];
+	}
+	
+	public static double[][] circle(double D, double x_0, double y_0, int res){
+		double[][] xyData = new double[2][];
+		
+		Circle circle = new Circle.Builder()
+				.D(D)
+				.x_0(x_0)
+				.y_0(y_0)
+				.build();
+		
+		double[] t = Vec.linspace(0.0, 1.0, res);
+		
+		circle.create(t);
+		
+		xyData[0] = circle.x();
+		xyData[1] = circle.y();
+		
+		return xyData;
 	}
 	
 }

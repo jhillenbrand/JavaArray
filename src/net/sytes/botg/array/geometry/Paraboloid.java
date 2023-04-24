@@ -57,6 +57,8 @@ public class Paraboloid extends SurfaceMesh {
 	public void create(double[] x, double[] y) {
 		int n = x.length;
 		int m = y.length;
+		this.x = x;
+		this.y = y;
 		this.Z = new double[n][m];
 		double[][][] XY = Mat.meshgrid(x, y);
 		double[][] X = XY[0];
