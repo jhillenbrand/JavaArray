@@ -106,4 +106,9 @@ public class UnitTest_Scalar {
 		
 	}
 	
+	@Test
+	public void test030() {
+		System.out.println(Math.ceil(Math.sqrt(6.0)));
+	}
+	
 }

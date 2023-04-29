@@ -6,8 +6,8 @@ import java.util.Random;
 /**
  * Class that contains matrix to matrix operations
  * <br>if not specified in the method description, the matrices adhere the following dimension nomenclature:
- * <br>>> double[][] X = new double[m][n],
- * <br>where n is the number of rows and m the number of columns
+ * <br>>> double[][] X = new double[r][c],
+ * <br>where r is the number of rows and c the number of columns
  * @author hillenbrand
  *
  */
@@ -33,10 +33,10 @@ public class Mat {
 	 */
 	public static double max(double[][] X) {
 		double xMax = Double.MIN_VALUE;
-		int n = X.length;
-		int m = X[0].length;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				if (X[i][j] > xMax) {
 					xMax = X[i][j];
 				}
@@ -53,10 +53,10 @@ public class Mat {
 	public static double min(double[][] X) {
 		checkForNull(X);
 		double xMin = Double.MAX_VALUE;
-		int n = X.length;
-		int m = X[0].length;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				if (X[i][j] < xMin) {
 					xMin = X[i][j];
 				}
@@ -68,11 +68,11 @@ public class Mat {
 	public static double mean(double[][] X) {
 		checkForNull(X);
 		double sum = 0.0;
-		int n = X.length;
-		int m = X[0].length;
-		int s = n * m;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		int s = r * c;
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				sum = sum + X[i][j];
 			}
 		}
@@ -81,16 +81,16 @@ public class Mat {
 	
 	public static double variance(double[][] X) {
 		checkForNull(X);
-		int n = X.length;
-		int m = X[0].length;
+		int r = X.length;
+		int c = X[0].length;
 		double mean = mean(X);
 		double variance = 0.0;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				variance = variance + Math.pow(X[i][j] - mean, 2);
 			}
 		}
-		return variance / (n * m);
+		return variance / (r * c);
 	}
 	
 	/**
@@ -132,10 +132,10 @@ public class Mat {
 		checkForNull(X);
 		double xMin = Double.MAX_VALUE;
 		double xMax = Double.MIN_VALUE;
-		int n = X.length;
-		int m = X[0].length;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				if (X[i][j] < xMin) {
 					xMin = X[i][j];
 				}
@@ -306,13 +306,13 @@ public class Mat {
 	 */
 	public static double[][] transpose(double[][] X){
 		
-		int m = X.length;
-		int n = X[0].length;
+		int r = X.length;
+		int c = X[0].length;
 		
-		double[][] Y = new double[n][m];
+		double[][] Y = new double[c][r];
 		
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		for (int i = 0; i < c; i++) {
+			for (int j = 0; j < r; j++) {
 				Y[i][j] = X[j][i];
 			}
 		}
@@ -453,16 +453,16 @@ public class Mat {
 	public static double[][] normVectors(double[][] XYZ){
 		checkForNull(XYZ);
 		checkForEmpty(XYZ);
-		int m = XYZ.length;
-		int n = XYZ[0].length;
-		double[][] XYZ_n = new double[m][n];
-		for (int j = 0; j < n; j++) {
+		int r = XYZ.length;
+		int c = XYZ[0].length;
+		double[][] XYZ_n = new double[r][c];
+		for (int j = 0; j < c; j++) {
 			double squaredSum = 0.0;
-			for (int i = 0; i < m; i++) {
+			for (int i = 0; i < r; i++) {
 				squaredSum = squaredSum + XYZ[i][j] * XYZ[i][j]; 
 			}
 			double vecLen = Math.sqrt(squaredSum);
-			for (int i = 0; i < m; i++) {
+			for (int i = 0; i < r; i++) {
 				XYZ_n[i][j] = XYZ[i][j] / vecLen;
 			}
 		}
@@ -475,13 +475,13 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] normalize(double[][] X){
-		int m = X.length;
-		int n = X[0].length;		
+		int r = X.length;
+		int c = X[0].length;		
 		double xMin = min(X);
 		double xMax = max(X);
-		double[][] xn = new double[m][n];
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+		double[][] xn = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				xn[i][j] = (X[i][j] - xMin) / (xMax - xMin);
 			}
 		}
@@ -497,11 +497,11 @@ public class Mat {
 		checkForEmpty(X);
 		double mean = mean(X);
 		double sigma = variance(X);
-		int m = X.length;
-		int n = X[0].length;
-		double[][] Z = new double[m][n];
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		double[][] Z = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				Z[i][j] = (X[i][j] - mean) / sigma;
 			}
 		}
@@ -519,11 +519,11 @@ public class Mat {
 		checkForNull(X, Y);
 		checkForEmpty(X, Y);
 		checkForMatchingDimensions(X, Y);
-		int m = X.length;
-		int n = X[0].length;
-		double[][] Z = new double[m][n];
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		double[][] Z = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				Z[i][j] = X[i][j] + Y[i][j];
 			}
 		}
@@ -541,11 +541,11 @@ public class Mat {
 		checkForNull(X, Y);
 		checkForEmpty(X, Y);
 		checkForMatchingDimensions(X, Y);
-		int m = X.length;
-		int n = X[0].length;
-		double[][] Z = new double[m][n];
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		double[][] Z = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				Z[i][j] = X[i][j] - Y[i][j];
 			}
 		}
@@ -563,14 +563,14 @@ public class Mat {
 	public static double[][] product3(double[][] X, double[][] Y){
 		checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
-		int mX = X.length;
-		int nX = X[0].length;
-		int nY = Y[0].length;
-        double[][] Z = new double[mX][nY];
-        for (int i = 0; i < mX; i++) {
-            for (int j = 0; j < nY; j++) {
+		int rX = X.length;
+		int cX = X[0].length;
+		int cY = Y[0].length;
+        double[][] Z = new double[rX][cY];
+        for (int i = 0; i < rX; i++) {
+            for (int j = 0; j < cY; j++) {
                 double sum = 0;
-                for (int k = 0; k < nX; k++) {
+                for (int k = 0; k < cX; k++) {
                     sum += X[i][k] * Y[k][j];
                 }
                 Z[i][j] = sum;
@@ -590,20 +590,20 @@ public class Mat {
 	public static double[][] product2(double[][] X, double[][] Y){
 		checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
-		int mX = X.length;
-		int nX = X[0].length;
-		int mY = Y.length;
-		int nY = Y[0].length;
-		double[][] Z = new double[mX][nY];
-		double[] Ycolj = new double[nX]; // for caching 
-		for (int j = 0; j < nY; j++) {
-			for (int k = 0; k < nX; k++) {
+		int rX = X.length;
+		int cX = X[0].length;
+		int rY = Y.length;
+		int cY = Y[0].length;
+		double[][] Z = new double[rX][cY];
+		double[] Ycolj = new double[cX]; // for caching 
+		for (int j = 0; j < cY; j++) {
+			for (int k = 0; k < cX; k++) {
 				Ycolj[k] = Y[k][j];
 			}
-			for (int i = 0; i < mX; i++) {
+			for (int i = 0; i < rX; i++) {
 				double[] Xrowi = X[i];
 				double sum = 0;
-				for (int k = 0; k < nX; k++) {
+				for (int k = 0; k < cX; k++) {
 					sum += Xrowi[k] * Ycolj[k];
 				}
 				Z[i][j] = sum;
@@ -623,21 +623,21 @@ public class Mat {
 	public static double[][] product(double[][] X, double[][] Y) {
 		checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
-		int mX = X.length;
-		int nX = X[0].length;
-		int mY = Y.length;
-		int nY = Y[0].length;
-		double[][] Z = new double[mX][nY];
+		int rX = X.length;
+		int cX = X[0].length;
+		int rY = Y.length;
+		int cY = Y[0].length;
+		double[][] Z = new double[rX][cY];
 		double[] Xrowi, Yrowi, Zrowi;
 		int i = 0, j = 0, k = 0;
 		double a = 0.0;
-		for (i = 0; i < mX; i++) {
+		for (i = 0; i < rX; i++) {
 			Xrowi = X[i];
 			Zrowi = Z[i];
-			for (k = 0; k < mY; k++){
+			for (k = 0; k < rY; k++){
 				Yrowi = Y[k];
 				a = Xrowi[k];
-				for (j = nY; --j >= 0;) {
+				for (j = cY; --j >= 0;) {
 					Zrowi[j] += a * Yrowi[j];
 				}
 			}
@@ -688,35 +688,35 @@ public class Mat {
 	 */
 	
 	/**
-	 * return an array with zeros of size [n, m]
-	 * @param n
-	 * @param m
+	 * return an array with zeros of size [r, c]
+	 * @param r number of rows
+	 * @param c number of columns
 	 * @return
 	 */
-	public static double[][] zeros(int n, int m) {
-		return new double[n][m];
+	public static double[][] zeros(int r, int c) {
+		return new double[r][c];
 	}
 	
 	/**
-	 * return an float array with zeros of size [n, m]
-	 * @param n
-	 * @param m
+	 * return an float array with zeros of size [r, c]
+	 * @param r number of rows
+	 * @param c number of columns
 	 * @return
 	 */
-	public static float[][] zerosF(int n, int m) {
-		return new float[n][m];
+	public static float[][] zerosF(int r, int c) {
+		return new float[r][c];
 	}
 		
 	/**
-	 * returns an 2D array with 1's, where {@code n} is the number of rows and {@code m} the number of columns
-	 * @param n
-	 * @param m
+	 * returns an 2D array with 1's, where {@code r} is the number of rows and {@code c} the number of columns
+	 * @param r number of rows
+	 * @param c number of columns
 	 * @return
 	 */
-	public static double[][] ones(int n, int m){
-		double[][] ar = new double[n][m];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+	public static double[][] ones(int r, int c){
+		double[][] ar = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				ar[i][j] = 1.0;
 			}
 		}
@@ -724,15 +724,15 @@ public class Mat {
 	}
 	
 	/**
-	 * returns an 2D float array with 1's, where {@code n} is the number of rows and {@code m} the number of columns
-	 * @param n
-	 * @param m
+	 * returns an 2D float array with 1's, where {@code r} is the number of rows and {@code c} the number of columns
+	 * @param r
+	 * @param c
 	 * @return
 	 */
-	public static float[][] onesF(int n, int m){
-		float[][] ar = new float[n][m];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+	public static float[][] onesF(int r, int c){
+		float[][] ar = new float[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
 				ar[i][j] = 1.0f;
 			}
 		}
@@ -774,35 +774,35 @@ public class Mat {
 	}	
 	
 	/**
-	 * returns a 2D matrix with random values in [0, 1] of size [{@code n},{@code m}]
-	 * @param n
-	 * @param m
+	 * returns a 2D matrix with random values in [0, 1] of size [{@code r},{@code c}]
+	 * @param r number of rows
+	 * @param c number of columns
 	 * @return
 	 */
-	public static double[][] rand(int n, int m){
-		Random r = new Random();
-		double[][] ar = new double[n][m];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				ar[i][j] = r.nextDouble();
+	public static double[][] rand(int r, int c){
+		Random rr = new Random();
+		double[][] ar = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				ar[i][j] = rr.nextDouble();
 			}
 		}
 		return ar;
 	}
 		
 	/**
-	 * returns a matrix X € R<sup>m x n</sup> with elements increasing from 0 to k = {@code m} * {@code n}
-	 * @param m
-	 * @param n
+	 * returns a matrix X € R<sup>m x n</sup> with elements increasing from 0 to k = {@code r} * {@code c}
+	 * @param r number of rows
+	 * @param c number of columns
 	 * @return
 	 */
-	public static double[][] incrementMat(int m, int n) {
-		int k = m * n;
-		double[][] X = new double[m][n];		
+	public static double[][] incrementMat(int r, int c) {
+		int k = r * c;
+		double[][] X = new double[r][c];		
 		for (int i = 0; i < k; i++) {
-			int r = i / n;
-			int c = i % n;
-			X[r][c] = i;
+			int rem = i / c;
+			int n = i % c;
+			X[rem][n] = i;
 		}
 		return X;
 	}
@@ -837,14 +837,15 @@ public class Mat {
 	}
 	
 	/**
-	 * returns 2D matrix with NaN values of length {@code n}
-	 * @param size
+	 * returns 2D matrix with NaN values of size [{@code r} x {@code c}]
+	 * @param r
+	 * @param c
 	 * @return
 	 */
-	public static double[][] nan(int n, int m) {
-		double[][] mat = new double[m][n];
-		for (int j = 0; j < m; j++) {
-			mat[j] = Vec.nan(n);
+	public static double[][] nan(int r, int c) {
+		double[][] mat = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			mat[i] = Vec.nan(c);
 		}
 		return mat;
 	}
@@ -901,23 +902,23 @@ public class Mat {
 	public static double[] vector(double[][] X, boolean columnByColumn) {
 		checkForNull(X);
 		checkForEmpty(X);
-		int n = X.length;
-		int m = X[0].length;
-		double[] x = new double[n * m];
+		int r = X.length;
+		int c = X[0].length;
+		double[] x = new double[r * c];
 		if (columnByColumn) {
-			int c = 0;
-			for (int j = 0; j < m; j++) {
-				for (int i = 0; i < n; i++) {
-					x[c] = X[i][j];
-					++c;
+			int n = 0;
+			for (int j = 0; j < c; j++) {
+				for (int i = 0; i < r; i++) {
+					x[n] = X[i][j];
+					++n;
 				}
 			}
 		} else {
-			int c = 0;
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < m; j++) {
-					x[c] = X[i][j];
-					++c;
+			int n = 0;
+			for (int i = 0; i < r; i++) {
+				for (int j = 0; j < c; j++) {
+					x[n] = X[i][j];
+					++n;
 				}
 			}
 		}
@@ -932,24 +933,24 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] appendRows(double[][] X, double[][] Y){
-		int n1 = X[0].length;
-		int m1 = X.length;
-		int n2 = Y[0].length;
-		int m2 = Y.length;
-		if (n1 == n2) {
-			double[][] Z = new double[m1 + m2][n1];
-			int c;
-			for (c = 0; c < m1; c++) {
-				Z[c] = X[c];
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			double[][] Z = new double[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
 			}
-			int c2 = c;
-			for (c = 0; c < m2; c++) {
-				Z[c2] = Y[c];
-				c2 = c2 + c;
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
 			}
 			return Z;
 		} else {
-			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching rows for appending by column!");
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
 		}
 	}
 	
@@ -961,15 +962,15 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] appendColumns(double[][] X, double[][] Y){
-		int n1 = X[0].length;
-		int m1 = X.length;
-		int n2 = Y[0].length;
-		int m2 = Y.length;
-		if (m1 == m2) {
-			double[][] Z = new double[m1][n1 + n2];
-			for (int c = 0; c < m1; c++) {
-				System.arraycopy(X[c], 0, Z[c], 0, n1);
-				System.arraycopy(Y[c], 0, Z[c], n1, n2);
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (r1 == r2) {
+			double[][] Z = new double[r1][c1 + c2];
+			for (int n = 0; n < r1; n++) {
+				System.arraycopy(X[n], 0, Z[n], 0, c1);
+				System.arraycopy(Y[n], 0, Z[n], c1, c2);
 			}
 			return Z;
 		} else {
@@ -1004,10 +1005,10 @@ public class Mat {
 	public static double[][] copy(double[][] X){
 		checkForNull(X);
 		checkForEmpty(X);
-		int m = X.length;
-		double[][] Y = new double[m][];
-		for (int j = 0; j < m; j++) {
-			Y[j] = X[j].clone();
+		int r = X.length;
+		double[][] Y = new double[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
 		}
 		return Y;
 	}
@@ -1020,11 +1021,11 @@ public class Mat {
 	public static double[][] copy2(double[][] X){
 		checkForNull(X);
 		checkForEmpty(X);
-		int m = X.length;
-		int n = X[0].length;
-		double[][] Y = new double[m][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
+		int r = X.length;
+		int c = X[0].length;
+		double[][] Y = new double[r][c];
+		for (int i = 0; i < c; i++) {
+			for (int j = 0; j < r; j++) {
 				Y[j][i] = X[j][i];
 			}
 		}

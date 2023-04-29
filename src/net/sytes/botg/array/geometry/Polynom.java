@@ -40,12 +40,15 @@ public class Polynom extends Curve2D {
 			this.weights = weights;
 			return this;
 		}
+
+		public Polynom build() {
+			return new Polynom(this);
+		}
 		
 	}
 	
 	public int degree() {
 		return this.weights.length - 1;
-	}
-	
+	}	
 	
 }

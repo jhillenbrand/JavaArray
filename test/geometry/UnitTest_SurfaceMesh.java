@@ -22,10 +22,10 @@ public class UnitTest_SurfaceMesh {
 		
 		p.create(x, y);
 		
-		Vec.print(p.getX());
-		Vec.print(p.getY());
+		Vec.print(p.x());
+		Vec.print(p.y());
 		
-		Mat.print(p.getZ());
+		Mat.print(p.z());
 		
 		
 	}

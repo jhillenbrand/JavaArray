@@ -1,6 +1,7 @@
 package net.sytes.botg.array.geometry;
 
 import net.sytes.botg.array.math.Mat;
+import net.sytes.botg.array.math.Vec;
 
 /**
  * https://en.wikipedia.org/wiki/Gaussian_function
@@ -43,8 +44,9 @@ public class GaussianSurface extends SurfaceMesh {
 	
 	@Override
 	public void create() {
-		// TODO Auto-generated method stub
-		
+		double[] x = Vec.linspace(-1.0, 1.0, 100);
+		double[] y = Vec.linspace(-1.0, 1.0, 100);
+		this.create(x, y);
 	}
 	
 	private double gaussian2d(double x, double y) {
