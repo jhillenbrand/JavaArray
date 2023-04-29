@@ -30,6 +30,11 @@ public class SphereSurface extends SurfaceMesh 	{
 	public void create(double[] x, double[] y) {
 		throw new UnsupportedOperationException(SphereSurface.class.getSimpleName() +  " is not defined for x[] and y[]");
 	}
+	
+	@Override
+	public double create(double x, double y) {
+		throw new UnsupportedOperationException(SphereSurface.class.getSimpleName() +  " is not defined for x and y input");
+	}
 
 	@Override
 	public void create() {
@@ -60,5 +65,4 @@ public class SphereSurface extends SurfaceMesh 	{
 		
 		this.Z = Z;
 	}
-
 }

@@ -52,4 +52,9 @@ public class GaussianSurface extends SurfaceMesh {
 	private double gaussian2d(double x, double y) {
 		return this.A * Math.exp(-1 * (Math.pow(x - this.x_0, 2) / 2 / Math.pow(this.sigma_x, 2) + Math.pow(y - this.y_0, 2) / 2 / Math.pow(this.sigma_y, 2)));
 	}
+
+	@Override
+	public double create(double x, double y) {
+		return this.gaussian2d(x, y);
+	}
 }

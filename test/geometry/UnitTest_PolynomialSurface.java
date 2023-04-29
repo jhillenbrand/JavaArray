@@ -1,5 +1,7 @@
 package geometry;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import net.sytes.botg.array.geometry.PolynomialSurface;
@@ -25,6 +27,45 @@ public class UnitTest_PolynomialSurface {
 		poly.create(x, y);
 		
 		//Mat.print(poly.z());
+		
+	}
+	
+	@Test
+	public void test010() {
+		
+		double[][] a_ij = {{1, 3}, {2, 4}};
+		
+		PolynomialSurface poly = new PolynomialSurface.Builder()
+				.a_ij(a_ij)
+				.build();
+		
+		System.out.println(Arrays.toString(poly.weights()));
+		
+	}
+	
+	@Test
+	public void test020() {
+		
+		double[] weights = {1, 2, 3, 4};
+		
+		PolynomialSurface poly = new PolynomialSurface.Builder()
+				.weights(weights)
+				.build();
+		
+		Mat.print(poly.a_ij());
+		
+	}
+	
+	@Test
+	public void test030() {
+		
+		double[][] a_ij = {{0, 2, 5}, {1, 3, 7}, {4, 6, 8}};
+		
+		PolynomialSurface poly = new PolynomialSurface.Builder()
+				.a_ij(a_ij)
+				.build();
+		
+		System.out.println(Arrays.toString(poly.weights()));
 		
 	}
 	

@@ -31,28 +31,7 @@ public class PolynomialSurface extends SurfaceMesh {
 		}
 
 		public Builder weights(double[] weights) {
-			int n = weights.length;
-			int s = (int) Math.ceil(Math.sqrt(n));
-			this.a_ij = new double[s][s];
-			int k = 0;
-			int i = 0;
-			int j = 0;
-			while (k < n) {
-				this.a_ij[i][j] = weights[k];
-				++i;
-				++k;
-				if (k < n) {
-					this.a_ij[i][j] = weights[k];
-				}
-				--i;
-				++j;
-				++k;
-				if (k < n) {
-					this.a_ij[i][j] = weights[k];
-				}
-				++i;
-				++k;
-			}
+			this.a_ij = matrix(weights);
 			return this;
 		}
 		
@@ -76,9 +55,13 @@ public class PolynomialSurface extends SurfaceMesh {
 		}
 	}
 
-	private double polySurface(double x, double y) {
-		double p = 0.0;
+	@Override
+	public double create(double x, double y) {		
+		return this.polySurface(x, y);
+	}
 
+	private double polySurface(double x, double y) {
+		
 		// assemble x-/y-matrices
 		int n = this.a_ij.length;
 		double[][] X = new double[1][n];
@@ -96,4 +79,209 @@ public class PolynomialSurface extends SurfaceMesh {
 		
 		return c_ij[0][0];
 	}
+	
+	private static double[][] matrix(double[] weights) {
+		int n = weights.length;
+		int s = (int) Math.ceil(Math.sqrt(n));
+		double[][] a_ij = new double[s][s];
+		int k = 0;
+		int i = 0;
+		int j = 0;
+		int p = a_ij.length - 1;
+		int nd = 2 * p + 1;
+		boolean stop = false;
+		
+		// go through diagonal matrix elements
+		for (int d = 0; d < nd; d++) {
+			
+			// even diagonals
+			if (d % 2 == 0) {
+				
+				a_ij[i][j] = weights[k];
+				++k;
+				if (k >= n) {
+					break;
+				}
+				// go through elements on diagonal
+				int ii = i;
+				int jj = j;
+				while (ii + 1 <= p && jj - 1 >= 0) {					
+					ii = ii + 1;
+					jj = jj - 1;
+					a_ij[ii][jj] = weights[k];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+					// set transpose element
+					a_ij[jj][ii] = weights[k];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+				}
+				
+				++i;
+				
+			// odd diagonals
+			} else {
+				
+				a_ij[i][j] = weights[k];
+				++k;
+				if (k >= n) {
+					break;
+				}
+				// set transpose element
+				a_ij[j][i] = weights[k];
+				++k;
+				if (k >= n) {
+					break;
+				}
+				// go through elements on diagonal
+				int ii = i;
+				int jj = j;
+				while (ii + 1 <= p && jj - 1 >= 0) {					
+					ii = ii + 1;
+					jj = jj - 1;
+					a_ij[ii][jj] = weights[k];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+					// set transpose element
+					a_ij[jj][ii] = weights[k];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+				}
+				
+				++j;
+			}
+			
+			if (stop) {
+				break;
+			}			
+		}
+		return a_ij;
+	}
+	
+	public double[] weights() {		
+		int n = Mat.numel(this.a_ij);
+		int k = 0;
+		int i = 0;
+		int j = 0;
+		int p = this.a_ij.length - 1;
+		int nd = 2 * p + 1;
+		boolean stop = false;
+		double[] weights = new double[n];
+		
+		// go through diagonal matrix elements
+		for (int d = 0; d < nd; d++) {
+			
+			// even diagonals
+			if (d % 2 == 0) {
+				
+				weights[k] = this.a_ij[i][j];
+				++k;
+				if (k >= n) {
+					break;
+				}
+				// go through elements on diagonal
+				int ii = i;
+				int jj = j;
+				while (ii + 1 <= p && jj - 1 >= 0) {					
+					ii = ii + 1;
+					jj = jj - 1;
+					weights[k] = this.a_ij[ii][jj];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+					// set transpose element
+					weights[k] = this.a_ij[jj][ii];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+				}
+				
+				++i;
+				
+			// odd diagonals
+			} else {
+				
+				weights[k] = this.a_ij[i][j];
+				++k;
+				if (k >= n) {
+					break;
+				}
+				// set transpose element
+				weights[k] = this.a_ij[j][i];
+				++k;
+				if (k >= n) {
+					break;
+				}
+				// go through elements on diagonal
+				int ii = i;
+				int jj = j;
+				while (ii + 1 <= p && jj - 1 >= 0) {					
+					ii = ii + 1;
+					jj = jj - 1;
+					weights[k] = this.a_ij[ii][jj];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+					// set transpose element
+					weights[k] = this.a_ij[jj][ii];
+					++k;
+					if (k >= n) {
+						stop = true;
+						break;
+					}
+				}
+				
+				++j;
+			}
+			
+			if (stop) {
+				break;
+			}			
+		}
+
+		
+		/*
+		while (k < n) {		
+			// set weight for current depth
+			weights[k] = this.a_ij[i + d][j];
+			++k;
+			
+			// go one deeper
+			++d;
+			if (k < n) {
+				weights[k] = this.a_ij[i + d][j];
+			}			
+			++k;
+			// set weight for transposed element
+			if (k < n) {
+				weights[k] = this.a_ij[i][j + d];
+			}			
+			++k;
+		}
+		*/		
+		return weights;
+	}
+	
+	public double[][] a_ij(){
+		return this.a_ij;
+	}
+	
 }

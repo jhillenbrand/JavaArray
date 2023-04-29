@@ -871,6 +871,22 @@ public class Mat {
 	 * --------------------------------------------------------------------
 	 */
 
+	
+	/**
+	 * returns the number of elements in {@code X}
+	 * @param X
+	 * @return
+	 */
+	public static int numel(double[][] X) {
+		checkForNull(X);
+		checkForEmpty(X);
+		int n = 0;
+		for (int i = 0; i < X.length; i++) {
+			n = n + X[i].length;
+		}
+		return n;
+	}
+	
 	/**
      * checks whether the matrix {@code X} is square
      * <br>{@code X} &#8712; R<sup>n x n</sup> 

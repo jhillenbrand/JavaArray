@@ -79,6 +79,15 @@ public class Paraboloid extends SurfaceMesh {
 	}
 
 	@Override
+	public double create(double x, double y) {
+		if (this.elliptic) {
+			return this.paraboloid(x, y);
+		} else {
+			return this.hyperboloid(x, y);
+		}
+	}
+
+	@Override
 	public void create() {
 		double[] x = Vec.linspace(-1.0, 1.0, 100);
 		double[] y = Vec.linspace(-1.0, 1.0, 100);

@@ -4,6 +4,8 @@ public interface ISurfaceMesh {
 
 	public void create(double[] x, double[] y);
 	
+	public double create(double x, double y);
+	
 	public void create();
 	
 }
