@@ -255,28 +255,7 @@ public class PolynomialSurface extends SurfaceMesh {
 			if (stop) {
 				break;
 			}			
-		}
-
-		
-		/*
-		while (k < n) {		
-			// set weight for current depth
-			weights[k] = this.a_ij[i + d][j];
-			++k;
-			
-			// go one deeper
-			++d;
-			if (k < n) {
-				weights[k] = this.a_ij[i + d][j];
-			}			
-			++k;
-			// set weight for transposed element
-			if (k < n) {
-				weights[k] = this.a_ij[i][j + d];
-			}			
-			++k;
-		}
-		*/		
+		}	
 		return weights;
 	}
 	
