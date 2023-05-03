@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import net.sytes.botg.array.ConvertArray;
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.spectrum.WindowFunction;
 import net.sytes.botg.array.spectrum.WindowFunction.WindowType;
 
@@ -3485,7 +3485,7 @@ public class Vec {
 		for (int i = 0; i < n; i++) {
 			xu.put(x[i], x[i]);
 		}
-		return ConvertArray.unwrap(xu.values().toArray(new Double[xu.size()]));
+		return Ar.unwrap(xu.values().toArray(new Double[xu.size()]));
 	}
 	
 	/**

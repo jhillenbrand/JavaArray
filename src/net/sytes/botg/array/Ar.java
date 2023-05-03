@@ -9,10 +9,10 @@ import java.util.Arrays;
  * 
  * @author hillenbrand
  */
-public class ConvertArray {
+public class Ar {
 	
 	// Suppress default constructor for noninstantiability
-	private ConvertArray() {
+	private Ar() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
 	}
 	

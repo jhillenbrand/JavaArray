@@ -2,7 +2,7 @@ package array;
 
 import org.junit.Test;
 
-import net.sytes.botg.array.ConvertArray;
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_ConvertArray {
@@ -12,25 +12,25 @@ public class UnitTest_ConvertArray {
 	@Test
 	public void test000() {
 		int[] d = Vec.randInt(1_000_000);		
-		ConvertArray.intToDouble2(d);
+		Ar.intToDouble2(d);
 	}
 	
 	@Test
 	public void test001() {
 		int[] d = Vec.randInt(1_000_000);		
-		ConvertArray.toDouble(d);
+		Ar.toDouble(d);
 	}
 	
 	@Test
 	public void test002() {
 		int[] d = Vec.randInt(10_000_000);		
-		ConvertArray.intToDouble2(d);
+		Ar.intToDouble2(d);
 	}
 	
 	@Test
 	public void test003() {
 		int[] d = Vec.randInt(10_000_000);		
-		ConvertArray.toDouble(d);
+		Ar.toDouble(d);
 	}
 	
 	@Test
@@ -41,7 +41,7 @@ public class UnitTest_ConvertArray {
 		long ns = 1_000_000_000;
 		long t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] bs = ConvertArray.toDouble(ints);
+			double[] bs = Ar.toDouble(ints);
 			//int b = bs.length;
 		}
 		long t2 = System.nanoTime();
@@ -52,7 +52,7 @@ public class UnitTest_ConvertArray {
 		System.out.println("sr=" + sr + "[Hz]");
 		
 		for (int i = 0; i < n; i++) {
-			double[] bs = ConvertArray.intToDouble2(ints);
+			double[] bs = Ar.intToDouble2(ints);
 			//int b = bs.length;
 		}
 		
@@ -76,7 +76,7 @@ public class UnitTest_ConvertArray {
 		long ns = 1_000_000_000;
 		long t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] dAr = ConvertArray.toDouble(objAr);
+			double[] dAr = Ar.toDouble(objAr);
 			//int b = bs.length;
 		}
 		long t2 = System.nanoTime();
@@ -88,7 +88,7 @@ public class UnitTest_ConvertArray {
 		
 		t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] dAr = ConvertArray.toDouble2(objAr);
+			double[] dAr = Ar.toDouble2(objAr);
 			//int b = bs.length;
 		}
 		t2 = System.nanoTime();
@@ -106,7 +106,7 @@ public class UnitTest_ConvertArray {
 		cw[0] = 'A';
 		cw[1] = 'B';
 		
-		char[] c = ConvertArray.unwrap(cw);
+		char[] c = Ar.unwrap(cw);
 		
 		System.out.println(c);		
 	}

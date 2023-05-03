@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import net.sytes.botg.array.ConvertArray;
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
 import net.sytes.botg.datatypes.buffers.TimedBuffer;
 
@@ -26,7 +26,7 @@ public class UnitTest_Buffers {
 			
 			double[] d = Vec.linspace((double) i, (double) i+1, s1);
 			
-			buf.push(ConvertArray.wrap(d));
+			buf.push(Ar.wrap(d));
 			
 			System.out.println("BUF: " + Arrays.toString(buf.toArray(true)));
 			

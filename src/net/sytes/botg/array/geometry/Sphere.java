@@ -1,6 +1,6 @@
 package net.sytes.botg.array.geometry;
 
-import net.sytes.botg.array.ConvertArray;
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
 
 /**
@@ -73,9 +73,9 @@ public class Sphere extends Surface3D {
 		
 		ss.create(t1, t2);
 		
-		this.x = ConvertArray.concat(ss.x(), ss.x());
-		this.y = ConvertArray.concat(ss.y(), ss.y());
-		this.z = ConvertArray.concat(ss.z(), Vec.product(ss.z(), -1.0));
+		this.x = Ar.concat(ss.x(), ss.x());
+		this.y = Ar.concat(ss.y(), ss.y());
+		this.z = Ar.concat(ss.z(), Vec.product(ss.z(), -1.0));
 		
 	}
 }
