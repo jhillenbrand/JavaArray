@@ -95,4 +95,8 @@ public class GaussianSurface extends SurfaceMesh {
 	public double create(double x, double y) {
 		return this.gaussian2d(x, y);
 	}
+	
+	public double[] weights() {
+		return new double[] { this.A, this.x_0, this.y_0, this.sigma_x, this.sigma_y};
+	}
 }

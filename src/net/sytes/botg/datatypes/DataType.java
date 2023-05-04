@@ -17,6 +17,16 @@ public enum DataType {
 		this(-1);
 	}
 	
+	/**
+	 * The provided code is a Java method named stringToDataType that takes a String argument named dataTypeStr and returns an instance of the DataType enum. The method is marked as public and static, which means it can be called from other classes without requiring an instance of the class.
+	 * The method first checks if the dataTypeStr argument is null, and if so, it returns null indicating that the provided argument is not valid.
+	 * The method then converts the provided dataTypeStr argument to lowercase using the toLowerCase method of the String class to ensure that case sensitivity is not an issue in the comparison.
+	 * Next, the method uses a series of if-else statements to determine which DataType enum instance should be returned based on the dataTypeStr argument. The if-else statements check if the str variable matches any of the known data types and returns the corresponding enum value.
+	 * Finally, if the provided dataTypeStr argument does not match any of the known data types, the method returns null.
+	 * Overall, the provided code appears to be a useful utility method for converting a string representation of a data type into its corresponding DataType enum value.
+	 * @param dataTypeStr
+	 * @return
+	 */
 	public static DataType stringToDataType(String dataTypeStr) {
 		if (dataTypeStr == null) {
 			return null;
@@ -58,7 +68,7 @@ public enum DataType {
 	}
 	
 	/**
-	 * converts the passed object from sourceType to targetType
+	 * converts the passed object from  {@code sourceType} to {@code targetType}
 	 * @param obj
 	 * @param sourceType
 	 * @param targetType
@@ -471,6 +481,34 @@ public enum DataType {
 		}
 		return newObjs;
 	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to double[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static double[] castToDouble(Object[] objs, DataType sourceType) {
+		double[] ar = new double[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (double) cast(objs[i], sourceType, DataType.DOUBLE);
+		}
+		return ar;		
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to double[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static double[] castToDouble(Object[] objs) {
+		double[] ar = new double[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (double) cast(objs[i], dataTypeOf(objs[i]), DataType.DOUBLE);
+		}
+		return ar;
+	}
+	
 	
 	/**
 	 * returns the (assumed) {@code DataType} of given String {@code value}
