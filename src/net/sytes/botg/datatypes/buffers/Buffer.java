@@ -369,6 +369,10 @@ public class Buffer implements IBuffer {
     	}
     }
 	
+    /**
+     * returns this {@code Buffer}s config as a {@code Map<String, Object>}
+      * @return
+     */
 	public Map<String, Object> toMap(){
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		map.put("type", this.type);
