@@ -1,7 +1,10 @@
 package net.sytes.botg.datatypes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public enum DataType {
 	
@@ -607,6 +610,67 @@ public enum DataType {
 	        return false;
 	    }
 	    return true;
+	}
+	
+	/**
+	 * casts the value type of {@code map} to the given {@code newType}
+	 * @param <K, V>
+	 * @param map
+	 * @param newType
+	 * @return
+	 */
+	public static <K, V> Map castMapValueType(Map<K, V> map, DataType newType) {
+		Map newMap;
+		switch (newType) {
+			case BOOLEAN:
+				newMap = new HashMap<String, Boolean>();
+				break;
+				
+			case BYTE:
+				newMap = new HashMap<String, Byte>(); 
+				break;
+				
+			case CHAR:
+				newMap = new HashMap<String, Character>();
+				break;
+				
+			case DOUBLE:
+				newMap = new HashMap<String, Double>();
+				break;
+				
+			case FLOAT:
+				newMap = new HashMap<String, Float>();
+				break;
+				
+			case INT:
+				newMap = new HashMap<String, Integer>();
+				break;
+				
+			case LONG:
+				newMap = new HashMap<String, Long>(); 
+				break;
+				
+			case OBJECT:
+				newMap = new HashMap<String, Object>();
+				break;
+				
+			case SHORT:
+				newMap = new HashMap<String, Short>();
+				break;
+				
+			case STRING:
+				newMap = new HashMap<String, String>();
+				break;
+				
+			default:
+				newMap = null;		
+		}
+		if (newMap != null) {
+			for (Entry<K, V> entry : map.entrySet()) {
+				newMap.put(entry.getKey(), cast(entry.getValue(), dataTypeOf(entry.getValue()), newType));
+			}			
+		}
+		return newMap;
 	}
 	
 	/**

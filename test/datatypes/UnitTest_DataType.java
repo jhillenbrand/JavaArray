@@ -2,6 +2,9 @@ package datatypes;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 import net.sytes.botg.datatypes.DataType;
@@ -126,6 +129,17 @@ public class UnitTest_DataType {
 	@Test
 	public void test022() {
 		assertEquals(DataType.dataTypeOf("123.12d"), DataType.DOUBLE);
+	}
+	
+	@Test
+	public void test023() {
+		
+		Map<String, Double> map = new HashMap<String, Double>();
+		map.put("1", 1.0);
+		map.put("2", 10.1);
+		
+		Map<String, Integer> map2 = DataType.castMapValueType(map, DataType.INT);
+		System.out.println(map2);
 	}
 	
 }
