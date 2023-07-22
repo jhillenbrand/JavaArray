@@ -2020,6 +2020,21 @@ public class Vec {
 	}
 	
 	/**
+	 * divides the given array {@code ar} by {@code divisor}
+	 * @param ar
+	 * @param divisor
+	 * @return
+	 */
+	public static double[] div(double[] ar, double divisor) {
+		int len = ar.length;
+		double[] newAr = new double[len];
+		for (int i = 0; i < len; i++) {
+			newAr[i] = ar[i] / divisor;
+		}
+		return newAr;
+	}
+	
+	/**
 	 * multiplies {@code ar1} and {@code ar2} elementwise and returns result
 	 * @param ar1
 	 * @param ar2
@@ -3950,13 +3965,30 @@ public class Vec {
 	
 	/**
 	 * computes the directional vector between two points {@code p1, p2}
-	 * @param x1
-	 * @param x2
+	 * @param p1
+	 * @param p2
 	 * @return
 	 */
 	public static double[] directionalVector(double[] p1, double[] p2) {
+		return directionalVector(p2, p1, false);
+	}
+	
+	/**
+	 * computes the directional vector between two points {@code p1, p2}
+	 * if unit is set to true, than the length of the resulting vector is 1
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	public static double[] directionalVector(double[] p1, double[] p2, boolean unit) {
 		checkForEqualDimensions(p1, p2);
-		return minus(p2, p1);
+		double[] dv = minus(p2, p1);
+		double len = Vec.distance(p1, p2);
+		if (unit) {
+			return div(dv, len);
+		} else {
+			return dv;
+		}
 	}
 	
 	/**
