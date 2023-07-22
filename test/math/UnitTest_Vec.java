@@ -348,7 +348,7 @@ public class UnitTest_Vec {
 		double[] nans = Vec.nan(10);
 		double[] rands = Vec.rand(10);
 		
-		double[] prods = Vec.prod(rands, nans);
+		double[] prods = Vec.product(rands, nans);
 		
 		System.out.println(Arrays.toString(prods));
 		

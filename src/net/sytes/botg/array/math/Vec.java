@@ -2008,6 +2008,7 @@ public class Vec {
 	
 	/**
 	 * multiplies {@code d} to every element in {@code ar}
+	 * overwriting original array object
 	 * @param ar
 	 * @param d
 	 * @return
@@ -2035,12 +2036,12 @@ public class Vec {
 	}
 	
 	/**
-	 * multiplies {@code ar1} and {@code ar2} elementwise and returns result
+	 * multiplies {@code ar1} and {@code ar2} elementwise and returns new vector
 	 * @param ar1
 	 * @param ar2
 	 * @return
 	 */
-	public static double[] prod(double[] ar1, double[] ar2) {
+	public static double[] product(double[] ar1, double[] ar2) {
 		checkForNull2(ar1, ar2);
 		checkForEqualDimensions(ar1, ar2);
 		double[] ar3 = new double[ar1.length];

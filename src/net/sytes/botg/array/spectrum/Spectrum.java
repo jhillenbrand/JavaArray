@@ -31,7 +31,7 @@ public class Spectrum {
 				throw new IllegalArgumentException("Window Function window must be equal to fftSampleSize");
 			}
 			for (int i = 0; i < w; i++) {
-				windows[w] = Vec.prod(windows[w], windowFunction);
+				windows[w] = Vec.product(windows[w], windowFunction);
 			}
 		}
 		
