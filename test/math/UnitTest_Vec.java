@@ -308,73 +308,6 @@ public class UnitTest_Vec {
 	}
 	
 	@Test
-	public void test120() {
-		double[] x = Vec.linspace(9);
-		double[][] X = Vec.matrix(x, 3, 3, false);
-		
-		Mat.print(X);
-	}
-	
-	@Test
-	public void test130() {
-		
-		double[] x = {0, 1, 2, 3, 4};
-		double[] y = {21, 24, 24, 18, 16};
-		
-		double[] x_s = {0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4};
-		
-		double[] y_s = Vec.splineInterp(x, y, x_s);
-		
-		Vec.print(y_s);
-		
-	}
-	
-	@Test
-	public void test140() {
-		
-		double[] x = new double[] {1.0, 2.0, 3.0};
-		
-		double[] y = Vec.copy(x);
-		
-		y[0] = 0.0;
-		
-		System.out.println(Arrays.toString(x));
-		
-	}
-	
-
-	@Test
-	public void test133() {
-		double[] nans = Vec.nan(10);
-		double[] rands = Vec.rand(10);
-		
-		double[] prods = Vec.product(rands, nans);
-		
-		System.out.println(Arrays.toString(prods));
-		
-	}
-	
-	@Test
-	public void test132() {
-		
-		double[] logspace = Vec.logspace(1, 10, 10);
-		System.out.println(Arrays.toString(logspace));
-		
-	}
-	
-
-	
-	@Test
-	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 1")
-	public void test131() {
-		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
-		
-		assertEquals(Vec.isMonotone(ar, true), true);
-	}
-	
-
-	
-	@Test
 	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 2")
 	public void test121() {
 		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
@@ -444,6 +377,62 @@ public class UnitTest_Vec {
 		double[] ar = {1.0, 0.99, 0.9, 0.0, -1.1};
 		
 		assertEquals(Vec.isStrictMonotone(ar, false), true);
+	}
+	
+	@Test
+	public void test130() {
+		
+		double[] x = {0, 1, 2, 3, 4};
+		double[] y = {21, 24, 24, 18, 16};
+		
+		double[] x_s = {0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4};
+		
+		double[] y_s = Vec.splineInterp(x, y, x_s);
+		
+		Vec.print(y_s);
+		
+	}
+	
+	@Test
+	public void test132() {
+		
+		double[] logspace = Vec.logspace(1, 10, 10);
+		System.out.println(Arrays.toString(logspace));
+		
+	}
+	
+
+	
+	@Test
+	@DisplayName("Testing Monotonicity Methods -> isMonotone() - 1")
+	public void test131() {
+		double[] ar = {1.0, 2.0, 3.0, 4.0, 4.1};
+		
+		assertEquals(Vec.isMonotone(ar, true), true);
+	}
+
+	@Test
+	public void test133() {
+		double[] nans = Vec.nan(10);
+		double[] rands = Vec.rand(10);
+		
+		double[] prods = Vec.product(rands, nans);
+		
+		System.out.println(Arrays.toString(prods));
+		
+	}
+	
+	@Test
+	public void test140() {
+		
+		double[] x = new double[] {1.0, 2.0, 3.0};
+		
+		double[] y = Vec.copy(x);
+		
+		y[0] = 0.0;
+		
+		System.out.println(Arrays.toString(x));
+		
 	}
 
 	
@@ -748,6 +737,37 @@ public class UnitTest_Vec {
 		
 		Vec.print(x);
 		Vec.print(y);
+		
+	}
+	
+	
+	@Test
+	public void test450() {
+		double[] x = Vec.linspace(9);
+		double[][] X = Vec.matrix(x, 3, 3, false);
+		
+		Mat.print(X);
+	}
+	
+	@Test
+	public void test451() {
+		
+		double[] x = {1, 1, 1};
+		
+		double[][] X = Vec.matrix(x, 1);
+		
+		Mat.print(X);
+		
+	}
+	
+	@Test
+	public void test452() {
+		
+		double[] x = {1, 1, 1};
+		
+		double[][] X = Vec.matrix(x, 3, 1, true);
+		
+		Mat.print(X);
 		
 	}
 	

@@ -2571,17 +2571,22 @@ public class Vec {
 			throw new IllegalArgumentException("vector x (" + n + ") must have the same length as rows x columns (" + (rows * columns) + ")");
 		}
 		double[][] X = new double[rows][columns];
-		if (!columnByColumn) {
+		if (!columnByColumn) {			
 			for (int i = 0; i < n; i++) {
 				int r = i / columns;
 				int c = i % columns;
 				X[r][c] = x[i];
 			}
 		} else {
+			int c = 0;
+			int r = 0;
 			for (int i = 0; i < n; i++) {
-				int c = i / columns;
-				int r = i % columns;
 				X[r][c] = x[i];
+				++c;
+				if (c == columns) {
+					c = 0;
+					++r;
+				}
 			}
 		}
 		return X;

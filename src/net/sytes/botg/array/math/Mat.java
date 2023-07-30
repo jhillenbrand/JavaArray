@@ -291,7 +291,21 @@ public class Mat {
         }
         return x;
     }
-		
+	
+	/**
+	 * matrix-vector multiplication
+	 * @param A
+	 * @param x
+	 * @return
+	 */
+	public static double[] product(double[][] A, double[] x) {
+		double[][] X = Vec.matrix(x, 1);
+		double[][] X_T = Mat.transpose(X);
+		double[][] Y = product(A, X_T);
+		double[][] Y_T = transpose(Y);
+		return Y_T[0];
+	}
+	
 	/**
 	 * --------------------------------------------------------------------
 	 * Matrix to Matrix
@@ -1057,8 +1071,10 @@ public class Mat {
 	public static String toString(double[][] matrix) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < matrix.length; i++) {
-			if (i == matrix.length - 1) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
 				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
 			} else if (i == 0) {
 				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
 			} else {

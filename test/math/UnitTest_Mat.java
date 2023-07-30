@@ -545,4 +545,17 @@ public class UnitTest_Mat {
 		Mat.print(XY[1]);
 		
 	}
+	
+	@Test
+	public void test075() {
+		double[][] A = Mat.unitMatrix(3);
+		
+		double[] x = new double[] {1, 1, 1};
+		
+		double[] y = Mat.product(A, x);
+		
+		Vec.print(y);
+		
+	}
+	
 }
