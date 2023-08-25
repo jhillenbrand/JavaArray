@@ -392,13 +392,45 @@ public enum DataType {
 						return Float.parseFloat(s.replace(",", "."));
 						
 					case INT:
-						return Integer.parseInt((String) obj);
+						// convert , to . TODO this is not safe and tackles all cases
+						s = (String) obj;
+						s = s.replace(",", ".");
+						// cut string of decimals
+						if (s.contains(".")) {
+							s = s.substring(0, s.indexOf("."));
+							return Integer.parseInt(s);
+						} else {
+							return Integer.parseInt(s);
+						}						
+						/* ALTERNATIVE CODE: seems to be slower by a couple ns	
+						s = (String) obj;
+						Double d = Double.parseDouble(s.replace(",", "."));
+						return d.intValue();
+						*/						
 						
 					case LONG:
-						return Long.parseLong((String) obj);
+						// convert , to . TODO this is not safe and tackles all cases
+						s = (String) obj;
+						s = s.replace(",", ".");
+						// cut string of decimals
+						if (s.contains(".")) {
+							s = s.substring(0, s.indexOf("."));
+							return Long.parseLong(s);
+						} else {
+							return Long.parseLong(s);
+						}
 						
 					case SHORT:
-						return Short.parseShort((String) obj);
+						// convert , to . TODO this is not safe and tackles all cases
+						s = (String) obj;
+						s = s.replace(",", ".");
+						// cut string of decimals
+						if (s.contains(".")) {
+							s = s.substring(0, s.indexOf("."));
+							return Short.parseShort(s);
+						} else {
+							return Short.parseShort(s);
+						}
 						
 					case STRING:
 						return obj.toString();

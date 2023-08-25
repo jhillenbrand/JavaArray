@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.datatypes.DataType;
 
 public class UnitTest_DataType {
@@ -140,6 +141,35 @@ public class UnitTest_DataType {
 		
 		Map<String, Integer> map2 = DataType.castMapValueType(map, DataType.INT);
 		System.out.println(map2);
+	}
+	
+	@Test
+	public void test030() {
+		
+		System.out.println(DataType.cast("99.9", DataType.SHORT));
+		System.out.println(DataType.cast("100.0", DataType.INT));
+		System.out.println(DataType.cast("100.0", DataType.LONG));
+		
+	}
+	
+	@Test
+	public void test031() {
+		
+		String s = "";
+		double d = 1.1;
+		int in = 0;
+		
+		long t1 = System.nanoTime();
+		int n = 1_000_000;
+		for (int i = 0; i < n; i++) {
+			s = "" + d * i;
+			in = (int) DataType.cast(s, DataType.INT);
+		}
+		
+		long t2 = System.nanoTime();
+		
+		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
+		
 	}
 	
 }

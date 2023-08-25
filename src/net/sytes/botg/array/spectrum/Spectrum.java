@@ -169,7 +169,7 @@ public class Spectrum {
 	 * NOTE: input array will be trimmed to 2^n length
 	 * @param x
 	 * @param sampleRate
-	 * @return
+	 * @return double[][] S, where S[0]: contains the frequencies and S[1] the spectrum amplitudes
 	 */
 	public static double[][] singleSidedSpectrum(double[] x, double sampleRate) {
 		Complex[] X = fft(x, true);
