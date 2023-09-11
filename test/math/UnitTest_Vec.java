@@ -771,4 +771,18 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test460() {
+		
+		double[] x = Vec.rand(20, -5.0, 5.0);
+		
+		double[] y = Vec.scale(x, -1.0, 1.0);
+		
+		double[] z = Vec.scale(x, 0.0, 1.0);
+		
+		Vec.print(y);
+		Vec.print(z);
+		
+	}
+	
 }

@@ -170,6 +170,34 @@ public class Vec {
 	}	
 	
 	/**
+	 * retrieves the minimum and maximum in {@code x} and returns them as array
+	 * double[] minMax = minMax(x);
+	 * minMax[0] --> minimum, minMax[1] --> maximum
+	 * @param x
+	 * @return
+	 */
+	public static double[] minMax(double[] x) {
+		checkForNull(x);
+		checkForEmpty(x);
+		double[] res = new double[2];
+		res[0] = x[0];
+		res[1] = x[0];
+		for(double d : x) {
+			if(res[1] > d) {
+				// do nothing
+			} else {
+				res[1] = d;
+			}
+			if(res[0] > d) {
+				res[0] = d;
+			} else {
+				// do nothing
+			}
+		}
+		return res;
+	}	
+	
+	/**
 	 * retrieves the maximum of subarray {@code x} defined by start index {@code s} and end index {@code e}
 	 * @param x
 	 * @param s
@@ -1048,15 +1076,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] normalize(double[] x) {
-		double xMax = max(x);
-		double xMin = min(x);
-		int n = x.length;
-		double[] xn = new double[n];
-		for (int i = 0; i < n; i++) {
-			xn[i] = (x[i] - xMin) / (xMax - xMin);
-		}
-		return xn;
-	}
+		return scale(x, 0.0, 1.0);
+	}	
 	
 	/**
 	 * normalization of vector {@code x} into range [-1, 1]
@@ -1064,14 +1085,27 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] normalize2(double[] x) {
-		double xMax = max(x);
-		double xMin = min(x);
-		int n = x.length;
-		double[] xn = new double[n];
-		for (int i = 0; i < n; i++) {
-			xn[i] = 2 * ((x[i] - xMin) / (xMax - xMin) - 0.5);
+		return scale(x, -1.0, 1.0);
+	}
+	
+	/**
+	 * scales the original vector {@code x} between the new range {@code [yMin, yMax]}
+	 * @param x
+	 * @param yMin
+	 * @param yMax
+	 * @return
+	 */
+	public static double[] scale(double[] x, double yMin, double yMax) {
+		double[] y = new double[x.length];
+		double[] minMax = Vec.minMax(x);
+		double xMin = minMax[0];
+		double xMax = minMax[1];
+		
+		for (int i = 0; i < x.length; i++) {
+			y[i] = (x[i] - xMin) / (xMax - xMin) * (yMax - yMin) + yMin;
 		}
-		return xn;
+		
+		return y;
 	}
 	
 	/**
@@ -2518,7 +2552,7 @@ public class Vec {
 		double len = norm(x);
 		return product(x, 1 / len);
 	}
-	
+		
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector to Matrix
