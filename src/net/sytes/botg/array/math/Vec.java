@@ -1090,16 +1090,29 @@ public class Vec {
 	
 	/**
 	 * scales the original vector {@code x} between the new range {@code [yMin, yMax]}
+	 * according to the minimum and maximum inside the {@code x}
 	 * @param x
 	 * @param yMin
 	 * @param yMax
 	 * @return
 	 */
 	public static double[] scale(double[] x, double yMin, double yMax) {
-		double[] y = new double[x.length];
 		double[] minMax = Vec.minMax(x);
 		double xMin = minMax[0];
 		double xMax = minMax[1];
+		return scale(x, xMin, xMax, yMin, yMax);
+	}
+	
+	/**
+	 * scales the original vector {@code x} between the new range {@code [yMin, yMax]}
+	 * according to original range {@code [xMin, xMax]}
+	 * @param x
+	 * @param yMin
+	 * @param yMax
+	 * @return
+	 */
+	public static double[] scale(double[] x, double xMin, double xMax, double yMin, double yMax) {
+		double[] y = new double[x.length];
 		
 		for (int i = 0; i < x.length; i++) {
 			y[i] = (x[i] - xMin) / (xMax - xMin) * (yMax - yMin) + yMin;
@@ -1107,6 +1120,7 @@ public class Vec {
 		
 		return y;
 	}
+	
 	
 	/**
 	 * normalization of vector {@code x} with zscore

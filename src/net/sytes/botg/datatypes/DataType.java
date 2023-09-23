@@ -755,7 +755,15 @@ public enum DataType {
 		
 	@Override
 	public String toString() {
-		return super.toString() + "(" + this.bytes + ")";
+		return this.toString(true);
+	}
+	
+	public String toString(boolean showBytes) {
+		if (showBytes) {
+			return super.toString() + "(" + this.bytes + ")";
+		} else {
+			return super.toString();
+		}
 	}
 	
 	public int nBytes() {
