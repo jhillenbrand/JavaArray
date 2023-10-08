@@ -23,6 +23,8 @@ public class Buffer implements IBuffer {
 	@ConfigOption
 	protected DataType dataType;
 	@ConfigOption
+	protected int capacity;
+	@ConfigOption
 	protected String description;
 	@ConfigOption
 	protected String unit;
@@ -58,6 +60,7 @@ public class Buffer implements IBuffer {
 		this(builder.capacity);
 		this.id = builder.id;
 		this.dataType = builder.dataType;
+		this.capacity = builder.capacity;
 		this.description = builder.description;
 		this.unit = builder.unit;
 	}
@@ -378,6 +381,7 @@ public class Buffer implements IBuffer {
 		map.put("type", this.type);
 		map.put("id", this.id);
 		map.put("capacity", this.capacity());
+		map.put("size", this.size());
 		map.put("dataType", this.dataType.toString());
 		map.put("unit", this.unit);
 		map.put("description", this.description);

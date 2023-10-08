@@ -38,6 +38,7 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 		this(builder.capacity);
 		this.id = builder.id;
 		this.dataType = builder.dataType;
+		this.capacity = builder.capacity;
 		this.description = builder.description;
 		this.unit = builder.unit;
 	}
