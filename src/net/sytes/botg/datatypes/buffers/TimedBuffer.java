@@ -30,6 +30,7 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 		if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than 0.");
     	}
+		this.capacity = capacity;
 		this.elems = new Object[capacity];
 		this.times = new long[capacity];
 	}
