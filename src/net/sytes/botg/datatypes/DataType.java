@@ -2,6 +2,7 @@ package net.sytes.botg.datatypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -786,5 +787,13 @@ public enum DataType {
 		DataType dt = DataType.STRING;
 		dt.setBytes(i);
 		return dt;
+	}
+	
+	public static Map<String, DataType> toMap(){
+		Map<String, DataType> map = new LinkedHashMap<String, DataType>();
+		for (DataType dt : DataType.values()) {
+			map.put(dt.toString(), dt);
+		}
+		return map;
 	}
 }
