@@ -423,6 +423,24 @@ public class Ar {
         }
         return result;
     }
+    
+    /**
+     * wraps an primitive double[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Long[] wrap(final long[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Long[] result = new Long[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
 
     /**
      * <p>Converts an array of object Floats to primitives.
