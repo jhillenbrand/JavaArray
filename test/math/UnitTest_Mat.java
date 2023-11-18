@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Mat;
 import net.sytes.botg.array.math.Vec;
 
@@ -27,11 +28,11 @@ public class UnitTest_Mat {
 		points[4][0] = 3.0;
 		points[4][1] = 3.0;
 	
-		Mat.print(points);
+		Ar.print(points);
 		
 		double[][] D_ij = Mat.distanceMatrix(points);
 		
-		Mat.print(D_ij);
+		Ar.print(D_ij);
 		
 	}
 	
@@ -48,7 +49,7 @@ public class UnitTest_Mat {
 		
 		double[][] m3 = Mat.appendRows(m1, m2);
 		
-		Mat.print(m3);
+		Ar.print(m3);
 	}
 	
 	@Test
@@ -65,7 +66,7 @@ public class UnitTest_Mat {
 		
 		double[][] m3 = Mat.appendRows(m1, m2);
 		
-		Mat.print(m3);
+		Ar.print(m3);
 	}
 	
 	@Test
@@ -82,7 +83,7 @@ public class UnitTest_Mat {
 		
 		double[][] m3 = Mat.appendColumns(m1, m2);
 		
-		Mat.print(m3);
+		Ar.print(m3);
 	}
 	
 	@Test
@@ -95,7 +96,7 @@ public class UnitTest_Mat {
 		
 		double[][] m2 = Mat.transpose(m1);
 		
-		Mat.print(m2);
+		Ar.print(m2);
 	}
 	
 	@Test
@@ -128,8 +129,8 @@ public class UnitTest_Mat {
 		
 		double[][] X_inv = Mat.inverse(X);
 		
-		Mat.print(X);
-		Mat.print(X_inv);
+		Ar.print(X);
+		Ar.print(X_inv);
 		
 	}
 	
@@ -140,8 +141,8 @@ public class UnitTest_Mat {
 				
 		double[][] Y = Mat.subByElimination(X, 1, 1);
 		
-		Mat.print(X);
-		Mat.print(Y);
+		Ar.print(X);
+		Ar.print(Y);
 		
 	}
 	
@@ -163,8 +164,8 @@ public class UnitTest_Mat {
 		
 		double[][] I_inv = Mat.inverse(I);
 		
-		Mat.print(I);
-		Mat.print(I_inv);
+		Ar.print(I);
+		Ar.print(I_inv);
 		
 	}
 	
@@ -175,8 +176,8 @@ public class UnitTest_Mat {
 		
 		double[][] X_inv = Mat.inverse(X);
 		
-		Mat.print(X);
-		Mat.print(X_inv);
+		Ar.print(X);
+		Ar.print(X_inv);
 		
 	}
 	
@@ -187,8 +188,8 @@ public class UnitTest_Mat {
 		
 		double[][] X_inv = Mat.inverse(X);
 		
-		Mat.print(X);
-		Mat.print(X_inv);
+		Ar.print(X);
+		Ar.print(X_inv);
 		
  	}
 	
@@ -198,11 +199,11 @@ public class UnitTest_Mat {
 		
 		double[][] X_inv = Mat.inverse(X);
 		
-		Mat.print(X);
-		Mat.print(X_inv);
+		Ar.print(X);
+		Ar.print(X_inv);
 		
 		double[][] X_inv_appr = Mat.inverseNumerical(X, 100);
-		Mat.print(X_inv_appr);
+		Ar.print(X_inv_appr);
 	}
 	
 	@Test
@@ -211,11 +212,11 @@ public class UnitTest_Mat {
 		
 		double[][] X_inv = Mat.inverse(X);
 		
-		Mat.print(X);
-		Mat.print(X_inv);
+		Ar.print(X);
+		Ar.print(X_inv);
 		
 		double[][] X_inv_appr = Mat.inverseNumerical(X, 100);
-		Mat.print(X_inv_appr);
+		Ar.print(X_inv_appr);
 	}
 	
 	@Test
@@ -226,8 +227,8 @@ public class UnitTest_Mat {
 		double[][] Z = Mat.product(X, Y);
 		double[][] Z2 = Mat.product(Y, X);
 		
-		Mat.print(Z);
-		Mat.print(Z2);
+		Ar.print(Z);
+		Ar.print(Z2);
 	}
 	
 	@Test
@@ -239,9 +240,9 @@ public class UnitTest_Mat {
 		double[][] Z2 = Mat.product2(X, Y);
 		double[][] Z3 = Mat.product3(X, Y);
 		
-		Mat.print(Z);
-		Mat.print(Z2);
-		Mat.print(Z3);
+		Ar.print(Z);
+		Ar.print(Z2);
+		Ar.print(Z3);
 		
 	}	
 	
@@ -252,9 +253,9 @@ public class UnitTest_Mat {
 		double[][] X_2 = Mat.square(X);
 		double[][] X_3 = Mat.power(X, 3);
 		
-		Mat.print(X);
-		Mat.print(X_2);
-		Mat.print(X_3);
+		Ar.print(X);
+		Ar.print(X_2);
+		Ar.print(X_3);
 		
 	}
 	
@@ -265,9 +266,9 @@ public class UnitTest_Mat {
 		double[][] X_2 = Mat.square(X);
 		double[][] X_3 = Mat.power(X, 3);
 		
-		Mat.print(X);
-		Mat.print(X_2);
-		Mat.print(X_3);
+		Ar.print(X);
+		Ar.print(X_2);
+		Ar.print(X_3);
 		
 	}
 	
@@ -289,7 +290,7 @@ public class UnitTest_Mat {
 			
 			double[][] C = Mat.product2(A, B);
 			
-			//Mat.print(C);
+			//Ar.print(C);
 			
 		}
 		
@@ -306,7 +307,7 @@ public class UnitTest_Mat {
 			
 			double[][] C = Mat.product3(A, B);
 			
-			//Mat.print(C);
+			//Ar.print(C);
 			
 		}
 		
@@ -323,7 +324,7 @@ public class UnitTest_Mat {
 			
 			double[][] C = Mat.product(A, B);
 			
-			//Mat.print(C);
+			//Ar.print(C);
 			
 		}
 		
@@ -342,8 +343,8 @@ public class UnitTest_Mat {
 		double[] x = Mat.linSolveInverse(A, y);
 		double[] x2 = Mat.linSolveLU(A, y);
 		
-		Vec.print(x);
-		Vec.print(x2);
+		Ar.print(x);
+		Ar.print(x2);
 	}
 	
 	@Test
@@ -354,9 +355,9 @@ public class UnitTest_Mat {
 		double[] x = Mat.linSolveInverse(A, y);
 		double[] x2 = Mat.linSolveLU(A, y);
 		double[] x3 = Mat.linSolveGaussian(A, y);
-		Vec.print(x);
-		Vec.print(x2);
-		Vec.print(x3);
+		Ar.print(x);
+		Ar.print(x2);
+		Ar.print(x3);
 	}
 	
 	@Test
@@ -367,9 +368,9 @@ public class UnitTest_Mat {
 		double[] x = Mat.linSolveInverse(A, y);		
 		double[] x2 = Mat.linSolveLU(A, y);
 		double[] x3 = Mat.linSolveGaussian(A, y);
-		Vec.print(x);
-		Vec.print(x2);
-		Vec.print(x3);
+		Ar.print(x);
+		Ar.print(x2);
+		Ar.print(x3);
 	}
 		
 	@Test
@@ -388,7 +389,7 @@ public class UnitTest_Mat {
 			double[] x = Mat.linSolveInverse(A, y);
 			et = System.currentTimeMillis();
 			
-			//Mat.print(x);
+			//Ar.print(x);
 			System.out.println("n=" + i);
 			System.out.println("elapsed time [ms]: " + (et - st));
 			System.out.println("");
@@ -411,7 +412,7 @@ public class UnitTest_Mat {
 			double[] x = Mat.linSolveInverse(A, y);
 			et = System.currentTimeMillis();
 			
-			Vec.print(x);
+			Ar.print(x);
 			System.out.println("n=" + i);
 			System.out.println("elapsed time [ms]: " + (et - st));
 			System.out.println("");
@@ -434,7 +435,7 @@ public class UnitTest_Mat {
 			double[] x = Mat.linSolveGaussian(A, y);
 			et = System.currentTimeMillis();
 			
-			Vec.print(x);
+			Ar.print(x);
 			System.out.println("n=" + i);
 			System.out.println("elapsed time [ms]: " + (et - st));
 			System.out.println("");
@@ -448,26 +449,26 @@ public class UnitTest_Mat {
 		
 		double[] x = Mat.linSolveLU(A, y);
 		
-		Vec.print(x);
+		Ar.print(x);
 		
 	}
 	
 	@Test
 	public void test150() {
 		double[][] X = Mat.incrementMat(3,  3);
-		Mat.print(X);
+		Ar.print(X);
 	}
 	
 	@Test
 	public void test151() {
 		double[][] X = Mat.incrementMat(2,  5);
-		Mat.print(X);
+		Ar.print(X);
 	}
 	
 	@Test
 	public void test152() {
 		double[][] X = Mat.incrementMat(5,  3);
-		Mat.print(X);
+		Ar.print(X);
 	}
 
 	@Test
@@ -491,7 +492,7 @@ public class UnitTest_Mat {
 		long st = System.nanoTime();
 		for (int i = 0; i < r; i++) {
 			
-			Y = Mat.copy2(X);
+			Y = Ar.copy2(X);
 			
 		}
 		
@@ -504,7 +505,7 @@ public class UnitTest_Mat {
 		st = System.nanoTime();
 		for (int i = 0; i < r; i++) {
 			
-			Y = Mat.copy(X);
+			Y = Ar.copy(X);
 			
 		}
 		
@@ -523,12 +524,12 @@ public class UnitTest_Mat {
 		
 		double[][] X = Mat.unitMatrix(3);
 		
-		double[][] Y = Mat.copy(X);
+		double[][] Y = Ar.copy(X);
 		
 		Y[0][0] = 2.0;
 		
-		Mat.print(X);
-		Mat.print(Y);
+		Ar.print(X);
+		Ar.print(Y);
 		
 	}
 	
@@ -541,8 +542,8 @@ public class UnitTest_Mat {
 		
 		double[][][] XY = Mat.meshgrid(x, y);
 				
-		Mat.print(XY[0]);
-		Mat.print(XY[1]);
+		Ar.print(XY[0]);
+		Ar.print(XY[1]);
 		
 	}
 	
@@ -554,7 +555,7 @@ public class UnitTest_Mat {
 		
 		double[] y = Mat.product(A, x);
 		
-		Vec.print(y);
+		Ar.print(y);
 		
 	}
 	

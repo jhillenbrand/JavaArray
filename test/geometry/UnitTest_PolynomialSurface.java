@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.geometry.PolynomialSurface;
 import net.sytes.botg.array.math.Mat;
 import net.sytes.botg.array.math.Vec;
@@ -52,7 +53,7 @@ public class UnitTest_PolynomialSurface {
 				.weights(weights)
 				.build();
 		
-		Mat.print(poly.a_ij());
+		Ar.print(poly.a_ij());
 		
 	}
 	

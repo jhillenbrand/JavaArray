@@ -2,6 +2,7 @@ package geometry;
 
 import org.junit.jupiter.api.Test;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.geometry.Paraboloid;
 import net.sytes.botg.array.math.Mat;
 import net.sytes.botg.array.math.Vec;
@@ -22,10 +23,10 @@ public class UnitTest_SurfaceMesh {
 		
 		p.create(x, y);
 		
-		Vec.print(p.x());
-		Vec.print(p.y());
+		Ar.print(p.x());
+		Ar.print(p.y());
 		
-		Mat.print(p.z());
+		Ar.print(p.z());
 		
 		
 	}

@@ -30,6 +30,10 @@ public class Vec {
 		BRUTE_FORCE, MAX, MEAN, LARGEST_TRIANGLE_THREE_BUCKETS, LARGEST_TRIANGLE_ONE_BUCKET, LONGEST_LINE_BUCKET
 	}
 	
+	public enum NonUniformDownsamplingAlgorithm {
+		MERGE_CLOSEST
+	}
+	
 	// Suppress default constructor for noninstantiability
 	private Vec() {
 		throw new AssertionError(this.getClass().getSimpleName() + " cannot be instantiated");
@@ -112,8 +116,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double min(double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double minVal = x[0];
 		for(double d : x) {
 			if(minVal > d) {
@@ -156,8 +160,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double max(double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double maxVal = x[0];
 		for(double d : x) {
 			if(maxVal > d) {
@@ -177,8 +181,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] minMax(double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double[] res = new double[2];
 		res[0] = x[0];
 		res[1] = x[0];
@@ -222,8 +226,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double rms(double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double rmsSum = 0;
 		for (double d : x) {
 			rmsSum = rmsSum + d * d;
@@ -361,8 +365,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double median(double[] x, int s, int e) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double med = 0.0;
 		/*
 		double[] tmp = new double[e - s + 1];
@@ -372,7 +376,7 @@ public class Vec {
 			++j;
 		}
 		*/
-		double[] tmp = Vec.sub(x, s, e);
+		double[] tmp = Ar.sub(x, s, e);
 		quicksort(tmp);
 		if (tmp.length % 2 == 0) {
 		    med = (tmp[tmp.length / 2] + tmp[tmp.length / 2 - 1]) / 2;
@@ -522,7 +526,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double sumprod(double[] x1, double[] x2) {
-		checkForEqualDimensions(x1, x2);
+		Ar.checkForEqualDimensions(x1, x2);
 		double sumprod = 0;
 		for(int i = 0; i < x1.length; i++) {
 			sumprod = sumprod + x1[i] * x2[i];
@@ -537,7 +541,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double scalarProduct(double[] x1, double[] x2) {
-		checkForEqualDimensions(x1, x2);
+		Ar.checkForEqualDimensions(x1, x2);
 		double scalar = 0.0;
 		for (int i = 0; i < x1.length; i++) {
 			scalar += x1[i] * x2[i];
@@ -553,7 +557,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] crossProduct(double[] a, double[] b) {
-		checkForEqualDimensions(a, b);
+		Ar.checkForEqualDimensions(a, b);
 		double[] c = new double[3];		
 		if (a.length == 1) {
 			throw new IllegalArgumentException("crossProduct is not defined for Dimension 1");
@@ -579,9 +583,9 @@ public class Vec {
 	 * @return
 	 */
 	public static double distance(double[] p1, double[] p2) {
-		checkForNull(p1);
-		checkForNull(p2);
-		checkForEqualDimensions(p1, p2);
+		Ar.checkForNull(p1);
+		Ar.checkForNull(p2);
+		Ar.checkForEqualDimensions(p1, p2);
 		int n = p1.length;
 		double sum = 0;
 		for (int i = 0; i < n; i++) {
@@ -598,7 +602,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double distanceToLine(double[] start, double[] end, double[] p) {
-		checkForEqualDimensions(start, end, p);
+		Ar.checkForEqualDimensions(start, end, p);
 		double[] a = start;
 		double[] b = minus(end, start);		
 		double[] c = minus(p, a);
@@ -648,7 +652,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double mse(double[] x1, double[] x2) {
-		checkForEqualDimensions(x1, x2);
+		Ar.checkForEqualDimensions(x1, x2);
 		double sum = 0.0;
 		for (int i = 0; i < x1.length; i++) {			
 			sum = sum + Math.pow(x1[i] - x2[i], 2);
@@ -663,7 +667,7 @@ public class Vec {
 	 * @return 
 	 */
 	public static double mse(int[] x1, int[] x2) {
-		checkForEqualDimensions(x1, x2);
+		Ar.checkForEqualDimensions(x1, x2);
 		double sum = 0.0;
 		for (int i = 0; i < x1.length; i++) {			
 			sum = sum + Math.pow(x1[i] - x2[i], 2);
@@ -843,10 +847,10 @@ public class Vec {
 	 */
 	public static double[] interp1Lin(double[] x, double[] y, double[] xi) {
 		// TODO finish impl
-		checkForNull(x);
-		checkForEmpty(y);
-		checkForNull(xi);
-		checkForEqualDimensions(x, y);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(y);
+		Ar.checkForNull(xi);
+		Ar.checkForEqualDimensions(x, y);
 		int n = x.length;
 		int ni = xi.length;
 		double[] yi = new double[ni];
@@ -893,8 +897,8 @@ public class Vec {
 		int n = y.length;
 		double[] x = linspace(n);
 		int[] minInds = findLocalMaxima(y, minDistance);
-		double[] x_s = elementsAt(x, minInds);
-		double[] y_s = elementsAt(y, minInds);
+		double[] x_s = Ar.elementsAt(x, minInds);
+		double[] y_s = Ar.elementsAt(y, minInds);
 		double[] y_ue = splineInterp(x_s, y_s, x);
 		return y_ue;
 	}
@@ -910,8 +914,8 @@ public class Vec {
 		int n = y.length;
 		double[] x = linspace(n);
 		int[] minInds = findLocalMinima(y, minDistance);
-		double[] x_s = elementsAt(x, minInds);
-		double[] y_s = elementsAt(y, minInds);
+		double[] x_s = Ar.elementsAt(x, minInds);
+		double[] y_s = Ar.elementsAt(y, minInds);
 		double[] y_le = splineInterp(x_s, y_s, x);
 		return y_le;
 	}
@@ -930,9 +934,9 @@ public class Vec {
 	 * @return double[] array of interpolated y-coordinates for {@code x}
 	 */
 	public static double[] splineInterp(double[] x_support, double[] y_support, double[] x) {
-		checkForNull2(x_support, y_support, x);
-		checkForEmpty2(x_support, y_support, x);
-		checkForEqualDimensions(x_support, y_support);
+		Ar.checkForNull2(x_support, y_support, x);
+		Ar.checkForEmpty2(x_support, y_support, x);
+		Ar.checkForEqualDimensions(x_support, y_support);
 		
 		int order = 3;
 		int ns = x_support.length;	// number of supporting points
@@ -1053,23 +1057,7 @@ public class Vec {
 		
 		return y_s;
 	}
-	
-	/**
-	 * removes {@code start} samples from the beginning of the {@code ar} and {@code end} samples from the end of {@code ar} 
-	 * <br>and returns the result as new double[] array 
-	 * @param start
-	 * @param end
-	 * @return
-	 */
-	public static double[] trim(double[] ar, int start, int end) {
-		checkForGreaterEqualZero(new int[] {start, end});
-		int n = ar.length;
-		if (start + end > n) {
-			throw new IllegalArgumentException("sum of start and end must be smaller than length of ar");
-		}
-		return sub(ar, start, n - end); 
-	}
-	
+		
 	/**
 	 * normalization of vector {@code x} into range [0, 1]
 	 * @param x
@@ -1179,7 +1167,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] downsampleBruteForce(double[] x, int m) {
-		checkForNull(x);
+		Ar.checkForNull(x);
 		int f = x.length / m;
 		int n = x.length;	
 		double[] newAr = new double[m];
@@ -1300,6 +1288,48 @@ public class Vec {
 	}
 	
 	/**
+	 * downsample non uniform data defined by {@code x, y} down to size {@code m} with the specified {@code algorithm},
+	 * returning a double[][] array with downsampled {@code x} at index 0 and downsampled {@code y} at index 1
+	 * @param x
+	 * @param y
+	 * @param m
+	 * @param algorithm
+	 * @return
+	 */
+	public static double[][] downsampleNonUniformData(double[] x, double[] y, int m, NonUniformDownsamplingAlgorithm algorithm){
+		switch (algorithm) {
+			case MERGE_CLOSEST:
+				return downsampleNonUniformByMergingClosest(x, y, m);
+		
+			default:
+				return null;		
+		}		
+	}
+	
+	public static double[][] downsampleNonUniformByMergingClosest(double[] x, double[] y, int m){
+		int n = x.length;
+		Ar.checkForEqualDimensions(x, y);
+		Ar.checkForGreaterZero(n - m);
+		
+		double[] x_s = new double[m];
+		double[] y_s = new double[m];
+		double[] x_diff = diff(x);
+		
+		int r = n - m;
+		
+		int[] minInds = minkInd(x_diff, r);
+		
+		for (int i = n - 1; i >= 0; i--) {
+			
+			
+			
+		}
+		
+		return new double[][]{x_s, y_s};
+	}
+	
+	
+	/**
 	 * upsamples the given array {@code x} by factor {@code n}
 	 * <br>
 	 * the implementation uses no recursion to be faster
@@ -1377,7 +1407,7 @@ public class Vec {
 	 * @return double[]
 	 */
 	public static double[] removeNaN(double[] data) {
-		return elementsAt(data, isNaN(data));
+		return Ar.elementsAt(data, isNaN(data));
 	}
 	
 	/**
@@ -1518,7 +1548,7 @@ public class Vec {
 			}
 		}
 		
-		return sub(z, c - 1);
+		return Ar.sub(z, c - 1);
 	}
 		
 	/**
@@ -1565,7 +1595,7 @@ public class Vec {
 			}
 		}
 		
-		zInds = sub(zInds, c);
+		zInds = Ar.sub(zInds, c);
 		
 		return zInds;		
 	}
@@ -1621,7 +1651,7 @@ public class Vec {
 				continue;
 			}
 		}		
-		return sub(extremeInds, c - 1);
+		return Ar.sub(extremeInds, c - 1);
 	}
 		
 	/**
@@ -1647,7 +1677,7 @@ public class Vec {
 				++c;
 			}
 		}		
-		return sub(maxInds, c - 1);
+		return Ar.sub(maxInds, c - 1);
 	}
 	
 	/**
@@ -1673,7 +1703,7 @@ public class Vec {
 				++c;
 			}
 		}		
-		return sub(minInds, c - 1);
+		return Ar.sub(minInds, c - 1);
 	}
 	
 	/**
@@ -1714,7 +1744,7 @@ public class Vec {
 			}
 		}
 		
-		maxInds = sub(maxInds, c);
+		maxInds = Ar.sub(maxInds, c);
 		
 		return maxInds;
 	}	
@@ -1757,7 +1787,7 @@ public class Vec {
 			}
 		}
 		
-		minInds = sub(minInds, c);
+		minInds = Ar.sub(minInds, c);
 		
 		return minInds;
 	}
@@ -1829,27 +1859,7 @@ public class Vec {
 		}
 		return newData;
 	}
-	
-	/**
-	 * return the k highest elements from ar[]
-	 * @param ar
-	 * @param k
-	 * @return
-	 */
-	public static double[] max(double[] ar, int k) {
-		double[] maxVals = new double[k];
-		Arrays.sort(ar);
-		int kk = 0;
-		for(int i = ar.length - 1; i > 0; i--) {
-			kk = kk + 1;
-			maxVals[kk - 1] = ar[i];
-			if(kk == k) {
-				return maxVals;
-			}
-		}
-		return maxVals;
-	}
-	
+		
 	/**
 	 * computes the difference from one element to the next, numeric differentiation
 	 * @param ar
@@ -1889,7 +1899,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] diff(double[] t, double[] ar) {
-		checkForEqualDimensions(t, ar);
+		Ar.checkForEqualDimensions(t, ar);
 		if (ar.length < 2) {
 			throw new IllegalArgumentException("ar must at least have to elements");
 		}
@@ -1909,7 +1919,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] plus(double[] x, double[] y){
-		checkForEqualDimensions(x, y);
+		Ar.checkForEqualDimensions(x, y);
 		int L = x.length;
 		double[] ar3 = new double[L];
 		for (int i = 0; i < L; i++) {
@@ -1925,39 +1935,13 @@ public class Vec {
 	 * @return double[] array
 	 */
 	public static double[] minus(double[] x, double[] y){
-		checkForEqualDimensions(x, y);
+		Ar.checkForEqualDimensions(x, y);
 		int L = x.length;
 		double[] ar3 = new double[L];
 		for (int i = 0; i < L; i++) {
 			ar3[i] = x[i] - y[i];
 		}
 		return ar3;
-	}
-
-	/**
-	 * add the element x to the end of the array ar and return the new array
-	 * @param <T> generic type
-	 * @param x new sample
-	 * @param ar existing array
-	 * @return generic array T[] 
-	 */
-	public static <T> T[] append(T[] ar, T x) {
-		T[] newAr = Arrays.copyOf(ar, ar.length + 1);
-		newAr[ar.length] = x;
-		return newAr;
-	}
-	
-	/**
-	 * add double d at the end of array and return new array
-	 * @param d
-	 * @param ar
-	 * @return
-	 */
-	public static double[] append(double[] ar, double d) {
-		double[] newAr = new double[ar.length + 1];
-		System.arraycopy(ar, 0, newAr, 0, ar.length);
-		newAr[ar.length] = d;
-		return newAr;
 	}
 	
 	/**
@@ -2090,8 +2074,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] product(double[] ar1, double[] ar2) {
-		checkForNull2(ar1, ar2);
-		checkForEqualDimensions(ar1, ar2);
+		Ar.checkForNull2(ar1, ar2);
+		Ar.checkForEqualDimensions(ar1, ar2);
 		double[] ar3 = new double[ar1.length];
 		for (int i = 0; i < ar1.length; i++) {
 			ar3[i] = ar1[i] * ar2[i];
@@ -2194,11 +2178,11 @@ public class Vec {
 		double[] r = new double[ar.length];
 		int n = ar.length;
 		int i = 0;
-		r[i] = rms(sub(ar, i, i + w - 1));
+		r[i] = rms(Ar.sub(ar, i, i + w - 1));
 		for (i = 0; i < n - 1; i++) {			
 			if (i + w > n - 1) {
 				int wr = n - i - 1;
-				r[i + 1] = rms(sub(ar, i, i + wr));
+				r[i + 1] = rms(Ar.sub(ar, i, i + wr));
 			} else {
 				r[i + 1] = Math.sqrt(1.0 / w * (Math.pow(ar[i + w], 2) - Math.pow(ar[i], 2)) + Math.pow(r[i], 2)); 
 			}			
@@ -2232,7 +2216,7 @@ public class Vec {
 				int wr = n - i - 1;
 				e = s + wr;
 			}
-			r[c] = rms(sub(ar, s, e));
+			r[c] = rms(Ar.sub(ar, s, e));
 			++c;
 			i = i + overlap - 1;
 		}
@@ -2257,7 +2241,7 @@ public class Vec {
 				int wr = n - i - 1;
 				e = s + wr;
 			}
-			r[i] = Vec.rms(sub(ar, s, e));					
+			r[i] = rms(Ar.sub(ar, s, e));					
 		}
 		return r;
 	}
@@ -2389,9 +2373,9 @@ public class Vec {
 	 * @return
 	 */
 	public static double mean(double[] t, double[] x, int s, int e) {
-		checkForEqualDimensions(t, x);
-		checkForAtLeastNElements(x, 2);
-		checkForIndicesInBounds(x, s, e);
+		Ar.checkForEqualDimensions(t, x);
+		Ar.checkForAtLeastNElements(x, 2);
+		Ar.checkForIndicesInBounds(x, s, e);
 		int n = x.length;
 		double sum = 0;
 		double delta_t = 0;
@@ -2424,8 +2408,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] sign(double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double[] sg = new double[x.length];
 		for (int i = 0; i < sg.length; i++) {
 			sg[i] = Scalar.sign(x[i]);
@@ -2441,10 +2425,10 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] zeroRange(double[] ar, int s, int e) {
-		checkForNull(ar);
-		checkForEmpty(ar);
+		Ar.checkForNull(ar);
+		Ar.checkForEmpty(ar);
 		Scalar.checkForFirstSmallerSecond(s, e);
-		checkForIndicesInBounds(ar, s, e);
+		Ar.checkForIndicesInBounds(ar, s, e);
 		double[] ar2 = ar.clone();
 		double[] zeros = zeros(ar2.length);
 		System.arraycopy(zeros, s, ar2, s, e - s + 1);
@@ -2458,8 +2442,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] maxI(double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		double maxVal = x[0];
 		int maxInd = -1;
 		for(int i = 0; i < x.length; i++) {
@@ -2509,7 +2493,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] linRegCoefficients(double[] x, double[] y, boolean withStats) {
-		checkForEqualDimensions(x, y);
+		Ar.checkForEqualDimensions(x, y);
 		
 		int n = x.length;
 
@@ -2566,7 +2550,47 @@ public class Vec {
 		double len = norm(x);
 		return product(x, 1 / len);
 	}
+	
+	/**
+	 * return the {@code k} highest elements from {@code ar}
+	 * @param ar
+	 * @param k
+	 * @return
+	 */
+	public static double[] maxk(double[] ar, int k) {
+		double[] maxVals = new double[k];
+		// copy, so that the original array is not manipulated
+		double[] newAr = Ar.copy(ar);
+		Arrays.sort(newAr);
+		int kk = 0;
+		for(int i = ar.length - 1; i > 0; i--) {
+			kk = kk + 1;
+			maxVals[kk - 1] = newAr[i];
+			if(kk == k) {
+				return maxVals;
+			}
+		}
+		return maxVals;
+	}
+	
+	/**
+	 * return the {@code k} smallest elements from {@code ar}
+	 * @param ar
+	 * @param k
+	 * @return
+	 */
+	public static double[] mink(double[] ar, int k) {
+		double[] minVals = new double[k];
+		// copy, so that the original array is not manipulated
+		double[] newAr = Ar.copy(ar);
+		Arrays.sort(newAr);
+		for(int i = 0; i < k; i++) {
+			minVals[i] = newAr[i];
+		}
+		return minVals;
+	}
 		
+	
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector to Matrix
@@ -2593,7 +2617,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[][] matrix(double[] x, int rows, boolean columnByColumn){
-		checkForNull(x);
+		Ar.checkForNull(x);
 		int n = x.length;
 		if (n % rows != 0) {
 			throw new IllegalArgumentException("the length of vector x (" + n + ") must be divisble by the number of rows (" + rows + ")");
@@ -2612,8 +2636,8 @@ public class Vec {
 	 * @return
 	 */
 	public static double[][] matrix(double[] x, int rows, int columns, boolean columnByColumn){
-		checkForNull(x);
-		checkForEmpty(x);
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
 		int n = x.length;
 		if (n != rows * columns) {
 			throw new IllegalArgumentException("vector x (" + n + ") must have the same length as rows x columns (" + (rows * columns) + ")");
@@ -2784,6 +2808,31 @@ public class Vec {
 	}
 	
 	/**
+	 * returns the indices of the {@code k} highest elements in the original array {@code ar}
+	 * @param ar
+	 * @param k
+	 * @return
+	 */
+	public static int[] maxkInd(double[] ar, int k) {
+		int[] sortedInd = bubbleSortInd(ar, false);
+		int[] maxInds = Ar.sub(sortedInd, k);
+		return maxInds;
+	}
+	
+	/**
+	 * return the {@code k} smallest elements from {@code ar}
+	 * @param ar
+	 * @param k
+	 * @return
+	 */
+	public static int[] minkInd(double[] ar, int k) {
+		int[] sortedInd = bubbleSortInd(ar, true);
+		int[] minInds = Ar.sub(sortedInd, k);
+		return minInds;
+	}
+	
+	
+	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector Permutation Methods
 	 * ----------------------------------------------------------------------------
@@ -2805,7 +2854,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] bubbleSort(double[] ar, boolean ascending) {
-		double[] newAr = copy(ar); 
+		double[] newAr = Ar.copy(ar); 
 		if (ascending) {
 			for (int a = newAr.length - 1; a > 0; a--) {
 				for (int b = 0; b < a; b++) {
@@ -2854,7 +2903,7 @@ public class Vec {
 	 * @return
 	 */
 	public static int[] bubbleSortInd(double[] ar) {
-		double[] newAr = copy(ar); 
+		double[] newAr = Ar.copy(ar); 
 		int[] inds = linspace(0, ar.length - 1);
 		for (int a = newAr.length - 1; a > 0; a--) {
 			for (int b = 0; b < a; b++) {
@@ -2880,7 +2929,7 @@ public class Vec {
 	 * @return
 	 */
 	public static int[] bubbleSortInd(double[] ar, boolean ascending) {
-		double[] newAr = copy(ar); 
+		double[] newAr = Ar.copy(ar); 
 		int[] inds = linspace(0, ar.length - 1);
 		if (ascending) {
 			for (int a = newAr.length - 1; a > 0; a--) {
@@ -2921,7 +2970,7 @@ public class Vec {
 	 * @return
 	 */
 	public static int[] bubbleSortInd(int[] ar, boolean ascending) {
-		int[] newAr = copy(ar); 
+		int[] newAr = Ar.copy(ar); 
 		int[] inds = linspace(0, ar.length - 1);
 		if (ascending) {
 			for (int a = newAr.length - 1; a > 0; a--) {
@@ -3304,158 +3353,7 @@ public class Vec {
 	 * Vector Search Methods
 	 * ----------------------------------------------------------------------------
 	 */
-	
-	/**
-	 * method returns true/false whether any of the array elements ar are contained in String s
-	 * @param s
-	 * @param ar
-	 * @return 
-	 */
-	public static boolean contains(double[] x, double d) {
-		for (double xi : x) {
-			if (xi == d) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * method returns true/false whether any of the array elements ar are contained in String s
-	 * @param s
-	 * @param ar
-	 * @return 
-	 */
-	public static boolean contains(int[] x, int i) {
-		for (int xi : x) {
-			if (xi == i) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * method returns true/false whether any of the array elements {@code x} contain String {@code s}
-	 * @param s
-	 * @param ar
-	 * @return 
-	 */
-	public static boolean contains(String[] x, String s) {
-		for (String xi : x) {
-			if (xi.contains(s)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-    public static int countOccurences(String[] ar, String s, boolean caseSensitive) {
-    	int count = -1;
-        for (int i = 0; i < ar.length; i++) {
-        	if (!caseSensitive) {
-	        	if (s.toLowerCase().equals(ar[i].toLowerCase())){
-	        		count++;
-	            }
-        	} else {
-        		if (s.equals(ar[i])){
-	        		count++;
-	            }
-        	}
-        }
-        return count;
-    }   
-    
-    public static boolean isIntInArray(int[] ar, int i) {
-    	for (int j = 0; j < ar.length; j++) {
-    		if (ar[j] == i) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-	
-	/**
-	 * returns a sub array starting at index s and ending at index e from ar
-	 * @param ar
-	 * @param s
-	 * @param e
-	 * @return
-	 */
-	public static double[] sub(final double[] ar, int s, int e) {
-		checkForIndicesInBounds(ar, s, e);
-		double[] ar2 = new double[e - s + 1];
-		System.arraycopy(ar, s, ar2, 0, ar2.length);
-		return ar2;
-	}
-	
-	/**
-	 * returns a sub array starting at 0 and ending at index e from ar
-	 * @param ar
-	 * @param e
-	 * @return
-	 */
-	public static double[] sub(double[] ar, int e) {
-		return sub(ar, 0, e);
-	}
-	
-	/**
-	 * returns a sub array of {@code x} between {@code start} and {@code end} with {@code step}
-	 * @param x
-	 * @param start
-	 * @param end
-	 * @param step
-	 * @return
-	 */
-	public static double[] sub(double[] x, int start, int end, int step) {
-		int n = (end - start + 1) / step;
-		double[] y = new double[n];
-		int j = 0;
-		for (int i = start; i < end; i = i + step) {
-			y[j] = x[i];
-			++j;
-		}
-		return y;
-	}
-	
-	/**
-	 * returns a sub array starting at 0 and ending at index e from ar
-	 * @param ar
-	 * @param e
-	 * @return
-	 */
-	public static int[] sub(int[] ar, int e) {
-		return sub(ar, 0, e);
-	}
-	
-	/**
-	 * returns a sub array starting at index s and ending at index e from ar
-	 * @param ar
-	 * @param s
-	 * @param e
-	 * @return
-	 */
-	public static int[] sub(final int[] ar, int s, int e) {
-		checkForIndicesInBounds(ar, s, e);
-		int[] ar2 = new int[e - s + 1];
-		System.arraycopy(ar, s, ar2, 0, ar2.length);
-		return ar2;
-	}
-	
-	/**
-	 * returns a sub array starting at index s and ending at index e from ar
-	 * @param ar
-	 * @param s
-	 * @param e
-	 * @return
-	 */
-	public static String[] sub(final String[] ar, int s, int e) {
-		checkForIndicesInBounds(ar, s, e);
-		String[] ar2 = new String[e - s + 1];
-		System.arraycopy(ar, s, ar2, 0, ar2.length);
-		return ar2;
-	}
-	
+
 	/**
 	 * return the indices of the k highest elements from ar[]
 	 * @param ar
@@ -3523,39 +3421,6 @@ public class Vec {
 		}
 		return -1;
 	}
-
-	/**
-	 * searches the first index in {@code x}, where the element of {@code x} is equal to {@code d}
-	 * <br>if no element is found -1 is returned
-	 * @param x
-	 * @param d
-	 * @return
-	 */
-	public static int findValue(double[] x, double d) {
-		for (int i = 0; i < x.length; i++) {
-			if (x[i] == d) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	/**
-	 * returns an array with unique elements based on values in {@code x}
-	 * @param x
-	 * @return
-	 */
-	public static double[] unique(final double[] x) {
-		checkForNull(x);
-		checkForEmpty(x);
-		int n = x.length;
-		//HashMap<Double, Double> xu = new LinkedHashMap<Double, Double>();
-		HashMap<Double, Double> xu = new HashMap<Double, Double>();
-		for (int i = 0; i < n; i++) {
-			xu.put(x[i], x[i]);
-		}
-		return Ar.unwrap(xu.values().toArray(new Double[xu.size()]));
-	}
 	
 	/**
 	 * returns a boolean[] array containing true for each element in {@code data} that is within the bounds [{@code lowerLimit}, {@code upperLimit}]
@@ -3572,73 +3437,6 @@ public class Vec {
 			}
 		}
 		return inds;
-	}
-	
-	/**
-	 * returns the elements specified with {@code inds} in {@code data} into new array
-	 * @param inds
-	 * @param data
-	 * @return double[]
-	 */
-	public static double[] elementsAt(double[] data, boolean[] inds) {
-		if (data.length != inds.length) {
-			throw new IllegalArgumentException("length of data and inds array must have same length");
-		}
-		int n = Vec.sum(inds);
-		double[] newData = new double[n];
-		int j = 0;
-		for (int i = 0; i < data.length; i++) {
-			if (inds[i]) {
-				newData[j] = data[i];
-				++j;
-			}
-		}
-		return newData;
-	}
-	
-	/**
-	 * returns the elements at indices {@code inds} in {@code ar} into new array
-	 * @param inds
-	 * @param data
-	 * @return double[]
-	 */
-	public static double[] elementsAt(double[] ar, int[] inds) {
-		int n = inds.length;
-		double[] ar2 = new double[n];
-		for (int i = 0; i < n; i++) {
-			ar2[i] = ar[inds[i]];
-		}
-		return ar2;
-	}
-	
-	/**
-	 * returns the elements at indices {@code inds} in {@code ar} into new array
-	 * @param inds
-	 * @param data
-	 * @return double[]
-	 */
-	public static double[] elementsAt(double[] ar, double[] inds) {
-		int n = inds.length;
-		double[] ar2 = new double[n];
-		for (int i = 0; i < n; i++) {
-			ar2[i] = ar[(int) inds[i]];
-		}
-		return ar2;
-	}
-	
-	/**
-	 * returns the elements at indices {@code inds} in {@code ar} into new array
-	 * @param inds
-	 * @param data
-	 * @return int[]
-	 */
-	public static int[] elementsAt(int[] ar, int[] inds) {
-		int n = inds.length;
-		int[] ar2 = new int[n];
-		for (int i = 0; i < n; i++) {
-			ar2[i] = ar[inds[i]];
-		}
-		return ar2;
 	}	
 	
 	/**
@@ -3657,61 +3455,6 @@ public class Vec {
 		return inds;
 	}
 	
-	/**
-	 * returns the index of {@code str} found in {@code ar}
-	 * <br>if {@code ar} does not contain {@code str}, then -1 is returned 
-	 * @param ar
-	 * @param str
-	 * @return
-	 */
-	public static int indexAt(final String[] ar, final String str) {
-		int i = -1;
-		for (int s = 0; s < ar.length; s++) {
-			if (ar[s].contentEquals(str)) {
-				i = s;
-				break;
-			}
-		}
-		return i;
-	}
-	
-	/**
-	 * returns the index of {@code d} found in {@code x}
-	 * <br>if {@code x} does not contain {@code d}, then -1 is returned 
-	 * @param x
-	 * @param d
-	 * @return
-	 */
-	public static int indexAt(final double[] x, final double d) {
-		int i = -1;
-		for (int j = 0; j < x.length; j++) {
-			if (x[j] == d) {
-				i = j;
-				break;
-			}
-		}
-		return i;
-	}
-	
-	public static <T> T[] removeEmpty(final T[] ar) {
-		List<T> list = new ArrayList<T>();
-		for (int a = 0; a < ar.length; a++) {
-			if (ar[a] != null) {
-				list.add(ar[a]);
-			}
-		}
-		return list.toArray(Arrays.copyOf(ar, list.size()));
-	}	
-
-	public static <T> T[] removeWith(T[] ar, T removeContent) {
-		List<T> list = new ArrayList<T>();
-		for (int a = 0; a < ar.length; a++) {
-			if (!ar[a].equals(removeContent)) {
-				list.add(ar[a]);
-			}
-		}
-		return list.toArray(Arrays.copyOf(ar, list.size()));
-	}
 	
 	/**
 	 * returns the knee point {x_kp, y_kp} for the coordinate values of {@code x} and {@code y}	
@@ -3720,7 +3463,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] findKneePoint(double[] x, double[] y, boolean sort){
-		checkForNull(y);
+		Ar.checkForNull(y);
 		double[] ys = y;
 		double[] xs = x;
 		if (xs == null) {
@@ -3728,8 +3471,8 @@ public class Vec {
 		}
 		if (sort) {
 			int[] is = bubbleSortInd(y);
-			ys = elementsAt(y, is);
-			xs = elementsAt(x, is);
+			ys = Ar.elementsAt(y, is);
+			xs = Ar.elementsAt(x, is);
 		}
 		double[] start = {xs[0], ys[0]};
 		double[] end = {xs[xs.length - 1], ys[ys.length - 1]};
@@ -4035,7 +3778,7 @@ public class Vec {
 	 * @return
 	 */
 	public static double[] directionalVector(double[] p1, double[] p2, boolean unit) {
-		checkForEqualDimensions(p1, p2);
+		Ar.checkForEqualDimensions(p1, p2);
 		double[] dv = minus(p2, p1);
 		double len = Vec.distance(p1, p2);
 		if (unit) {
@@ -4147,260 +3890,10 @@ public class Vec {
 	
 	/**
 	 * ----------------------------------------------------------------------------
-	 * Vector Utility Methods
+	 * Vector Characteristics Methods
 	 * ----------------------------------------------------------------------------
 	 */
-	
-	/**
-	 * TODO testing
-	 * appends all specified {@code arrays} to a new array consisting of all elements
-	 * @param arrays
-	 * @return
-	 */
-	public static double[] append(final double[] ... arrays) {
-	    int size = 0;
-	    for (double[] a: arrays) {
-	        size += a.length;
-	        double[] res = new double[size];
-	        int destPos = 0;
-	        for ( int i = 0; i < arrays.length; i++ ) {
-	            if ( i > 0 ) {
-	            	destPos += arrays[i-1].length;
-	            }
-	            int length = arrays[i].length;
-	            System.arraycopy(arrays[i], 0, res, destPos, length);
-	        }
-	        return res;
-	    }
-		return null;
-	}
-	
-	/**
-	 * copies the specified array {@code x}
-	 * @param x
-	 * @return
-	 */
-	public static double[] copy(double[] x) {
-		return x.clone();
-	}
-	
-	/**
-	 * copies the specified array {@code x}
-	 * @param x
-	 * @return
-	 */
-	public static int[] copy(int[] x) {
-		return x.clone();
-	}
-	
-	/**
-	 * returns true if set specified object {@code o} is an array
-	 * @param o
-	 * @return
-	 */
-	public static boolean isArray(Object o) {
-		if (o != null && o.getClass().isArray()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * prints a 1D Object[] array
-	 * @param ar
-	 */
-	public static void print(final Object[] ar) {
-		System.out.println(Arrays.toString(ar));
-	}
-	
-	/**
-	 * prints a 1D double[] array
-	 * @param ar
-	 */
-	public static void print(final double[] ar) {
-		System.out.println(Arrays.toString(ar));
-	}
-	
-	/**
-	 * prints a 1D int[] array
-	 * @param ar
-	 */
-	public static void print(final int[] ar) {
-		System.out.println(Arrays.toString(ar));
-	}
-	
-	public static void checkForEmpty(double[] ar) {
-		if (ar.length == 0) {
-			throw new IllegalArgumentException("ar must not be empty");
-		}
-	}
-	
-	public static void checkForEmpty2(double[] ... x) {
-		for (int i = 0; i < x.length; i++) {
-			if (x[i].length == 0) {
-				throw new IllegalArgumentException("input arrays must not be empty");
-			}
-		}
-	}	
 		
-	/**
-	 * checks if the given {@code inds} are greater than 0
-	 * @param inds
-	 */
-	public static void checkForGreaterZero(final int ... inds) {
-		for (int i : inds) {
-			if (i < 0) {
-				throw new IllegalArgumentException("Indices must be greater than 0.");
-			}
-		}
-	}
-	
-	/**
-	 * checks if the given {@code inds} are greater than or equal to 0
-	 * <br>(the input array is final)
-	 * @param inds
-	 */
-	public static void checkForGreaterEqualZero(final int[] inds) {
-		for (int i : inds) {
-			if (i <= 0) {
-				throw new IllegalArgumentException("Indices must be greater than or equal to 0.");
-			}
-		}
-	}
-	
-	public static void checkForGreaterEqualZero2(int[] inds) {
-		for (int i : inds) {
-			if (i <= 0) {
-				throw new IllegalArgumentException("Indices must be greater than or equal to 0.");
-			}
-		}
-	}
-	
-	/**
-	 * checks if the start and end indices are within array bounds
-	 * @param ar
-	 * @param s
-	 * @param e
-	 */
-	public static void checkForIndicesInBounds(double[] ar, int s, int e) {
-		if (s < 0 || e >= ar.length) {
-			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
-		}
-	}
-	
-	/**
-	 * checks if the start and end indices are within array bounds
-	 * @param ar
-	 * @param s
-	 * @param e
-	 */
-	public static void checkForIndicesInBounds(int[] ar, int s, int e) {
-		if (s < 0 || e >= ar.length) {
-			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
-		}
-	}
-	
-	/**
-	 * checks if the start and end indices are within array bounds
-	 * @param ar
-	 * @param s
-	 * @param e
-	 */
-	public static void checkForIndicesInBounds(String[] ar, int s, int e) {
-		if (s < 0 || e >= ar.length) {
-			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
-		}
-	}
-	
-	/**
-	 * check if argument not NULL
-	 * @param ar
-	 */
-	public static void checkForNull(double[] ar) {
-		if (ar == null) {
-			throw new IllegalArgumentException("ar must not be null");
-		}
-	}
-	
-	/**
-	 * check if arguments are not NULL
-	 * @param ar
-	 */
-	public static void checkForNull2(double[] ... ar) {
-		for (int a = 0; a < ar.length; a++) {
-			if (ar[a] == null) {
-				throw new IllegalArgumentException("arrays must not be NULL");
-			}
-		}
-	}
-	
-	/**
-	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
-	 * @param ar1
-	 * @param ar2
-	 */
-	public static void checkForEqualDimensions(double[] ar1, double[] ar2) {
-		if (ar1.length == ar2.length) {
-			// do nothing
-		} else {
-			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
-		}
-	}
-	
-	/**
-	 * checks whether specified {@code arrays} have same length
-	 * @param arrays
-	 */
-	public static void checkForEqualDimensions(double[] ... arrays) {
-		if (arrays.length == 0) {
-			throw new IllegalArgumentException("specified arrays were empty");
-		}		
-		int n = arrays[0].length;
-		for (double[] ar : arrays) {
-			if (ar.length != n) {
-				throw new IllegalArgumentException("not all specified arrays have the same length");
-			}
-		}
-	}
-	
-	/**
-	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
-	 * @param ar1
-	 * @param ar2
-	 */
-	public static void checkForEqualDimensions(float[] ar1, float[] ar2) {
-		if (ar1.length == ar2.length) {
-			// do nothing
-		} else {
-			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
-		}
-	}
-	
-	/**
-	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
-	 * @param ar1
-	 * @param ar2
-	 */
-	public static void checkForEqualDimensions(int[] ar1, int[] ar2) {
-		if (ar1.length == ar2.length) {
-			// do nothing
-		} else {
-			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
-		}
-	}
-
-	/**
-	 * checks whether there are at least {@code n} elements in {@code ar}
-	 * @param ar
-	 * @param n
-	 */
-	public static void checkForAtLeastNElements(double[] ar, int n) {
-		if (ar.length < n) {
-			throw new IllegalArgumentException("ar must have at least " + n + " elements");
-		}
-	}
-	
 	/**
 	 * checks if the {@code ar} is strictly monotone increasing or decreasing
 	 * @param ar

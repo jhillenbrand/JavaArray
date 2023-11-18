@@ -7,7 +7,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import net.sytes.botg.array.math.Mat;
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_Vec {
@@ -204,7 +204,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 4, 2);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -215,7 +215,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 4, 2);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -226,7 +226,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 4, 1);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -237,7 +237,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 3, 2);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -248,7 +248,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 3, 1);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -259,7 +259,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 5, 2);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -270,7 +270,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 5, 3);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -281,7 +281,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 5, 0);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -292,7 +292,7 @@ public class UnitTest_Vec {
 		
 		double[][] W = Vec.overlapWindows(x, 5, 4);
 		
-		Mat.print(W);
+		Ar.print(W);
 		
 	}	
 	
@@ -303,7 +303,7 @@ public class UnitTest_Vec {
 		
 		double[][] w = Vec.overlapWindows(x, 3, 2);
 		
-		Mat.print(w);
+		Ar.print(w);
 		
 	}
 	
@@ -389,7 +389,7 @@ public class UnitTest_Vec {
 		
 		double[] y_s = Vec.splineInterp(x, y, x_s);
 		
-		Vec.print(y_s);
+		Ar.print(y_s);
 		
 	}
 	
@@ -427,7 +427,7 @@ public class UnitTest_Vec {
 		
 		double[] x = new double[] {1.0, 2.0, 3.0};
 		
-		double[] y = Vec.copy(x);
+		double[] y = Ar.copy(x);
 		
 		y[0] = 0.0;
 		
@@ -449,7 +449,7 @@ public class UnitTest_Vec {
 		
 		
 		for (int i = 0; i < ints.length; i++) {
-			Vec.checkForGreaterEqualZero2(ints);
+			Ar.checkForGreaterEqualZero2(ints);
 		}
 		
 		long t2 = System.nanoTime();
@@ -461,7 +461,7 @@ public class UnitTest_Vec {
 		
 		t1 = System.nanoTime();		
 		for (int i = 0; i < ints.length; i++) {
-			Vec.checkForGreaterEqualZero(ints);
+			Ar.checkForGreaterEqualZero(ints);
 		}
 		
 		t2 = System.nanoTime();
@@ -483,7 +483,7 @@ public class UnitTest_Vec {
 		
 		double[] d = Vec.rand(100);
 		
-		double[] dd = Vec.sub(d, 0, 100);
+		double[] dd = Ar.sub(d, 0, 100);
 		
 		System.out.println(Arrays.toString(dd));
 		
@@ -494,7 +494,7 @@ public class UnitTest_Vec {
 		
 		double[] d = Vec.rand(100);
 		
-		double[] dd = Vec.sub(d, 1, 90);
+		double[] dd = Ar.sub(d, 1, 90);
 		
 		System.out.println(Arrays.toString(dd));
 		
@@ -521,7 +521,7 @@ public class UnitTest_Vec {
 		System.out.println(Arrays.toString(ar));
 		System.out.println(d);
 		
-		Double[] nAr = Vec.append(ar, d);
+		Double[] nAr = Ar.append(ar, d);
 		System.out.println(Arrays.toString(nAr));
 	}
 	
@@ -534,7 +534,7 @@ public class UnitTest_Vec {
 		System.out.println(Arrays.toString(ar));
 		System.out.println(d);
 		
-		double[] nAr = Vec.append(ar, d);
+		double[] nAr = Ar.append(ar, d);
 		System.out.println(Arrays.toString(nAr));
 	}
 		
@@ -568,7 +568,7 @@ public class UnitTest_Vec {
 		
 		double[] x = {1.0, 1.1, 9.1, 76.3, 1.1, 2.0, 9.1};
 		
-		double[] xu = Vec.unique(x);
+		double[] xu = Ar.unique(x);
 		
 		System.out.println(Arrays.toString(xu));
 		
@@ -579,7 +579,7 @@ public class UnitTest_Vec {
 		
 		double[] x = {1.0, 1.1, 9.1, 76.3, 1.1, 2.0, 9.1};
 		
-		double[] xu = Vec.unique(x);
+		double[] xu = Ar.unique(x);
 		
 		System.out.println(Arrays.toString(xu));
 		
@@ -593,7 +593,7 @@ public class UnitTest_Vec {
 		int n = 1_000_000;
 		long t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] xu = Vec.unique(x);
+			double[] xu = Ar.unique(x);
 			//int b = bs.length;
 		}
 		long t2 = System.nanoTime();
@@ -604,7 +604,7 @@ public class UnitTest_Vec {
 		
 		t1 = System.nanoTime();
 		for (int i = 0; i < n; i++) {
-			double[] xu = Vec.unique(x);
+			double[] xu = Ar.unique(x);
 			//int b = bs.length;
 		}
 		t2 = System.nanoTime();
@@ -662,10 +662,10 @@ public class UnitTest_Vec {
 		
 		int[] inds = Vec.bubbleSortInd(r, true);
 		
-		Vec.print(r);
-		Vec.print(inds);
+		Ar.print(r);
+		Ar.print(inds);
 		
-		Vec.print(Vec.elementsAt(r, inds));
+		Ar.print(Ar.elementsAt(r, inds));
 		
 	}
 	
@@ -677,8 +677,8 @@ public class UnitTest_Vec {
 		
 		double[] y_reg = Vec.linReg(x, y);
 		
-		Vec.print(y);
-		Vec.print(y_reg);
+		Ar.print(y);
+		Ar.print(y_reg);
 		
 	}
 	
@@ -688,7 +688,7 @@ public class UnitTest_Vec {
 		double[] x = {1, 1};
 		double[] xn = Vec.unitVector(x);
 		
-		Vec.print(xn);
+		Ar.print(xn);
 		
 	}
 	
@@ -699,8 +699,8 @@ public class UnitTest_Vec {
 		
 		double[] y = Vec.padding(x, 15);
 		
-		Vec.print(x);
-		Vec.print(y);
+		Ar.print(x);
+		Ar.print(y);
 		
 	}
 	
@@ -711,8 +711,8 @@ public class UnitTest_Vec {
 		
 		double[] y = Vec.padding(x, 15, 1.0);
 		
-		Vec.print(x);
-		Vec.print(y);
+		Ar.print(x);
+		Ar.print(y);
 		
 	}
 	
@@ -723,8 +723,8 @@ public class UnitTest_Vec {
 		
 		double[] y = Vec.mirroredPadding(x, 8);
 		
-		Vec.print(x);
-		Vec.print(y);
+		Ar.print(x);
+		Ar.print(y);
 		
 	}
 	
@@ -735,8 +735,8 @@ public class UnitTest_Vec {
 		
 		double[] y = Vec.mirroredPadding(x, 25);
 		
-		Vec.print(x);
-		Vec.print(y);
+		Ar.print(x);
+		Ar.print(y);
 		
 	}
 	
@@ -746,7 +746,7 @@ public class UnitTest_Vec {
 		double[] x = Vec.linspace(9);
 		double[][] X = Vec.matrix(x, 3, 3, false);
 		
-		Mat.print(X);
+		Ar.print(X);
 	}
 	
 	@Test
@@ -756,7 +756,7 @@ public class UnitTest_Vec {
 		
 		double[][] X = Vec.matrix(x, 1);
 		
-		Mat.print(X);
+		Ar.print(X);
 		
 	}
 	
@@ -767,7 +767,7 @@ public class UnitTest_Vec {
 		
 		double[][] X = Vec.matrix(x, 3, 1, true);
 		
-		Mat.print(X);
+		Ar.print(X);
 		
 	}
 	
@@ -780,8 +780,36 @@ public class UnitTest_Vec {
 		
 		double[] z = Vec.scale(x, 0.0, 1.0);
 		
-		Vec.print(y);
-		Vec.print(z);
+		Ar.print(y);
+		Ar.print(z);
+		
+	}
+	
+	@Test
+	public void test470() {
+		
+		double[] x = Vec.rand(10, 0.0, 100.0);
+		
+		double[] max = Vec.maxk(x, 3);
+		int[] i = Vec.maxkInd(x, 3);
+		
+		Ar.print(x);
+		Ar.print(max);
+		Ar.print(i);
+		
+	}
+	
+	@Test
+	public void test471() {
+		
+		double[] x = Vec.rand(10, 0.0, 100.0);
+		
+		double[] min = Vec.mink(x, 3);
+		int[] i = Vec.minkInd(x, 3);
+		
+		Ar.print(x);
+		Ar.print(min);
+		Ar.print(i);
 		
 	}
 	

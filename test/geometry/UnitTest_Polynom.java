@@ -2,6 +2,7 @@ package geometry;
 
 import org.junit.jupiter.api.Test;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.geometry.Polynom;
 import net.sytes.botg.array.math.Vec;
 
@@ -17,7 +18,7 @@ public class UnitTest_Polynom {
 		
 		poly.create(t);
 		
-		Vec.print(poly.y());
+		Ar.print(poly.y());
 		
 				
 	}

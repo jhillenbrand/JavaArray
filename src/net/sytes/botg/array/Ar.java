@@ -1,7 +1,12 @@
 package net.sytes.botg.array;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import net.sytes.botg.array.math.Vec;
 
 /**
  * the unwrapping code is taken from org.apache.commons.lang3.ArrayUtils
@@ -660,4 +665,766 @@ public class Ar {
     	}		
     }
     
+	/**
+	 * delete the element of double array {@code x} at index {@code i} (reducing the array length by one), by returning a copy of original array except this index {@code i}
+	 * @param i
+	 * @return
+	 */
+	public static double[] removeAt(double[] x, int i) {
+		return null;
+	}
+	
+	/**
+	 * delete the element of double array {@code x} at index {@code i} (reducing the array length by one)
+	 * @param x
+	 * @param i
+	 */
+	public static void removeAt2(double[] x, int i) {
+		
+	}
+    
+	/**
+	 * prints a 1D Object[] array
+	 * @param ar
+	 */
+	public static void print(final Object[] ar) {
+		System.out.println(Arrays.toString(ar));
+	}
+	
+	/**
+	 * prints a 1D double[] array
+	 * @param ar
+	 */
+	public static void print(final double[] ar) {
+		System.out.println(Arrays.toString(ar));
+	}
+	
+	/**
+	 * prints a 1D int[] array
+	 * @param ar
+	 */
+	public static void print(final int[] ar) {
+		System.out.println(Arrays.toString(ar));
+	}
+
+	/**
+	 * TODO testing
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static double[] append(final double[] ... arrays) {
+	    int size = 0;
+	    for (double[] a: arrays) {
+	        size += a.length;
+	        double[] res = new double[size];
+	        int destPos = 0;
+	        for ( int i = 0; i < arrays.length; i++ ) {
+	            if ( i > 0 ) {
+	            	destPos += arrays[i-1].length;
+	            }
+	            int length = arrays[i].length;
+	            System.arraycopy(arrays[i], 0, res, destPos, length);
+	        }
+	        return res;
+	    }
+		return null;
+	}
+		
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+
+	public static double[] copy(double[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static int[] copy(int[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * returns true if set specified object {@code o} is an array
+	 * @param o
+	 * @return
+	 */
+	public static boolean isArray(Object o) {
+		if (o != null && o.getClass().isArray()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static void checkForEmpty(double[] ar) {
+		if (ar.length == 0) {
+			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
+	public static void checkForEmpty2(double[] ... x) {
+		for (int i = 0; i < x.length; i++) {
+			if (x[i].length == 0) {
+				throw new IllegalArgumentException("input arrays must not be empty");
+			}
+		}
+	}	
+		
+	/**
+	 * checks if the given {@code inds} are greater than 0
+	 * @param inds
+	 */
+	public static void checkForGreaterZero(final int ... inds) {
+		for (int i : inds) {
+			if (i < 0) {
+				throw new IllegalArgumentException("Indices must be greater than 0.");
+			}
+		}
+	}
+	
+	/**
+	 * checks if the given {@code inds} are greater than or equal to 0
+	 * <br>(the input array is final)
+	 * @param inds
+	 */
+	public static void checkForGreaterEqualZero(final int[] inds) {
+		for (int i : inds) {
+			if (i <= 0) {
+				throw new IllegalArgumentException("Indices must be greater than or equal to 0.");
+			}
+		}
+	}
+	
+	public static void checkForGreaterEqualZero2(int[] inds) {
+		for (int i : inds) {
+			if (i <= 0) {
+				throw new IllegalArgumentException("Indices must be greater than or equal to 0.");
+			}
+		}
+	}
+	
+	/**
+	 * checks if the start and end indices are within array bounds
+	 * @param ar
+	 * @param s
+	 * @param e
+	 */
+	public static void checkForIndicesInBounds(double[] ar, int s, int e) {
+		if (s < 0 || e >= ar.length) {
+			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+	
+	/**
+	 * checks if the start and end indices are within array bounds
+	 * @param ar
+	 * @param s
+	 * @param e
+	 */
+	public static void checkForIndicesInBounds(int[] ar, int s, int e) {
+		if (s < 0 || e >= ar.length) {
+			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+	
+	/**
+	 * checks if the start and end indices are within array bounds
+	 * @param ar
+	 * @param s
+	 * @param e
+	 */
+	public static void checkForIndicesInBounds(String[] ar, int s, int e) {
+		if (s < 0 || e >= ar.length) {
+			throw new IndexOutOfBoundsException("Index out of Bounds, s=" + s + " > 0 and e=" + e + " < " + ar.length + ".");
+		}
+	}
+	
+	/**
+	 * check if argument not NULL
+	 * @param ar
+	 */
+	public static void checkForNull(double[] ar) {
+		if (ar == null) {
+			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
+	/**
+	 * check if arguments are not NULL
+	 * @param ar
+	 */
+	public static void checkForNull2(double[] ... ar) {
+		for (int a = 0; a < ar.length; a++) {
+			if (ar[a] == null) {
+				throw new IllegalArgumentException("arrays must not be NULL");
+			}
+		}
+	}
+	
+	/**
+	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
+	 * @param ar1
+	 * @param ar2
+	 */
+	public static void checkForEqualDimensions(double[] ar1, double[] ar2) {
+		if (ar1.length == ar2.length) {
+			// do nothing
+		} else {
+			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
+		}
+	}
+	
+	/**
+	 * checks whether specified {@code arrays} have same length
+	 * @param arrays
+	 */
+	public static void checkForEqualDimensions(double[] ... arrays) {
+		if (arrays.length == 0) {
+			throw new IllegalArgumentException("specified arrays were empty");
+		}		
+		int n = arrays[0].length;
+		for (double[] ar : arrays) {
+			if (ar.length != n) {
+				throw new IllegalArgumentException("not all specified arrays have the same length");
+			}
+		}
+	}
+	
+	/**
+	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
+	 * @param ar1
+	 * @param ar2
+	 */
+	public static void checkForEqualDimensions(float[] ar1, float[] ar2) {
+		if (ar1.length == ar2.length) {
+			// do nothing
+		} else {
+			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
+		}
+	}
+	
+	/**
+	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
+	 * @param ar1
+	 * @param ar2
+	 */
+	public static void checkForEqualDimensions(int[] ar1, int[] ar2) {
+		if (ar1.length == ar2.length) {
+			// do nothing
+		} else {
+			throw new IllegalArgumentException("ar1[" + ar1.length + "] and ar2[" + ar2.length + "] do not have the same length");
+		}
+	}
+
+	/**
+	 * checks whether there are at least {@code n} elements in {@code ar}
+	 * @param ar
+	 * @param n
+	 */
+	public static void checkForAtLeastNElements(double[] ar, int n) {
+		if (ar.length < n) {
+			throw new IllegalArgumentException("ar must have at least " + n + " elements");
+		}
+	}
+	
+	/**
+	 * check if both matrices have same dimensions
+	 * @param X
+	 * @param Y
+	 */
+	public static void checkForMatchingDimensions(double[][] X, double[][] Y) {
+		if (X.length != Y.length || X[0].length != Y[0].length) {
+			throw new IllegalArgumentException("Dimension mismatch of matrices");
+		}
+	}
+	
+	public static void checkForNull(double[][] ar) {
+		if (ar == null) {
+			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
+	public static void checkForNull(double[][] ... ar) {
+		for (int i = 0; i < ar.length; i++) {
+			if (ar[i] == null) {
+				throw new IllegalArgumentException("ar must not be null");
+			}
+		}
+	}
+	
+	public static void checkForEmpty(double[][] X) {
+		if (X.length == 0) {
+			throw new IllegalArgumentException("matrix X must not be empty");
+		} else {
+			for (int i = 0; i < X.length; i++) {
+				if (X[i].length == 0) {
+					throw new IllegalArgumentException("matrix X must not contain empty vectors");
+				}
+			}
+		}
+	}
+	
+	public static void checkForEmpty(double[][] ... X) {
+		for (int i = 0; i < X.length; i++) {
+			if (X[i].length == 0) {
+				throw new IllegalArgumentException("ar must not be empty");
+			}
+		}
+	}
+
+	/**
+	 * prints the 2D object array
+	 * @param ar
+	 */
+	public static void print(final Object[][] ar) {
+		for (int i = 0; i < ar.length; i++) {
+			System.out.println(Arrays.toString(ar[i]));
+		}
+	}
+	
+	/**
+	 * prints the 2D double array
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 */
+	public static void print(final double[][] matrix) {
+		System.out.println(toString(matrix));
+	}
+	
+	/**
+	 * deep clone an matrix {@code X}
+	 * @param X
+	 * @return
+	 */
+	public static double[][] copy(double[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		double[][] Y = new double[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+	
+	/**
+	 * deep clone an matrix {@code X} using loop
+	 * @param X
+	 * @return
+	 */
+	public static double[][] copy2(double[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		int c = X[0].length;
+		double[][] Y = new double[r][c];
+		for (int i = 0; i < c; i++) {
+			for (int j = 0; j < r; j++) {
+				Y[j][i] = X[j][i];
+			}
+		}
+		return Y;
+	}
+	
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(double[][] matrix) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * prints the 2D int array
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param ar
+	 */
+	public static void print(final int[][] ar) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < ar.length; i++) {
+			if (i == ar.length - 1) {
+				sb.append(" " + Arrays.toString(ar[i]).replace("[", ""));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(ar[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(ar[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		System.out.println(sb.toString());
+	}
+
+	
+	/**
+	 * method returns true/false whether any of the array elements ar are contained in String s
+	 * @param s
+	 * @param ar
+	 * @return 
+	 */
+	public static boolean contains(double[] x, double d) {
+		for (double xi : x) {
+			if (xi == d) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * method returns true/false whether any of the array elements ar are contained in String s
+	 * @param s
+	 * @param ar
+	 * @return 
+	 */
+	public static boolean contains(int[] x, int i) {
+		for (int xi : x) {
+			if (xi == i) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * method returns true/false whether any of the array elements {@code x} contain String {@code s}
+	 * @param s
+	 * @param ar
+	 * @return 
+	 */
+	public static boolean contains(String[] x, String s) {
+		for (String xi : x) {
+			if (xi.contains(s)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+    public static int countOccurences(String[] ar, String s, boolean caseSensitive) {
+    	int count = -1;
+        for (int i = 0; i < ar.length; i++) {
+        	if (!caseSensitive) {
+	        	if (s.toLowerCase().equals(ar[i].toLowerCase())){
+	        		count++;
+	            }
+        	} else {
+        		if (s.equals(ar[i])){
+	        		count++;
+	            }
+        	}
+        }
+        return count;
+    }   
+    
+    public static boolean isIntInArray(int[] ar, int i) {
+    	for (int j = 0; j < ar.length; j++) {
+    		if (ar[j] == i) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+	
+	/**
+	 * returns a sub array starting at index s and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double[] sub(final double[] ar, int s, int e) {
+		Ar.checkForIndicesInBounds(ar, s, e);
+		double[] ar2 = new double[e - s + 1];
+		System.arraycopy(ar, s, ar2, 0, ar2.length);
+		return ar2;
+	}
+	
+	/**
+	 * returns a sub array starting at 0 and ending at index e from ar
+	 * @param ar
+	 * @param e
+	 * @return
+	 */
+	public static double[] sub(double[] ar, int e) {
+		return sub(ar, 0, e);
+	}
+	
+	/**
+	 * returns a sub array of {@code x} between {@code start} and {@code end} with {@code step}
+	 * @param x
+	 * @param start
+	 * @param end
+	 * @param step
+	 * @return
+	 */
+	public static double[] sub(double[] x, int start, int end, int step) {
+		int n = (end - start + 1) / step;
+		double[] y = new double[n];
+		int j = 0;
+		for (int i = start; i < end; i = i + step) {
+			y[j] = x[i];
+			++j;
+		}
+		return y;
+	}
+	
+	/**
+	 * returns a sub array starting at 0 and ending at index e from ar
+	 * @param ar
+	 * @param e
+	 * @return
+	 */
+	public static int[] sub(int[] ar, int e) {
+		return sub(ar, 0, e);
+	}
+	
+	/**
+	 * returns a sub array starting at index s and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static int[] sub(final int[] ar, int s, int e) {
+		Ar.checkForIndicesInBounds(ar, s, e);
+		int[] ar2 = new int[e - s + 1];
+		System.arraycopy(ar, s, ar2, 0, ar2.length);
+		return ar2;
+	}
+	
+	/**
+	 * returns a sub array starting at index s and ending at index e from ar
+	 * @param ar
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static String[] sub(final String[] ar, int s, int e) {
+		Ar.checkForIndicesInBounds(ar, s, e);
+		String[] ar2 = new String[e - s + 1];
+		System.arraycopy(ar, s, ar2, 0, ar2.length);
+		return ar2;
+	}
+	
+
+	/**
+	 * removes {@code start} samples from the beginning of the {@code ar} and {@code end} samples from the end of {@code ar} 
+	 * <br>and returns the result as new double[] array 
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static double[] trim(double[] ar, int start, int end) {
+		Ar.checkForGreaterEqualZero(new int[] {start, end});
+		int n = ar.length;
+		if (start + end > n) {
+			throw new IllegalArgumentException("sum of start and end must be smaller than length of ar");
+		}
+		return Ar.sub(ar, start, n - end); 
+	}
+	
+
+	
+	/**
+	 * returns the elements specified with {@code inds} in {@code data} into new array
+	 * @param inds
+	 * @param data
+	 * @return double[]
+	 */
+	public static double[] elementsAt(double[] data, boolean[] inds) {
+		if (data.length != inds.length) {
+			throw new IllegalArgumentException("length of data and inds array must have same length");
+		}
+		int n = Vec.sum(inds);
+		double[] newData = new double[n];
+		int j = 0;
+		for (int i = 0; i < data.length; i++) {
+			if (inds[i]) {
+				newData[j] = data[i];
+				++j;
+			}
+		}
+		return newData;
+	}
+	
+	/**
+	 * returns the elements at indices {@code inds} in {@code ar} into new array
+	 * @param inds
+	 * @param data
+	 * @return double[]
+	 */
+	public static double[] elementsAt(double[] ar, int[] inds) {
+		int n = inds.length;
+		double[] ar2 = new double[n];
+		for (int i = 0; i < n; i++) {
+			ar2[i] = ar[inds[i]];
+		}
+		return ar2;
+	}
+	
+	/**
+	 * returns the elements at indices {@code inds} in {@code ar} into new array
+	 * @param inds
+	 * @param data
+	 * @return double[]
+	 */
+	public static double[] elementsAt(double[] ar, double[] inds) {
+		int n = inds.length;
+		double[] ar2 = new double[n];
+		for (int i = 0; i < n; i++) {
+			ar2[i] = ar[(int) inds[i]];
+		}
+		return ar2;
+	}
+	
+	/**
+	 * returns the elements at indices {@code inds} in {@code ar} into new array
+	 * @param inds
+	 * @param data
+	 * @return int[]
+	 */
+	public static int[] elementsAt(int[] ar, int[] inds) {
+		int n = inds.length;
+		int[] ar2 = new int[n];
+		for (int i = 0; i < n; i++) {
+			ar2[i] = ar[inds[i]];
+		}
+		return ar2;
+	}
+
+	/**
+	 * add the element x to the end of the array ar and return the new array
+	 * @param <T> generic type
+	 * @param x new sample
+	 * @param ar existing array
+	 * @return generic array T[] 
+	 */
+	public static <T> T[] append(T[] ar, T x) {
+		T[] newAr = Arrays.copyOf(ar, ar.length + 1);
+		newAr[ar.length] = x;
+		return newAr;
+	}
+	
+	/**
+	 * add double d at the end of array and return new array
+	 * @param d
+	 * @param ar
+	 * @return
+	 */
+	public static double[] append(double[] ar, double d) {
+		double[] newAr = new double[ar.length + 1];
+		System.arraycopy(ar, 0, newAr, 0, ar.length);
+		newAr[ar.length] = d;
+		return newAr;
+	}
+	
+	/**
+	 * returns an array with unique elements based on values in {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static double[] unique(final double[] x) {
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
+		int n = x.length;
+		//HashMap<Double, Double> xu = new LinkedHashMap<Double, Double>();
+		HashMap<Double, Double> xu = new HashMap<Double, Double>();
+		for (int i = 0; i < n; i++) {
+			xu.put(x[i], x[i]);
+		}
+		return Ar.unwrap(xu.values().toArray(new Double[xu.size()]));
+	}
+
+	/**
+	 * searches the first index in {@code x}, where the element of {@code x} is equal to {@code d}
+	 * <br>if no element is found -1 is returned
+	 * @param x
+	 * @param d
+	 * @return
+	 */
+	public static int findValue(double[] x, double d) {
+		for (int i = 0; i < x.length; i++) {
+			if (x[i] == d) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * returns the index of {@code str} found in {@code ar}
+	 * <br>if {@code ar} does not contain {@code str}, then -1 is returned 
+	 * @param ar
+	 * @param str
+	 * @return
+	 */
+	public static int indexAt(final String[] ar, final String str) {
+		int i = -1;
+		for (int s = 0; s < ar.length; s++) {
+			if (ar[s].contentEquals(str)) {
+				i = s;
+				break;
+			}
+		}
+		return i;
+	}
+	
+	/**
+	 * returns the index of {@code d} found in {@code x}
+	 * <br>if {@code x} does not contain {@code d}, then -1 is returned 
+	 * @param x
+	 * @param d
+	 * @return
+	 */
+	public static int indexAt(final double[] x, final double d) {
+		int i = -1;
+		for (int j = 0; j < x.length; j++) {
+			if (x[j] == d) {
+				i = j;
+				break;
+			}
+		}
+		return i;
+	}
+	
+	public static <T> T[] removeEmpty(final T[] ar) {
+		List<T> list = new ArrayList<T>();
+		for (int a = 0; a < ar.length; a++) {
+			if (ar[a] != null) {
+				list.add(ar[a]);
+			}
+		}
+		return list.toArray(Arrays.copyOf(ar, list.size()));
+	}	
+
+	public static <T> T[] removeWith(T[] ar, T removeContent) {
+		List<T> list = new ArrayList<T>();
+		for (int a = 0; a < ar.length; a++) {
+			if (!ar[a].equals(removeContent)) {
+				list.add(ar[a]);
+			}
+		}
+		return list.toArray(Arrays.copyOf(ar, list.size()));
+	}	
+	
 }

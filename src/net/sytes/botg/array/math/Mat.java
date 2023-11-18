@@ -3,6 +3,8 @@ package net.sytes.botg.array.math;
 import java.util.Arrays;
 import java.util.Random;
 
+import net.sytes.botg.array.Ar;
+
 /**
  * Class that contains matrix to matrix operations
  * <br>if not specified in the method description, the matrices adhere the following dimension nomenclature:
@@ -51,7 +53,7 @@ public class Mat {
 	 * @return
 	 */
 	public static double min(double[][] X) {
-		checkForNull(X);
+		Ar.checkForNull(X);
 		double xMin = Double.MAX_VALUE;
 		int r = X.length;
 		int c = X[0].length;
@@ -66,7 +68,7 @@ public class Mat {
 	}
 	
 	public static double mean(double[][] X) {
-		checkForNull(X);
+		Ar.checkForNull(X);
 		double sum = 0.0;
 		int r = X.length;
 		int c = X[0].length;
@@ -80,7 +82,7 @@ public class Mat {
 	}
 	
 	public static double variance(double[][] X) {
-		checkForNull(X);
+		Ar.checkForNull(X);
 		int r = X.length;
 		int c = X[0].length;
 		double mean = mean(X);
@@ -129,7 +131,7 @@ public class Mat {
 	 * @return
 	 */
 	public static double[] minMax(double[][] X) {
-		checkForNull(X);
+		Ar.checkForNull(X);
 		double xMin = Double.MAX_VALUE;
 		double xMax = Double.MIN_VALUE;
 		int r = X.length;
@@ -244,8 +246,8 @@ public class Mat {
 	 * @return
 	 */
 	public static double[] linSolveLU(double[][] A, double[] b) {
-		checkForNull(A);
-		Vec.checkForNull(b);
+		Ar.checkForNull(A);
+		Ar.checkForNull(b);
 		checkMatrixProdDimensions(A, b);
 		int n = A.length;
         // decomposition of matrix
@@ -430,8 +432,8 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] distanceMatrix(double[][] points) {
-		checkForNull(points);
-		checkForEmpty(points);
+		Ar.checkForNull(points);
+		Ar.checkForEmpty(points);
 		int n = points.length;
 		double[][] D_ij = new double[n][n];
 		for (int i = 0; i < n; i++) {
@@ -465,8 +467,8 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] normVectors(double[][] XYZ){
-		checkForNull(XYZ);
-		checkForEmpty(XYZ);
+		Ar.checkForNull(XYZ);
+		Ar.checkForEmpty(XYZ);
 		int r = XYZ.length;
 		int c = XYZ[0].length;
 		double[][] XYZ_n = new double[r][c];
@@ -508,7 +510,7 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] zscore(double[][] X) {
-		checkForEmpty(X);
+		Ar.checkForEmpty(X);
 		double mean = mean(X);
 		double sigma = variance(X);
 		int r = X.length;
@@ -530,9 +532,9 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] plus(double[][] X, double[][] Y){
-		checkForNull(X, Y);
-		checkForEmpty(X, Y);
-		checkForMatchingDimensions(X, Y);
+		Ar.checkForNull(X, Y);
+		Ar.checkForEmpty(X, Y);
+		Ar.checkForMatchingDimensions(X, Y);
 		int r = X.length;
 		int c = X[0].length;
 		double[][] Z = new double[r][c];
@@ -552,9 +554,9 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] minus(double[][] X, double[][] Y){
-		checkForNull(X, Y);
-		checkForEmpty(X, Y);
-		checkForMatchingDimensions(X, Y);
+		Ar.checkForNull(X, Y);
+		Ar.checkForEmpty(X, Y);
+		Ar.checkForMatchingDimensions(X, Y);
 		int r = X.length;
 		int c = X[0].length;
 		double[][] Z = new double[r][c];
@@ -575,7 +577,7 @@ public class Mat {
 	 * @return
 	 */
 	public static double[][] product3(double[][] X, double[][] Y){
-		checkForNull(X, Y);
+		Ar.checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
 		int rX = X.length;
 		int cX = X[0].length;
@@ -602,7 +604,7 @@ public class Mat {
 	 * @return Z<sub>ij</sub>, 2D array
 	 */
 	public static double[][] product2(double[][] X, double[][] Y){
-		checkForNull(X, Y);
+		Ar.checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
 		int rX = X.length;
 		int cX = X[0].length;
@@ -635,7 +637,7 @@ public class Mat {
 	 * @return Z<sub>ij</sub>, 2D array
 	 */
 	public static double[][] product(double[][] X, double[][] Y) {
-		checkForNull(X, Y);
+		Ar.checkForNull(X, Y);
 		checkMatrixProdDimensions(X, Y);
 		int rX = X.length;
 		int cX = X[0].length;
@@ -680,7 +682,7 @@ public class Mat {
 			} else if (k == 0 ) {
 				return unitMatrix(X.length);
 			} else if(k == 1) {
-				return copy(X);
+				return Ar.copy(X);
 			} else {
 				if (k % 2 == 0) {
 					double[][] T = product(X, X);
@@ -892,8 +894,8 @@ public class Mat {
 	 * @return
 	 */
 	public static int numel(double[][] X) {
-		checkForNull(X);
-		checkForEmpty(X);
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
 		int n = 0;
 		for (int i = 0; i < X.length; i++) {
 			n = n + X[i].length;
@@ -930,8 +932,8 @@ public class Mat {
 	 * @return
 	 */
 	public static double[] vector(double[][] X, boolean columnByColumn) {
-		checkForNull(X);
-		checkForEmpty(X);
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
 		int r = X.length;
 		int c = X[0].length;
 		double[] x = new double[r * c];
@@ -1007,102 +1009,7 @@ public class Mat {
 			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columns for appending by row!");
 		}
 	}
-	
-	/**
-	 * prints the 2D object array
-	 * @param ar
-	 */
-	public static void print(final Object[][] ar) {
-		for (int i = 0; i < ar.length; i++) {
-			System.out.println(Arrays.toString(ar[i]));
-		}
-	}
-	
-	/**
-	 * prints the 2D double array
-	 * <br>(Format corresponds with MATLAB matrix print out)
-	 * @param matrix
-	 */
-	public static void print(final double[][] matrix) {
-		System.out.println(toString(matrix));
-	}
-	
-	/**
-	 * deep clone an matrix {@code X}
-	 * @param X
-	 * @return
-	 */
-	public static double[][] copy(double[][] X){
-		checkForNull(X);
-		checkForEmpty(X);
-		int r = X.length;
-		double[][] Y = new double[r][];
-		for (int i = 0; i < r; i++) {
-			Y[i] = X[i].clone();
-		}
-		return Y;
-	}
-	
-	/**
-	 * deep clone an matrix {@code X} using loop
-	 * @param X
-	 * @return
-	 */
-	public static double[][] copy2(double[][] X){
-		checkForNull(X);
-		checkForEmpty(X);
-		int r = X.length;
-		int c = X[0].length;
-		double[][] Y = new double[r][c];
-		for (int i = 0; i < c; i++) {
-			for (int j = 0; j < r; j++) {
-				Y[j][i] = X[j][i];
-			}
-		}
-		return Y;
-	}
-	
-	/**
-	 * returns the matrix as string
-	 * <br>(Format corresponds with MATLAB matrix print out)
-	 * @param matrix
-	 * @return
-	 */
-	public static String toString(double[][] matrix) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < matrix.length; i++) {
-			if (i == matrix.length - 1 && matrix.length != 1) {
-				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
-			} else if (matrix.length == 1) {
-				sb.append(Arrays.toString(matrix[i]));
-			} else if (i == 0) {
-				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
-			} else {
-				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
-			}
-		}
-		return sb.toString();
-	}
-	
-	/**
-	 * prints the 2D int array
-	 * <br>(Format corresponds with MATLAB matrix print out)
-	 * @param ar
-	 */
-	public static void print(final int[][] ar) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < ar.length; i++) {
-			if (i == ar.length - 1) {
-				sb.append(" " + Arrays.toString(ar[i]).replace("[", ""));
-			} else if (i == 0) {
-				sb.append(Arrays.toString(ar[i]).replace("]", ";\n"));
-			} else {
-				sb.append(" " + Arrays.toString(ar[i]).replace("[", "").replace("]", ";\n"));
-			}
-		}
-		System.out.println(sb.toString());
-	}
-		
+			
 	public static String matrixDimensionsToString(double[][] X) {
 		StringBuilder sb = new StringBuilder();
 		int n1 = X[0].length;
@@ -1123,48 +1030,4 @@ public class Mat {
 		}
 	}
 	
-	/**
-	 * check if both matrices have same dimensions
-	 * @param X
-	 * @param Y
-	 */
-	public static void checkForMatchingDimensions(double[][] X, double[][] Y) {
-		if (X.length != Y.length || X[0].length != Y[0].length) {
-			throw new IllegalArgumentException("Dimension mismatch of matrices");
-		}
-	}
-	
-	public static void checkForNull(double[][] ar) {
-		if (ar == null) {
-			throw new IllegalArgumentException("ar must not be null");
-		}
-	}
-	
-	public static void checkForNull(double[][] ... ar) {
-		for (int i = 0; i < ar.length; i++) {
-			if (ar[i] == null) {
-				throw new IllegalArgumentException("ar must not be null");
-			}
-		}
-	}
-	
-	public static void checkForEmpty(double[][] X) {
-		if (X.length == 0) {
-			throw new IllegalArgumentException("matrix X must not be empty");
-		} else {
-			for (int i = 0; i < X.length; i++) {
-				if (X[i].length == 0) {
-					throw new IllegalArgumentException("matrix X must not contain empty vectors");
-				}
-			}
-		}
-	}
-	
-	public static void checkForEmpty(double[][] ... X) {
-		for (int i = 0; i < X.length; i++) {
-			if (X[i].length == 0) {
-				throw new IllegalArgumentException("ar must not be empty");
-			}
-		}
-	}
 }

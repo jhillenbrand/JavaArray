@@ -1,5 +1,6 @@
 package net.sytes.botg.array.geometry;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Mat;
 import net.sytes.botg.array.math.Vec;
 
@@ -137,8 +138,8 @@ public class CoordSys {
 	@Override
 	public CoordSys clone() {
 		CoordSys cos = new CoordSys();
-		cos.base = Mat.copy(this.base);
-		cos.origin = Vec.copy(this.origin);
+		cos.base = Ar.copy(this.base);
+		cos.origin = Ar.copy(this.origin);
 		return cos;
 	}
 	
