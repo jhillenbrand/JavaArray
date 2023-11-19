@@ -31,7 +31,7 @@ public class Vec {
 	}
 	
 	public enum NonUniformDownsamplingAlgorithm {
-		MERGE_CLOSEST
+		MERGE_CLOSEST, DELETE_CLOSEST_GRADIENTS
 	}
 	
 	// Suppress default constructor for noninstantiability
@@ -1299,35 +1299,185 @@ public class Vec {
 	public static double[][] downsampleNonUniformData(double[] x, double[] y, int m, NonUniformDownsamplingAlgorithm algorithm){
 		switch (algorithm) {
 			case MERGE_CLOSEST:
-				return downsampleNonUniformByMergingClosest(x, y, m);
+				return downsampleNonUniformDataByMergingClosest(x, y, m);
 		
+			case DELETE_CLOSEST_GRADIENTS:
+				return downsampleNonUniformDataByDeletingCloseGradients2(x, y, m);
+				
 			default:
 				return null;		
 		}		
 	}
 	
-	public static double[][] downsampleNonUniformByMergingClosest(double[] x, double[] y, int m){
+	/**
+	 * TODO does not properly work yet
+	 * downsamples the data defined by {@code x, y} to arrays of length {@code m} by merging
+	 * the closest neighboring values on the {@code x}-axis
+	 * @param x
+	 * @param y
+	 * @param m
+	 * @return
+	 */
+	public static double[][] downsampleNonUniformDataByMergingClosest(double[] x, double[] y, int m){
+		throw new UnsupportedOperationException("Method is not properly implemented yet");
+//		int n = x.length;
+//		Ar.checkForEqualDimensions(x, y);
+//		Ar.checkForGreaterZero(n - m);
+//		
+//		double[] dx = new double[m];
+//		double[] dy = new double[m];
+//		double[] x_diff = diff(x);
+//		
+//		int r = n - m;
+//		
+//		int[] minInds = minkInd(x_diff, r);
+//		int j = 0;
+//		boolean found;
+//		for (int i = 0; i < x.length; i++) {
+//			found = false;
+//			for (int mi = 0; mi < minInds.length; mi++) {
+//				if (i == minInds[mi]) {
+//					dx[j] = (x[i] + x[i + 1]) / 2;
+//					dy[j] = (y[i] + y[i + 1]) / 2;
+//					++i;
+//					found = true;
+//					break;
+//				}
+//			}
+//			if (!found) {
+//				dx[j] = x[i];
+//				dy[j] = y[i];
+//			}
+//			++j;
+//		}
+//		
+//		return new double[][]{dx, dy};
+	}
+
+	/**
+	 * downsamples the data defined by {@code x, y} to arrays of length {@code m} by omitting
+	 * data samples with close gradients
+	 * @param x
+	 * @param y
+	 * @param m
+	 * @return
+	 */
+	public static double[][] downsampleNonUniformDataByDeletingCloseGradients(double[] x, double[] y, int m){
 		int n = x.length;
 		Ar.checkForEqualDimensions(x, y);
 		Ar.checkForGreaterZero(n - m);
-		
-		double[] x_s = new double[m];
-		double[] y_s = new double[m];
-		double[] x_diff = diff(x);
-		
 		int r = n - m;
+		double[] dx = new double[m];
+		double[] dy = new double[m];
 		
-		int[] minInds = minkInd(x_diff, r);
+		// compute the gradient
+		double[] d = diff(x, y);
 		
-		for (int i = n - 1; i >= 0; i--) {
-			
-			
-			
+		// find the m closest gradients
+		double[] dd = diff(d);
+		int[] minInds = minkInd(dd, r);
+		
+		// sort them ascending
+		Arrays.sort(minInds);
+		int mi = 0;
+		int j = 0;
+		for (int i = 0; i < n; i++) {
+			if (mi < minInds.length) {
+				if (i == minInds[mi] + 1) {
+					// skip the value
+					++mi;
+				} else {
+					dx[j] = x[i];
+					dy[j] = y[i];
+					++j;
+				}
+			} else {
+				dx[j] = x[i];
+				dy[j] = y[i];
+				++j;
+			}
 		}
 		
-		return new double[][]{x_s, y_s};
+		return new double[][]{dx, dy};
 	}
 	
+	/**
+	 * downsamples the data defined by {@code x, y} to arrays of length {@code m} by omitting
+	 * data samples with close gradients
+	 * @param x
+	 * @param y
+	 * @param m
+	 * @return
+	 */
+	public static double[][] downsampleNonUniformDataByDeletingCloseGradients2(double[] x, double[] y, int m){
+		int n = x.length;
+		Ar.checkForEqualDimensions(x, y);
+		Ar.checkForGreaterZero(n - m);
+		int r = n - m;
+		double[] dx = new double[n];
+		double[] dy = new double[n];
+		
+		// compute the gradient
+		double[] d = diff(x, y);
+		
+		// find the r closest gradients
+		double[] dd = diff(d);
+		int[] minInds = minkInd(dd, r);
+		
+		// sort them ascending
+		Arrays.sort(minInds);
+		int mi = 0;
+		int j = 0;
+		int lastSkip = -1;
+		for (int i = 0; i < n; i++) {
+			if (mi < minInds.length) {
+				if (minInds[mi] + 1 < i) {
+					++mi;
+				}
+			}
+			if (mi < minInds.length) {
+				if (i == minInds[mi] + 1 && lastSkip + 1 != i) {
+					// do not ignore local maxima/minima
+					if (i != 0 && i != n - 1) {
+						// local maximum
+						if (x[i] > x[i + 1] && x[i] > x[i - 1]) {
+							dx[j] = x[i];
+							dy[j] = y[i];
+							++j;
+						} else if (x[i] < x[i + 1] && x[i] < x[i - 1]) {
+							dx[j] = x[i];
+							dy[j] = y[i];
+							++j;
+						} else {				
+							// skip the value
+							lastSkip = i;
+						}
+					} else {
+						// skip the value
+						lastSkip = i;
+					}					
+				}  else {
+					dx[j] = x[i];
+					dy[j] = y[i];
+					++j;
+				}
+			} else {
+				dx[j] = x[i];
+				dy[j] = y[i];
+				++j;
+			}
+		}
+		
+		if (j == m || j < m) {
+			dx = Ar.sub(dx, j - 1);
+			dy = Ar.sub(dy, j - 1);
+			return new double[][]{dx, dy};
+		} else {
+			dx = Ar.sub(dx, j - 1);
+			dy = Ar.sub(dy, j - 1);
+			return downsampleNonUniformDataByDeletingCloseGradients2(dx, dy, m);
+		}
+	}	
 	
 	/**
 	 * upsamples the given array {@code x} by factor {@code n}
@@ -1893,23 +2043,23 @@ public class Vec {
 	}
 	
 	/**
-	 * computes the time based difference of ar based on time values in t
-	 * @param t
-	 * @param ar
+	 * computes the difference quotient of y over x
+	 * @param x
+	 * @param y
 	 * @return
 	 */
-	public static double[] diff(double[] t, double[] ar) {
-		Ar.checkForEqualDimensions(t, ar);
-		if (ar.length < 2) {
+	public static double[] diff(double[] x, double[] y) {
+		Ar.checkForEqualDimensions(x, y);
+		if (x.length < 2) {
 			throw new IllegalArgumentException("ar must at least have to elements");
 		}
-		double[] newAr = new double[ar.length - 1];
-		double dt = 0;
-		for (int i = 0; i < ar.length - 1; i++) {
-			dt = t[i + 1] - t[i];
-			newAr[i] = (ar[i + 1] - ar[i]) / dt;
+		double[] d = new double[x.length - 1];
+		double dx = 0;
+		for (int i = 0; i < x.length - 1; i++) {
+			dx = x[i + 1] - x[i];
+			d[i] = (y[i + 1] - y[i]) / dx;
 		}
-		return null;
+		return d;
 	}
 	
 	/**
@@ -2826,7 +2976,7 @@ public class Vec {
 	 * @return
 	 */
 	public static int[] minkInd(double[] ar, int k) {
-		int[] sortedInd = bubbleSortInd(ar, true);
+		int[] sortedInd = quicksort2(ar);
 		int[] minInds = Ar.sub(sortedInd, k);
 		return minInds;
 	}

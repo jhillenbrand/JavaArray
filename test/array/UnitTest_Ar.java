@@ -5,7 +5,7 @@ import org.junit.Test;
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
 
-public class UnitTest_ConvertArray {
+public class UnitTest_Ar {
 
 
 	
@@ -109,6 +109,17 @@ public class UnitTest_ConvertArray {
 		char[] c = Ar.unwrap(cw);
 		
 		System.out.println(c);		
+	}
+	
+	@Test
+	public void test030() {
+		
+		double[] x = Vec.linspace(10);
+		
+		double[] x_ = Ar.removeAt(x, 1);
+		
+		Ar.print(x);
+		Ar.print(x_);
 	}
 	
 }

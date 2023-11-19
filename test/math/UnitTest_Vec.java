@@ -813,4 +813,17 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test480() {
+		
+		double[] x = Vec.linspace(100);
+		double[] y = Vec.rand(100, 0.0, 100.0);
+		
+		double[][] d = Vec.downsampleNonUniformDataByDeletingCloseGradients(x, y, 80);
+		
+		Ar.print(d[0]);
+		Ar.print(d[1]);
+		
+	}
+	
 }

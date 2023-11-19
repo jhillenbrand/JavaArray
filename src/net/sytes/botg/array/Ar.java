@@ -671,18 +671,17 @@ public class Ar {
 	 * @return
 	 */
 	public static double[] removeAt(double[] x, int i) {
-		return null;
+		double[] y = new double[x.length - 1];
+		int j = 0;
+		for (int k = 0; k < x.length; k++) {
+			if (k != i) {
+				y[j] = x[k];
+				++j;
+			}
+		}
+		return y;
 	}
-	
-	/**
-	 * delete the element of double array {@code x} at index {@code i} (reducing the array length by one)
-	 * @param x
-	 * @param i
-	 */
-	public static void removeAt2(double[] x, int i) {
-		
-	}
-    
+	    
 	/**
 	 * prints a 1D Object[] array
 	 * @param ar
