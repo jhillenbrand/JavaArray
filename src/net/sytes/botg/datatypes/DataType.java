@@ -393,7 +393,7 @@ public enum DataType {
 						return Float.parseFloat(s.replace(",", "."));
 						
 					case INT:
-						// convert , to . TODO this is not safe and tackles all cases
+						// convert , to . TODO this is not safe and does not cover all cases
 						s = (String) obj;
 						s = s.replace(",", ".");
 						// cut string of decimals
@@ -410,7 +410,7 @@ public enum DataType {
 						*/						
 						
 					case LONG:
-						// convert , to . TODO this is not safe and tackles all cases
+						// convert , to . TODO this is not safe and does not cover all cases
 						s = (String) obj;
 						s = s.replace(",", ".");
 						// cut string of decimals
@@ -422,7 +422,7 @@ public enum DataType {
 						}
 						
 					case SHORT:
-						// convert , to . TODO this is not safe and tackles all cases
+						// convert , to . TODO this is not safe and does not cover all cases
 						s = (String) obj;
 						s = s.replace(",", ".");
 						// cut string of decimals
