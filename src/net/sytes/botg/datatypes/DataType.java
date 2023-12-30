@@ -505,6 +505,24 @@ public enum DataType {
 	/**
 	 * converts the objects in {@code objs} from assumed {@code sourceType} to {@code targetType}
 	 * TODO this code is not optimized for speed, as convertToDataType is run through for every object in {@code objs}
+	 * @param obj
+	 * @param sourceType
+	 * @param targetType
+	 * @return
+	 */
+	public static Object[] cast(Object[] objs, DataType targetType) {
+		Object[] newObjs = new Object[objs.length];
+		int i = 0;
+		for (Object o : objs) {
+			newObjs[i] = cast(o, targetType);
+			++i;
+		}
+		return newObjs;
+	}
+	
+	/**
+	 * converts the objects in {@code objs} from assumed {@code sourceType} to {@code targetType}
+	 * TODO this code is not optimized for speed, as convertToDataType is run through for every object in {@code objs}
 	 * @param objs
 	 * @param sourceType
 	 * @param targetType
