@@ -595,6 +595,38 @@ public enum DataType {
 	}
 
 	/**
+	 * methods attempts to parse {@code obj} into {@code DataType}, attempting brute force casting
+	 * <br>casting is attempted in the following order:
+	 * <br>boolean -> integer -> long -> double -> String --> Object
+	 * <br>if the {@code obj} cannot be parsed into a primitive, than it is returned as {@code String} or finally {@code Object}
+	 * @param str
+	 * @return
+	 */
+	public static Object cast(Object obj) {
+		if (obj == null) {
+			return null;
+		}
+		if (obj instanceof String) {
+			String str = (String) obj;
+			if (isBoolean(str)) {
+				return parseBoolean(str);
+			}
+			if (isInteger(str)) {
+				return Integer.parseInt(str);
+			}
+			if (isLong(str)) {
+				return Long.parseLong(str);
+			}
+			if (isDouble(str)) {
+				return Double.parseDouble(str);
+			}
+			return str;	
+		} else {
+			return obj;
+		}	
+	}
+	
+	/**
 	 * return true/false if the specified string can be parsed as {@code boolean}
 	 * @param str
 	 * @return
@@ -662,7 +694,23 @@ public enum DataType {
 	    }
 	    return true;
 	}
-	
+			
+	/**
+	 * parses the given {@code str} as {@code boolean}
+	 * <br>if {@code str} cannot be parsed an {@code IllegalArgumentException} is thrown
+	 * @param str
+	 * @return
+	 */
+	private static boolean parseBoolean(String str) {
+		if (str.toLowerCase().contentEquals("yes") || str.toLowerCase().contentEquals("true") || str.toLowerCase().contentEquals("ja") || str.toLowerCase().contentEquals("1") || str.toLowerCase().contentEquals("y") || str.toLowerCase().contentEquals("j") || str.toLowerCase().contentEquals("ok") || str.toLowerCase().contentEquals("i.o.")) {
+	    	return true;
+	    } else if (str.toLowerCase().contentEquals("no") || str.toLowerCase().contentEquals("false") || str.toLowerCase().contentEquals("nein") || str.toLowerCase().contentEquals("0") || str.toLowerCase().contentEquals("n") || str.toLowerCase().contentEquals("n.i.o.")) {
+	    	return false;
+	    } else {
+	    	throw new IllegalArgumentException(str + " cannot be parsed as " + Boolean.class.getSimpleName());
+	    }
+	}
+		
 	/**
 	 * casts the value type of {@code map} to the given {@code newType}
 	 * @param <K, V>
