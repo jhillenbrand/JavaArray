@@ -1119,6 +1119,31 @@ public class Ar {
 		return false;
 	}
 	
+	/**
+	 * method returns true/false whether any of the array elements {@code ar} contain Object {@code e}
+	 * the method is typed during runtime
+	 * @param <T>
+	 * @param ar
+	 * @param e
+	 * @return
+	 */
+	public static <T> boolean contains(T[] ar, T e) {
+		for (T a : ar) {
+			if (a.equals(e)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * counts the occurences of {@code s} in array {@code ar}
+	 * if {@code caseSensitive} is specified the search neglects capital or lowercase letters
+	 * @param ar
+	 * @param s
+	 * @param caseSensitive
+	 * @return
+	 */
     public static int countOccurences(String[] ar, String s, boolean caseSensitive) {
     	int count = -1;
         for (int i = 0; i < ar.length; i++) {
@@ -1134,16 +1159,7 @@ public class Ar {
         }
         return count;
     }   
-    
-    public static boolean isIntInArray(int[] ar, int i) {
-    	for (int j = 0; j < ar.length; j++) {
-    		if (ar[j] == i) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-	
+    	
 	/**
 	 * returns a sub array starting at index s and ending at index e from ar
 	 * @param ar
