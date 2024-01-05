@@ -3639,6 +3639,28 @@ public class Vec {
 		return new double[] {xs[iMax], ys[iMax]};
 	}
 	
+	
+	/**
+	 * Vector Geometry Methods
+	 */
+	
+	
+	/**
+	 * The distance d from a point {@code otherPoint} (x0, y0, z0) to a plane with normal vector {@code planeNormal} (A,B,C) and a point {@code planePoint} on the plane (x1,y1,z1) can be calculated using the formula:
+	 * d=|Ax_0+By0+Cz0−(Ax1+By1+Cz1)| / (A^2+B^2+C^2)^(1/2)​
+	 * @param planeNormal
+	 * @param pointOnPlane
+	 * @param otherPoint
+	 * @return
+	 */
+	public static double distancePointToPlane(double[] planeNormal, double[] planePoint, double[] otherPoint) {		
+		double[] dv = minus(otherPoint, planePoint);
+		double num = Math.abs(scalarProduct(planeNormal, dv));
+		double den = norm(planeNormal);
+		return num / den;
+	}
+	
+	
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector Generation Methods
@@ -4092,5 +4114,18 @@ public class Vec {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * checks if the array given is a vector (Tensor 1) 
+	 * @param x
+	 * @return
+	 */
+	public static boolean isVector(double[] x) {
+		if (Ar.isArray(x[0])) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
