@@ -1,6 +1,5 @@
 package net.sytes.botg.array.math;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import net.sytes.botg.array.Ar;
@@ -661,6 +660,76 @@ public class Mat {
 		return Z;
 	}
 	
+	public static double[][] tiledProduct(double[][] X, double[][] Y, int tileSize) {
+		Ar.checkForNull(X, Y);
+		checkMatrixProdDimensions(X, Y);
+		int rX = X.length;
+		int cX = X[0].length;
+		int cY = Y[0].length;
+        double[][] Z = new double[rX][cY];
+        for (int ih = 0; ih < rX; ih += tileSize) {
+            for (int jh = 0; jh < cY; jh += tileSize) {
+                for (int kh = 0; kh < cX; kh += tileSize) {
+                	for (int il = 0; il < tileSize; ++il) {
+                		for (int kl = 0; kl < tileSize; ++kl) {
+                			for (int jl = 0; jl < tileSize; ++jl) {
+                				Z[ih+il][jh+jl] += X[ih+il][kh+kl] * Y[kh+kl][jh+jl];
+                			}
+                		}
+                	}
+                }
+            }
+        }
+        return Z;
+	}
+	
+	
+	/**
+	 * returns the matrix multiplication of {@code X} and {@code Y}
+	 * <br>Z<sub>ij</sub> = X<sub>ik</sub>Y<sub>kj</sub>
+	 * <br>using naive approach of 3 nested loops i -> k -> j
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static double[][] product4(double[][] X, double[][] Y){
+		Ar.checkForNull(X, Y);
+		checkMatrixProdDimensions(X, Y);
+		int rX = X.length;
+		int cX = X[0].length;
+		int cY = Y[0].length;
+        double[][] Z = new double[rX][cY];
+        for (int i = 0; i < rX; i++) {
+            for (int k = 0; k < cX; k++) {
+                for (int j = 0; j < cY; j++) {
+                	Z[i][j] += X[i][k] * Y[k][j];
+                }
+            }
+        }
+        return Z;
+	}
+	
+	
+	/**
+	 * multiplies a scalar {@code c} with every element in {@code X}
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static double[][] product(double[][] X, double c){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		Ar.checkForEqualDimensions(X);
+		double[][] Y = new double[X.length][X[0].length];
+		for (int i = 0; i < X.length; i++) {
+			for (int j = 0; j < X[0].length; j++) {
+				
+			}
+		}
+		return Y;
+	}
+	
+	
 	public static double[][] square(double[][] X){
 		if (isSquare(X)) {
 			return product(X, X);
@@ -756,6 +825,23 @@ public class Mat {
 	}
 	
 	/**
+	 * returns an 2D int array with 1's, where {@code r} is the number of rows and {@code c} the number of columns
+	 * @param r
+	 * @param c
+	 * @return
+	 */
+	public static int[][] onesI(int r, int c){
+		int[][] ar = new int[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				ar[i][j] = 1;
+			}
+		}
+		return ar;
+	}
+	
+	
+	/**
 	 * returns a squared unit matrix of size {@code n}
 	 * <br> Example for n = 3
 	 * <br>| 1, 0, 0 |
@@ -806,6 +892,24 @@ public class Mat {
 		return ar;
 	}
 		
+	/**
+	 * returns a 2D matrix with random values from all 2^32 possible int values of size [{@code r},{@code c}]
+	 * @param r number of rows
+	 * @param c number of columns
+	 * @return
+	 */
+	public static int[][] randI(int r, int c){
+		Random rr = new Random();
+		int[][] ar = new int[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				ar[i][j] = rr.nextInt();
+			}
+		}
+		return ar;
+	}
+	
+	
 	/**
 	 * returns a matrix X € R<sup>m x n</sup> with elements increasing from 0 to k = {@code r} * {@code c}
 	 * @param r number of rows
@@ -1009,7 +1113,32 @@ public class Mat {
 			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columns for appending by row!");
 		}
 	}
-			
+	
+	
+	/**
+	 * enforces symmetric values of the upper triangular of {@code X} to the rest of the matrix
+	 * <br>only works with quadratic matrices
+	 * <br>the method changes the matrix itself, it does not create a copy
+	 * @param X
+	 * @return
+	 * @throws IllegalArgumentException when the matrix {@code X} is not square
+	 */
+	public static void makeSymmetric(double[][] X){
+		if (!isSquare(X)) {
+			throw new IllegalArgumentException("The input matrix must be squared");
+		}
+		
+		int rows = X.length;
+		int cols = X[0].length;
+		
+		for (int i = 0; i < rows - 1; i++) {
+			for (int j = 0 + i; j < cols; j++) {
+				X[j][i] = X[i][j];
+			}		
+		}		
+	}
+	
+	
 	public static String matrixDimensionsToString(double[][] X) {
 		StringBuilder sb = new StringBuilder();
 		int n1 = X[0].length;
@@ -1017,7 +1146,7 @@ public class Mat {
 		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
 		return sb.toString();
 	}
-	
+			
 	private static  void checkMatrixProdDimensions(double[][] X, double[][] Y) {
 		if (X[0].length != Y.length) {
             throw new IllegalArgumentException("Invalid matrix dimensions for multiplication, " + matrixDimensionsToString(X) + " --> " + matrixDimensionsToString(Y));

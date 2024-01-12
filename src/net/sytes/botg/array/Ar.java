@@ -944,16 +944,26 @@ public class Ar {
 		}
 	}
 	
-	public static void checkForNull(double[][] ar) {
-		if (ar == null) {
-			throw new IllegalArgumentException("ar must not be null");
+	/**
+	 * checks if the matrix passed is null
+	 * @param X
+	 * @throws IllegalArgumentException when the matrix passed is null
+	 */
+	public static void checkForNull(double[][] X) {
+		if (X == null) {
+			throw new IllegalArgumentException("matrix must not be null");
 		}
 	}
 	
-	public static void checkForNull(double[][] ... ar) {
-		for (int i = 0; i < ar.length; i++) {
-			if (ar[i] == null) {
-				throw new IllegalArgumentException("ar must not be null");
+	/**
+	 * checks if none of the matrices passed are null
+	 * @param X
+	 * @throws IllegalArgumentException when one of the matrices passed is null
+	 */
+	public static void checkForNull(double[][] ... X) {
+		for (int i = 0; i < X.length; i++) {
+			if (X[i] == null) {
+				throw new IllegalArgumentException("matrices must not be null");
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Mat;
+import net.sytes.botg.array.math.Parallel;
 import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_Mat {
@@ -277,8 +278,8 @@ public class UnitTest_Mat {
 		
 		long st = 0;
 		long et = 0;
-		int n = 500;
-		int r = 10;
+		int n = 4096;
+		int r = 1;
 
 		double[][] A = Mat.ones(n, n);
 		double[][] B = Mat.ones(n, n);
@@ -296,7 +297,7 @@ public class UnitTest_Mat {
 		
 		et = System.nanoTime();
 		
-		System.out.println("NAIVE n=" + n);
+		System.out.println("NAIVE i-> j -> k, n=" + n);
 		System.out.println("elapsed time [ns]: " + (et - st) + ", per iteration [ns]: " + (double) (et - st) /  (double) r);
 		System.out.println("");
 		
@@ -333,7 +334,66 @@ public class UnitTest_Mat {
 		System.out.println("JAMA n=" + n);
 		System.out.println("elapsed time [ns]: " + (et - st) + ", per iteration [ns]: " + (double) (et - st) /  (double) r);
 		System.out.println("");
+		
+		st = System.nanoTime();
+		
+		for (int i = 0; i < r; i++) {
+		
+			
+			double[][] C = Mat.product4(A, B);
+			
+			//Ar.print(C);
+			
+		}
+		
+		et = System.nanoTime();
+		
+		System.out.println("NAIVE i -> k -> j,  n=" + n);
+		System.out.println("elapsed time [ns]: " + (et - st) + ", per iteration [ns]: " + (double) (et - st) /  (double) r);
+		System.out.println("");
+		
+		
 	}
+	
+	@Test
+	public void test095() {
+		
+		long st = 0;
+		long et = 0;
+		int n = 2048;
+		int r = 1;
+
+		double[][] A = Mat.ones(n, n);
+		double[][] B = Mat.ones(n, n);
+		
+		int ts = 2;
+		
+		for (int t = 1; t <= n; t++) {
+			
+			ts = (int) Math.pow(2, t);
+			if (ts > n) {
+				break;
+			}
+			
+			st = System.nanoTime();
+		
+			for (int i = 0; i < r; i++) {
+			
+				
+				double[][] C = Mat.tiledProduct(A, B, ts);
+				
+				//Ar.print(C);
+				
+			}
+			et = System.nanoTime();
+			
+			System.out.println("NAIVE i-> j -> k, n=" + n + ", ts=" + ts);
+			System.out.println("elapsed time [ns]: " + (et - st) + ", per iteration [ns]: " + (double) (et - st) /  (double) r);
+			System.out.println("");
+		}
+		
+	}	
+	
 	
 	@Test
 	public void test100() {
@@ -557,6 +617,43 @@ public class UnitTest_Mat {
 		
 		Ar.print(y);
 		
+	}
+	
+	@Test
+	public void test110() {
+		
+		double[][] A = new double[][] {{1.0, 1.0},{0.0, 1.0}};
+		
+		Ar.print(A);
+		
+		Mat.makeSymmetric(A);
+		
+		Ar.print(A);
+		
+	}
+	
+	@Test
+	public void test111() {
+		
+		double[][] A = new double[][] {{1.0, 1.0},{0.0, 1.0}, {0.0, 2.0}};
+		
+		Ar.print(A);
+		
+		Mat.makeSymmetric(A);
+		
+		Ar.print(A);
+		
+	}
+	
+	@Test
+	public void test112() {
+		double[][] A = new double[][] {{1.0, 1.0, 2.0},{0.0, 1.0, 3.0}, {0.0, 0.0, 4.0}};
+		
+		Ar.print(A);
+		
+		Mat.makeSymmetric(A);
+		
+		Ar.print(A);
 	}
 	
 }
