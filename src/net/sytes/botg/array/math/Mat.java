@@ -723,11 +723,29 @@ public class Mat {
 		double[][] Y = new double[X.length][X[0].length];
 		for (int i = 0; i < X.length; i++) {
 			for (int j = 0; j < X[0].length; j++) {
-				
+				Y[i][j] = X[i][j] * c;
 			}
 		}
 		return Y;
 	}
+	
+	/**
+	 * multiplies a scalar {@code c} with every element in {@code X}
+	 * this changes the matrix that was passed;
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static void product2(double[][] X, double c){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		Ar.checkForEqualDimensions(X);
+		for (int i = 0; i < X.length; i++) {
+			for (int j = 0; j < X[0].length; j++) {
+				X[i][j] = X[i][j] * c;
+			}
+		}
+	}	
 	
 	
 	public static double[][] square(double[][] X){
