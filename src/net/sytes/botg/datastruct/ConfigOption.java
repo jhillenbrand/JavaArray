@@ -1,4 +1,4 @@
-package net.sytes.botg.datatypes;
+package net.sytes.botg.datastruct;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

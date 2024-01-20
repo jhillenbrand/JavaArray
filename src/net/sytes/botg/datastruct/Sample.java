@@ -1,4 +1,4 @@
-package net.sytes.botg.datatypes;
+package net.sytes.botg.datastruct;
 
 /**
  * representing a value pair of {time, value}

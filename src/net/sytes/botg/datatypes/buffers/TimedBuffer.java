@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import net.sytes.botg.datastruct.Sample;
+import net.sytes.botg.datastruct.TimeSeries;
 import net.sytes.botg.datatypes.DataType;
-import net.sytes.botg.datatypes.Sample;
-import net.sytes.botg.datatypes.TimeSeries;
 
 public class TimedBuffer extends Buffer implements ITimedBuffer {
 

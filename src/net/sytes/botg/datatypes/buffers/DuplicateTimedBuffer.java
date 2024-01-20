@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import net.sytes.botg.datatypes.ConfigOption;
+import net.sytes.botg.datastruct.ConfigOption;
 import net.sytes.botg.datatypes.DataType;
 
 public class DuplicateTimedBuffer extends TimedBuffer {

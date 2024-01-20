@@ -1,7 +1,7 @@
 package net.sytes.botg.datatypes.buffers;
 
-import net.sytes.botg.datatypes.Sample;
-import net.sytes.botg.datatypes.TimeSeries;
+import net.sytes.botg.datastruct.Sample;
+import net.sytes.botg.datastruct.TimeSeries;
 
 public interface ITimedBuffer {
 

@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import net.sytes.botg.datatypes.ConfigOption;
+import net.sytes.botg.datastruct.ConfigOption;
 import net.sytes.botg.datatypes.DataType;
 
 /**

@@ -1,4 +1,4 @@
-package net.sytes.botg.datatypes;
+package net.sytes.botg.datastruct;
 
 public class Parameter extends NamedValuePair {
 

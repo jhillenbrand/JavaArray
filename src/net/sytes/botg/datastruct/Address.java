@@ -1,4 +1,6 @@
-package net.sytes.botg.datatypes;
+package net.sytes.botg.datastruct;
+
+import net.sytes.botg.datatypes.DataType;
 
 /**
  * class that stores data and information of address endpoint for a data node in data sources

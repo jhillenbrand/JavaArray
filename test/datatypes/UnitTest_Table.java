@@ -9,9 +9,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import net.sytes.botg.datatypes.Table;
-import net.sytes.botg.datatypes.Table.CloningBehavior;
-import net.sytes.botg.datatypes.Table.Comparator;
+import net.sytes.botg.datastruct.Table;
+import net.sytes.botg.datastruct.Table.CloningBehavior;
+import net.sytes.botg.datastruct.Table.Comparator;
 
 public class UnitTest_Table {
 

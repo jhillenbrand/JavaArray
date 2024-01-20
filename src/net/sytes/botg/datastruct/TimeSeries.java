@@ -1,6 +1,7 @@
-package net.sytes.botg.datatypes;
+package net.sytes.botg.datastruct;
 
 import java.util.Arrays;
+
 import net.sytes.botg.datatypes.buffers.TimedBuffer;
 
 public class TimeSeries {
