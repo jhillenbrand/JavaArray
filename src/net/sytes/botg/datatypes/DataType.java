@@ -12,7 +12,7 @@ public enum DataType {
 	DOUBLE(Double.BYTES), INT(Integer.BYTES), FLOAT(Float.BYTES), LONG(Long.BYTES), CHAR(Character.BYTES), STRING, BYTE, BOOLEAN(1), SHORT(Short.BYTES), OBJECT;
 
 	private int bytes = -1;
-	
+
 	private DataType(int bytes) {
 		this.bytes = bytes;
 	}

@@ -10,7 +10,7 @@ import net.sytes.botg.datastruct.TimeSeries;
 import net.sytes.botg.datatypes.DataType;
 
 public class TimedBuffer extends Buffer implements ITimedBuffer {
-
+	
 	protected long[] times;
 	
 	protected static final String TIME_FIELD = "\"time\": ";
