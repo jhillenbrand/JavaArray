@@ -1077,6 +1077,14 @@ public class Table implements Cloneable {
 		sb.append("}");
 		return sb.toString();
 	}
+
+	/**
+	 * returns the table as map
+	 * @return
+	 */
+	public Map<String, List<Object>> toMap() {
+		return this.data;
+	}
 		
 	/**
 	 * string representation of this Table
