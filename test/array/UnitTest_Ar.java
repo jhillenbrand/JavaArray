@@ -146,4 +146,17 @@ public class UnitTest_Ar {
 		Ar.print(d);
 	}
 	
+	@Test
+	public void test042() {
+		double[] a = {};
+		
+		double[] b = Vec.linspace(10);
+		
+		double[] c = Vec.linspace(3);
+		
+		double[] d = Ar.append(a, b, c);
+		
+		Ar.print(d);
+	}
+	
 }
