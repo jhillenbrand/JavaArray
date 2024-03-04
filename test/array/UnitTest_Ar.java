@@ -159,4 +159,17 @@ public class UnitTest_Ar {
 		Ar.print(d);
 	}
 	
+	@Test
+	public void test050() {
+		
+		double[] x = new double[] {0.0, 1.0, 9.0, 1.0, 5.0, 4.0, 1.0};
+		
+		double d = 1.0;
+		
+		int[] inds = Ar.findValues(x, d);
+		
+		Ar.print(inds);
+		
+	}
+	
 }

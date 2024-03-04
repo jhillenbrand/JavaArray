@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import org.junit.jupiter.api.Test;
+import java.util.function.Function;
 
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.spectrum.WindowFunction;
@@ -32,6 +31,10 @@ public class Vec {
 	
 	public enum NonUniformDownsamplingAlgorithm {
 		MERGE_CLOSEST, DELETE_CLOSEST_GRADIENTS
+	}
+	
+	public enum GroupBy {
+		MIN, MAX, MEAN
 	}
 	
 	// Suppress default constructor for noninstantiability
@@ -2981,64 +2984,6 @@ public class Vec {
 	}
 	
 	/**
-	 * searches all values in {@code sourceValues} in {@code searchValues} and retrieves the corresponding {@code returnValues} by matching index between {@code searchValues} and  {@code returnValues}
-	 * <br>{@code sourceValues} and {@code searchValues} are assumed to be monotone increasing values (sorted ascending)
-	 * @param sourceValues
-	 * @param targetValues
-	 * @param lookupValues
-	 * @return
-	 */
-	public static double[] mapValues(double[] sourceValues, double[] searchValues, double[] returnValues) {
-		if (searchValues.length != returnValues.length) {
-			throw new IllegalArgumentException("length of searchValues and returnValues must match!");
-		}
-		
-		double[] mappedValues = new double[sourceValues.length];		
-		
-		int lastSearchIndex = 0;
-		
-		for (int i = 0; i < sourceValues.length; i++) {
-			double v1 = sourceValues[i];
-			boolean notFound= true;
-			for (int j = lastSearchIndex; j < searchValues.length; j++) {
-				double v2 = searchValues[j];
-				if (v1 <= v2) {
-					mappedValues[i] = returnValues[j];
-					notFound = false;
-					break;
-				} else {
-					lastSearchIndex = j;
-				}
-			}
-			if (notFound) {
-				mappedValues[i] = returnValues[returnValues.length - 1];
-			}			
-		}
-		
-		return mappedValues;
-	}
-	
-	/**
-	 * searches the closest value in {@code searchValues} for all the values in {@code sourceValues} and retrieves the corresponding {@code returnValues} by matching index
-	 * <br>running time O(n²)
-	 * @param sourceValues
-	 * @param searchValues
-	 * @param returnValues
-	 * @return
-	 */
-	public static double[] mapUnsortedValues(double[] sourceValues, double[] searchValues, double[] returnValues) {
-		if (searchValues.length != returnValues.length) {
-			throw new IllegalArgumentException("length of searchValues and returnValues must match!");
-		}
-		double[] mappedValues = new double[sourceValues.length];
-		for (int i = 0; i < sourceValues.length; i++) {
-			int index = Vec.findClosest(searchValues, sourceValues[i]);
-			mappedValues[i] = returnValues[index];
-		}		
-		return mappedValues;
-	}
-	
-	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector Permutation Methods
 	 * ----------------------------------------------------------------------------
@@ -3715,7 +3660,94 @@ public class Vec {
 		}
 		return index;
 	}
+
+	/**
+	 * searches all values in {@code sourceValues} in {@code searchValues} and retrieves the corresponding {@code returnValues} by matching index between {@code searchValues} and  {@code returnValues}
+	 * <br>{@code sourceValues} and {@code searchValues} are assumed to be monotone increasing values (sorted ascending)
+	 * @param sourceValues
+	 * @param targetValues
+	 * @param lookupValues
+	 * @return
+	 */
+	public static double[] mapValues(double[] sourceValues, double[] searchValues, double[] returnValues) {
+		if (searchValues.length != returnValues.length) {
+			throw new IllegalArgumentException("length of searchValues and returnValues must match!");
+		}
+		
+		double[] mappedValues = new double[sourceValues.length];		
+		
+		int lastSearchIndex = 0;
+		
+		for (int i = 0; i < sourceValues.length; i++) {
+			double v1 = sourceValues[i];
+			boolean notFound= true;
+			for (int j = lastSearchIndex; j < searchValues.length; j++) {
+				double v2 = searchValues[j];
+				if (v1 <= v2) {
+					mappedValues[i] = returnValues[j];
+					notFound = false;
+					break;
+				} else {
+					lastSearchIndex = j;
+				}
+			}
+			if (notFound) {
+				mappedValues[i] = returnValues[returnValues.length - 1];
+			}			
+		}
+		
+		return mappedValues;
+	}
 	
+	/**
+	 * searches the closest value in {@code searchValues} for all the values in {@code sourceValues} and retrieves the corresponding {@code returnValues} by matching index
+	 * <br>running time O(nï¿½)
+	 * @param sourceValues
+	 * @param searchValues
+	 * @param returnValues
+	 * @return
+	 */
+	public static double[] mapUnsortedValues(double[] sourceValues, double[] searchValues, double[] returnValues) {
+		if (searchValues.length != returnValues.length) {
+			throw new IllegalArgumentException("length of searchValues and returnValues must match!");
+		}
+		double[] mappedValues = new double[sourceValues.length];
+		for (int i = 0; i < sourceValues.length; i++) {
+			int index = Vec.findClosest(searchValues, sourceValues[i]);
+			mappedValues[i] = returnValues[index];
+		}		
+		return mappedValues;
+	}
+	
+	public static double[][] group(double[] searchValues, double[] returnValues, GroupBy groupBy) {
+		
+		double[] uniques = Ar.unique(searchValues);
+		double[][] result = new double[2][];
+		
+		result[0] = uniques;
+		
+		for (int u = 0; u < uniques.length; u++) {
+			
+			Ar.findValue(searchValues, uniques[u]);
+			
+		}
+		
+		switch (groupBy) {
+			case MAX:
+				break;
+				
+			case MEAN:
+				break;
+				
+			case MIN:
+				break;
+				
+			default:
+				return null;		
+		}
+		
+		return null;
+	}
 	
 	/**
 	 * Vector Geometry Methods

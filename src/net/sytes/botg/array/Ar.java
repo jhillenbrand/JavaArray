@@ -1393,6 +1393,31 @@ public class Ar {
 		}
 		return -1;
 	}
+	
+	/**
+	 * searches the indices in {@code x}, where the element of {@code x} is equal to {@code d}
+	 * <br>if no element is found NULL is returned
+	 * @param x
+	 * @param d
+	 * @return
+	 */
+	public static int[] findValues(double[] x, double d) {
+		boolean none = true;
+		int[] inds = new int[x.length];
+		int c = 0;
+		for (int i = 0; i < x.length; i++) {
+			if (x[i] == d) {
+				inds[c] = i;
+				++c;
+				none = false;
+			}
+		}
+		if (none) {
+			return null;
+		}
+		inds = Ar.sub(inds, c - 1);
+		return inds;
+	}
 
 	/**
 	 * returns the index of {@code str} found in {@code ar}
