@@ -707,7 +707,6 @@ public class Ar {
 	}
 
 	/**
-	 * TODO testing
 	 * appends all specified {@code arrays} to a new array consisting of all elements
 	 * @param arrays
 	 * @return
@@ -716,18 +715,17 @@ public class Ar {
 	    int size = 0;
 	    for (double[] a: arrays) {
 	        size += a.length;
-	        double[] res = new double[size];
-	        int destPos = 0;
-	        for ( int i = 0; i < arrays.length; i++ ) {
-	            if ( i > 0 ) {
-	            	destPos += arrays[i-1].length;
-	            }
-	            int length = arrays[i].length;
-	            System.arraycopy(arrays[i], 0, res, destPos, length);
-	        }
-	        return res;
 	    }
-		return null;
+        double[] res = new double[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
 	}
 		
 	/**

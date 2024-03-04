@@ -122,4 +122,28 @@ public class UnitTest_Ar {
 		Ar.print(x_);
 	}
 	
+	@Test
+	public void test040() {
+		double[] x = Vec.linspace(10);
+		
+		double[] y = Vec.linspace(5);
+		
+		double[] z = Ar.append(x, y);
+		
+		Ar.print(z);
+	}
+	
+	@Test
+	public void test041() {
+		double[] a = Vec.linspace(10);
+		
+		double[] b = Vec.linspace(5);
+		
+		double[] c = Vec.linspace(3);
+		
+		double[] d = Ar.append(a, b, c);
+		
+		Ar.print(d);
+	}
+	
 }
