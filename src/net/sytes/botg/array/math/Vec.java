@@ -3728,7 +3728,7 @@ public class Vec {
 		
 		for (int u = 0; u < uniques.length; u++) {
 			
-			Ar.findValue(searchValues, uniques[u]);
+			Ar.findFirst(searchValues, uniques[u]);
 			
 		}
 		

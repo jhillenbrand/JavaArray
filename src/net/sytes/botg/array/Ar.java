@@ -1385,7 +1385,7 @@ public class Ar {
 	 * @param d
 	 * @return
 	 */
-	public static int findValue(double[] x, double d) {
+	public static int findFirst(double[] x, double d) {
 		for (int i = 0; i < x.length; i++) {
 			if (x[i] == d) {
 				return i;
@@ -1401,7 +1401,7 @@ public class Ar {
 	 * @param d
 	 * @return
 	 */
-	public static int[] findValues(double[] x, double d) {
+	public static int[] find(double[] x, double d) {
 		boolean none = true;
 		int[] inds = new int[x.length];
 		int c = 0;

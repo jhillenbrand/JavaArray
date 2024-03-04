@@ -166,7 +166,7 @@ public class UnitTest_Ar {
 		
 		double d = 1.0;
 		
-		int[] inds = Ar.findValues(x, d);
+		int[] inds = Ar.find(x, d);
 		
 		Ar.print(inds);
 		
