@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.jupiter.api.Test;
+
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.spectrum.WindowFunction;
 import net.sytes.botg.array.spectrum.WindowFunction.WindowType;
@@ -1106,8 +1108,7 @@ public class Vec {
 		
 		return y;
 	}
-	
-	
+		
 	/**
 	 * normalization of vector {@code x} with zscore
 	 * @param x
@@ -2979,6 +2980,63 @@ public class Vec {
 		return minInds;
 	}
 	
+	/**
+	 * searches all values in {@code sourceValues} in {@code searchValues} and retrieves the corresponding {@code returnValues} by matching index between {@code searchValues} and  {@code returnValues}
+	 * <br>{@code sourceValues} and {@code searchValues} are assumed to be monotone increasing values (sorted ascending)
+	 * @param sourceValues
+	 * @param targetValues
+	 * @param lookupValues
+	 * @return
+	 */
+	public static double[] mapValues(double[] sourceValues, double[] searchValues, double[] returnValues) {
+		if (searchValues.length != returnValues.length) {
+			throw new IllegalArgumentException("length of searchValues and returnValues must match!");
+		}
+		
+		double[] mappedValues = new double[sourceValues.length];		
+		
+		int lastSearchIndex = 0;
+		
+		for (int i = 0; i < sourceValues.length; i++) {
+			double v1 = sourceValues[i];
+			boolean notFound= true;
+			for (int j = lastSearchIndex; j < searchValues.length; j++) {
+				double v2 = searchValues[j];
+				if (v1 <= v2) {
+					mappedValues[i] = returnValues[j];
+					notFound = false;
+					break;
+				} else {
+					lastSearchIndex = j;
+				}
+			}
+			if (notFound) {
+				mappedValues[i] = returnValues[returnValues.length - 1];
+			}			
+		}
+		
+		return mappedValues;
+	}
+	
+	/**
+	 * searches the closest value in {@code searchValues} for all the values in {@code sourceValues} and retrieves the corresponding {@code returnValues} by matching index
+	 * <br>running time O(n²)
+	 * @param sourceValues
+	 * @param searchValues
+	 * @param returnValues
+	 * @return
+	 */
+	public static double[] mapUnsortedValues(double[] sourceValues, double[] searchValues, double[] returnValues) {
+		if (searchValues.length != returnValues.length) {
+			throw new IllegalArgumentException("length of searchValues and returnValues must match!");
+		}
+		double[] mappedValues = new double[sourceValues.length];
+		for (int i = 0; i < sourceValues.length; i++) {
+			int index = Vec.findClosest(searchValues, sourceValues[i]);
+			mappedValues[i] = returnValues[index];
+		}		
+		return mappedValues;
+	}
 	
 	/**
 	 * ----------------------------------------------------------------------------
@@ -3603,7 +3661,6 @@ public class Vec {
 		return inds;
 	}
 	
-	
 	/**
 	 * returns the knee point {x_kp, y_kp} for the coordinate values of {@code x} and {@code y}	
 	 * @param x
@@ -3637,6 +3694,26 @@ public class Vec {
 			}
 		}	
 		return new double[] {xs[iMax], ys[iMax]};
+	}
+	
+	/**
+	 * returns the index of the closest element of {@code x} for {@code d}
+	 * running time O(n)
+	 * @param x
+	 * @param d
+	 * @return
+	 */
+	public static int findClosest(double[] x, double d) {
+		double diff = Math.abs(x[0] - d);
+		int index = 0;
+		for (int i = 1; i < x.length; i++) {
+			double diff2 = Math.abs(x[i] - d);
+			if (diff2 < diff) {
+				diff = diff2;
+				index = i;
+			}
+		}
+		return index;
 	}
 	
 	

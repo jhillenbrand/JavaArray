@@ -826,4 +826,44 @@ public class UnitTest_Vec {
 		
 	}
 	
+
+	
+	@Test
+	public void test490() {
+		
+		double[] sourceValues = new double[]{0.0, 1.0, 2.0, 3.0};
+		
+		double[] searchValues = new double[]{0.5, 1.1, 1.9, 2.0};
+		double[] returnValues = new double[]{2.5, 5.0, 10.0, 20.0};
+		
+		double[] mappedValues = Vec.mapValues(sourceValues, searchValues, returnValues);
+		
+		Ar.print(mappedValues);
+		
+	}
+	
+	@Test
+	public void test500() {
+		double[] x = Vec.linspace(10);
+		
+		double d = 3.0;
+		
+		Ar.print(x);
+		
+		System.out.println(Vec.findClosest(x, d));
+		
+	}
+	
+	@Test
+	public void test501() {
+		double[] x = Vec.rand(10, 0.0, 10.0);
+		
+		double d = 3.0;
+		
+		Ar.print(x);
+		
+		System.out.println(Vec.findClosest(x, d));
+		
+	}
+	
 }

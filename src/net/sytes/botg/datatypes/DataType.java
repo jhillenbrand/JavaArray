@@ -78,7 +78,7 @@ public enum DataType {
 	 * @param targetType
 	 * @return
 	 */
-	public static Object cast(Object obj, DataType sourceType, DataType targetType) {
+	public static Object cast(Object obj, DataType sourceType, DataType targetType) throws NumberFormatException {
 		String s = null;
 		switch(sourceType) {
 			case BOOLEAN:
