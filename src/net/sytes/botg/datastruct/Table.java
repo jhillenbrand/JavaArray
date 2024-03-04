@@ -1100,10 +1100,6 @@ public class Table implements Cloneable {
 		return s + temp;
 	}
 	
-	public Map<String, List<Object>> toMap(){
-		return this.data;
-	}
-	
 	/**
 	 * on cloning this {@code Table} all columns are added to a new {@code Table}
 	 */
