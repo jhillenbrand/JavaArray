@@ -762,6 +762,10 @@ public class Vec {
 				case MEAN:
 					y[i] = mean(t, x, start, end);
 					break;
+					
+				case MAX:
+					y[i] = max(t, x, start, end);
+					break;
 				
 				default:
 					throw new IllegalArgumentException(Feature.class.getSimpleName() + " " + feature.toString() + " is not implemented!");
@@ -2514,7 +2518,8 @@ public class Vec {
 	}
 		
 	/**
-	 * * returns the sliding mean of {@code x} for non-uniform spacing with {@code t} inside sub array {@code [s, e]}
+	 * returns the sliding mean of {@code x} for non-uniform spacing with {@code t} inside sub array {@code [s, e]}
+	 * and the corresponding new spacing from {@code t} TODO
 	 * <br>computation scheme:
 	 * <br>x&#773;=&sum;<sub>i=s</sub><sup>i=e</sup>x<sub>i</sub>&middot;(t<sub>i+1</sub>-t<sub>i-1</sub>)/(t<sub>e+1</sub>-t<sub>s-1</sub>)
 	 * <br>&#8704; e+1 > n - 1 : t<sub>e+1</sub> = 2&middot;t<sub>e</sub> - t<sub>e-1</sub> and &#8704; s = 0 : t<sub>s - 1</sub> = 2&middot;t<sub>0</sub>-t<sub>1</sub>
@@ -2552,6 +2557,35 @@ public class Vec {
 			sum = sum + x[i] * delta_t / t_ges;
 		}		
 		return sum / (e - s + 1);
+	}
+	
+	/**
+	 * returns the sliding max of {@code x} for non-uniform spacing with {@code t} inside sub array {@code [s, e]}
+	 * and the corresponding new spacing from {@code t} TODO
+	 * <br>computation scheme:
+	 * <br>x<sub>max</sub>=max{x<sub>i=s</sub>, ...x<sub>i=e</sub>}
+	 * <br>t<sub>max</sub>=&sum;<sub>i=s</sub><sup>i=e</sup>t<sub>i</sub>/(e-s+1)
+	 * @param t
+	 * @param x
+	 * @param s
+	 * @param e
+	 * @return
+	 */
+	public static double max(double[] t, double[] x, int s, int e) {
+		Ar.checkForEqualDimensions(t, x);
+		Ar.checkForAtLeastNElements(x, 2);
+		Ar.checkForIndicesInBounds(x, s, e);
+		double sum = 0;
+		double xMax = 0;
+		for (int i = s; i <= e; ++i) {
+			if (x[i] > xMax) {
+				xMax = x[i];
+			}
+			sum = sum + t[i];
+		}		
+		double t_max = sum / (e - s + 1);
+		
+		return xMax;
 	}
 	
 	/**
