@@ -3753,34 +3753,58 @@ public class Vec {
 		return mappedValues;
 	}
 	
-	public static double[][] group(double[] searchValues, double[] returnValues, GroupBy groupBy) {
+	
+	/**
+	 * groups the values in {@code returnValues} that correspond to a 
+	 * 
+	 * <br>Example: 
+	 * <br>double[] searchValues = {1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0};
+	 * <br>double[] returnValues = {0.5, 1.0, 1.5, 1.0, 5.0, 6.0, 6.4, 2.0, 2.4};
+	 * <br>Vec.group(searchValues, returnValues, GroupBy.MEAN);
+	 * <br>>>[[1.0, 2.0, 3.0],
+	 * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.0, 5.8, 3.0]]
+	 * 
+	 * @param searchValues
+	 * @param returnValues
+	 * @param groupBy
+	 * @return
+	 */
+	public static double[][] group(double[] searchValues, double[] returnValues, GroupBy groupBy) throws IllegalArgumentException {		
+		if (searchValues.length != returnValues.length) {
+			throw new IllegalArgumentException("length of arrays searchValues and returnValues must be equal");
+		}
 		
 		double[] uniques = Ar.unique(searchValues);
 		double[][] result = new double[2][];
 		
 		result[0] = uniques;
+		double[] groupedValues = new double[uniques.length];
 		
 		for (int u = 0; u < uniques.length; u++) {
-			
-			Ar.findFirst(searchValues, uniques[u]);
+						
+			int[] foundIndices = Ar.find(searchValues, uniques[u]);
+			double[] values = Ar.elementsAt(searchValues, foundIndices);
+						
+			switch (groupBy) {
+				case MAX:
+					groupedValues[u] = Vec.max(values);
+					break;
+					
+				case MEAN:
+					groupedValues[u] = Vec.mean(values);
+					break;
+					
+				case MIN:
+					groupedValues[u] = Vec.min(values);
+					break;
+					
+				default:
+					return null;		
+			}
 			
 		}
-		
-		switch (groupBy) {
-			case MAX:
-				break;
-				
-			case MEAN:
-				break;
-				
-			case MIN:
-				break;
-				
-			default:
-				return null;		
-		}
-		
-		return null;
+		result[1] = groupedValues;
+		return result;
 	}
 	
 	/**
