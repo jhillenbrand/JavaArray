@@ -336,7 +336,7 @@ public class Table implements Cloneable {
 	 * @param columnData
 	 */
 	public void addColumn(Object[] columnData) {
-		this.addColumn("COL" + (this.getNumberOfColumns()), columnData);
+		this.addColumn("COL" + (this.columns()), columnData);
 	}
 	
 	/**
@@ -351,7 +351,7 @@ public class Table implements Cloneable {
 	}
 	
 	public void addColumn(List<Object> columnData) {
-		String columnName = "COL" + this.getNumberOfColumns();
+		String columnName = "COL" + this.columns();
 		this.addColumn(columnName, columnData);
 	}
 	
@@ -406,8 +406,8 @@ public class Table implements Cloneable {
 	 * @param rowData
 	 */
 	public void addRow(List<Object> rowData) {
-		if (rowData.size() != this.getNumberOfColumns()) {
-			throw new IllegalArgumentException("elements in rowData (" + rowData.size() + ") does not equal the number of columns (" + this.getNumberOfColumns() + ") in this Table");
+		if (rowData.size() != this.columns()) {
+			throw new IllegalArgumentException("elements in rowData (" + rowData.size() + ") does not equal the number of columns (" + this.columns() + ") in this Table");
 		}
 		/*
 		if (this.cloneOnEntry) {
@@ -538,8 +538,8 @@ public class Table implements Cloneable {
 	 * @param data
 	 */
 	public void set(int row, Object[] data) {
-		if (data.length != this.getNumberOfColumns()) {
-			throw new IllegalArgumentException("elements in rowData (" + data.length + ") does not equal the number of columns (" + this.getNumberOfColumns() + ") in this Table");
+		if (data.length != this.columns()) {
+			throw new IllegalArgumentException("elements in rowData (" + data.length + ") does not equal the number of columns (" + this.columns() + ") in this Table");
 		}
 		int c = 0;
 		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
@@ -894,6 +894,14 @@ public class Table implements Cloneable {
 	}
 	
 	/**
+	 * returns the number of rows (maximum) in the {@code Table}
+	 * @return
+	 */
+	public int rows() {
+		return this.getNumberOfElementsInRows();
+	}
+	
+	/**
 	 * returns the largest row number in Table
 	 * @return
 	 */
@@ -911,7 +919,7 @@ public class Table implements Cloneable {
 	 * return the number of columns in Table
 	 * @return
 	 */
-	public int getNumberOfColumns() {
+	public int columns() {
 		if (this.data.isEmpty()) {
 			return 0;
 		} else {
@@ -926,7 +934,7 @@ public class Table implements Cloneable {
 	public int[] size() {
 		int[] s = new int[2];
 		s[0] = this.getNumberOfElementsInRows();
-		s[1] = this.getNumberOfColumns();
+		s[1] = this.columns();
 		return s;
 	}
 	
@@ -936,7 +944,7 @@ public class Table implements Cloneable {
 	 * @return
 	 */
 	public int getNumberOfElements() {
-		return this.getNumberOfElementsInRows() * this.getNumberOfColumns();
+		return this.getNumberOfElementsInRows() * this.columns();
 	}
 	
 	/**
@@ -979,7 +987,7 @@ public class Table implements Cloneable {
 	 * @param column
 	 */
 	public boolean isColumnIndexWithinLimit(int column) {
-		if (this.getNumberOfColumns() > column) {
+		if (this.columns() > column) {
 			return true;
 		} else {
 			return false;
@@ -1011,7 +1019,7 @@ public class Table implements Cloneable {
 	 */
 	private void checkRange(int row, int col, String columnName) {
 		if (!this.isColumnIndexWithinLimit(col)) {
-			throw new IndexOutOfBoundsException("column index (" + col + ") is out of range (max index: " + (this.getNumberOfColumns() - 1) + ")");
+			throw new IndexOutOfBoundsException("column index (" + col + ") is out of range (max index: " + (this.columns() - 1) + ")");
 		}
 		if (!this.isRowIndexWithinLimit(row)) {
 			throw new IndexOutOfBoundsException("row index (" + row + ") is out of range (max index: " + (this.getNumberOfElementsInRows() - 1) + ")");
@@ -1092,7 +1100,7 @@ public class Table implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		String s = Table.class.getSimpleName() + "(" + this.getNumberOfElementsInRows() + ", " + this.getNumberOfColumns() + "):\n";
+		String s = Table.class.getSimpleName() + "(" + this.getNumberOfElementsInRows() + ", " + this.columns() + "):\n";
 		String temp = this.data.toString();
 		temp = temp.replace("], ", "]\n\t");
 		temp = temp.replace("{", "{\n\t");

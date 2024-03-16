@@ -3721,32 +3721,39 @@ public class Vec {
 	
 	public static double[][] group(double[] searchValues, double[] returnValues, GroupBy groupBy) {
 		
-		double[] uniques = Ar.unique(searchValues);
+		double[] uniqueGroups = Ar.unique(searchValues);
+		double[]  uniqueValues = new double[uniqueGroups.length];
 		double[][] result = new double[2][];
 		
-		result[0] = uniques;
+		result[0] = uniqueGroups;
 		
-		for (int u = 0; u < uniques.length; u++) {
+		for (int u = 0; u < uniqueGroups.length; u++) {
 			
-			Ar.findFirst(searchValues, uniques[u]);
+			int[] inds = Ar.find(searchValues, uniqueGroups[u]);
+			double[] groupValues = Ar.elementsAt(returnValues, inds);
+			
+			switch (groupBy) {
+				case MAX:
+					uniqueValues[u] = Vec.max(groupValues);
+					break;
+					
+				case MEAN:
+					uniqueValues[u] = Vec.mean(groupValues);
+					break;
+					
+				case MIN:
+					uniqueValues[u] = Vec.min(groupValues);
+					break;
+					
+				default:
+					return null;		
+			}
 			
 		}
 		
-		switch (groupBy) {
-			case MAX:
-				break;
-				
-			case MEAN:
-				break;
-				
-			case MIN:
-				break;
-				
-			default:
-				return null;		
-		}
+		result[1] = uniqueValues;
 		
-		return null;
+		return result;
 	}
 	
 	/**

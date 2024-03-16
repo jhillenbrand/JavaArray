@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
+import net.sytes.botg.array.math.Vec.GroupBy;
 
 public class UnitTest_Vec {
 
@@ -863,6 +864,18 @@ public class UnitTest_Vec {
 		Ar.print(x);
 		
 		System.out.println(Vec.findClosest(x, d));
+		
+	}
+	
+	@Test
+	public void test510(){
+		
+		double[] x = {1.0, 2.0, 1.0, 3.0, 1.0, 2.0, 2.0, 3.0};
+		double[] y = {3.0, 4.0, 2.0, 10.0, 5.5, 3.0, 2.1, 9.0};
+		
+		double[][] z = Vec.group(x, y, GroupBy.MEAN);
+		
+		Ar.print(z);
 		
 	}
 	
