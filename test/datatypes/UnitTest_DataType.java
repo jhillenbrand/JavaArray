@@ -94,42 +94,42 @@ public class UnitTest_DataType {
 	
 	@Test
 	public void test015() {
-		assertEquals(DataType.dataTypeOf("true"), DataType.BOOLEAN);
+		assertEquals(DataType.of("true"), DataType.BOOLEAN);
 	}
 	
 	@Test
 	public void test016() {
-		assertEquals(DataType.dataTypeOf("ja"), DataType.BOOLEAN);
+		assertEquals(DataType.of("ja"), DataType.BOOLEAN);
 	}
 	
 	@Test
 	public void test017() {
-		assertEquals(DataType.dataTypeOf("1.05"), DataType.DOUBLE);
+		assertEquals(DataType.of("1.05"), DataType.DOUBLE);
 	}
 	
 	@Test
 	public void test018() {
-		assertEquals(DataType.dataTypeOf("1.05a"), DataType.DOUBLE);
+		assertEquals(DataType.of("1.05a"), DataType.DOUBLE);
 	}
 	
 	@Test
 	public void test019() {
-		assertEquals(DataType.dataTypeOf("1.0"), DataType.INT);
+		assertEquals(DataType.of("1.0"), DataType.INT);
 	}
 	
 	@Test
 	public void test020() {
-		assertEquals(DataType.dataTypeOf("124236523452342134"), DataType.LONG);
+		assertEquals(DataType.of("124236523452342134"), DataType.LONG);
 	}
 	
 	@Test
 	public void test021() {
-		assertEquals(DataType.dataTypeOf("12342134"), DataType.INT);
+		assertEquals(DataType.of("12342134"), DataType.INT);
 	}
 	
 	@Test
 	public void test022() {
-		assertEquals(DataType.dataTypeOf("123.12d"), DataType.DOUBLE);
+		assertEquals(DataType.of("123.12d"), DataType.DOUBLE);
 	}
 	
 	@Test

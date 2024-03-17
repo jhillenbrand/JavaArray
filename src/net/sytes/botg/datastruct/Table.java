@@ -784,40 +784,40 @@ public class Table implements Cloneable {
 					break;
 					
 				case EQUAL_OR_GREATER:
-					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.dataTypeOf(filterValue.getClass()), DataType.DOUBLE));				
-					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.dataTypeOf(obj.getClass()), DataType.DOUBLE));
+					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.of(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.of(obj.getClass()), DataType.DOUBLE));
 					if (objVal < fVal) {
 						filteredTable.removeRow(r);
 					}
 					break;
 					
 				case EQUAL_OR_SMALLER:
-					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.dataTypeOf(filterValue.getClass()), DataType.DOUBLE));				
-					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.dataTypeOf(obj.getClass()), DataType.DOUBLE));
+					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.of(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.of(obj.getClass()), DataType.DOUBLE));
 					if (objVal > fVal) {
 						filteredTable.removeRow(r);
 					}
 					break;
 					
 				case GREATER_THAN:
-					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.dataTypeOf(filterValue.getClass()), DataType.DOUBLE));				
-					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.dataTypeOf(obj.getClass()), DataType.DOUBLE));
+					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.of(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.of(obj.getClass()), DataType.DOUBLE));
 					if (objVal <= fVal) {
 						filteredTable.removeRow(r);
 					}
 					break;
 					
 				case SMALLER_THAN:
-					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.dataTypeOf(filterValue.getClass()), DataType.DOUBLE));				
-					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.dataTypeOf(obj.getClass()), DataType.DOUBLE));
+					fVal = (double) Objects.requireNonNull(DataType.cast(filterValue, DataType.of(filterValue.getClass()), DataType.DOUBLE));				
+					objVal = (double) Objects.requireNonNull(DataType.cast(obj, DataType.of(obj.getClass()), DataType.DOUBLE));
 					if (objVal >= fVal) {
 						filteredTable.removeRow(r);
 					}
 					break;
 										
 				case LIKE:
-					sFilter = (String) Objects.requireNonNull(DataType.cast(filterValue, DataType.dataTypeOf(filterValue.getClass()), DataType.STRING));						
-					sObj = (String) Objects.requireNonNull(DataType.cast(obj, DataType.dataTypeOf(obj.getClass()), DataType.STRING));
+					sFilter = (String) Objects.requireNonNull(DataType.cast(filterValue, DataType.of(filterValue.getClass()), DataType.STRING));						
+					sObj = (String) Objects.requireNonNull(DataType.cast(obj, DataType.of(obj.getClass()), DataType.STRING));
 					if (!sObj.contentEquals(sFilter)) {
 						filteredTable.removeRow(r);
 					}

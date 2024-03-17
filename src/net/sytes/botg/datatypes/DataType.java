@@ -68,7 +68,7 @@ public enum DataType {
 	 * @return
 	 */
 	public static Object cast(Object obj, DataType targetType) {
-		return cast(obj, dataTypeOf(obj.getClass()), targetType);
+		return cast(obj, of(obj.getClass()), targetType);
 	}
 	
 	/**
@@ -558,7 +558,7 @@ public enum DataType {
 	public static double[] castToDouble(Object[] objs) {
 		double[] ar = new double[objs.length];
 		for (int i = 0; i < objs.length; i++) {
-			ar[i] = (double) cast(objs[i], dataTypeOf(objs[i]), DataType.DOUBLE);
+			ar[i] = (double) cast(objs[i], of(objs[i]), DataType.DOUBLE);
 		}
 		return ar;
 	}
@@ -569,7 +569,7 @@ public enum DataType {
 	 * @param value
 	 * @return
 	 */
-	public static DataType dataTypeOf(String value) {
+	public static DataType of(String value) {
 		if (value == null) {
 			return null;
 		} else if (isBoolean(value)) {
@@ -590,8 +590,8 @@ public enum DataType {
 	 * @param obj
 	 * @return
 	 */
-	public static DataType dataTypeOf(Object obj) {
-		return dataTypeOf(obj.getClass());
+	public static DataType of(Object obj) {
+		return of(obj.getClass());
 	}
 
 	/**
@@ -766,7 +766,7 @@ public enum DataType {
 		}
 		if (newMap != null) {
 			for (Entry<K, V> entry : map.entrySet()) {
-				newMap.put(entry.getKey(), cast(entry.getValue(), dataTypeOf(entry.getValue()), newType));
+				newMap.put(entry.getKey(), cast(entry.getValue(), of(entry.getValue()), newType));
 			}			
 		}
 		return newMap;
@@ -777,7 +777,7 @@ public enum DataType {
 	 * @param clazz
 	 * @return
 	 */
-	public static DataType dataTypeOf(Class<?> clazz) {
+	public static DataType of(Class<?> clazz) {
 		if (clazz.equals(Double.class) || clazz.equals(double.class) || clazz.equals(Double[].class) || clazz.equals(double[].class)) {
 			return DOUBLE;
 		} else if (clazz.equals(Integer.class) || clazz.equals(int.class) || clazz.equals(Integer[].class) || clazz.equals(int[].class)) {
