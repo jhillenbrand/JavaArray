@@ -786,6 +786,8 @@ public enum DataType {
 			return SHORT;
 		} else if (clazz.equals(Long.class) || clazz.equals(long.class) || clazz.equals(Long[].class) || clazz.equals(long[].class)) {
 			return LONG;
+		} else if (clazz.equals(Character.class) || clazz.equals(char.class) || clazz.equals(Character[].class) || clazz.equals(char[].class)) {
+			return CHAR;
 		} else if (clazz.equals(String.class) || clazz.equals(String[].class)) {
 			return STRING;
 		} else if (clazz.equals(Float.class) || clazz.equals(float.class) || clazz.equals(Float[].class) || clazz.equals(float[].class)) {
