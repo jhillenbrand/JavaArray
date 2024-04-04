@@ -82,7 +82,7 @@ public class CoordSys {
 	}
 	
 	/**
-	 * rotates the {@code base} around 1st axis by angle {@code phi}
+	 * rotates the {@code base} around 1st axis by angle {@code phi} counterclockwise
 	 * @param phi
 	 */
 	public void rot1(double phi) {
@@ -96,7 +96,7 @@ public class CoordSys {
 	}
 	
 	/**
-	 * rotates the {@code base} around 2nd axis by angle {@code phi}
+	 * rotates the {@code base} around 2nd axis by angle {@code phi} counterclockwise
 	 * @param phi
 	 */
 	public void rot2(double phi) {
@@ -110,7 +110,7 @@ public class CoordSys {
 	}
 	
 	/**
-	 * rotates the {@code base} around 3rd axis by angle {@code phi}
+	 * rotates the {@code base} around 3rd axis by angle {@code phi} counterclockwise
 	 * @param phi
 	 */
 	public void rot3(double phi) {
@@ -133,6 +133,18 @@ public class CoordSys {
 		double[][] X_B = Vec.matrix(x_b, 1);
 		double[][] X_ = Mat.product(this.base, X_B);
 		return X_[0];
+	}
+	
+	/**
+	 * transforms the vectors contained in {@code xyz} in the euclidean base system {{1,0,0}, {0,1,0}, {0,0,1}} (or a previous transformed system) into a matrix of vectors {@code XYZ} of this coordinate system
+	 * <br>where {@code xyz}[0] contains all x-values, {@code xyz}[1] contains all y-values and {@code xyz}[2] contains all z-values
+	 * @param xyz
+	 * @return
+	 */
+	public double[][] transform(double[][] xyz){
+		double[][] XYZ = Mat.minus(xyz, this.origin);
+		XYZ = Mat.product(this.base, XYZ);
+		return XYZ;
 	}
 	
 	@Override

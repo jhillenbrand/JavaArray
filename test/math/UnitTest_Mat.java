@@ -656,4 +656,18 @@ public class UnitTest_Mat {
 		Ar.print(A);
 	}
 	
+	@Test
+	public void test120() {
+		
+		double[][] A = Mat.incrementMat(3, 4);
+		double[] x = Vec.linspace(3);
+		
+		double[][] B = Mat.minus(A, x);
+		
+		Ar.print(A);
+		Ar.print(x);
+		Ar.print(B);
+		
+	}
+	
 }
