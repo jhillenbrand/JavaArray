@@ -3477,7 +3477,7 @@ public class Vec {
 	public static void flip(double[] ar) {
 		double tmp;
 		int i = 0;
-		int j = ar.length;
+		int j = ar.length - 1;
         while (j > i) {
             tmp = ar[j];
             ar[j] = ar[i];

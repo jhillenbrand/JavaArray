@@ -172,4 +172,18 @@ public class UnitTest_Ar {
 		
 	}
 	
+	@Test
+	public void test060() {
+		
+		double[][] X = {{1, 1, 1},
+						{1, 0, 1},
+						{0, 1, 1},
+						{1, 1, 1}};
+		
+		double[][] Y = Ar.unique(X);
+		
+		Ar.print(Y);
+		
+	}
+	
 }

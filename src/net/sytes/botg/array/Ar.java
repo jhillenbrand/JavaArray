@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import net.sytes.botg.array.math.Vec;
@@ -1370,12 +1371,36 @@ public class Ar {
 		Ar.checkForNull(x);
 		Ar.checkForEmpty(x);
 		int n = x.length;
-		//HashMap<Double, Double> xu = new LinkedHashMap<Double, Double>();
-		HashMap<Double, Double> xu = new HashMap<Double, Double>();
+		HashMap<Double, Double> xu = new LinkedHashMap<Double, Double>();
+		//HashMap<Double, Double> xu = new HashMap<Double, Double>();
 		for (int i = 0; i < n; i++) {
 			xu.put(x[i], x[i]);
 		}
 		return Ar.unwrap(xu.values().toArray(new Double[xu.size()]));
+	}
+	
+	/**
+	 * returns an matrix with unique elements based on values in {@code X}
+	 * @param X
+	 * @return
+	 */
+	public static double[][] unique(final double[][] X) {
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int n = X.length;
+		HashMap<String, double[]> XU = new LinkedHashMap<String, double[]>();
+		//HashMap<Double[], Double[]> XU = new HashMap<Double[], Double[]>();
+		for (int i = 0; i < n; i++) {
+			XU.put(Arrays.toString(X[i]), X[i]);
+		}
+		Object[] objs = XU.values().toArray();
+		
+		double[][] Y = new double[objs.length][];
+		for (int i = 0; i < Y.length; i++) {
+			Y[i] = (double[]) objs[i];
+		}
+		
+		return Y;
 	}
 
 	/**

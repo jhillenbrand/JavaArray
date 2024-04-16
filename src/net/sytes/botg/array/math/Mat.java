@@ -568,6 +568,28 @@ public class Mat {
 	}
 	
 	/**
+	 * vector subraction x<sub>i</sub> from each matrix element A<sub>ij</sub>
+	 * @param A
+	 * @param x
+	 * @return
+	 */
+	public static double[][] minus(double[][] A, double[] x){
+		if (A.length != x.length) {
+			throw new IllegalArgumentException("First dimension of A[" + A.length + "][" + A[0].length + "] does not match dimension of x[" + x.length + "].");
+		}
+		int r = A.length;
+		int c = A[0].length;
+		double[][] B = new double[r][c];
+		for (int i = 0; i < r; i++) {
+			double d = x[i];
+			for (int j = 0; j < c; j++) {
+				B[i][j] = A[i][j] - d;
+			}
+		}
+		return B;
+	}
+	
+	/**
 	 * returns the matrix multiplication of {@code X} and {@code Y}
 	 * <br>Z<sub>ij</sub> = X<sub>ik</sub>Y<sub>kj</sub>
 	 * <br>using naive approach of 3 nested loops i -> j -> k
