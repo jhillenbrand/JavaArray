@@ -1,6 +1,4 @@
-package net.sytes.botg.array.spectrum;
-
-import net.sytes.botg.array.math.Vec;
+package net.sytes.botg.array.math;
 
 /**
  * Utility class that provides various window types that can be applied on sample vectors

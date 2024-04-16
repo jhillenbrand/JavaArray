@@ -4,11 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 
 import net.sytes.botg.array.Ar;
-import net.sytes.botg.array.spectrum.WindowFunction;
-import net.sytes.botg.array.spectrum.WindowFunction.WindowType;
+import net.sytes.botg.array.math.WindowFunction.WindowType;
 
 /**
  * Collection of methods that operates on vectors (mainly double[]) as method input
@@ -20,6 +18,8 @@ import net.sytes.botg.array.spectrum.WindowFunction.WindowType;
 public class Vec {
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
+	
+	private static final Feature[] ALL_FEATURES = {Feature.SUM, Feature.MIN, Feature.MAX, Feature.MEAN, Feature.SPAN, Feature.MEDIAN, Feature.RMS, Feature.RMSMEAN, Feature.VARIANCE, Feature.SKEWNESS, Feature.KURTOSIS, Feature.CREST, Feature.NORM};
 	
 	public enum Feature {
 		SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM
@@ -110,6 +110,26 @@ public class Vec {
 				return rms(x, s, e);
 			default:
 				return Double.NaN;
+		}
+	}
+	
+	/**
+	 * extracts the specified {@code feature}s from {@code x} and returns them in an {@code double[]} array
+	 * <br>if {@code features} is specified as NULL, then all default {@code Feature}s in {@code ALL_FEATURES} are extracted
+	 * <br>including features like RMS, MEAN, CREST, KURTOSIS, ... 
+	 * @param x
+	 * @param features
+	 * @return
+	 */
+	public static double[] features(double[] x, Feature[] features) {
+		if (features != null) {
+			double[] fx = new double[features.length];
+			for (int f = 0; f < features.length; f++) {
+				fx[f] = feature(x, features[f]);
+			}
+			return fx;
+		} else {
+			return features(x, ALL_FEATURES);
 		}
 	}
 	
