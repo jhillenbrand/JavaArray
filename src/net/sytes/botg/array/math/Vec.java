@@ -19,7 +19,7 @@ public class Vec {
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
 	
-	private static final Feature[] ALL_FEATURES = {Feature.SUM, Feature.MIN, Feature.MAX, Feature.MEAN, Feature.SPAN, Feature.MEDIAN, Feature.RMS, Feature.RMSMEAN, Feature.VARIANCE, Feature.SKEWNESS, Feature.KURTOSIS, Feature.CREST, Feature.NORM};
+	public static final Feature[] ALL_FEATURES = {Feature.SUM, Feature.MIN, Feature.MAX, Feature.MEAN, Feature.SPAN, Feature.MEDIAN, Feature.RMS, Feature.RMSMEAN, Feature.VARIANCE, Feature.SKEWNESS, Feature.KURTOSIS, Feature.CREST, Feature.NORM};
 	
 	public enum Feature {
 		SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM
@@ -3014,29 +3014,17 @@ public class Vec {
 	}
 	
 	/**
-	 * returns the indices of the {@code k} highest elements in the original array {@code ar}
-	 * @param ar
-	 * @param k
+	 * transposes the row vector {@code x} to a column vector in matrix form
+	 * <br>Example:
+	 * <br>[0, 1, 2] --> [[0], [1], [2]]
+	 * @param x
 	 * @return
 	 */
-	public static int[] maxkInd(double[] ar, int k) {
-		int[] sortedInd = bubbleSortInd(ar, false);
-		int[] maxInds = Ar.sub(sortedInd, k);
-		return maxInds;
+	public static double[][] transpose(double[] x){
+		double[][] X = matrix(x, 1);
+		return Mat.transpose(X);
 	}
-	
-	/**
-	 * return the {@code k} smallest elements from {@code ar}
-	 * @param ar
-	 * @param k
-	 * @return
-	 */
-	public static int[] minkInd(double[] ar, int k) {
-		int[] sortedInd = quicksort2(ar);
-		int[] minInds = Ar.sub(sortedInd, k);
-		return minInds;
-	}
-	
+		
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector Permutation Methods
@@ -3560,25 +3548,29 @@ public class Vec {
 	 */
 
 	/**
-	 * return the indices of the k highest elements from ar[]
+	 * returns the indices of the {@code k} highest elements in the original array {@code ar}
 	 * @param ar
 	 * @param k
 	 * @return
 	 */
-	public static int[] maxInd(double[] ar, int k) {
-		int[] sortInds = quicksort2(ar);
-		int[] maxInds = new int[k];
-		int kk = 0;
-		for(int i = sortInds.length - 1; i > 0; i--) {
-			kk = kk + 1;
-			maxInds[kk - 1] = sortInds[i];
-			if(kk == k - 1) {
-				return maxInds;
-			}
-		}
-		return null;
+	public static int[] maxkInd(double[] ar, int k) {
+		int[] sortedInd = bubbleSortInd(ar, false);
+		int[] maxInds = Ar.sub(sortedInd, k);
+		return maxInds;
 	}
 	
+	/**
+	 * return the {@code k} smallest elements from {@code ar}
+	 * @param ar
+	 * @param k
+	 * @return
+	 */
+	public static int[] minkInd(double[] ar, int k) {
+		int[] sortedInd = quicksort2(ar);
+		int[] minInds = Ar.sub(sortedInd, k);
+		return minInds;
+	}	
+		 
 	/**
 	 * searches the first index in {@code x}, where the element of {@code x} is greater or equal than {@code d}
 	 * <br>if equalOrGreater is set to true, the comparison is >= instead of >

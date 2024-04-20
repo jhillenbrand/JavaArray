@@ -438,7 +438,7 @@ public class UnitTest_Vec {
 
 	
 	@Test
-	public void test0151() {
+	public void test151() {
 		
 		int s = 1_000;
 		int n = 100_000;		
@@ -484,7 +484,7 @@ public class UnitTest_Vec {
 		
 		double[] d = Vec.rand(100);
 		
-		double[] dd = Ar.sub(d, 0, 100);
+		double[] dd = Ar.sub(d, 0, 50);
 		
 		System.out.println(Arrays.toString(dd));
 		
@@ -876,6 +876,19 @@ public class UnitTest_Vec {
 		double[][] z = Vec.group(x, y, GroupBy.MEAN);
 		
 		Ar.print(z);
+		
+	}
+	
+	@Test
+	public void test520() {
+		
+		double[] x = Vec.linspace(3);
+		
+		Ar.print(x);
+		
+		double[][] X = Vec.transpose(x);
+		
+		Ar.print(X);
 		
 	}
 	
