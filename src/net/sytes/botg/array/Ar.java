@@ -104,6 +104,32 @@ public class Ar {
     }
 	
 	/**
+	 * appends a {@code prefix} inf front of all elements of {@code stringAr}
+	 * @param stringAr
+	 * @return
+	 */
+	public static String[] prefix(String[] stringAr, String prefix) {
+		String[] newAr = new String[stringAr.length];
+		for (int s = 0; s < stringAr.length; s++) {
+			newAr[s] = prefix + stringAr[s];
+		}
+		return newAr;
+	}
+	
+	/**
+	 * appends a {@code postfix} to all elements of {@code stringAr}
+	 * @param stringAr
+	 * @return
+	 */
+	public static String[] postfix(String[] stringAr, String postfix) {
+		String[] newAr = new String[stringAr.length];
+		for (int s = 0; s < stringAr.length; s++) {
+			newAr[s] = stringAr[s] + postfix;
+		}
+		return newAr;
+	}
+	
+	/**
 	 * convert object[] to double[]
 	 * @param ar
 	 * @return

@@ -21,6 +21,27 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
     	buffers.put(buffer.getId(), buffer);
     	return buffers;
     }
+    
+    /**
+     * creates a {@code Map} of {@code TimedBuffer}s specified by {@code bufferIds}
+     * @param bufferIds
+     * @param dt
+     * @param capacity
+     * @return
+     */
+    public static Map<String, TimedBuffer> toMap(String[] bufferIds, DataType dt, int capacity){
+    	Map<String, TimedBuffer> buffers = new LinkedHashMap<String, TimedBuffer>();
+    	for (String bufferId : bufferIds) {
+    		TimedBuffer buf = new TimedBuffer.Builder()
+    				.id(bufferId)
+    				.capacity(capacity)
+    				.dataType(dt)
+    				.build();
+    		
+    		buffers.put(bufferId, buf);
+    	}
+    	return buffers;
+    }
 	
 	public TimedBuffer() {
 		this(new Builder());
