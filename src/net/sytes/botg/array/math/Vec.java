@@ -19,10 +19,18 @@ public class Vec {
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
 	
-	public static final Feature[] ALL_FEATURES = {Feature.SUM, Feature.MIN, Feature.MAX, Feature.MEAN, Feature.SPAN, Feature.MEDIAN, Feature.RMS, Feature.RMSMEAN, Feature.VARIANCE, Feature.SKEWNESS, Feature.KURTOSIS, Feature.CREST, Feature.NORM};
-	
 	public enum Feature {
-		SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM
+		SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM;
+		
+		public static String[] names() {
+			Feature[] features = Feature.values();
+			String[] names = new String[features.length];
+			for (int f = 0; f < names.length; f++) {
+				names[f] = features[f].name();
+			}
+			return names;
+		}
+		
 	}
 
 	public enum DownsamplingAlgorithm {
@@ -129,7 +137,7 @@ public class Vec {
 			}
 			return fx;
 		} else {
-			return features(x, ALL_FEATURES);
+			return features(x, Feature.values());
 		}
 	}
 	

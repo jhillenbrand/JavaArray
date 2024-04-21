@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import net.sytes.botg.datastruct.Sample;
 import net.sytes.botg.datastruct.TimeSeries;
@@ -41,6 +42,26 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
     		buffers.put(bufferId, buf);
     	}
     	return buffers;
+    }
+    
+    /**
+     * creates an output string for all the {@code buffers} and their data
+     * @param buffers
+     * @return
+     */
+    public static String toString(Map<String, TimedBuffer> buffers) {
+    	StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for (Entry<String, TimedBuffer> entry : buffers.entrySet()) {
+			if (first) {
+				sb.append(entry.getValue().toString(true));			
+				first = false;
+			} else {
+				sb.append("\n");
+				sb.append(entry.getValue().toString(true));			
+			}
+		}
+		return sb.toString();
     }
 	
 	public TimedBuffer() {
