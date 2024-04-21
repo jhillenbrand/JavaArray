@@ -420,12 +420,13 @@ public class Buffer implements IBuffer {
     protected Object[] unsynchronizedToArray() {
 		Object[] elements;
      	final int count = this.count;
+     	final int pullIndex = this.pullIndex;
      	elements = new Object[count];
-        int n = this.elems.length - this.pullIndex;
+        int n = this.elems.length - pullIndex;
         if (count <= n) {
-            System.arraycopy(this.elems, this.pullIndex, elements, 0, count);
+            System.arraycopy(this.elems, pullIndex, elements, 0, count);
         	} else {
-            System.arraycopy(this.elems, this.pullIndex, elements, 0, n);
+            System.arraycopy(this.elems, pullIndex, elements, 0, n);
             System.arraycopy(this.elems, 0, elements, n, count - n);
         }
         return elements;

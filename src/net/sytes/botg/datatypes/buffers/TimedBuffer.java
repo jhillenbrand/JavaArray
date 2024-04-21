@@ -464,16 +464,17 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 		long[] times;
 		Object[] elements;
      	final int count = this.count;
+     	final int pullIndex = this.pullIndex;
      	elements = new Object[count];
      	times = new  long[count];
-        int n = this.elems.length - this.pullIndex;
+        int n = this.elems.length - pullIndex;        
         if (count <= n) {
-            System.arraycopy(this.elems, this.pullIndex, elements, 0, count);
-            System.arraycopy(this.times, this.pullIndex, times, 0, count);
+            System.arraycopy(this.elems, pullIndex, elements, 0, count);
+            System.arraycopy(this.times, pullIndex, times, 0, count);
     	} else { 
-            System.arraycopy(this.elems, this.pullIndex, elements, 0, n);
+            System.arraycopy(this.elems, pullIndex, elements, 0, n);
             System.arraycopy(this.elems, 0, elements, n, count - n);
-            System.arraycopy(this.times, this.pullIndex, times, 0, n);
+            System.arraycopy(this.times, pullIndex, times, 0, n);
             System.arraycopy(this.times, 0, times, n, count - n);
         }
         return new TimeSeries(times, elements);
