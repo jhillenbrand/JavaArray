@@ -385,12 +385,21 @@ public enum DataType {
 					case DOUBLE:
 						// convert , to .
 						s = (String) obj;
-						return Double.parseDouble(s.replace(",", "."));
+						if (s.contains(",")) {
+							s.replace(".", "");
+							s.replace(",", ".");
+						}
+						return Double.parseDouble(s);
 						
 					case FLOAT:
 						// convert , to .
 						s = (String) obj;
-						return Float.parseFloat(s.replace(",", "."));
+						s = (String) obj;
+						if (s.contains(",")) {
+							s.replace(".", "");
+							s.replace(",", ".");
+						}
+						return Float.parseFloat(s);
 						
 					case INT:
 						// convert , to . TODO this is not safe and does not cover all cases
