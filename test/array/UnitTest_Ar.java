@@ -1,6 +1,7 @@
 package array;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Vec;
@@ -183,6 +184,28 @@ public class UnitTest_Ar {
 		double[][] Y = Ar.unique(X);
 		
 		Ar.print(Y);
+		
+	}
+	
+	@Test
+	public void test070() {
+		
+		String[] ar1 = {"a", "A", "a"}; 
+		
+		Assertions.assertFalse(Ar.areAllEqual(ar1));
+		
+		String[] ar2 = {"a", "a", "a"}; 
+		
+		Assertions.assertTrue(Ar.areAllEqual(ar2));
+		
+		Integer[] ar3 = {1, 1, 1};
+		
+		Assertions.assertTrue(Ar.areAllEqual(ar3));
+		
+		int[] ar4 = {1, 1, 1};
+		
+		Assertions.assertTrue(Ar.areAllEqual(ar4));
+		
 		
 	}
 	

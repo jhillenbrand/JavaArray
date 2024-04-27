@@ -1489,6 +1489,188 @@ public class Ar {
 	}
 	
 	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param <T>
+	 * @param ar
+	 * @return
+	 */
+	public static <T> boolean areAllEqual(T[] ar) {
+		if (ar.length > 1) {
+			T elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (!ar[i].equals(elem)) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(int[] ar) {
+		if (ar.length > 1) {
+			int elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(double[] ar) {
+		if (ar.length > 1) {
+			double elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(float[] ar) {
+		if (ar.length > 1) {
+			float elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(long[] ar) {
+		if (ar.length > 1) {
+			long elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(byte[] ar) {
+		if (ar.length > 1) {
+			byte elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(short[] ar) {
+		if (ar.length > 1) {
+			short elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(char[] ar) {
+		if (ar.length > 1) {
+			char elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * checks whether all elements in {@code ar} are the same
+	 * @param ar
+	 * @return
+	 */
+	public static boolean areAllEqual(boolean[] ar) {
+		if (ar.length > 1) {
+			boolean elem = ar[0];
+			for (int i = 1; i < ar.length; i++) {
+				if (ar[i] != elem) {
+					return false;
+				}
+				elem = ar[i];
+			}
+			return true;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
 	 * returns the index of {@code d} found in {@code x}
 	 * <br>if {@code x} does not contain {@code d}, then -1 is returned 
 	 * @param x
