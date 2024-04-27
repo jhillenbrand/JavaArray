@@ -386,8 +386,8 @@ public enum DataType {
 						// convert , to .
 						s = (String) obj;
 						if (s.contains(",")) {
-							s.replace(".", "");
-							s.replace(",", ".");
+							s = s.replace(".", "");
+							s = s.replace(",", ".");
 						}
 						return Double.parseDouble(s);
 						
@@ -396,8 +396,8 @@ public enum DataType {
 						s = (String) obj;
 						s = (String) obj;
 						if (s.contains(",")) {
-							s.replace(".", "");
-							s.replace(",", ".");
+							s = s.replace(".", "");
+							s = s.replace(",", ".");
 						}
 						return Float.parseFloat(s);
 						
@@ -663,12 +663,38 @@ public enum DataType {
 	        return false;
 	    }
 	    try {
+	    	if (str.contains(",")) {
+	    		str = str.replace(".", "");
+	    		str = str.replace(",", ".");
+			}
 	        double d = Double.parseDouble(str);
 	    } catch (NumberFormatException nfe) {
 	        return false;
 	    }
 	    return true;
 	}
+	
+	/**
+	 * return true/false if the specified string can be parsed into a float
+	 * @param str
+	 * @return
+	 */
+	public static boolean isFloat(String str) { 
+		if (str == null) {
+	        return false;
+	    }
+	    try {
+	    	if (str.contains(",")) {
+	    		str = str.replace(".", "");
+	    		str = str.replace(",", ".");
+			}
+	        double f = Float.parseFloat(str);
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
+	    return true;
+	}
+	
 	
 	/**
 	 * return true/false if the specified string can be parsed into a {@code Integer}
