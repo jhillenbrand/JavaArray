@@ -1,5 +1,7 @@
 package net.sytes.botg.datastruct;
 
+import java.util.Map;
+
 import net.sytes.botg.datatypes.DataType;
 
 /**
@@ -8,7 +10,7 @@ import net.sytes.botg.datatypes.DataType;
  */
 public class Address {
 
-	protected String source;
+	protected Map<String, Object> source;
 	protected String address;
 	protected DataType dataType;
 	protected String unit;
@@ -28,13 +30,13 @@ public class Address {
 	
 	public static class Builder {
 		
-		private String source = "";
+		private Map<String, Object> source = null;
 		private String address = "";
 		private DataType dataType = DataType.DOUBLE;
 		private String unit = "";
 		private String description = "";
 
-		public Builder source(String source) {
+		public Builder source(Map<String, Object> source) {
 			this.source = source;
 			return this;
 		}
@@ -117,7 +119,7 @@ public class Address {
 	/**
 	 * @return the source
 	 */
-	public String getSource() {
+	public Map<String, Object> getSource() {
 		return this.source;
 	}
 }
