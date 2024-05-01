@@ -705,8 +705,22 @@ public class Vec {
 		}
 		return (double) sum / x1.length;
 	}
-		
 	
+	/**
+	 * updates existing mean value {@code mean} computed based on {@code n} samples with new datapoints {@code x}
+	 * @return
+	 */
+	public static double updateMean(double mean, int n, double[] x) {
+		double newMean = mean;
+		int newN = n;
+		for (int i = 0; i < x.length; i++) {
+			newMean = 1 / (newN + 1) * (newN * newMean + x[i]);
+			++newN;
+		}
+		return newMean;
+	}
+	
+		
 	/**
 	 * ----------------------------------------------------------------------------
 	 * Vector to Vector
