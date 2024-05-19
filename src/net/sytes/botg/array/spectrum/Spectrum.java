@@ -233,6 +233,29 @@ public class Spectrum {
     	}
 		return fft(c);
     }
+    
+    /**
+     * compute the fft for specified vector in {@code d} by expanding the vector to a length of power of 2
+     * @param d
+     * @return
+     */
+    public static Complex[] fft2(double[] d) {    	
+    	if (d.length < 2) {
+    		throw new IllegalArgumentException("Array must be at least of length 2");
+    	}
+    	
+    	int n = Scalar.nextGreaterExponentForBase2(d.length);
+    	double[] nd = new double[(int) Math.pow(2, n)];
+    	System.arraycopy(d, 0, nd, 0, d.length);
+    	
+    	int rem = nd.length - d.length;
+    	
+    	for (int i = 0; i < rem; i++) {
+    		nd[i + d.length] = d[d.length - 2 - i];
+    	}
+    	
+    	return fft(nd);
+    }
 	
     /**
      *  Radix-2 Cooley-Tukey FFT ALGORITHM

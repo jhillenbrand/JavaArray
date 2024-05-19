@@ -1,8 +1,11 @@
 package spectrum;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import net.sytes.botg.array.math.Vec;
+import net.sytes.botg.array.spectrum.Complex;
 import net.sytes.botg.array.spectrum.Spectrum;
 
 public class UnitTest_Spectrum {
@@ -63,6 +66,17 @@ public class UnitTest_Spectrum {
 		sp = el / n; 
 		
 		System.out.println("FFT -> Sampling Period per Iteration [ns]: " + sp);
+	}
+	
+	@Test
+	public void test010() {
+		
+		double[] d = Vec.rand(10);
+		
+		Complex[] c = Spectrum.fft2(d);
+		
+		System.out.println(Arrays.toString(c));
+		
 	}
 	
 }
