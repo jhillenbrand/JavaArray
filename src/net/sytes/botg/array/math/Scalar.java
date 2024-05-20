@@ -1,6 +1,11 @@
 package net.sytes.botg.array.math;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Random;
+
+import net.sytes.botg.datatypes.DataType;
 
 public class Scalar {
 
@@ -48,6 +53,35 @@ public class Scalar {
 		int scaledXInt = (int) scaledX;
 		double newX = scaledXInt / scale;
 		return newX;
+	}
+	
+	/**
+	 * rounds a double to {@code decimals}
+	 * @param x
+	 * @param decimals
+	 * @return
+	 */
+	public static double roundToDecimals2(double x, int decimals) {		
+		DecimalFormat df = new DecimalFormat("#." + new String(new char[decimals]).replace("\0", "#"));
+		df.setRoundingMode(RoundingMode.CEILING);
+		//String ds = df.format(x);
+		return (double) DataType.cast(df.format(x), DataType.DOUBLE);
+	}
+	
+	/**
+	 * rounds a double to {@code decimals} using {@code BigDecimal}
+	 * <br>slower than other methods, because of String conversion
+	 * @param x
+	 * @param decimals
+	 * @return
+	 */
+	public static double roundToDecimals3(double x, int decimals) {		
+		if (decimals < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(Double.toString(x));
+	    bd = bd.setScale(decimals, RoundingMode.HALF_UP);
+	    
+	    return bd.doubleValue();
 	}
 		
 	/**
