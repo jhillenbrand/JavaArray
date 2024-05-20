@@ -235,8 +235,8 @@ public class Spectrum {
     }
 	
     /**
-     *  Radix-2 Cooley-Tukey FFT ALGORITHM
-     *  compute the FFT of x[], assuming its length n is a power of 2
+     * Radix-2 Cooley-Tukey FFT ALGORITHM
+     * compute the FFT of x[], assuming its length n is a power of 2
      * @param x
      * @see https://www.ams.org/journals/mcom/1965-19-090/S0025-5718-1965-0178586-1/
      * @return

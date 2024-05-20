@@ -425,7 +425,7 @@ public class Vec {
 	public static double mean(double[] x) {
 		return sum(x) / x.length;
 	}
-	
+		
 	/**
 	 * retrieves the mean of subarray {@code x} defined by start index {@code s} and end index {@code e}
 	 * @param x
