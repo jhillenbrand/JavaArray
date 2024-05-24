@@ -629,7 +629,9 @@ public enum DataType {
 			if (isDouble(str)) {
 				return Double.parseDouble(str);
 			}
-			return str;	
+			return str;
+		} else if (obj instanceof Double) {
+			return ((Double) obj).doubleValue();
 		} else {
 			return obj;
 		}	
@@ -662,6 +664,10 @@ public enum DataType {
 		if (str == null) {
 	        return false;
 	    }
+		// rule out strings with leading zeros
+		if (str.length() > 1 && str.startsWith("0")) {
+			return false;
+		}
 	    try {
 	    	if (str.contains(",")) {
 	    		str = str.replace(".", "");
@@ -683,6 +689,9 @@ public enum DataType {
 		if (str == null) {
 	        return false;
 	    }
+		if (str.length() > 1 && str.startsWith("0")) {
+			return false;
+		}
 	    try {
 	    	if (str.contains(",")) {
 	    		str = str.replace(".", "");
@@ -705,6 +714,9 @@ public enum DataType {
 		if (str == null) {
 	        return false;
 	    }
+		if (str.length() > 1 && str.startsWith("0")) {
+			return false;
+		}
 	    try {
 	        int i = Integer.parseInt(str);
 	    } catch (NumberFormatException nfe) {
@@ -722,6 +734,9 @@ public enum DataType {
 		if (str == null) {
 	        return false;
 	    }
+		if (str.length() > 1 && str.startsWith("0")) {
+			return false;
+		}
 	    try {
 	        long lo = Long.parseLong(str);
 	    } catch (NumberFormatException nfe) {
