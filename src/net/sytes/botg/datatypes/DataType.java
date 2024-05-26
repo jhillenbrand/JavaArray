@@ -646,9 +646,9 @@ public enum DataType {
 		if (str == null) {
 	        return false;
 	    }
-	    if (str.toLowerCase().contentEquals("yes") || str.toLowerCase().contentEquals("true") || str.toLowerCase().contentEquals("ja") || str.toLowerCase().contentEquals("1") || str.toLowerCase().contentEquals("y") || str.toLowerCase().contentEquals("j") || str.toLowerCase().contentEquals("ok") || str.toLowerCase().contentEquals("i.o.")) {
+	    if (str.toLowerCase().contentEquals("yes") || str.toLowerCase().contentEquals("true") || str.toLowerCase().contentEquals("ja") || str.toLowerCase().contentEquals("y") || str.toLowerCase().contentEquals("j") || str.toLowerCase().contentEquals("ok") || str.toLowerCase().contentEquals("i.o.")) {
 	    	return true;
-	    } else if (str.toLowerCase().contentEquals("no") || str.toLowerCase().contentEquals("false") || str.toLowerCase().contentEquals("nein") || str.toLowerCase().contentEquals("0") || str.toLowerCase().contentEquals("n") || str.toLowerCase().contentEquals("n.i.o.")) {
+	    } else if (str.toLowerCase().contentEquals("no") || str.toLowerCase().contentEquals("false") || str.toLowerCase().contentEquals("nein") || str.toLowerCase().contentEquals("n") || str.toLowerCase().contentEquals("n.i.o.")) {
 	    	return true;
 	    } else {
 	    	return false;
