@@ -53,6 +53,12 @@ public interface IBuffer {
 	public void clear();
 	
 	/**
+	 * resizes the {@code capacity} of this {@code Buffer}	
+	 * @param capacity
+	 */
+	public void resize(int capacity);
+	
+	/**
 	 * returns the current size (number of elements in the buffer)
 	 * @return
 	 */

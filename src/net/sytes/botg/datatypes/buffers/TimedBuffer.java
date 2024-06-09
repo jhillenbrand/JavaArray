@@ -215,6 +215,19 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 	}
 	
 	/**
+	 * resizes the current capacity of the {@code TimedBuffer} to new {@code capacity}
+	 */
+	@Override
+	public void resize(int capacity) {
+		super.resize(capacity);
+		long[] newTimes = new long[this.capacity];
+		if (this.size() > 0) {
+			System.arraycopy(this.elems, 0, newTimes, 0, this.size());
+		}
+		this.times = newTimes;
+	}
+	
+	/**
      * Inserts {@code time} and {@code element} at tail of {@code TimedBuffer}
      */
     protected void enqueue(long time, Object element) {

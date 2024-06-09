@@ -2,6 +2,7 @@ package net.sytes.botg.datatypes.buffers;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,23 +19,34 @@ public class Buffer implements IBuffer {
 
 	@ConfigOption
 	protected String type = this.getClass().getName();
+	
 	@ConfigOption
 	protected String id;
+	
 	@ConfigOption
 	protected DataType dataType;
+	
 	@ConfigOption
 	protected int capacity;
+	
 	@ConfigOption
 	protected String description;
+	
 	@ConfigOption
 	protected String unit;
+	
+	@ConfigOption
+	protected Object[] initialValues;
 
 	/** The buffered elements */
 	protected Object[] elems;
+	
 	/** items index for next pull */
 	protected int pullIndex;
+	
 	/** items index for push */
 	protected int pushIndex;
+	
 	/** Number of elements in the queue */
 	protected volatile int count;
 
@@ -51,7 +63,7 @@ public class Buffer implements IBuffer {
 	
 	public Buffer(int capacity) {
 		if (capacity <= 0) {
-            throw new IllegalArgumentException("Capacity must be greater than 0.");
+            throw new IllegalArgumentException("capacity must be greater than 0.");
     	}
         this.capacity = capacity;
 		this.elems = new Object[capacity];
@@ -64,6 +76,10 @@ public class Buffer implements IBuffer {
 		this.capacity = builder.capacity;
 		this.description = builder.description;
 		this.unit = builder.unit;
+		this.initialValues = builder.initialValues;
+		if (this.initialValues != null) {
+			
+		}
 	}
 
 	public static class Builder {
@@ -73,6 +89,7 @@ public class Buffer implements IBuffer {
 		private String description = null;
 		private String unit = null;
 		private int capacity = 1;
+		private Object[] initialValues = null;
 
 		public Builder id(String id) {
 			this.id = id;
@@ -96,6 +113,16 @@ public class Buffer implements IBuffer {
 		
 		public Builder capacity(int capacity) {
 			this.capacity = capacity;
+			return this;
+		}
+		
+		public Builder initialValues(Object[] initialValues) {
+			this.initialValues = initialValues;
+			return this;
+		}
+		
+		public Builder initialValues(List<Object> initialValues) {
+			this.initialValues = initialValues.toArray();
 			return this;
 		}
 
@@ -172,6 +199,30 @@ public class Buffer implements IBuffer {
 		this.dequeue(numOfElements);
 	}
 	
+	/**
+	 * resets the {@code Buffer} to its original conditions
+	 */
+	public void reset() {
+		this.clear();
+		this.resize(this.capacity);
+		if (this.initialValues != null) {
+			 this.push(this.initialValues);
+		}
+	}
+
+	/**
+	 * resizes the current capacity of the {@code Buffer} to new {@code capacity}
+	 */
+	@Override
+	public void resize(int capacity) {
+		this.capacity = capacity;
+		Object[] newElems = new Object[this.capacity];
+		if (this.size() > 0) {
+			System.arraycopy(this.elems, 0, newElems, 0, this.size());
+		}
+		this.elems = newElems;
+	}
+	
 	@Override
 	public int size() {
 		return this.count;
@@ -179,7 +230,10 @@ public class Buffer implements IBuffer {
 	
 	@Override
 	public int capacity() {
-		return this.elems.length;
+		if (this.capacity != this.elems.length) {
+			this.resize(this.capacity);
+		}
+		return this.capacity;
 	}
 	
 	@Override
