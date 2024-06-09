@@ -570,8 +570,301 @@ public enum DataType {
 			ar[i] = (double) cast(objs[i], of(objs[i]), DataType.DOUBLE);
 		}
 		return ar;
+	}	
+
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to Double[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Double[] castToDoubleObjects(Object[] objs) {
+		Double[] ar = new Double[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Double) cast(objs[i], of(objs[i]), DataType.DOUBLE);
+		}
+		return ar;
 	}
 	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to float[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static float[] castToFloat(Object[] objs, DataType sourceType) {
+		float[] ar = new float[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (float) cast(objs[i], sourceType, DataType.FLOAT);
+		}
+		return ar;		
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to float[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static float[] castToFloat(Object[] objs) {
+		float[] ar = new float[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (float) cast(objs[i], of(objs[i]), DataType.FLOAT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to Float[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Float[] castToFloatObjects(Object[] objs) {
+		Float[] ar = new Float[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Float) cast(objs[i], of(objs[i]), DataType.FLOAT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to boolean[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static boolean[] castToBoolean(Object[] objs, DataType sourceType) {
+		boolean[] ar = new boolean[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (boolean) cast(objs[i], sourceType, DataType.BOOLEAN);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to boolean[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static boolean[] castToBoolean(Object[] objs) {
+		boolean[] ar = new boolean[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (boolean) cast(objs[i], of(objs[i]), DataType.BOOLEAN);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to Boolean[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Boolean[] castToBooleanObjects(Object[] objs) {
+		Boolean[] ar = new Boolean[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Boolean) cast(objs[i], of(objs[i]), DataType.BOOLEAN);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to int[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static int[] castToInteger(Object[] objs, DataType sourceType) {
+		int[] ar = new int[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (int) cast(objs[i], sourceType, DataType.INT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to int[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static int[] castToInteger(Object[] objs) {
+		int[] ar = new int[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (int) cast(objs[i], of(objs[i]), DataType.INT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to Integer[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Integer[] castToIntegerObjects(Object[] objs) {
+		Integer[] ar = new Integer[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Integer) cast(objs[i], of(objs[i]), DataType.INT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to long[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static long[] castToLong(Object[] objs, DataType sourceType) {
+		long[] ar = new long[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (long) cast(objs[i], sourceType, DataType.LONG);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to long[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static long[] castToLong(Object[] objs) {
+		long[] ar = new long[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (long) cast(objs[i], of(objs[i]), DataType.LONG);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to Long[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Long[] castToLongObjects(Object[] objs) {
+		Long[] ar = new Long[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Long) cast(objs[i], of(objs[i]), DataType.LONG);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to String[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static String[] castToString(Object[] objs, DataType sourceType) {
+		String[] ar = new String[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (String) cast(objs[i], sourceType, DataType.STRING);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to String[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static String[] castToString(Object[] objs) {
+		String[] ar = new String[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (String) cast(objs[i], of(objs[i]), DataType.STRING);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to byte[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static byte[] castToBytes(Object[] objs, DataType sourceType) {
+		byte[] ar = new byte[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (byte) cast(objs[i], sourceType, DataType.BYTE);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to byte[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static byte[] castToBytes(Object[] objs) {
+		byte[] ar = new byte[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (byte) cast(objs[i], of(objs[i]), DataType.BYTE);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to short[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static short[] castToShort(Object[] objs, DataType sourceType) {
+		short[] ar = new short[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (short) cast(objs[i], sourceType, DataType.SHORT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to short[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static short[] castToShort(Object[] objs) {
+		short[] ar = new short[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (short) cast(objs[i], of(objs[i]), DataType.SHORT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to Short[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Short[] castToShortObjects(Object[] objs) {
+		Short[] ar = new Short[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Short) cast(objs[i], of(objs[i]), DataType.SHORT);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to char[] assuming {@code DataType} {@code sourceType} 
+	 * @param objs
+	 * @param sourceType
+	 * @return
+	 */
+	public static char[] castToChar(Object[] objs, DataType sourceType) {
+		char[] ar = new char[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (char) cast(objs[i], sourceType, DataType.CHAR);
+		}
+		return ar;
+	}
+	
+	/**
+	 * converts the {@code Objects[]} in {@code objs} to char[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static char[] castToChar(Object[] objs) {
+		char[] ar = new char[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (char) cast(objs[i], of(objs[i]), DataType.CHAR);
+		}
+		return ar;
+	}
 	
 	/**
 	 * returns the (assumed) {@code DataType} of given String {@code value}

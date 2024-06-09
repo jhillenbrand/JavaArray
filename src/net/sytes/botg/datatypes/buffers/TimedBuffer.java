@@ -2,6 +2,7 @@ package net.sytes.botg.datatypes.buffers;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.Map.Entry;
@@ -9,6 +10,7 @@ import java.util.Map.Entry;
 import net.sytes.botg.datastruct.Sample;
 import net.sytes.botg.datastruct.TimeSeries;
 import net.sytes.botg.datatypes.DataType;
+import net.sytes.botg.datatypes.buffers.Buffer.Builder;
 
 public class TimedBuffer extends Buffer implements ITimedBuffer {
 	
@@ -69,16 +71,18 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 	}
 	
 	public TimedBuffer(int capacity) {
-		if (capacity <= 0) {
-            throw new IllegalArgumentException("Capacity must be greater than 0.");
-    	}
-		this.capacity = capacity;
-		this.elems = new Object[capacity];
+		super(capacity);
 		this.times = new long[capacity];
 	}
 	
+	public TimedBuffer(int capacity, Object[] initialValues) {
+		super(capacity, initialValues);
+		this.times = new long[capacity];
+	}
+	
+	
 	private TimedBuffer(Builder builder) {
-		this(builder.capacity);
+		this(builder.capacity, builder.initialValues);
 		this.id = builder.id;
 		this.dataType = builder.dataType;
 		this.capacity = builder.capacity;
@@ -93,6 +97,7 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 		private String description = null;
 		private String unit = null;
 		private int capacity = 1;
+		private Object[] initialValues = null;
 
 		public Builder id(String id) {
 			this.id = id;
@@ -116,6 +121,16 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 		
 		public Builder capacity(int capacity) {
 			this.capacity = capacity;
+			return this;
+		}
+		
+		public Builder initialValues(Object[] initialValues) {
+			this.initialValues = initialValues;
+			return this;
+		}
+		
+		public Builder initialValues(List<Object> initialValues) {
+			this.initialValues = initialValues.toArray();
 			return this;
 		}
 

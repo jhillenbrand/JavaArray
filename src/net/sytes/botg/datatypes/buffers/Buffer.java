@@ -62,24 +62,28 @@ public class Buffer implements IBuffer {
 	}
 	
 	public Buffer(int capacity) {
+		this(capacity, null);
+	}
+	
+	public Buffer(int capacity, Object[] initialValues) {
 		if (capacity <= 0) {
             throw new IllegalArgumentException("capacity must be greater than 0.");
     	}
         this.capacity = capacity;
 		this.elems = new Object[capacity];
+		this.initialValues = initialValues;
+		if (this.initialValues != null) {
+			
+		}
 	}
 	
 	private Buffer(Builder builder) {
-		this(builder.capacity);
+		this(builder.capacity, builder.initialValues);
 		this.id = builder.id;
 		this.dataType = builder.dataType;
 		this.capacity = builder.capacity;
 		this.description = builder.description;
 		this.unit = builder.unit;
-		this.initialValues = builder.initialValues;
-		if (this.initialValues != null) {
-			
-		}
 	}
 
 	public static class Builder {
