@@ -444,7 +444,9 @@ public class Buffer implements IBuffer {
 		map.put("dataType", this.dataType.toString());
 		map.put("unit", this.unit);
 		map.put("description", this.description);
-		map.put("initialValues", Arrays.asList(this.initialValues));
+		if (this.initialValues != null) {
+			map.put("initialValues", Arrays.asList(this.initialValues));
+		}
 		return map;
 	}
     

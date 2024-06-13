@@ -4064,6 +4064,21 @@ public class Vec {
 	}
 	
 	/**
+	 * returns a long array starting from {@code start} to {@code end} with step size 1
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static long[] linspaceL(int start, int end) {
+		int size = end - start + 1;
+		long[] ar = new long[size];
+		for (int i = 0; i < size; i++) {
+			ar[i] = start + 1 * i;
+		}
+		return ar;
+	}
+	
+	/**
 	 * returns a double array starting from {@code start} with {@code size} steps of {@code step}
 	 * @param start
 	 * @param size
