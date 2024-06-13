@@ -800,6 +800,19 @@ public enum DataType {
 	}
 	
 	/**
+	 * converts the {@code Objects[]} in {@code objs} to Byte[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Byte[] castToByteObjects(Object[] objs) {
+		Byte[] ar = new Byte[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Byte) cast(objs[i], of(objs[i]), DataType.BYTE);
+		}
+		return ar;
+	}
+	
+	/**
 	 * converts the {@code Objects[]} in {@code objs} to short[] assuming {@code DataType} {@code sourceType} 
 	 * @param objs
 	 * @param sourceType
@@ -867,6 +880,19 @@ public enum DataType {
 	}
 	
 	/**
+	 * converts the {@code Objects[]} in {@code objs} to Character[] respect to the underlying {@code objs'} classes
+	 * @param objs
+	 * @return
+	 */
+	public static Character[] castToCharObjects(Object[] objs) {
+		Character[] ar = new Character[objs.length];
+		for (int i = 0; i < objs.length; i++) {
+			ar[i] = (Character) cast(objs[i], of(objs[i]), DataType.CHAR);
+		}
+		return ar;
+	}
+	
+	/**
 	 * returns the (assumed) {@code DataType} of given String {@code value}
 	 * @param value
 	 * @return
@@ -929,7 +955,7 @@ public enum DataType {
 			return obj;
 		}	
 	}
-	
+
 	/**
 	 * return true/false if the specified string can be parsed as {@code boolean}
 	 * @param str

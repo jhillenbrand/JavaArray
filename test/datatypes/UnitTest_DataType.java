@@ -2,12 +2,13 @@ package datatypes;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
-import net.sytes.botg.array.Ar;
 import net.sytes.botg.datatypes.DataType;
 
 public class UnitTest_DataType {
@@ -171,5 +172,6 @@ public class UnitTest_DataType {
 		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
 		
 	}
+	
 	
 }
