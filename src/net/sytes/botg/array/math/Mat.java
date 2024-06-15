@@ -45,6 +45,49 @@ public class Mat {
 		}
 		return xMax;
 	}
+	
+	/**
+	 * returns the maximum values in {@code X} along dimension {@code dim}={1, 2}  
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static double[] max(double[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		double[] max = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			max = new double[n];
+			for (int i = 0; i < n; i++) {
+				double xMax = Double.MIN_VALUE;
+				for (int j = 0; j < m; j++) {
+					if (X[i][j] > xMax) {
+						xMax = X[i][j];
+					}
+				}
+				max[i] = xMax;
+			}
+		} else if (dim == 2){
+			max = new double[X[0].length];
+			for (int j = 0; j < m; j++) {
+				double xMax = Double.MIN_VALUE;
+				for (int i = 0; i < n; i++) {
+					if (X[i][j] > xMax) {
+						xMax = X[i][j];
+					}
+				}
+				max[j] = xMax;
+			}
+		}
+		return max;
+	}
+	
 
 	/**
 	 * return min value of all matrix elements
@@ -1177,8 +1220,7 @@ public class Mat {
 			}		
 		}		
 	}
-	
-	
+		
 	public static String matrixDimensionsToString(double[][] X) {
 		StringBuilder sb = new StringBuilder();
 		int n1 = X[0].length;
