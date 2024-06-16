@@ -22,6 +22,46 @@ public class Mat {
 	}
 	
 	/**
+	 * extracts the specified {@code feature} from {@code X} and returns them in an {@code double[]} array
+	 * @param X
+	 * @param feature
+	 * @return
+	 */
+	public static double[] feature(double[][] X, Feature feature) {
+		if (feature != null) {
+			double[] fx = new double[X.length];
+			for (int i = 0; i < X.length; i++) {
+				fx[i] = Vec.feature(X[i], feature);
+			}
+			return fx;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * extracts the specified {@code feature}s from {@code X} and returns them in an {@code double[][]} array
+	 * <br>if {@code features} is specified as NULL, then all default {@code Feature}s in {@code ALL_FEATURES} are extracted
+	 * <br>including features like RMS, MEAN, CREST, KURTOSIS, ... 
+	 * @param X
+	 * @param features
+	 * @return
+	 */
+	public static double[][] features(double[][] X, Feature[] features) {
+		if (features != null) {
+			double[][] FX = new double[features.length][X.length];
+			for (int f = 0; f < features.length; f++) {
+				for (int i = 0; i < X.length; i++) {
+					FX[f][i] = Vec.feature(X[i], features[f]);
+				}
+			}
+			return FX;
+		} else {
+			return features(X, Feature.values());
+		}
+	}
+	
+	/**
 	 * --------------------------------------------------------------------
 	 * Matrix to Scalar
 	 * --------------------------------------------------------------------
@@ -994,7 +1034,7 @@ public class Mat {
 	
 	
 	/**
-	 * returns a matrix X € R<sup>m x n</sup> with elements increasing from 0 to k = {@code r} * {@code c}
+	 * returns a matrix X ï¿½ R<sup>m x n</sup> with elements increasing from 0 to k = {@code r} * {@code c}
 	 * @param r number of rows
 	 * @param c number of columns
 	 * @return
@@ -1174,6 +1214,153 @@ public class Mat {
 	}
 	
 	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static float[][] appendRows(float[][] X, float[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			float[][] Z = new float[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
+	}
+	
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static long[][] appendRows(long[][] X, long[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			long[][] Z = new long[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
+	}
+	
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static int[][] appendRows(int[][] X, int[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			int[][] Z = new int[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
+	}
+	
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static double[][] appendRows(double[][] X, double[] x){
+		double[][] Y = new double[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
+	
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static float[][] appendRows(float[][] X, float[] x){
+		float[][] Y = new float[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
+		
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static long[][] appendRows(long[][] X, long[] x){
+		long[][] Y = new long[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
+	
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static int[][] appendRows(int[][] X, int[] x){
+		int[][] Y = new int[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}	
+	
+	/**
 	 * appends the matrix {@code X} by matrix {@code Y} as new columns
 	 * <br>if dimensions match
 	 * @param X
@@ -1222,6 +1409,30 @@ public class Mat {
 	}
 		
 	public static String matrixDimensionsToString(double[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+	
+	public static String matrixDimensionsToString(float[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+	
+	public static String matrixDimensionsToString(long[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+	
+	public static String matrixDimensionsToString(int[][] X) {
 		StringBuilder sb = new StringBuilder();
 		int n1 = X[0].length;
 		int m1 = X.length;

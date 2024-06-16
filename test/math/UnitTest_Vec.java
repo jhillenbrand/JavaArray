@@ -108,7 +108,7 @@ public class UnitTest_Vec {
 		
 		System.out.println(Arrays.toString(ar2));
 	}
-	
+		
 	@Test
 	public void test050() {
 		double[] ar = {0.0, 1.0, 2.0, 1.0, 0.0, -1.0, -1.0, 1.0, 0.0, 1.0};
@@ -891,5 +891,45 @@ public class UnitTest_Vec {
 		Ar.print(X);
 		
 	}
+	
+
+	
+	@Test
+	public void test530() {
+		double[] x = Vec.linspace(10);
+		
+		double[] y = Vec.linspace(5);
+		
+		double[] z = Vec.append(x, y);
+		
+		Ar.print(z);
+	}
+	
+	@Test
+	public void test531() {
+		double[] a = Vec.linspace(10);
+		
+		double[] b = Vec.linspace(5);
+		
+		double[] c = Vec.linspace(3);
+		
+		double[] d = Vec.append(a, b, c);
+		
+		Ar.print(d);
+	}
+	
+	@Test
+	public void test532() {
+		double[] a = {};
+		
+		double[] b = Vec.linspace(10);
+		
+		double[] c = Vec.linspace(3);
+		
+		double[] d = Vec.append(a, b, c);
+		
+		Ar.print(d);
+	}
+	
 	
 }

@@ -732,35 +732,12 @@ public class Ar {
 	public static void print(final int[] ar) {
 		System.out.println(Arrays.toString(ar));
 	}
-
-	/**
-	 * appends all specified {@code arrays} to a new array consisting of all elements
-	 * @param arrays
-	 * @return
-	 */
-	public static double[] append(final double[] ... arrays) {
-	    int size = 0;
-	    for (double[] a: arrays) {
-	        size += a.length;
-	    }
-        double[] res = new double[size];
-        int destPos = 0;
-        for ( int i = 0; i < arrays.length; i++ ) {
-            if ( i > 0 ) {
-            	destPos += arrays[i-1].length;
-            }
-            int length = arrays[i].length;
-            System.arraycopy(arrays[i], 0, res, destPos, length);
-        }
-        return res;
-	}
 		
 	/**
 	 * copies the specified array {@code x}
 	 * @param x
 	 * @return
 	 */
-
 	public static double[] copy(double[] x) {
 		return x.clone();
 	}
@@ -771,6 +748,33 @@ public class Ar {
 	 * @return
 	 */
 	public static int[] copy(int[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static long[] copy(long[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static float[] copy(float[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static String[] copy(String[] x) {
 		return x.clone();
 	}
 	
@@ -790,6 +794,26 @@ public class Ar {
 	public static void checkForEmpty(double[] ar) {
 		if (ar.length == 0) {
 			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
+	/**
+	 * checks whether array is empty
+	 * @param ar
+	 */
+	public static void checkForEmpty(float[] ar) {
+		if (ar.length == 0) {
+			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
+	/**
+	 * checks whether matrix is empty
+	 * @param matrix
+	 */
+	public static void checkForEmpty(float[][] matrix) {
+		if (matrix.length == 0) {
+			throw new IllegalArgumentException("matrix must not be empty");
 		}
 	}
 	
@@ -875,6 +899,16 @@ public class Ar {
 	 * @param ar
 	 */
 	public static void checkForNull(double[] ar) {
+		if (ar == null) {
+			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
+	/**
+	 * check if argument not NULL
+	 * @param ar
+	 */
+	public static void checkForNull(float[] ar) {
 		if (ar == null) {
 			throw new IllegalArgumentException("ar must not be null");
 		}
@@ -981,6 +1015,39 @@ public class Ar {
 	}
 	
 	/**
+	 * checks if the matrix passed is null
+	 * @param X
+	 * @throws IllegalArgumentException when the matrix passed is null
+	 */
+	public static void checkForNull(float[][] X) {
+		if (X == null) {
+			throw new IllegalArgumentException("matrix must not be null");
+		}
+	}
+	
+	/**
+	 * checks if the matrix passed is null
+	 * @param X
+	 * @throws IllegalArgumentException when the matrix passed is null
+	 */
+	public static void checkForNull(long[][] X) {
+		if (X == null) {
+			throw new IllegalArgumentException("matrix must not be null");
+		}
+	}
+	
+	/**
+	 * checks if the matrix passed is null
+	 * @param X
+	 * @throws IllegalArgumentException when the matrix passed is null
+	 */
+	public static void checkForNull(int[][] X) {
+		if (X == null) {
+			throw new IllegalArgumentException("matrix must not be null");
+		}
+	}	
+	
+	/**
 	 * checks if none of the matrices passed are null
 	 * @param X
 	 * @throws IllegalArgumentException when one of the matrices passed is null
@@ -1005,6 +1072,30 @@ public class Ar {
 		}
 	}
 	
+	public static void checkForEmpty(long[][] X) {
+		if (X.length == 0) {
+			throw new IllegalArgumentException("matrix X must not be empty");
+		} else {
+			for (int i = 0; i < X.length; i++) {
+				if (X[i].length == 0) {
+					throw new IllegalArgumentException("matrix X must not contain empty vectors");
+				}
+			}
+		}
+	}
+	
+	public static void checkForEmpty(int[][] X) {
+		if (X.length == 0) {
+			throw new IllegalArgumentException("matrix X must not be empty");
+		} else {
+			for (int i = 0; i < X.length; i++) {
+				if (X[i].length == 0) {
+					throw new IllegalArgumentException("matrix X must not contain empty vectors");
+				}
+			}
+		}
+	}
+	
 	public static void checkForEmpty(double[][] ... X) {
 		for (int i = 0; i < X.length; i++) {
 			if (X[i].length == 0) {
@@ -1012,7 +1103,7 @@ public class Ar {
 			}
 		}
 	}
-
+	
 	/**
 	 * prints the 2D object array
 	 * @param ar
@@ -1067,6 +1158,39 @@ public class Ar {
 		return Y;
 	}
 	
+	public static float[][] copy(float[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		float[][] Y = new float[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+	
+	public static int[][] copy(int[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		int[][] Y = new int[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}	
+	
+	public static long[][] copy(long[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		long[][] Y = new long[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+		
 	/**
 	 * returns the matrix as string
 	 * <br>(Format corresponds with MATLAB matrix print out)
@@ -1074,6 +1198,72 @@ public class Ar {
 	 * @return
 	 */
 	public static String toString(double[][] matrix) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(float[][] matrix) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(long[][] matrix) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(int[][] matrix) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < matrix.length; i++) {
 			if (i == matrix.length - 1 && matrix.length != 1) {
@@ -1107,7 +1297,6 @@ public class Ar {
 		}
 		System.out.println(sb.toString());
 	}
-
 	
 	/**
 	 * method returns true/false whether any of the array elements ar are contained in String s
@@ -1276,7 +1465,6 @@ public class Ar {
 		return ar2;
 	}
 	
-
 	/**
 	 * removes {@code start} samples from the beginning of the {@code ar} and {@code end} samples from the end of {@code ar} 
 	 * <br>and returns the result as new double[] array 
@@ -1292,9 +1480,7 @@ public class Ar {
 		}
 		return Ar.sub(ar, start, n - end); 
 	}
-	
-
-	
+		
 	/**
 	 * returns the elements specified with {@code inds} in {@code data} into new array
 	 * @param inds
@@ -1589,7 +1775,6 @@ public class Ar {
 		}
 	}
 	
-
 	/**
 	 * checks whether all elements in {@code ar} are the same
 	 * @param ar

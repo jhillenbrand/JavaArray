@@ -19,20 +19,6 @@ public class Vec {
 	
 	private static final long BETTER_OF_AS_STREAM_SIZE = 100_000_000;
 	
-	public enum Feature {
-		SUM, MIN, MAX, MEAN, SPAN, MEDIAN, RMS, RMSMEAN, VARIANCE, SKEWNESS, KURTOSIS, CREST, NORM;
-		
-		public static String[] names() {
-			Feature[] features = Feature.values();
-			String[] names = new String[features.length];
-			for (int f = 0; f < names.length; f++) {
-				names[f] = features[f].name();
-			}
-			return names;
-		}
-		
-	}
-
 	public enum DownsamplingAlgorithm {
 		BRUTE_FORCE, MAX, MEAN, LARGEST_TRIANGLE_THREE_BUCKETS, LARGEST_TRIANGLE_ONE_BUCKET, LONGEST_LINE_BUCKET
 	}
@@ -4274,6 +4260,116 @@ public class Vec {
 				return y;
 			}
 		}
+	}
+	
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static double[] append(final double[] ... arrays) {
+	    int size = 0;
+	    for (double[] a: arrays) {
+	        size += a.length;
+	    }
+        double[] res = new double[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
+	}
+	
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static float[] append(final float[] ... arrays) {
+	    int size = 0;
+	    for (float[] a: arrays) {
+	        size += a.length;
+	    }
+        float[] res = new float[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
+	}
+	
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static int[] append(final int[] ... arrays) {
+	    int size = 0;
+	    for (int[] a: arrays) {
+	        size += a.length;
+	    }
+        int[] res = new int[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
+	}
+	
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static long[] append(final long[] ... arrays) {
+	    int size = 0;
+	    for (long[] a: arrays) {
+	        size += a.length;
+	    }
+        long[] res = new long[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
+	}
+	
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static String[] append(final String[] ... arrays) {
+	    int size = 0;
+	    for (String[] a: arrays) {
+	        size += a.length;
+	    }
+        String[] res = new String[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
 	}
 	
 	/**

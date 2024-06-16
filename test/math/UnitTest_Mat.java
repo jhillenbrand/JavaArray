@@ -540,59 +540,6 @@ public class UnitTest_Mat {
 	}
 	
 	
-	@Test
-	public void test130() {
-		
-		int n = 100;
-		int r = 20_000;
-		
-		double[][] X = Mat.unitMatrix(n);
-		double[][] Y = null;
-		
-		long st = System.nanoTime();
-		for (int i = 0; i < r; i++) {
-			
-			Y = Ar.copy2(X);
-			
-		}
-		
-		long et = System.nanoTime();
-		double el = et - st;
-		double sp = el / n; 
-		
-		System.out.println("copy2 -> Sampling Period per Element [ns]: " + sp);
-		
-		st = System.nanoTime();
-		for (int i = 0; i < r; i++) {
-			
-			Y = Ar.copy(X);
-			
-		}
-		
-		et = System.nanoTime();
-		el = et - st;
-		sp = el / n; 
-		
-		System.out.println("copy -> Sampling Period per Element [ns]: " + sp);
-		
-		System.out.println("X = [" + X[0].length + ", " + X.length + "], Y = [" + Y[0].length + ", " + Y.length + "]");
-		
-	}
-
-	@Test
-	public void test131() {
-		
-		double[][] X = Mat.unitMatrix(3);
-		
-		double[][] Y = Ar.copy(X);
-		
-		Y[0][0] = 2.0;
-		
-		Ar.print(X);
-		Ar.print(Y);
-		
-	}
-	
 	
 	@Test
 	public void test074() {
@@ -667,6 +614,72 @@ public class UnitTest_Mat {
 		Ar.print(A);
 		Ar.print(x);
 		Ar.print(B);
+		
+	}
+
+	
+	@Test
+	public void test130() {
+		
+		int n = 100;
+		int r = 20_000;
+		
+		double[][] X = Mat.unitMatrix(n);
+		double[][] Y = null;
+		
+		long st = System.nanoTime();
+		for (int i = 0; i < r; i++) {
+			
+			Y = Ar.copy2(X);
+			
+		}
+		
+		long et = System.nanoTime();
+		double el = et - st;
+		double sp = el / n; 
+		
+		System.out.println("copy2 -> Sampling Period per Element [ns]: " + sp);
+		
+		st = System.nanoTime();
+		for (int i = 0; i < r; i++) {
+			
+			Y = Ar.copy(X);
+			
+		}
+		
+		et = System.nanoTime();
+		el = et - st;
+		sp = el / n; 
+		
+		System.out.println("copy -> Sampling Period per Element [ns]: " + sp);
+		
+		System.out.println("X = [" + X[0].length + ", " + X.length + "], Y = [" + Y[0].length + ", " + Y.length + "]");
+		
+	}
+
+	@Test
+	public void test131() {
+		
+		double[][] X = Mat.unitMatrix(3);
+		
+		double[][] Y = Ar.copy(X);
+		
+		Y[0][0] = 2.0;
+		
+		Ar.print(X);
+		Ar.print(Y);
+		
+	}
+	
+	@Test
+	public void test140() {
+		
+		double[][] X = Mat.unitMatrix(3);
+		double[] x = Vec.rand(3);
+		
+		double[][] Y = Mat.appendRows(X, x);
+		
+		Ar.print(Y);
 		
 	}
 	

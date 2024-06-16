@@ -124,43 +124,6 @@ public class UnitTest_Ar {
 	}
 	
 	@Test
-	public void test040() {
-		double[] x = Vec.linspace(10);
-		
-		double[] y = Vec.linspace(5);
-		
-		double[] z = Ar.append(x, y);
-		
-		Ar.print(z);
-	}
-	
-	@Test
-	public void test041() {
-		double[] a = Vec.linspace(10);
-		
-		double[] b = Vec.linspace(5);
-		
-		double[] c = Vec.linspace(3);
-		
-		double[] d = Ar.append(a, b, c);
-		
-		Ar.print(d);
-	}
-	
-	@Test
-	public void test042() {
-		double[] a = {};
-		
-		double[] b = Vec.linspace(10);
-		
-		double[] c = Vec.linspace(3);
-		
-		double[] d = Ar.append(a, b, c);
-		
-		Ar.print(d);
-	}
-	
-	@Test
 	public void test050() {
 		
 		double[] x = new double[] {0.0, 1.0, 9.0, 1.0, 5.0, 4.0, 1.0};
