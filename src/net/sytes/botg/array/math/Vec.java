@@ -2711,17 +2711,17 @@ public class Vec {
 		
 		int n = x.length;
 
-        // first pass
-        double sumx = 0.0, sumy = 0.0, sumx2 = 0.0;
+        // first pass: mean values
+        double sumx = 0.0, sumy = 0.0; //, sumx2 = 0.0;
         for (int i = 0; i < n; i++) {
             sumx  += x[i];
-            sumx2 += x[i]*x[i];
+            //sumx2 += x[i]*x[i];
             sumy  += y[i];
         }
         double xbar = sumx / n;
         double ybar = sumy / n;
 
-        // second pass: compute summary statistics
+        // second pass: compute summary statistics, standard deviation
         double xxbar = 0.0, yybar = 0.0, xybar = 0.0;
         for (int i = 0; i < n; i++) {
             xxbar += (x[i] - xbar) * (x[i] - xbar);
