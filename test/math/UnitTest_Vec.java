@@ -128,6 +128,28 @@ public class UnitTest_Vec {
 		System.out.println(Arrays.toString(inds));
 		
 	}
+
+	@Test
+	public void test052() {
+		
+		double[] d = Vec.rand(100);
+		
+		double[] dd = Ar.sub(d, 0, 50);
+		
+		System.out.println(Arrays.toString(dd));
+		
+	}
+	
+	@Test
+	public void test053() {
+		
+		double[] d = Vec.rand(100);
+		
+		double[] dd = Ar.sub(d, 1, 90);
+		
+		System.out.println(Arrays.toString(dd));
+		
+	}
 	
 	@Test
 	public void test060() {
@@ -166,6 +188,13 @@ public class UnitTest_Vec {
 		
 	}
 	
+	@Test
+	public void test090() {
+		double[] nans = Vec.nan(10);
+		
+		System.out.println(Arrays.toString(nans));
+		
+	}	
 
 	@Test
 	public void test100() {
@@ -470,36 +499,18 @@ public class UnitTest_Vec {
 		
 		System.out.println("" + (t2 - t1) + " [ns]; " + (((double) (t2 - t1)) / (double) n) + "[ns]");
 	}
+	
+	@Test
+	public void test160() {
+		
+		double[] values = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0};
+		int[] index = {0, 1, 0, 2, 3, 1, 2, 0, 3};
+		double[][] groups = Vec.group(values, index);
+		
+		Ar.print(groups);
+		
+	}
 
-	@Test
-	public void test090() {
-		double[] nans = Vec.nan(10);
-		
-		System.out.println(Arrays.toString(nans));
-		
-	}
-	
-	@Test
-	public void test056() {
-		
-		double[] d = Vec.rand(100);
-		
-		double[] dd = Ar.sub(d, 0, 50);
-		
-		System.out.println(Arrays.toString(dd));
-		
-	}
-	
-	@Test
-	public void test057() {
-		
-		double[] d = Vec.rand(100);
-		
-		double[] dd = Ar.sub(d, 1, 90);
-		
-		System.out.println(Arrays.toString(dd));
-		
-	}
 	@Test
 	public void test201() {
 		double[] data = Vec.rand(10000);
@@ -930,6 +941,5 @@ public class UnitTest_Vec {
 		
 		Ar.print(d);
 	}
-	
-	
+		
 }

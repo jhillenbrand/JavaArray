@@ -3775,7 +3775,7 @@ public class Vec {
 	
 	
 	/**
-	 * groups the values in {@code returnValues} that correspond to a 
+	 * groups the values in {@code returnValues} that correspond to the same index in {@code searchValues} and group them with the {@code groupBy} criteria
 	 * 
 	 * <br>Example: 
 	 * <br>double[] searchValues = {1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0};
@@ -3828,6 +3828,33 @@ public class Vec {
 		result[1] = groupedValues;
 		return result;
 	}
+	
+	/**
+	 * groups the {@code values} by {@code index} to a new double matrix where each row represents all values corresponding to each unique index found in {@code index}
+	 * 
+	 * <br>Example: 
+	 * <br>double[] values = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0};
+	 * <br>int[] index = {0, 1, 0, 2, 3, 1, 2, 0, 3};
+	 * <br>Vec.group(values, index);
+	 * <br>>>[[1.0, 3.0, 8.0],
+	 * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.0, 6.0]
+	 * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4.0, 7.0]
+	 * <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5.0, 9.0]]
+	 * 
+	 * @param values
+	 * @param index
+	 * @return
+	 */
+	public static double[][] group(double[] values, int[] index){
+		int[] uIndex = Ar.unique(index);
+		double[][] groups = new double[uIndex.length][];
+		for (int i = 0; i < uIndex.length; i++) {
+			int[] groupIndex = Ar.find(index, uIndex[i]);
+			double[] groupValues = Ar.elementsAt(values, groupIndex);
+			groups[i] = groupValues;
+		}
+		return groups;
+	}	
 	
 	/**
 	 * Vector Geometry Methods

@@ -797,6 +797,12 @@ public class Ar {
 		}
 	}
 	
+	public static void checkForEmpty(int[] ar) {
+		if (ar.length == 0) {
+			throw new IllegalArgumentException("ar must not be empty");
+		}
+	}
+	
 	/**
 	 * checks whether array is empty
 	 * @param ar
@@ -899,6 +905,16 @@ public class Ar {
 	 * @param ar
 	 */
 	public static void checkForNull(double[] ar) {
+		if (ar == null) {
+			throw new IllegalArgumentException("ar must not be null");
+		}
+	}
+	
+	/**
+	 * check if argument not NULL
+	 * @param ar
+	 */
+	public static void checkForNull(int[] ar) {
 		if (ar == null) {
 			throw new IllegalArgumentException("ar must not be null");
 		}
@@ -1592,6 +1608,26 @@ public class Ar {
 	}
 	
 	/**
+	 * returns an array with unique elements based on values of {@code x}
+	 * in ascending numerical order
+	 * @param x
+	 * @return
+	 */
+	public static int[] unique(final int[] x) {
+		Ar.checkForNull(x);
+		Ar.checkForEmpty(x);
+		int n = x.length;
+		HashMap<Integer, Integer> xu = new LinkedHashMap<Integer, Integer>();
+		//HashMap<Double, Double> xu = new HashMap<Double, Double>();
+		for (int i = 0; i < n; i++) {
+			xu.put(x[i], x[i]);
+		}
+		int[] index = Ar.unwrap(xu.values().toArray(new Integer[xu.size()]));
+		Arrays.sort(index);
+		return index;
+	}
+		
+	/**
 	 * returns an matrix with unique elements based on values in {@code X}
 	 * @param X
 	 * @return
@@ -1644,6 +1680,31 @@ public class Ar {
 		int c = 0;
 		for (int i = 0; i < x.length; i++) {
 			if (x[i] == d) {
+				inds[c] = i;
+				++c;
+				none = false;
+			}
+		}
+		if (none) {
+			return null;
+		}
+		inds = Ar.sub(inds, c - 1);
+		return inds;
+	}
+	
+	/**
+	 * searches the indices in {@code x}, where the element of {@code x} is equal to {@code xi}
+	 * <br>if no element is found NULL is returned
+	 * @param x
+	 * @param xi
+	 * @return
+	 */
+	public static int[] find(int[] x, int xi) {
+		boolean none = true;
+		int[] inds = new int[x.length];
+		int c = 0;
+		for (int i = 0; i < x.length; i++) {
+			if (x[i] == xi) {
 				inds[c] = i;
 				++c;
 				none = false;
