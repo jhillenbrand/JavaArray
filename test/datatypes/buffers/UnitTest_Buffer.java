@@ -327,24 +327,24 @@ public class UnitTest_Buffer {
 		Object[] elements = new Object[]{5, 6, 7, 8, 9};
 		buf.push(elements);
 
-		System.out.println(buf.toString());
+		System.out.println(buf.toString(true));
 		
 		buf.push(10);
 		buf.push(11);
 		buf.push(12);
 				
-		System.out.println(buf.toString());
+		System.out.println(buf.toString(true));
 		
-		Object[] deqElems = buf.toArray(false, 3);
+		Object[] deqElems = buf.toArray(false, 4);
 		
-		System.out.println(buf.toString());
+		System.out.println(buf.toString(true));
 		System.out.println(Arrays.toString(deqElems));
 		
 		buf.push(13);
-		System.out.println(buf.toString());
+		System.out.println(buf.toString(true));
 		
 		System.out.println(buf.pull());
-		System.out.println(buf.toString());
+		System.out.println(buf.toString(true));
 		
 	}
 	

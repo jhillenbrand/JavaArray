@@ -354,7 +354,7 @@ public class Buffer implements IBuffer {
             System.arraycopy(delElements, 0, this.elems, this.pullIndex, numOfElements);
         } else {
             System.arraycopy(delElements, 0, this.elems, this.elems.length - n, n);
-            System.arraycopy(delElements, n - 1, this.elems, 0, numOfElements - n);
+            System.arraycopy(delElements, n, this.elems, 0, numOfElements - n);
         }
 		// correct pullIndex and count
         this.pullIndex = this.pullIndex + numOfElements;

@@ -383,9 +383,9 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
             System.arraycopy(delTimes, 0, this.times, this.pullIndex, numOfSamples);
         } else {
             System.arraycopy(delElements, 0, this.elems, this.elems.length - n, n);
-            System.arraycopy(delElements, n - 1, this.elems, 0, numOfSamples - n);
+            System.arraycopy(delElements, n, this.elems, 0, numOfSamples - n);
             System.arraycopy(delTimes, 0, this.times, this.times.length - n, n);
-            System.arraycopy(delTimes, n - 1, this.times, 0, numOfSamples - n);
+            System.arraycopy(delTimes, n, this.times, 0, numOfSamples - n);
         }
 		// correct pullIndex and count
         this.pullIndex = this.pullIndex + numOfSamples;
