@@ -89,7 +89,7 @@ public class UnitTest_Table {
 		t = new Table("C2", c1);
 		System.out.println(t.toJson());	
 		
-		t = new Table(Arrays.asList(c1));
+		t = new Table(c1);
 		System.out.println(t.toJson());	
 		
 		t = new Table("C3", Arrays.asList(c1));

@@ -83,15 +83,7 @@ public class Table implements Cloneable {
 	public Table(String columnName, Object[] ar) {
 		this(columnName, Arrays.asList(ar), DEFAULT_CLONING_BEHAVIOR);
 	}
-	
-	/**
-	 * the object list is stored in data with default columnName
-	 * @param data
-	 */
-	public Table(List<Object> data) {		
-		this("COL0", data, DEFAULT_CLONING_BEHAVIOR);
-	}
-	
+		
 	/**
 	 * the list is stored as columnName in data
 	 * @param columnName
@@ -172,7 +164,18 @@ public class Table implements Cloneable {
 		for (String h : headers) {
 			this.data.put(h, new ArrayList<Object>());
 		}
-	}	
+	}
+	
+	/**
+	 * initializes the Table with empty Columns with the {@code headers} specified
+	 * @param headers
+	 */
+	public Table(List<String> headers){
+		this(DEFAULT_CLONING_BEHAVIOR);
+		for (String h : headers) {
+			this.data.put(h, new ArrayList<Object>());
+		}
+	}
 	
 	/**
 	 * returns the value at {@code column} at row {@code r}
