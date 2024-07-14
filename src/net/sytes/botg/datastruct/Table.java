@@ -273,6 +273,20 @@ public class Table implements Cloneable {
 	}
 	
 	/**
+	 * get the specified row {@code r} data as a {@code Map<String, Object>}, where the key holds the column names
+	 * @param r
+	 * @return
+	 */
+	public Map<String, Object> getRowMap(int r){
+		this.checkRange(r);
+		Map<String, Object> row = new LinkedHashMap<String, Object>();
+		for (Entry<String, List<Object>> entry : this.data.entrySet()) {
+			row.put(entry.getKey(), entry.getValue().get(r));
+		}
+		return row;
+	}
+	
+	/**
 	 * get the column data as list of objects specified by c
 	 * <br>this creates a deep clone of the underlying objects inside the list
 	 * @param c
