@@ -137,6 +137,93 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 		public TimedBuffer build() {
 			return new TimedBuffer(this);
 		}
+		
+		/**
+		 * build {@code n} buffers of the same config
+		 * @param n
+		 * @return
+		 */
+		public Map<String, TimedBuffer> build(int n) {
+			Map<String, TimedBuffer> buffers = new LinkedHashMap<String, TimedBuffer>();
+			for (int i = 0; i < n; i++) {
+				TimedBuffer buffer = new TimedBuffer.Builder()
+					.capacity(this.capacity)
+					.description(this.description)
+					.unit(this.unit)
+					.dataType(this.dataType)
+					.initialValues(this.initialValues)
+					.build();
+				buffers.put(buffer.getId(), buffer);
+			}
+			return buffers;
+		}
+		
+		/**
+		 * build {@code n} buffers of the same config, which id's will be "idPrefix-i"
+		 * <br>Example for {@code n}=2 and idPrefix=BUF --> BUF-1, BUF-2 
+		 * @param n
+		 * @return
+		 */
+		public Map<String, TimedBuffer> build(int n, String idPrefix) {
+			Map<String, TimedBuffer> buffers = new LinkedHashMap<String, TimedBuffer>();
+			for (int i = 0; i < n; i++) {
+				TimedBuffer buffer = new TimedBuffer.Builder()
+					.id(idPrefix + "-" + i)
+					.capacity(this.capacity)
+					.description(this.description)
+					.unit(this.unit)
+					.dataType(this.dataType)
+					.initialValues(this.initialValues)
+					.build();
+				buffers.put(buffer.getId(), buffer);
+			}
+			return buffers;
+		}
+		
+		/**
+		 * build a buffer for each {@code DataType} in {@code dataTypes}
+		 * @param dataTypes
+		 * @return
+		 */
+		public Map<String, TimedBuffer> build(DataType[] dataTypes) {
+			Map<String, TimedBuffer> buffers = new LinkedHashMap<String, TimedBuffer>();
+			for (int i = 0; i < dataTypes.length; i++) {
+				TimedBuffer buffer = new TimedBuffer.Builder()
+					.capacity(this.capacity)
+					.description(this.description)
+					.unit(this.unit)
+					.dataType(dataTypes[i])
+					.initialValues(this.initialValues)
+					.build();
+				buffers.put(buffer.getId(), buffer);
+			}
+			return buffers;
+		}
+		
+		/**
+		 * build a buffer for each {@code DataType} in {@code dataTypes} with id from {@code ids}
+		 * @param dataTypes
+		 * @return
+		 */
+		public Map<String, TimedBuffer> build(String[] ids, DataType[] dataTypes) {
+			if (ids.length != dataTypes.length) {
+				throw new IllegalArgumentException("length of ids (" + ids.length + ") must be the same as dataTypes (" + dataTypes.length + ")");
+			}
+			Map<String, TimedBuffer> buffers = new LinkedHashMap<String, TimedBuffer>();
+			for (int i = 0; i < dataTypes.length; i++) {
+				TimedBuffer buffer = new TimedBuffer.Builder()
+					.id(ids[i])
+					.capacity(this.capacity)
+					.description(this.description)
+					.unit(this.unit)
+					.dataType(dataTypes[i])
+					.initialValues(this.initialValues)
+					.build();
+				buffers.put(buffer.getId(), buffer);
+			}
+			return buffers;
+		}
+		
 	}
 
 	@Override
