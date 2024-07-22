@@ -27,6 +27,11 @@ public class TimeSeries {
 		this.values = values;
 	}
 
+	public TimeSeries(Object[] values) {
+		this.timestamps = null;
+		this.values = values;
+	}
+	
 	public TimeSeries(Long[] t, Object[] v) {
 		this(toPrimitive(t), v);
 	}

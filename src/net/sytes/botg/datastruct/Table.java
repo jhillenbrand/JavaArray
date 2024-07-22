@@ -217,6 +217,18 @@ public class Table implements Cloneable {
 	}
 	
 	/**
+	 * return row with index {@code i} as new {@code Table}
+	 * @param i
+	 * @return
+	 */
+	public Table getRowAsTable(int i) {
+		Table t = new Table();
+		Map<String, Object> map = this.getRowMap(i);
+		t.addRow(map);
+		return t;
+	}
+	
+	/**
 	 * returns row values specified by {@code columnNames} and {@code row} index
 	 * @param columnNames
 	 * @param row
