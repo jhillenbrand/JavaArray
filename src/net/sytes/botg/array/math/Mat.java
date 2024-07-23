@@ -417,7 +417,73 @@ public class Mat {
 		
 		return Y;		
 	}
+	
+	/**
+	 * transposes the matrix {@code X}
+	 * <br>X_ij --> X_ji 
+	 * @param X
+	 * @return
+	 */
+	public static float[][] transpose(float[][] X){
 		
+		int r = X.length;
+		int c = X[0].length;
+		
+		float[][] Y = new float[c][r];
+		
+		for (int i = 0; i < c; i++) {
+			for (int j = 0; j < r; j++) {
+				Y[i][j] = X[j][i];
+			}
+		}
+		
+		return Y;		
+	}
+	
+	/**
+	 * transposes the matrix {@code X}
+	 * <br>X_ij --> X_ji 
+	 * @param X
+	 * @return
+	 */
+	public static int[][] transpose(int[][] X){
+		
+		int r = X.length;
+		int c = X[0].length;
+		
+		int[][] Y = new int[c][r];
+		
+		for (int i = 0; i < c; i++) {
+			for (int j = 0; j < r; j++) {
+				Y[i][j] = X[j][i];
+			}
+		}
+		
+		return Y;		
+	}
+	
+	/**
+	 * transposes the matrix {@code X}
+	 * <br>X_ij --> X_ji 
+	 * @param X
+	 * @return
+	 */
+	public static long[][] transpose(long[][] X){
+		
+		int r = X.length;
+		int c = X[0].length;
+		
+		long[][] Y = new long[c][r];
+		
+		for (int i = 0; i < c; i++) {
+			for (int j = 0; j < r; j++) {
+				Y[i][j] = X[j][i];
+			}
+		}
+		
+		return Y;		
+	}
+	
 	/**
 	 * invert matrix {@code X}
 	 * @param X

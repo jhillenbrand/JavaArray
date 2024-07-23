@@ -457,6 +457,24 @@ public class Ar {
     }
     
     /**
+     * wraps an primitive float[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Float[] wrap(final float[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Float[] result = new Float[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    /**
      * wraps an primitive double[] array into its Object wrapper
      * @param array
      * @return
@@ -1136,6 +1154,15 @@ public class Ar {
 	 * @param matrix
 	 */
 	public static void print(final double[][] matrix) {
+		System.out.println(toString(matrix));
+	}
+	
+	/**
+	 * prints the 2D float array
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 */
+	public static void print(final float[][] matrix) {
 		System.out.println(toString(matrix));
 	}
 	
