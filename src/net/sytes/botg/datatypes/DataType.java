@@ -909,7 +909,7 @@ public enum DataType {
 		} else if (isDouble(value)) {
 			return DataType.DOUBLE;
 		} else {
-			return DataType.OBJECT;
+			return DataType.STRING;
 		}
 	}
 	
