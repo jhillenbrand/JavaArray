@@ -3628,6 +3628,59 @@ public class Vec {
 	}
 	
 	/**
+	 * find all values in {@code x} that are equal or smaller than {@code d}
+	 * @param x
+	 * @param d
+	 * @param equalOrSmaller
+	 * @return
+	 */
+	public static int[] findValuesSmallerThan(double[] x, double d, boolean equalOrSmaller) {
+		int[] indices = new int[x.length];
+		int c = 0;
+		for (int i = 0; i < x.length; i++) {
+			if (equalOrSmaller) {
+				if (x[i] <= d) {
+					indices[c] = i;
+					++c;
+				}
+			} else {
+				if (x[i] < d) {
+					indices[c] = i;
+					++c;
+				}
+			}
+		}		
+		return Ar.sub(indices, c -1);
+	}
+	
+	/**
+	 * find all values in {@code x} that are equal or greater than {@code d}
+	 * @param x
+	 * @param d
+	 * @param equalOrGreater
+	 * @return
+	 */
+	public static int[] findValuesGreaterThan(double[] x, double d, boolean equalOrGreater) {
+		int[] indices = new int[x.length];
+		int c = 0;
+		for (int i = 0; i < x.length; i++) {
+			if (equalOrGreater) {
+				if (x[i] >= d) {
+					indices[c] = i;
+					++c;
+				}
+			} else {
+				if (x[i] > d) {
+					indices[c] = i;
+					++c;
+				}
+			}
+		}		
+		return Ar.sub(indices, c -1);
+	}
+	
+	
+	/**
 	 * returns a boolean[] array containing true for each element in {@code data} that is within the bounds [{@code lowerLimit}, {@code upperLimit}]
 	 * @param data
 	 * @param lowerLimit
