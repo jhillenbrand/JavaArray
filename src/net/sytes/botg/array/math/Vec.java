@@ -1143,6 +1143,22 @@ public class Vec {
 		
 		return y;
 	}
+	
+	/**
+	 * scales the original vector {@code x} into new range using the ratio of {@code yTarget}/{@code xSource}
+	 * @param x
+	 * @param xSource
+	 * @param yTarget
+	 * @return
+	 */
+	public static double[] scale2Target(double[] x, double xSource, double yTarget) {
+		double[] y = new double[x.length];
+		double f = yTarget / xSource;
+		for (int i = 0; i < x.length; i++) {
+			y[i] = x[i] * f;
+		}
+		return y;
+	}
 		
 	/**
 	 * normalization of vector {@code x} with zscore
