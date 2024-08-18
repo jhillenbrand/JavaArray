@@ -1168,6 +1168,33 @@ public enum DataType {
 		}
 	}
 	
+	/**
+	 * returns an array of {@code DataType} based on the {@code List} of {@code classes} specified
+	 * @param classes
+	 * @return
+	 */
+	public static DataType[] of(List<Class<?>> classes) {
+		DataType[] dataTypes = new DataType[classes.size()];
+		for (int d = 0; d < dataTypes.length; d++) {
+			dataTypes[d] = of(classes.get(d));
+		}
+		return dataTypes;
+	}
+	
+
+	/**
+	 * returns an array of {@code DataType} based on the {@code Array} of {@code classes} specified
+	 * @param classes
+	 * @return
+	 */
+	public static DataType[] of(Class<?>[] classes) {
+		DataType[] dataTypes = new DataType[classes.length];
+		for (int d = 0; d < dataTypes.length; d++) {
+			dataTypes[d] = of(classes[d]);
+		}
+		return dataTypes;
+	}
+	
 	public static DataType getIntTypeByBytes(int bytes) {
 		switch (bytes) {
 			case 1:
