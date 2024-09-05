@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.array.math.Mat;
-import net.sytes.botg.array.math.Parallel;
 import net.sytes.botg.array.math.Vec;
 
 public class UnitTest_Mat {
@@ -159,6 +159,31 @@ public class UnitTest_Mat {
 	}
 	
 	@Test
+	public void test074() {
+		
+		double[] x = Vec.linspace(-1.0, 1.0, 10);
+		double[] y = Vec.linspace(-1.0, 1.0, 5);
+		
+		double[][][] XY = Mat.meshgrid(x, y);
+				
+		Ar.print(XY[0]);
+		Ar.print(XY[1]);
+		
+	}
+	
+	@Test
+	public void test075() {
+		double[][] A = Mat.unitMatrix(3);
+		
+		double[] x = new double[] {1, 1, 1};
+		
+		double[] y = Mat.product(A, x);
+		
+		Ar.print(y);
+		
+	}
+	
+	@Test
 	public void test080() {
 		
 		double[][] I = Mat.unitMatrix(3);
@@ -278,7 +303,7 @@ public class UnitTest_Mat {
 		
 		long st = 0;
 		long et = 0;
-		int n = 4096;
+		int n = 1024;
 		int r = 1;
 
 		double[][] A = Mat.ones(n, n);
@@ -360,7 +385,7 @@ public class UnitTest_Mat {
 		
 		long st = 0;
 		long et = 0;
-		int n = 2048;
+		int n = 1024;
 		int r = 1;
 
 		double[][] A = Mat.ones(n, n);
@@ -438,7 +463,7 @@ public class UnitTest_Mat {
 		
 		long st = 0;
 		long et = 0;
-		int n = 20;
+		int n = 10;
 		
 		for (int i = 2; i < n; i++) {
 		
@@ -461,7 +486,7 @@ public class UnitTest_Mat {
 		
 		long st = 0;
 		long et = 0;
-		int n = 20;
+		int n = 10;
 		
 		for (int i = 2; i < n; i++) {
 		
@@ -484,7 +509,7 @@ public class UnitTest_Mat {
 		
 		long st = 0;
 		long et = 0;
-		int n = 20;
+		int n = 10;
 		
 		for (int i = 2; i < n; i++) {
 		
@@ -511,61 +536,8 @@ public class UnitTest_Mat {
 		
 		Ar.print(x);
 		
-	}
-	
-	@Test
-	public void test150() {
-		double[][] X = Mat.incrementMat(3,  3);
-		Ar.print(X);
-	}
-	
-	@Test
-	public void test151() {
-		double[][] X = Mat.incrementMat(2,  5);
-		Ar.print(X);
-	}
-	
-	@Test
-	public void test152() {
-		double[][] X = Mat.incrementMat(5,  3);
-		Ar.print(X);
-	}
-
-	@Test
-	public void test134() {
-		double[][] nans = Mat.nan(10, 2);
+	}	
 		
-		System.out.println(Arrays.deepToString(nans));
-		
-	}
-	
-	
-	
-	@Test
-	public void test074() {
-		
-		double[] x = Vec.linspace(-1.0, 1.0, 10);
-		double[] y = Vec.linspace(-1.0, 1.0, 5);
-		
-		double[][][] XY = Mat.meshgrid(x, y);
-				
-		Ar.print(XY[0]);
-		Ar.print(XY[1]);
-		
-	}
-	
-	@Test
-	public void test075() {
-		double[][] A = Mat.unitMatrix(3);
-		
-		double[] x = new double[] {1, 1, 1};
-		
-		double[] y = Mat.product(A, x);
-		
-		Ar.print(y);
-		
-	}
-	
 	@Test
 	public void test110() {
 		
@@ -670,8 +642,17 @@ public class UnitTest_Mat {
 		Ar.print(Y);
 		
 	}
+
+	@Test
+	public void test134() {
+		double[][] nans = Mat.nan(10, 2);
+		
+		System.out.println(Arrays.deepToString(nans));
+		
+	}
 	
 	@Test
+	@DisplayName("appendRows")
 	public void test140() {
 		
 		double[][] X = Mat.unitMatrix(3);
@@ -680,6 +661,39 @@ public class UnitTest_Mat {
 		double[][] Y = Mat.appendRows(X, x);
 		
 		Ar.print(Y);
+		
+	}
+	
+	@Test
+	@DisplayName("incrementMat - 1")
+	public void test150() {
+		double[][] X = Mat.incrementMat(3,  3);
+		Ar.print(X);
+	}
+	
+	@Test
+	@DisplayName("incrementMat - 2")
+	public void test151() {
+		double[][] X = Mat.incrementMat(2,  5);
+		Ar.print(X);
+	}
+	
+	@Test
+	@DisplayName("incrementMat - 3")
+	public void test152() {
+		double[][] X = Mat.incrementMat(5,  3);
+		Ar.print(X);
+	}
+	
+	@Test
+	@DisplayName("trajectoryMatrix")
+	public void test160() {
+		
+		double[] x = Vec.linspace(9);
+		
+		double[][] X = Mat.trajectoryMatrix(x, 3); 
+		
+		Ar.print(X);
 		
 	}
 	

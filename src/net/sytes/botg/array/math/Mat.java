@@ -1251,6 +1251,27 @@ public class Mat {
 	}
 	
 	/**
+	 * returns the trajectory matrix (Hankel matrix) X for {@code x} and window length {@code L} 
+	 * @see <a href="https://en.wikipedia.org/wiki/Singular_spectrum_analysis">wikipedia</a>
+	 * @param x
+	 * @param L
+	 * @return
+	 */
+	public static double[][] trajectoryMatrix(double[] x, int L){
+		int N = x.length;
+		int K = N - (L - 1);
+		double[][] X = new double[L][K];
+		int s = 0;
+		for (int k = 0; k < K; k++) {			
+			for (int l = 0; l < L; l++) {
+				X[l][k] = x[l + s];
+			}
+			++s;
+		}
+		return X;
+	}
+	
+	/**
 	 * appends the matrix {@code X} by matrix {@code Y} as new rows
 	 * <br>if dimensions match
 	 * @param X
