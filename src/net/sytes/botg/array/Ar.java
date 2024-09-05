@@ -765,6 +765,15 @@ public class Ar {
 	 * @param x
 	 * @return
 	 */
+	public static byte[] copy(byte[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
 	public static int[] copy(int[] x) {
 		return x.clone();
 	}
@@ -793,6 +802,15 @@ public class Ar {
 	 * @return
 	 */
 	public static String[] copy(String[] x) {
+		return x.clone();
+	}
+	
+	/**
+	 * copies the specified array {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static Object[] copy(Object[] x) {
 		return x.clone();
 	}
 	
@@ -1079,7 +1097,29 @@ public class Ar {
 		if (X == null) {
 			throw new IllegalArgumentException("matrix must not be null");
 		}
-	}	
+	}
+	
+	/**
+	 * checks if the matrix passed is null
+	 * @param X
+	 * @throws IllegalArgumentException when the matrix passed is null
+	 */
+	public static void checkForNull(Object[][] X) {
+		if (X == null) {
+			throw new IllegalArgumentException("matrix must not be null");
+		}
+	}
+	
+	/**
+	 * checks if the matrix passed is null
+	 * @param X
+	 * @throws IllegalArgumentException when the matrix passed is null
+	 */
+	public static void checkForNull(byte[][] X) {
+		if (X == null) {
+			throw new IllegalArgumentException("matrix must not be null");
+		}
+	}
 	
 	/**
 	 * checks if none of the matrices passed are null
@@ -1134,6 +1174,30 @@ public class Ar {
 		for (int i = 0; i < X.length; i++) {
 			if (X[i].length == 0) {
 				throw new IllegalArgumentException("ar must not be empty");
+			}
+		}
+	}
+
+	public static void checkForEmpty(Object[][] X) {
+		if (X.length == 0) {
+			throw new IllegalArgumentException("matrix X must not be empty");
+		} else {
+			for (int i = 0; i < X.length; i++) {
+				if (X[i].length == 0) {
+					throw new IllegalArgumentException("matrix X must not contain empty vectors");
+				}
+			}
+		}
+	}
+	
+	public static void checkForEmpty(byte[][] X) {
+		if (X.length == 0) {
+			throw new IllegalArgumentException("matrix X must not be empty");
+		} else {
+			for (int i = 0; i < X.length; i++) {
+				if (X[i].length == 0) {
+					throw new IllegalArgumentException("matrix X must not contain empty vectors");
+				}
 			}
 		}
 	}
@@ -1228,6 +1292,28 @@ public class Ar {
 		Ar.checkForEmpty(X);
 		int r = X.length;
 		long[][] Y = new long[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+	
+	public static Object[][] copy(Object[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		Object[][] Y = new Object[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+	
+	public static byte[][] copy(byte[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		byte[][] Y = new byte[r][];
 		for (int i = 0; i < r; i++) {
 			Y[i] = X[i].clone();
 		}

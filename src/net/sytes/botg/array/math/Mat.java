@@ -1445,7 +1445,22 @@ public class Mat {
 		}
 		Y[Y.length - 1] = x; 
 		return Y;
-	}	
+	}
+	
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static boolean[][] appendRows(boolean[][] X, boolean[] x){
+		boolean[][] Y = new boolean[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
 	
 	/**
 	 * appends the matrix {@code X} by matrix {@code Y} as new columns
