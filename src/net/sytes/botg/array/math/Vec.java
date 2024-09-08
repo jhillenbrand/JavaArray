@@ -4445,6 +4445,50 @@ public class Vec {
         }
         return res;
 	}
+
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static byte[] append(final byte[] ... arrays) {
+	    int size = 0;
+	    for (byte[] a: arrays) {
+	        size += a.length;
+	    }
+	    byte[] res = new byte[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
+	}
+	
+	/**
+	 * appends all specified {@code arrays} to a new array consisting of all elements
+	 * @param arrays
+	 * @return
+	 */
+	public static Object[] append(final Object[] ... arrays) {
+	    int size = 0;
+	    for (Object[] a: arrays) {
+	        size += a.length;
+	    }
+	    Object[] res = new Object[size];
+        int destPos = 0;
+        for ( int i = 0; i < arrays.length; i++ ) {
+            if ( i > 0 ) {
+            	destPos += arrays[i-1].length;
+            }
+            int length = arrays[i].length;
+            System.arraycopy(arrays[i], 0, res, destPos, length);
+        }
+        return res;
+	}
 	
 	/**
 	 * appends all specified {@code arrays} to a new array consisting of all elements

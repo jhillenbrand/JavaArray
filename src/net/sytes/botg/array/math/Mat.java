@@ -128,6 +128,89 @@ public class Mat {
 		return max;
 	}
 	
+	/**
+	 * returns the maximum values in {@code X} along dimension {@code dim}={1, 2}  
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static int[] max(int[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		int[] max = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			max = new int[n];
+			for (int i = 0; i < n; i++) {
+				int xMax = Integer.MIN_VALUE;
+				for (int j = 0; j < m; j++) {
+					if (X[i][j] > xMax) {
+						xMax = X[i][j];
+					}
+				}
+				max[i] = xMax;
+			}
+		} else if (dim == 2){
+			max = new int[X[0].length];
+			for (int j = 0; j < m; j++) {
+				int xMax = Integer.MIN_VALUE;
+				for (int i = 0; i < n; i++) {
+					if (X[i][j] > xMax) {
+						xMax = X[i][j];
+					}
+				}
+				max[j] = xMax;
+			}
+		}
+		return max;
+	}
+	
+	/**
+	 * returns the maximum values in {@code X} along dimension {@code dim}={1, 2}  
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static float[] max(float[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		float[] max = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			max = new float[n];
+			for (int i = 0; i < n; i++) {
+				float xMax = Float.MIN_VALUE;
+				for (int j = 0; j < m; j++) {
+					if (X[i][j] > xMax) {
+						xMax = X[i][j];
+					}
+				}
+				max[i] = xMax;
+			}
+		} else if (dim == 2){
+			max = new float[X[0].length];
+			for (int j = 0; j < m; j++) {
+				float xMax = Float.MIN_VALUE;
+				for (int i = 0; i < n; i++) {
+					if (X[i][j] > xMax) {
+						xMax = X[i][j];
+					}
+				}
+				max[j] = xMax;
+			}
+		}
+		return max;
+	}	
 
 	/**
 	 * return min value of all matrix elements
@@ -1299,6 +1382,35 @@ public class Mat {
 			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
 		}
 	}
+
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static char[][] appendRows(char[][] X, char[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			char[][] Z = new char[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
+	}
 	
 	/**
 	 * appends the matrix {@code X} by matrix {@code Y} as new rows
@@ -1385,7 +1497,94 @@ public class Mat {
 		} else {
 			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
 		}
+	}	
+
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static String[][] appendRows(String[][] X, String[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			String[][] Z = new String[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
 	}
+
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static byte[][] appendRows(byte[][] X, byte[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			byte[][] Z = new byte[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
+	}		
+
+	/**
+	 * appends the matrix {@code X} by matrix {@code Y} as new rows
+	 * <br>if dimensions match
+	 * @param X
+	 * @param Y
+	 * @return
+	 */
+	public static boolean[][] appendRows(boolean[][] X, boolean[][] Y){
+		int c1 = X[0].length;
+		int r1 = X.length;
+		int c2 = Y[0].length;
+		int r2 = Y.length;
+		if (c1 == c2) {
+			boolean[][] Z = new boolean[r1 + r2][c1];
+			int n;
+			for (n = 0; n < r1; n++) {
+				Z[n] = X[n];
+			}
+			int n2 = n;
+			for (n = 0; n < r2; n++) {
+				Z[n2] = Y[n];
+				n2 = n2 + n;
+			}
+			return Z;
+		} else {
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+		}
+	}	
 	
 	/**
 	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
@@ -1462,6 +1661,52 @@ public class Mat {
 		return Y;
 	}
 	
+
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static byte[][] appendRows(byte[][] X, byte[] x){
+		byte[][] Y = new byte[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
+	
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static Object[][] appendRows(Object[][] X, Object[] x){
+		Object[][] Y = new Object[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
+	
+	/**
+	 * creates a new matrix by appending the vector {@code x} to matrix {@code X} as new row
+	 * @param X
+	 * @param x
+	 * @return
+	 */
+	public static String[][] appendRows(String[][] X, String[] x){
+		String[][] Y = new String[X.length + 1][];
+		for (int i = 0; i < X.length; i++) {
+			Y[i] = X[i];
+		}
+		Y[Y.length - 1] = x; 
+		return Y;
+	}
+	
 	/**
 	 * appends the matrix {@code X} by matrix {@code Y} as new columns
 	 * <br>if dimensions match
@@ -1511,6 +1756,38 @@ public class Mat {
 	}
 		
 	public static String matrixDimensionsToString(double[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+	
+	public static String matrixDimensionsToString(char[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+	
+	public static String matrixDimensionsToString(boolean[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+
+	public static String matrixDimensionsToString(String[][] X) {
+		StringBuilder sb = new StringBuilder();
+		int n1 = X[0].length;
+		int m1 = X.length;
+		sb.append("[").append(m1).append("]").append("[").append(n1).append("]");
+		return sb.toString();
+	}
+		
+	public static String matrixDimensionsToString(byte[][] X) {
 		StringBuilder sb = new StringBuilder();
 		int n1 = X[0].length;
 		int m1 = X.length;

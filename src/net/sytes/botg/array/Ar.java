@@ -455,6 +455,78 @@ public class Ar {
         }
         return result;
     }
+
+    /**
+     * wraps an primitive String[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Object[] wrap(final String[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Object[] result = new Object[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    /**
+     * wraps an primitive double[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Short[] wrap(final short[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Short[] result = new Short[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+
+    /**
+     * wraps an primitive char[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Character[] wrap(final char[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Character[] result = new Character[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
+    /**
+     * wraps an primitive byte[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Byte[] wrap(final byte[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Byte[] result = new Byte[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
     
     /**
      * wraps an primitive float[] array into its Object wrapper
@@ -492,6 +564,24 @@ public class Ar {
         return result;
     }
 
+    /**
+     * wraps an primitive double[] array into its Object wrapper
+     * @param array
+     * @return
+     */
+    public static Boolean[] wrap(final boolean[] array) {
+    	if (array == null) {
+            return null;
+        } else if (array.length == 0) {
+            return null;
+        }
+        final Boolean[] result = new Boolean[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
+    }
+    
     /**
      * <p>Converts an array of object Floats to primitives.
      *
@@ -866,6 +956,14 @@ public class Ar {
 			}
 		}
 	}	
+	
+	public static void checkForEmpty(short[] ... x) {
+		for (int i = 0; i < x.length; i++) {
+			if (x[i].length == 0) {
+				throw new IllegalArgumentException("input arrays must not be empty");
+			}
+		}
+	}	
 		
 	/**
 	 * checks if the given {@code inds} are greater than 0
@@ -979,6 +1077,18 @@ public class Ar {
 	}
 	
 	/**
+	 * check if arguments are not NULL
+	 * @param ar
+	 */
+	public static void checkForNull(short[] ... ar) {
+		for (int a = 0; a < ar.length; a++) {
+			if (ar[a] == null) {
+				throw new IllegalArgumentException("arrays must not be NULL");
+			}
+		}
+	}
+	
+	/**
 	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
 	 * @param ar1
 	 * @param ar2
@@ -1006,6 +1116,38 @@ public class Ar {
 			}
 		}
 	}
+	
+	/**
+	 * checks whether specified {@code arrays} have same length
+	 * @param arrays
+	 */
+	public static void checkForEqualDimensions(int[] ... arrays) {
+		if (arrays.length == 0) {
+			throw new IllegalArgumentException("specified arrays were empty");
+		}		
+		int n = arrays[0].length;
+		for (int[] ar : arrays) {
+			if (ar.length != n) {
+				throw new IllegalArgumentException("not all specified arrays have the same length");
+			}
+		}
+	}
+	
+	/**
+	 * checks whether specified {@code arrays} have same length
+	 * @param arrays
+	 */
+	public static void checkForEqualDimensions(float[] ... arrays) {
+		if (arrays.length == 0) {
+			throw new IllegalArgumentException("specified arrays were empty");
+		}		
+		int n = arrays[0].length;
+		for (float[] ar : arrays) {
+			if (ar.length != n) {
+				throw new IllegalArgumentException("not all specified arrays have the same length");
+			}
+		}
+	}	
 	
 	/**
 	 * checks for equal dimensions of both arguments and throws {@code IllegalArgumentException} if not true
@@ -1309,11 +1451,33 @@ public class Ar {
 		return Y;
 	}
 	
+	public static String[][] copy(String[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		String[][] Y = new String[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+	
 	public static byte[][] copy(byte[][] X){
 		Ar.checkForNull(X);
 		Ar.checkForEmpty(X);
 		int r = X.length;
 		byte[][] Y = new byte[r][];
+		for (int i = 0; i < r; i++) {
+			Y[i] = X[i].clone();
+		}
+		return Y;
+	}
+	
+	public static short[][] copy(short[][] X){
+		Ar.checkForNull(X);
+		Ar.checkForEmpty(X);
+		int r = X.length;
+		short[][] Y = new short[r][];
 		for (int i = 0; i < r; i++) {
 			Y[i] = X[i].clone();
 		}
@@ -1327,6 +1491,50 @@ public class Ar {
 	 * @return
 	 */
 	public static String toString(double[][] matrix) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		return sb.toString();
+	}
+		
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(boolean[][] matrix) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix.length; i++) {
+			if (i == matrix.length - 1 && matrix.length != 1) {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", ""));
+			} else if (matrix.length == 1) {
+				sb.append(Arrays.toString(matrix[i]));
+			} else if (i == 0) {
+				sb.append(Arrays.toString(matrix[i]).replace("]", ";\n"));
+			} else {
+				sb.append(" " + Arrays.toString(matrix[i]).replace("[", "").replace("]", ";\n"));
+			}
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * returns the matrix as string
+	 * <br>(Format corresponds with MATLAB matrix print out)
+	 * @param matrix
+	 * @return
+	 */
+	public static String toString(byte[][] matrix) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < matrix.length; i++) {
 			if (i == matrix.length - 1 && matrix.length != 1) {
