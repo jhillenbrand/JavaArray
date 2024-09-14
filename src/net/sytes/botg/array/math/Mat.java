@@ -211,7 +211,247 @@ public class Mat {
 		}
 		return max;
 	}	
+	
+	/**
+	 * rms values of {@code X} along dimension {@code dim}
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static double[] rms(double[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		double[] rms = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			rms = new double[n];
+			for (int i = 0; i < n; i++) {
+				double rmsSum = 0;
+				for (int j = 0; j < m; j++) {
+					rmsSum = rmsSum + X[i][j] * X[i][j];
+				}
+				rms[i] = Math.sqrt(rmsSum / m);
+			}
+		} else if (dim == 2) {
+			rms = new double[m];
+			for (int j = 0; j < m; j++) {
+				double rmsSum = 0;
+				for (int i = 0; i < n; i++) {
+					rmsSum = rmsSum + X[i][j] * X[i][j];
+				}
+				rms[j] = Math.sqrt(rmsSum / n);
+			}
+		}
+		return rms;
+	}
+	
+	/**
+	 * rms values of {@code X} along dimension {@code dim}
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static float[] rms(float[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		float[] rms = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			rms = new float[n];
+			for (int i = 0; i < n; i++) {
+				float rmsSum = 0;
+				for (int j = 0; j < m; j++) {
+					rmsSum = rmsSum + X[i][j] * X[i][j];
+				}
+				rms[i] = (float) Math.sqrt(rmsSum / m);
+			}
+		} else if (dim == 2) {
+			rms = new float[m];
+			for (int j = 0; j < m; j++) {
+				float rmsSum = 0;
+				for (int i = 0; i < n; i++) {
+					rmsSum = rmsSum + X[i][j] * X[i][j];
+				}
+				rms[j] = (float) Math.sqrt(rmsSum / n);
+			}
+		}
+		return rms;
+	}
+	
+	/**
+	 * rms values of {@code X} along dimension {@code dim}
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static int[] rms(int[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		int[] rms = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			rms = new int[n];
+			for (int i = 0; i < n; i++) {
+				int rmsSum = 0;
+				for (int j = 0; j < m; j++) {
+					rmsSum = rmsSum + X[i][j] * X[i][j];
+				}
+				rms[i] = (int) Math.sqrt(rmsSum / m);
+			}
+		} else if (dim == 2) {
+			rms = new int[m];
+			for (int j = 0; j < m; j++) {
+				int rmsSum = 0;
+				for (int i = 0; i < n; i++) {
+					rmsSum = rmsSum + X[i][j] * X[i][j];
+				}
+				rms[j] = (int) Math.sqrt(rmsSum / n);
+			}
+		}
+		return rms;
+	}
 
+	/**
+	 * returns the minimum values in {@code X} along dimension {@code dim}={1, 2}  
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static double[] min(double[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		double[] min = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			min = new double[n];
+			for (int i = 0; i < n; i++) {
+				double xMin = Double.MAX_VALUE;
+				for (int j = 0; j < m; j++) {
+					if (X[i][j] < xMin) {
+						xMin = X[i][j];
+					}
+				}
+				min[i] = xMin;
+			}
+		} else if (dim == 2){
+			min = new double[X[0].length];
+			for (int j = 0; j < m; j++) {
+				double xMin = Double.MAX_VALUE;
+				for (int i = 0; i < n; i++) {
+					if (X[i][j] < xMin) {
+						xMin = X[i][j];
+					}
+				}
+				min[j] = xMin;
+			}
+		}
+		return min;
+	}
+
+	/**
+	 * returns the minimum values in {@code X} along dimension {@code dim}={1, 2}  
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static float[] min(float[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		float[] min = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			min = new float[n];
+			for (int i = 0; i < n; i++) {
+				float xMin = Float.MAX_VALUE;
+				for (int j = 0; j < m; j++) {
+					if (X[i][j] < xMin) {
+						xMin = X[i][j];
+					}
+				}
+				min[i] = xMin;
+			}
+		} else if (dim == 2){
+			min = new float[X[0].length];
+			for (int j = 0; j < m; j++) {
+				float xMin = Float.MAX_VALUE;
+				for (int i = 0; i < n; i++) {
+					if (X[i][j] < xMin) {
+						xMin = X[i][j];
+					}
+				}
+				min[j] = xMin;
+			}
+		}
+		return min;
+	}
+
+	/**
+	 * returns the minimum values in {@code X} along dimension {@code dim}={1, 2}  
+	 * @param X
+	 * @param dim
+	 * @return
+	 */
+	public static int[] min(int[][] X, int dim) {
+		if (dim != 1 && dim != 2) {
+			throw new IllegalArgumentException("dim must either be 1 or 2");
+		}		
+		Ar.checkForEqualDimensions(X);
+		
+		int[] min = null;
+		int n = X.length;
+		int m = X[0].length;
+		
+		if (dim == 1) {
+			min = new int[n];
+			for (int i = 0; i < n; i++) {
+				int xMin = Integer.MAX_VALUE;
+				for (int j = 0; j < m; j++) {
+					if (X[i][j] < xMin) {
+						xMin = X[i][j];
+					}
+				}
+				min[i] = xMin;
+			}
+		} else if (dim == 2){
+			min = new int[X[0].length];
+			for (int j = 0; j < m; j++) {
+				int xMin = Integer.MAX_VALUE;
+				for (int i = 0; i < n; i++) {
+					if (X[i][j] < xMin) {
+						xMin = X[i][j];
+					}
+				}
+				min[j] = xMin;
+			}
+		}
+		return min;
+	}
+	
 	/**
 	 * return min value of all matrix elements
 	 * @param X

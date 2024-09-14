@@ -172,6 +172,56 @@ public class Vec {
 	}
 	
 	/**
+	 * returns the span value of {@code x}
+	 *<br>Example:
+	 *<br>span({1.0, 2.5, 3.4}) --&gt; 3.4 - 1.0 = 2.4 
+	 * @param x
+	 * @return
+	 */
+	public static float span(float[] x) {
+		float maxVal = x[0];
+		float minVal = x[0];
+		for(float f : x) {
+			if(maxVal > f) {
+				// do nothing
+			} else {
+				maxVal = f;
+			}
+			if(minVal > f) {
+				minVal = f;
+			} else {
+				// do nothing
+			}
+		}
+		return maxVal - minVal;
+	}
+
+	/**
+	 * returns the span value of {@code x}
+	 *<br>Example:
+	 *<br>span({1, 2, 3}) --&gt; 3 - 1 = 2 
+	 * @param x
+	 * @return
+	 */
+	public static int span(int[] x) {
+		int maxVal = x[0];
+		int minVal = x[0];
+		for(int i : x) {
+			if(maxVal > i) {
+				// do nothing
+			} else {
+				maxVal = i;
+			}
+			if(minVal > i) {
+				minVal = i;
+			} else {
+				// do nothing
+			}
+		}
+		return maxVal - minVal;
+	}
+	
+	/**
 	 * retrieves the maximum in {@code x}
 	 * @param x
 	 * @return
@@ -333,6 +383,19 @@ public class Vec {
 		}
 		return sum;
 	}
+
+	/**
+	 * sum of {@code x}
+	 * @param x
+	 * @return
+	 */
+	public static float sum(float[] x) {
+		float sum = 0;
+		for(float f : x) {
+			sum = sum + f;
+		}
+		return sum;
+	}
 	
 	/**
 	 * sum of {@code x} based on Streams
@@ -375,6 +438,42 @@ public class Vec {
 	}
 	
 	/**
+	 * computes the median
+	 * @param x
+	 * @return
+	 */
+	public static float median(float x[]) {
+		// array must be cloned before sorting, otherwise the original array is sorted
+		float[] x_c = x.clone();
+		Arrays.sort(x_c);
+		float med = 0;
+		if (x_c.length % 2 == 0) {
+		    med = (x_c[x_c.length / 2] + x_c[x_c.length / 2 - 1]) / 2;
+		} else {
+		    med = x_c[x_c.length / 2];
+		}
+		return med;
+	}
+
+	/**
+	 * computes the median
+	 * @param x
+	 * @return
+	 */
+	public static int median(int x[]) {
+		// array must be cloned before sorting, otherwise the original array is sorted
+		int[] x_c = x.clone();
+		Arrays.sort(x_c);
+		int med = 0;
+		if (x_c.length % 2 == 0) {
+		    med = (x_c[x_c.length / 2] + x_c[x_c.length / 2 - 1]) / 2;
+		} else {
+		    med = x_c[x_c.length / 2];
+		}
+		return med;
+	}	
+	
+	/**
 	 * computes the median for the elements in {@code x} from index {@code s} to {@code e}
 	 * @param x
 	 * @param s
@@ -410,6 +509,24 @@ public class Vec {
 	 */
 	public static double mean(double[] x) {
 		return sum(x) / x.length;
+	}
+	
+	/**
+	 * computes the mean value of the given {@code x}
+	 * @param x
+	 * @return double
+	 */
+	public static float mean(float[] x) {
+		return sum(x) / x.length;
+	}
+
+	/**
+	 * computes the mean value of the given {@code x}
+	 * @param x
+	 * @return double
+	 */
+	public static int mean(int[] x) {
+		return (int) (sum(x) / x.length);
 	}
 		
 	/**
