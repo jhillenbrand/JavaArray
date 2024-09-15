@@ -145,7 +145,33 @@ public class Spectrum {
         }
         return y;
     }
-		
+	
+    /**
+     * computes the mean frequency of {@code x} based on {@code sampleRate}<br>
+     * f<sub>mean</sub>=&sum;<sub>i=0</sub><sup>n</sup>(I<sub>i</sub>*f<sub>i</sub>)/&sum;<sub>i=0</sub><sup>n</sup>I<sub>i</sub><br>
+     * where<br> 
+     * n = number of frequency bins<br>
+     * f<sub>i</sub> = frequency at bin i<br>
+     * I<sub>i</sub> = frequency Intensity of spectrum at bin i
+     * @param x
+     * @param sampleRate
+     * @return
+     */
+    public static double meanFrequency(double[] x, double sampleRate) {
+    	double[] psd = powerSpectralDensity(x, sampleRate);
+    	int n = psd.length;
+    	double psdSum= 0.0;
+    	double fSum = 0.0;
+    	double f = 0.0;
+    	for (int i = 0; i < n; i++) {
+    		f = ((double) i / (double) (n - 1) * sampleRate / 2);
+    		fSum = fSum + f * psd[i];
+    		psdSum = psdSum + psd[i];
+    	}
+    	double fMean = fSum / psdSum;
+    	return fMean;
+    }
+    
 	/**
 	 * returns the single sided spectrum p of x
 	 * NOTE: input array will be trimmed to 2^n length
@@ -164,7 +190,7 @@ public class Spectrum {
 		}
 		return p;
 	}
-	
+		
 	/**
 	 * returns the single sided spectrum p and corresponding frequencies f of x
 	 * NOTE: input array will be trimmed to 2^n length
@@ -188,20 +214,20 @@ public class Spectrum {
 		return p;
 	}
 	
-	public static double[][] singleSidedSpectrum2(double[] x, double sampleRate) {
+	/**
+	 * computes the power spectral density of signal {@code x} for {@code sampleRate}
+	 * @param x
+	 * @param sampleRate
+	 * @return
+	 */
+	public static double[] powerSpectralDensity(double[] x, double sampleRate) {
 		Complex[] X = fft(x, true);
-		int L = X.length;		
-		double[][] p = new double[2][L / 2 + 1];
-		double f = 0.0;
-		for (int i = 0; i < L / 2 + 1; i++) {
-			p[1][i] = X[i].multiply(1.0 / (double) L).abs();
-			if (i != 0 && i < L / 2) {
-				p[1][i] = p[1][i] * 2;
-			}
-			f = (double) i / (double) L * sampleRate;
-			p[0][i] = f;			
+		int n = X.length;
+		double[] psd = new double[n / 2];
+		for (int i = 0; i < n / 2; i++) {
+			psd[i] = (X[i].getReal() * X[i].getReal() + X[i].getImaginary() * X[i].getImaginary()) / (n * sampleRate);
 		}
-		return p;
+		return psd;
 	}
 	
 	/**

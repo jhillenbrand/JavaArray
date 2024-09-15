@@ -254,6 +254,20 @@ public class Scalar {
 	}
 	
 	/**
+	 * creates a sine wave value for the  time input {@code t}
+	 * @param t time input [s]
+	 * @param amplitude sine wave amplitude
+	 * @param frequency [Hz]
+	 * @param phase [°]
+	 * @param noise [0..1] percentage of amplitude
+	 * @return
+	 */
+	public static double sine(double t, double amplitude, double frequency, double phase, double noise) {
+		double sine = amplitude / 2 * Math.sin(2 * Math.PI * t * frequency + 2 * Math.PI * phase / 360) + amplitude / 2 * noise * (Math.random() - 0.5);
+		return sine;		
+	}
+	
+	/**
 	 * checks if the first argument is smaller than the second and throws {@code IllegalArgumentException} if true
 	 * @param d1
 	 * @param d2

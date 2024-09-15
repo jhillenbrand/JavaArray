@@ -1,9 +1,12 @@
 package spectrum;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import net.sytes.botg.array.math.Scalar;
 import net.sytes.botg.array.math.Vec;
 import net.sytes.botg.array.spectrum.Complex;
 import net.sytes.botg.array.spectrum.Spectrum;
@@ -76,6 +79,22 @@ public class UnitTest_Spectrum {
 		Complex[] c = Spectrum.fft2(d);
 		
 		System.out.println(Arrays.toString(c));
+		
+	}
+	
+	@Test
+	public void test020() {
+		
+		double f = 50.0;
+		double fs = 1000.0;
+		
+		double[] sine = Vec.sine(1024, 1.0, f, fs);
+		
+		double[][] P = Spectrum.singleSidedSpectrum(sine, fs);
+		
+		double mf = Spectrum.meanFrequency(sine, fs);
+		
+		assertEquals(Scalar.round(mf), (int) f);
 		
 	}
 	

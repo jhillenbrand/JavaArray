@@ -4,13 +4,12 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import net.sytes.botg.datastruct.Sample;
 import net.sytes.botg.datastruct.TimeSeries;
 import net.sytes.botg.datatypes.DataType;
-import net.sytes.botg.datatypes.buffers.Buffer.Builder;
 
 public class TimedBuffer extends Buffer implements ITimedBuffer {
 	
@@ -18,11 +17,29 @@ public class TimedBuffer extends Buffer implements ITimedBuffer {
 	
 	protected static final String TIME_FIELD = "\"time\": ";
 	protected static final String TIMES_FIELD = "\"times\": ";
-		
+	
+	 /**
+     * storing {@code TimedBuffer} inside {@code Map<String, TimedBuffer>}
+     * @param buffer
+     * @return
+     */
     public static Map<String, TimedBuffer> toMap(TimedBuffer buffer){
     	Map<String, TimedBuffer> buffers = new LinkedHashMap<String, TimedBuffer>();
     	buffers.put(buffer.getId(), buffer);
     	return buffers;
+    }
+    
+    /**
+     * storing {@code TimedBuffer}s inside {@code Map<String, TimedBuffer>}
+     * @param buffers
+     * @return
+     */
+    public static Map<String, TimedBuffer> toMap(TimedBuffer ... buffers){
+    	Map<String, TimedBuffer> map = new LinkedHashMap<String, TimedBuffer>();
+    	for (TimedBuffer buffer : buffers) {
+    		map.put(buffer.getId(), buffer);
+    	}
+    	return map;
     }
     
     /**

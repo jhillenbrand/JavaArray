@@ -53,7 +53,15 @@ public class Complex {
     	return new Complex(this.real, -this.imaginary);
     }
     
-    @Override
+    public double getImaginary() {
+		return this.imaginary;
+	}
+
+	public double getReal() {
+		return this.real;
+	}
+
+	@Override
     public String toString() {
     	if (this.imaginary < 0) {
         	return "" + this.real + " - " + Math.abs(this.imaginary) + "i";

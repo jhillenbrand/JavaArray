@@ -4399,6 +4399,38 @@ public class Vec {
 	}
 	
 	/**
+	 * creates a sine wave based on the input arguments
+	 * @param n number of samples to produce
+	 * @param amplitude sine wave amplitude
+	 * @param frequency [Hz]
+	 * @param sampleRate [Hz]
+	 * @return
+	 */
+	public static double[] sine(int n, double amplitude, double frequency, double sampleRate) {
+		return sine(n, amplitude, frequency, sampleRate, 0.0, 0.0);
+	}
+	
+	/**
+	 * creates a sine wave based on the input arguments
+	 * @param n number of samples to produce
+	 * @param amplitude sine wave amplitude
+	 * @param frequency [Hz]
+	 * @param sampleRate [Hz]
+	 * @param phase [°]
+	 * @param noise [0..1] percentage of amplitude
+	 * @return
+	 */
+	public static double[] sine(int n, double amplitude, double frequency, double sampleRate, double phase, double noise) {
+		double[] s = new double[n];
+		double td = 0.0;
+		for (int i = 0; i < n; i++) {
+			td = i * (1.0 / sampleRate);
+			s[i] = Scalar.sine(td, amplitude, frequency, phase, noise);
+		}
+		return s;		
+	}
+	
+	/**
 	 * adds zeros at the end of {@code x}, so that the new array is of size {@code n}
 	 * <br>if n <= x.length, then the original array is returned
 	 * @param x
