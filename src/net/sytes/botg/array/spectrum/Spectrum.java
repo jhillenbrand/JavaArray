@@ -231,6 +231,25 @@ public class Spectrum {
 	}
 	
 	/**
+	 * computes the power spectral density and frequencies of signal {@code x} for {@code sampleRate}
+	 * @param x
+	 * @param sampleRate
+	 * @return
+	 */
+	public static double[][] powerSpectralDensity2(double[] x, double sampleRate) {
+		Complex[] X = fft(x, true);
+		int n = X.length;		
+		double[][] P = new double[2][n / 2];
+		double f = 0.0;
+		for (int i = 0; i < n / 2; i++) {
+			f = (double) i / (double) n * sampleRate;
+			P[0][i] = f;
+			P[1][i] = (X[i].getReal() * X[i].getReal() + X[i].getImaginary() * X[i].getImaginary()) / (n * sampleRate);
+		}
+		return P;
+	}
+	
+	/**
 	 * compute fft based on double input
 	 * @param d
 	 * @return

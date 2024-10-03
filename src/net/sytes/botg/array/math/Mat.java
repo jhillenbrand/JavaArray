@@ -1619,7 +1619,7 @@ public class Mat {
 			}
 			return Z;
 		} else {
-			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columsn for appending by rows!");
+			throw new IllegalArgumentException("matrices X" + matrixDimensionsToString(X) + " and Y" + matrixDimensionsToString(Y) + " do not have matching columns for appending by rows!");
 		}
 	}
 
