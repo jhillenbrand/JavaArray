@@ -95,7 +95,7 @@ public class UnitTest_Table {
 		t = new Table("C3", Arrays.asList(c1));
 		System.out.println(t.toJson());	
 		
-		Map<String, List<Object>> map = new HashMap<String, List<Object>>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("C4", Arrays.asList(c1));
 		map.put("C5", Arrays.asList(c2));

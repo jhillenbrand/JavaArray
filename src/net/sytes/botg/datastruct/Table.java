@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sytes.botg.array.Ar;
 import net.sytes.botg.datatypes.DataType;
 
 import java.util.Objects;
@@ -94,13 +95,19 @@ public class Table implements Cloneable {
 	}
 		
 	/**
-	 * the map is interpreted as Columnwise data, where the keys specify the name of the column and the values are Object[] arrays containing the row data
+	 * the map is interpreted as Columnwise data, where the keys specify the name of the column and the values are Objects or List<Object>'s containing the row data
 	 * @param mapData
-	 */
-	public Table(Map<String, List<Object>> mapData) {
+	 */	
+	public Table(Map<String, Object> mapData) {
 		this(null, null, DEFAULT_CLONING_BEHAVIOR);
-		for (Entry<String, List<Object>> entry : mapData.entrySet()) {
-			this.addColumn(entry.getKey(), entry.getValue());
+		for (Entry<String, Object> entry : mapData.entrySet()) {
+			if(Ar.isArray(entry.getValue())) {
+				this.addColumn(entry.getKey(), (List<Object>) entry.getValue());
+			} else if (entry.getValue() instanceof List<?>) {
+				this.addColumn(entry.getKey(), (List<Object>) entry.getValue());
+			} else {
+				this.add(entry.getKey(), entry.getValue());
+			}
 		}
 	}
 	
@@ -482,6 +489,9 @@ public class Table implements Cloneable {
 	 * @param value
 	 */
 	public void add(String columnName, Object value) {
+		if (!data.containsKey(columnName)) {
+			this.data.put(columnName, new ArrayList<Object>());
+		}
 		this.data.get(columnName).add(value);
 		this.fillUpColumns();
 	}
