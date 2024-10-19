@@ -1,4 +1,4 @@
-package datatypes;
+package datastruct;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -656,6 +656,29 @@ public class UnitTest_Table {
 		Table t2 = t.filter("B", "C2", Comparator.EQUAL);
 		
 		System.out.println(t2);
+	}
+	
+	@Test
+	public void test113() {
+		Table t = new Table();
+		
+		Object[] c1 = new Object[] {1.0, 3.3, 3.0, 3.1, 5.0};
+		Object[] c2 = new Object[] {"A", "B", "B", "B", "C"};
+		Object[] c3 = new Object[] {true, false, true, true, false};
+		
+		t.addColumn("C1", c1);
+		t.addColumn("C2", c2);
+		t.addColumn("C3", c3);
+				
+		System.out.println(t);
+		
+		Table t2 = t.filter("B", "C2", Comparator.EQUAL);
+		
+		System.out.println(t2);
+		
+		Table t3 = t2.filter(false, "C3", Comparator.EQUAL);
+		
+		System.out.println(t3);
 	}
 	
 	

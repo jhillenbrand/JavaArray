@@ -7,11 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import net.sytes.botg.array.Ar;
 import net.sytes.botg.datatypes.DataType;
-
-import java.util.Objects;
 
 /**
  * Table implementation in Java based on a {@code LinkedHashMap} for addressing columns by name, the data within a column is represented by {@code ArrayList<Object>} for easy adding and removing of rows
@@ -40,7 +39,72 @@ public class Table implements Cloneable {
 	}
 	
 	public enum Comparator {
-		EQUAL, SMALLER_THAN, GREATER_THAN, EQUAL_OR_SMALLER, EQUAL_OR_GREATER, LIKE, NOT_NULL, NOT_EQUAL
+		
+		EQUAL("="), SMALLER_THAN("<"), GREATER_THAN(">"), EQUAL_OR_SMALLER("<="), EQUAL_OR_GREATER(">="), LIKE("~"), NOT_NULL("!=NULL"), NOT_EQUAL("!=");
+		
+		private String comperator;
+		
+		private Comparator(String comperator) {
+			this.comperator = comperator;
+		}
+		
+		public String toString() {
+			return this.comperator;
+		}
+		
+		public static Comparator containsComperator(String s) {
+		    if (s.contains(NOT_NULL.toString())) {
+		    	return NOT_NULL;
+			} else if (s.contains(NOT_EQUAL.toString())) {
+				return NOT_EQUAL;
+			} else if (s.contains(EQUAL_OR_SMALLER.toString())) {
+				return EQUAL_OR_SMALLER;
+			} else if (s.contains(EQUAL_OR_GREATER.toString())) {
+				return EQUAL_OR_GREATER;
+			} else if (s.contains(EQUAL.toString())) {
+				return EQUAL;
+			} else if (s.contains(SMALLER_THAN.toString())) {
+				return SMALLER_THAN;
+			} else if(s.contains(GREATER_THAN.toString())) {
+				return GREATER_THAN;
+			} else if (s.contains(LIKE.toString())) {
+				return LIKE;
+			} else {
+				return null;
+			}
+		}
+		
+		public static Comparator toEnum(String comparator) {
+			switch (comparator) {
+				case "=":
+					return EQUAL;
+				
+				case "!=":
+					return NOT_EQUAL;
+					
+				case "<":
+					return SMALLER_THAN;
+					
+				case "<=":
+					return EQUAL_OR_SMALLER;
+					
+				case ">":
+					return GREATER_THAN;
+					
+				case ">=":
+					return EQUAL_OR_GREATER;
+				
+				case "~":
+					return LIKE;
+					
+				case "!=NULL":
+					return NOT_NULL;
+				
+				default:
+					return null;
+			}
+		}	
+		
 	}
 	
 	public enum MatchMode {
