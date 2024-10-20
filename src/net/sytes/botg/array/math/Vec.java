@@ -3510,6 +3510,40 @@ public class Vec {
 	}
 	
 	/**
+	 * flips the original Array {@code ar} upside-down
+	 * @param ar
+	 */
+	public static void flip(Object[] ar) {
+		int i = 0;
+		Object o;
+		int n = ar.length;
+		for (i = 0; i < n / 2; i++) {
+			o = ar[i];
+			ar[i] = ar[n - i - 1];
+			ar[n - i - 1] = o;
+		}
+	}
+	
+	/**
+	 * flips the specified Array {@code ar} and returns a new array containing the old one upside-down
+	 * @param array
+	 * @return
+	 */
+	public static Object[] flip2(Object[] ar) {
+		//long start = System.nanoTime();
+		int i, j, n;
+		n = ar.length;
+		j = n;
+		Object[] newAr = new Object[j];
+		for (i = 0; i < n; i++) {
+			newAr[j - 1] = ar[i];
+			j = j - 1;
+		}
+		return newAr;
+		//System.out.println(System.nanoTime() - start + " ns elapsed");
+	}
+	
+	/**
 	 * switches values at odd indices to even indices and vice versa
 	 * <br>faster than oddToEven
 	 * @param array
