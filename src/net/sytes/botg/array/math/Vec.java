@@ -2262,6 +2262,21 @@ public class Vec {
 	}
 	
 	/**
+	 * element wise subtraction of array with scalar
+	 * @param x double[] array
+	 * @param y double[] array
+	 * @return double[] array
+	 */
+	public static double[] minus(double[] x, double y){
+		int L = x.length;
+		double[] ar3 = new double[L];
+		for (int i = 0; i < L; i++) {
+			ar3[i] = x[i] - y;
+		}
+		return ar3;
+	}
+	
+	/**
 	 * offsets every element in {@code ar} by {@code o} and returns new array
 	 * @param ar
 	 * @param o
